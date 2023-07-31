@@ -5,7 +5,6 @@ import jakarta.servlet.descriptor.JspPropertyGroupDescriptor;
 import jakarta.servlet.descriptor.TaglibDescriptor;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 
 public class DescriptorConverter {
    public DescriptorConverter() {
@@ -15,11 +14,9 @@ public class DescriptorConverter {
       return new JspConfigDescriptor() {
          public Collection<JspPropertyGroupDescriptor> getJspPropertyGroups() {
             Collection<javax.servlet.descriptor.JspPropertyGroupDescriptor> ori = jspConfigDescriptor.getJspPropertyGroups();
-            ArrayList<JspPropertyGroupDescriptor> dest = new ArrayList();
-            Iterator var4 = ori.iterator();
+            ArrayList<JspPropertyGroupDescriptor> dest = new ArrayList<>();
 
-            while(var4.hasNext()) {
-               javax.servlet.descriptor.JspPropertyGroupDescriptor item = (javax.servlet.descriptor.JspPropertyGroupDescriptor)var4.next();
+            for (javax.servlet.descriptor.JspPropertyGroupDescriptor item : ori) {
                dest.add(DescriptorConverter.convert(item));
             }
 
@@ -28,11 +25,9 @@ public class DescriptorConverter {
 
          public Collection<TaglibDescriptor> getTaglibs() {
             Collection<javax.servlet.descriptor.TaglibDescriptor> ori = jspConfigDescriptor.getTaglibs();
-            ArrayList<TaglibDescriptor> dest = new ArrayList();
-            Iterator var4 = ori.iterator();
+            ArrayList<TaglibDescriptor> dest = new ArrayList<>();
 
-            while(var4.hasNext()) {
-               javax.servlet.descriptor.TaglibDescriptor item = (javax.servlet.descriptor.TaglibDescriptor)var4.next();
+            for (javax.servlet.descriptor.TaglibDescriptor item : ori) {
                dest.add(DescriptorConverter.convert(item));
             }
 
@@ -45,11 +40,9 @@ public class DescriptorConverter {
       return new javax.servlet.descriptor.JspConfigDescriptor() {
          public Collection<javax.servlet.descriptor.JspPropertyGroupDescriptor> getJspPropertyGroups() {
             Collection<JspPropertyGroupDescriptor> ori = jspConfigDescriptor.getJspPropertyGroups();
-            ArrayList<javax.servlet.descriptor.JspPropertyGroupDescriptor> dest = new ArrayList();
-            Iterator var4 = ori.iterator();
+            ArrayList<javax.servlet.descriptor.JspPropertyGroupDescriptor> dest = new ArrayList<>();
 
-            while(var4.hasNext()) {
-               JspPropertyGroupDescriptor item = (JspPropertyGroupDescriptor)var4.next();
+            for (JspPropertyGroupDescriptor item : ori) {
                dest.add(DescriptorConverter.convert(item));
             }
 
@@ -58,11 +51,9 @@ public class DescriptorConverter {
 
          public Collection<javax.servlet.descriptor.TaglibDescriptor> getTaglibs() {
             Collection<TaglibDescriptor> ori = jspConfigDescriptor.getTaglibs();
-            ArrayList<javax.servlet.descriptor.TaglibDescriptor> dest = new ArrayList();
-            Iterator var4 = ori.iterator();
+            ArrayList<javax.servlet.descriptor.TaglibDescriptor> dest = new ArrayList<>();
 
-            while(var4.hasNext()) {
-               TaglibDescriptor item = (TaglibDescriptor)var4.next();
+            for (TaglibDescriptor item : ori) {
                dest.add(DescriptorConverter.convert(item));
             }
 

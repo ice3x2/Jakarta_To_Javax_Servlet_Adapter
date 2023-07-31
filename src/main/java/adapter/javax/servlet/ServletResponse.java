@@ -71,7 +71,7 @@ public class ServletResponse implements javax.servlet.ServletResponse {
    }
 
    public void reset() {
-      this.response.reset();
+      this.response.reSet<>();
    }
 
    public void setLocale(Locale loc) {

@@ -29,13 +29,11 @@ public class StreamConverter {
          }
 
          public int read() throws IOException {
-            int value = inputstream.read();
-            return value;
+            return inputstream.read();
          }
 
          public int read(byte[] b) throws IOException {
-            int len = inputstream.read(b, 0, b.length);
-            return len;
+            return inputstream.read(b, 0, b.length);
          }
 
          public int read(byte[] b, int off, int len) throws IOException {

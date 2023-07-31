@@ -3,9 +3,9 @@ package adapter.jakarta.servlet.http;
 
 public class HttpUpgradeHandler implements jakarta.servlet.http.HttpUpgradeHandler{
 
-    javax.servlet.http.HttpUpgradeHandler httpUpgradeHandler;
+    private javax.servlet.http.HttpUpgradeHandler httpUpgradeHandler;
 
-    public javax.servlet.http.HttpUpgradeHandler getHttpUpgradeHandler() {
+     public javax.servlet.http.HttpUpgradeHandler getHttpUpgradeHandler() {
         return httpUpgradeHandler;
     }
 

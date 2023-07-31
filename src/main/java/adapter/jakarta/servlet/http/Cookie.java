@@ -1,82 +1,83 @@
 package adapter.jakarta.servlet.http;
 
-public class Cookie extends jakarta.servlet.http.Cookie {
-   javax.servlet.http.Cookie cookie;
+public class Cookie extends jakarta.servlet.http.Cookie implements Cloneable {
+   private final javax.servlet.http.Cookie cookie;
 
    public Cookie(javax.servlet.http.Cookie cookie) {
       super("ignored", "ignored");
       this.cookie = cookie;
    }
 
-   public void setComment(String purpose) {
+   @Override public void setComment(String purpose) {
       this.cookie.setComment(purpose);
    }
 
-   public String getComment() {
+   @Override public String getComment() {
       return this.cookie.getComment();
    }
 
-   public void setDomain(String pattern) {
+   @Override public void setDomain(String pattern) {
       this.cookie.setDomain(pattern);
    }
 
-   public String getDomain() {
+   @Override public String getDomain() {
       return this.cookie.getDomain();
    }
 
-   public void setMaxAge(int expiry) {
+   @Override public void setMaxAge(int expiry) {
       this.cookie.setMaxAge(expiry);
    }
 
-   public int getMaxAge() {
+   @Override public int getMaxAge() {
       return this.cookie.getMaxAge();
    }
 
-   public void setPath(String uri) {
+   @Override public void setPath(String uri) {
       this.cookie.setPath(uri);
    }
 
-   public String getPath() {
+   @Override public String getPath() {
       return this.cookie.getPath();
    }
 
-   public void setSecure(boolean flag) {
+   @Override public void setSecure(boolean flag) {
       this.cookie.setSecure(flag);
    }
 
-   public boolean getSecure() {
+   @Override public boolean getSecure() {
       return this.cookie.getSecure();
    }
 
-   public String getName() {
+   @Override public String getName() {
       return this.cookie.getName();
    }
 
-   public void setValue(String newValue) {
+   @Override public void setValue(String newValue) {
       this.cookie.setValue(newValue);
    }
 
-   public String getValue() {
+   @Override public String getValue() {
       return this.cookie.getValue();
    }
 
-   public int getVersion() {
+   @Override public int getVersion() {
       return this.cookie.getVersion();
    }
 
-   public void setVersion(int v) {
+   @Override public void setVersion(int v) {
       this.cookie.setVersion(v);
    }
 
-   public Object clone() {
+   @SuppressWarnings("MethodDoesntCallSuperMethod")
+   @Override public Cookie clone() {
       return new Cookie((javax.servlet.http.Cookie)this.cookie.clone());
    }
 
-   public void setHttpOnly(boolean httpOnly) {
+   @Override public void setHttpOnly(boolean httpOnly) {
       this.cookie.setHttpOnly(httpOnly);
    }
 
-   public boolean isHttpOnly() {
+   @Override public boolean isHttpOnly() {
       return this.cookie.isHttpOnly();
    }
 }

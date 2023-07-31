@@ -3,78 +3,78 @@ package adapter.javax.servlet.http;
 import java.util.Enumeration;
 import javax.servlet.ServletContext;
 
-public class HttpSession implements javax.servlet.http.HttpSession {
-   jakarta.servlet.http.HttpSession httpSession;
+ public class HttpSession implements javax.servlet.http.HttpSession {
+   private final jakarta.servlet.http.HttpSession httpSession;
 
    HttpSession(jakarta.servlet.http.HttpSession httpSession) {
       this.httpSession = httpSession;
    }
 
-   public long getCreationTime() {
+   @Override public long getCreationTime() {
       return this.httpSession.getCreationTime();
    }
 
-   public String getId() {
+   @Override public String getId() {
       return this.httpSession.getId();
    }
 
-   public long getLastAccessedTime() {
+   @Override public long getLastAccessedTime() {
       return this.httpSession.getLastAccessedTime();
    }
 
-   public ServletContext getServletContext() {
+   @Override public ServletContext getServletContext() {
       return new adapter.javax.servlet.ServletContext(this.httpSession.getServletContext());
    }
 
-   public void setMaxInactiveInterval(int interval) {
+   @Override public void setMaxInactiveInterval(int interval) {
       this.httpSession.setMaxInactiveInterval(interval);
    }
 
-   public int getMaxInactiveInterval() {
+   @Override public int getMaxInactiveInterval() {
       return this.httpSession.getMaxInactiveInterval();
    }
 
-   public javax.servlet.http.HttpSessionContext getSessionContext() {
+   @Override public javax.servlet.http.HttpSessionContext getSessionContext() {
       return new HttpSessionContext(this.httpSession.getSessionContext());
    }
 
-   public Object getAttribute(String name) {
+   @Override public Object getAttribute(String name) {
       return this.httpSession.getAttribute(name);
    }
 
-   public Object getValue(String name) {
+   @Override public Object getValue(String name) {
       return this.httpSession.getValue(name);
    }
 
-   public Enumeration<String> getAttributeNames() {
+   @Override public Enumeration<String> getAttributeNames() {
       return this.httpSession.getAttributeNames();
    }
 
-   public String[] getValueNames() {
+   @Override public String[] getValueNames() {
       return this.httpSession.getValueNames();
    }
 
-   public void setAttribute(String name, Object value) {
+   @Override public void setAttribute(String name, Object value) {
       this.httpSession.setAttribute(name, value);
    }
 
-   public void putValue(String name, Object value) {
+   @Override public void putValue(String name, Object value) {
       this.httpSession.putValue(name, value);
    }
 
-   public void removeAttribute(String name) {
+   @Override public void removeAttribute(String name) {
       this.httpSession.removeAttribute(name);
    }
 
-   public void removeValue(String name) {
+   @Override public void removeValue(String name) {
       this.httpSession.removeValue(name);
    }
 
-   public void invalidate() {
+   @Override public void invalidate() {
       this.httpSession.invalidate();
    }
 
-   public boolean isNew() {
+   @Override public boolean isNew() {
       return this.httpSession.isNew();
    }
 }

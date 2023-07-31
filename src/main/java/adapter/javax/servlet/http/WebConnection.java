@@ -6,33 +6,33 @@ import javax.servlet.ServletInputStream;
 import javax.servlet.ServletOutputStream;
 import java.io.IOException;
 
-public class WebConnection implements javax.servlet.http.WebConnection{
-    jakarta.servlet.http.WebConnection webConnection;
+ public class WebConnection implements javax.servlet.http.WebConnection{
+    private jakarta.servlet.http.WebConnection webConnection;
 
-    public jakarta.servlet.http.WebConnection getWebConnection() {
+     public jakarta.servlet.http.WebConnection getWebConnection() {
         return webConnection;
     }
 
 
 
-    public WebConnection(jakarta.servlet.http.WebConnection webConnection) {
+     public WebConnection(jakarta.servlet.http.WebConnection webConnection) {
         this.webConnection = webConnection;
 
     }
 
-    @Override
-    public void close() throws Exception {
+
+    @Override public void close() throws Exception {
         this.webConnection.close();
 
     }
 
-    @Override
-    public ServletInputStream getInputStream() throws IOException {
+
+    @Override public ServletInputStream getInputStream() throws IOException {
         return StreamConverter.convert(this.webConnection.getInputStream());
     }
 
-    @Override
-    public ServletOutputStream getOutputStream() throws IOException {
+
+    @Override public ServletOutputStream getOutputStream() throws IOException {
         return StreamConverter.convert(this.webConnection.getOutputStream());
     }
 }

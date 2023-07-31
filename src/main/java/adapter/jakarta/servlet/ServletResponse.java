@@ -6,78 +6,79 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Locale;
 
-public class ServletResponse implements jakarta.servlet.ServletResponse {
-   javax.servlet.ServletResponse response = null;
+ public class ServletResponse implements jakarta.servlet.ServletResponse {
+   private javax.servlet.ServletResponse response = null;
 
-   public ServletResponse(javax.servlet.ServletResponse response) {
+    public ServletResponse(javax.servlet.ServletResponse response) {
       this.response = response;
    }
 
-   public javax.servlet.ServletResponse getResponse() {
+    @SuppressWarnings("unused")
+    public javax.servlet.ServletResponse getResponse() {
       return this.response;
    }
 
-   public String getCharacterEncoding() {
+   @Override public String getCharacterEncoding() {
       return this.response.getCharacterEncoding();
    }
 
-   public String getContentType() {
+   @Override public String getContentType() {
       return this.response.getContentType();
    }
 
-   public ServletOutputStream getOutputStream() throws IOException {
+   @Override public ServletOutputStream getOutputStream() throws IOException {
       return StreamConverter.convert(this.response.getOutputStream());
    }
 
-   public PrintWriter getWriter() throws IOException {
+   @Override public PrintWriter getWriter() throws IOException {
       return this.response.getWriter();
    }
 
-   public void setCharacterEncoding(String charset) {
+   @Override public void setCharacterEncoding(String charset) {
       this.response.setCharacterEncoding(charset);
    }
 
-   public void setContentLength(int len) {
+   @Override public void setContentLength(int len) {
       this.response.setContentLength(len);
    }
 
-   public void setContentType(String type) {
+   @Override public void setContentType(String type) {
       this.response.setContentType(type);
    }
 
-   public void setBufferSize(int size) {
+   @Override public void setBufferSize(int size) {
       this.response.setBufferSize(size);
    }
 
-   public int getBufferSize() {
+   @Override public int getBufferSize() {
       return this.response.getBufferSize();
    }
 
-   public void flushBuffer() throws IOException {
+   @Override public void flushBuffer() throws IOException {
       this.response.flushBuffer();
    }
 
-   public void resetBuffer() {
+   @Override public void resetBuffer() {
       this.response.resetBuffer();
    }
 
-   public boolean isCommitted() {
+   @Override public boolean isCommitted() {
       return this.response.isCommitted();
    }
 
-   public void reset() {
-      this.response.reset();
+   @Override public void reset() {
+      this.response.reSet<>();
    }
 
-   public void setLocale(Locale loc) {
+   @Override public void setLocale(Locale loc) {
       this.response.setLocale(loc);
    }
 
-   public Locale getLocale() {
+   @Override public Locale getLocale() {
       return this.response.getLocale();
    }
 
-   public void setContentLengthLong(long arg0) {
+   @Override public void setContentLengthLong(long arg0) {
       this.response.setContentLength((int)arg0);
    }
 }

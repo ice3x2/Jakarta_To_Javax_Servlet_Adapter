@@ -23,285 +23,278 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletInputStream;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpUpgradeHandler;
-
 public class HttpServletRequest extends ServletRequest implements javax.servlet.http.HttpServletRequest {
-   jakarta.servlet.http.HttpServletRequest httpRequest = null;
+   private jakarta.servlet.http.HttpServletRequest httpRequest = null;
 
-   public HttpServletRequest(jakarta.servlet.http.HttpServletRequest request) {
+    public HttpServletRequest(jakarta.servlet.http.HttpServletRequest request) {
       super(request);
       this.httpRequest = request;
    }
 
-   public Object getAttribute(String name) {
+   @Override public Object getAttribute(String name) {
       return this.httpRequest.getAttribute(name);
    }
 
-   public Enumeration<String> getAttributeNames() {
+   @Override public Enumeration<String> getAttributeNames() {
       return this.httpRequest.getAttributeNames();
    }
 
-   public String getCharacterEncoding() {
+   @Override public String getCharacterEncoding() {
       return this.httpRequest.getCharacterEncoding();
    }
 
-   public void setCharacterEncoding(String env) throws UnsupportedEncodingException {
+   @Override public void setCharacterEncoding(String env) throws UnsupportedEncodingException {
       this.httpRequest.setCharacterEncoding(env);
    }
 
-   public int getContentLength() {
+   @Override public int getContentLength() {
       return this.httpRequest.getContentLength();
    }
 
-   public String getContentType() {
+   @Override public String getContentType() {
       return this.httpRequest.getContentType();
    }
 
-   public ServletInputStream getInputStream() throws IOException {
+   @Override public ServletInputStream getInputStream() throws IOException {
       return StreamConverter.convert(this.httpRequest.getInputStream());
    }
 
-   public String getParameter(String name) {
+   @Override public String getParameter(String name) {
       return this.httpRequest.getParameter(name);
    }
 
-   public Enumeration<String> getParameterNames() {
+   @Override public Enumeration<String> getParameterNames() {
       return this.httpRequest.getParameterNames();
    }
 
-   public String[] getParameterValues(String name) {
+   @Override public String[] getParameterValues(String name) {
       return this.httpRequest.getParameterValues(name);
    }
 
-   public Map<String, String[]> getParameterMap() {
+   @Override public Map<String, String[]> getParameterMap() {
       return this.httpRequest.getParameterMap();
    }
 
-   public String getProtocol() {
+   @Override public String getProtocol() {
       return this.httpRequest.getProtocol();
    }
 
-   public String getScheme() {
+   @Override public String getScheme() {
       return this.httpRequest.getScheme();
    }
 
-   public String getServerName() {
+   @Override public String getServerName() {
       return this.httpRequest.getServerName();
    }
 
-   public int getServerPort() {
+   @Override public int getServerPort() {
       return this.httpRequest.getServerPort();
    }
 
-   public BufferedReader getReader() throws IOException {
+   @Override public BufferedReader getReader() throws IOException {
       return this.httpRequest.getReader();
    }
 
-   public String getRemoteAddr() {
+   @Override public String getRemoteAddr() {
       return this.httpRequest.getRemoteAddr();
    }
 
-   public String getRemoteHost() {
+   @Override public String getRemoteHost() {
       return this.httpRequest.getRemoteHost();
    }
 
-   public void setAttribute(String name, Object o) {
+   @Override public void setAttribute(String name, Object o) {
       this.httpRequest.setAttribute(name, o);
    }
 
-   public void removeAttribute(String name) {
+   @Override public void removeAttribute(String name) {
       this.httpRequest.removeAttribute(name);
    }
 
-   public Locale getLocale() {
+   @Override public Locale getLocale() {
       return this.httpRequest.getLocale();
    }
 
-   public Enumeration<Locale> getLocales() {
+   @Override public Enumeration<Locale> getLocales() {
       return this.httpRequest.getLocales();
    }
 
-   public boolean isSecure() {
+   @Override public boolean isSecure() {
       return this.httpRequest.isSecure();
    }
 
-   public RequestDispatcher getRequestDispatcher(String path) {
+   @Override public RequestDispatcher getRequestDispatcher(String path) {
       return new adapter.javax.servlet.RequestDispatcher(this.httpRequest.getRequestDispatcher(path));
    }
 
-   public String getRealPath(String path) {
+   @Override public String getRealPath(String path) {
       return this.httpRequest.getRealPath(path);
    }
 
-   public int getRemotePort() {
+   @Override public int getRemotePort() {
       return this.httpRequest.getRemotePort();
    }
 
-   public String getLocalName() {
+   @Override public String getLocalName() {
       return this.httpRequest.getLocalName();
    }
 
-   public String getLocalAddr() {
+   @Override public String getLocalAddr() {
       return this.httpRequest.getLocalAddr();
    }
 
-   public int getLocalPort() {
+   @Override public int getLocalPort() {
       return this.httpRequest.getLocalPort();
    }
 
-   public ServletContext getServletContext() {
+   @Override public ServletContext getServletContext() {
       return new adapter.javax.servlet.ServletContext(this.httpRequest.getServletContext());
    }
 
-   public AsyncContext startAsync() {
+   @Override public AsyncContext startAsync() {
       return AsyncContextConverter.convert(this.httpRequest.startAsync());
    }
 
-   public AsyncContext startAsync(javax.servlet.ServletRequest servletRequest, ServletResponse servletResponse) {
+   @Override public AsyncContext startAsync(javax.servlet.ServletRequest servletRequest, ServletResponse servletResponse) {
       return AsyncContextConverter.convert(this.httpRequest.startAsync(ServletReqResConverter.convert(servletRequest), ServletReqResConverter.convert(servletResponse)));
    }
 
-   public boolean isAsyncStarted() {
+   @Override public boolean isAsyncStarted() {
       return this.httpRequest.isAsyncStarted();
    }
 
-   public boolean isAsyncSupported() {
+   @Override public boolean isAsyncSupported() {
       return this.httpRequest.isAsyncSupported();
    }
 
-   public AsyncContext getAsyncContext() {
+   @Override public AsyncContext getAsyncContext() {
       return AsyncContextConverter.convert(this.httpRequest.getAsyncContext());
    }
 
-   public DispatcherType getDispatcherType() {
+   @Override public DispatcherType getDispatcherType() {
       return HttpComponentConverter.convert(this.httpRequest.getDispatcherType());
    }
 
-   public String getAuthType() {
+   @Override public String getAuthType() {
       return this.httpRequest.getAuthType();
    }
 
-   public javax.servlet.http.Cookie[] getCookies() {
+   @Override public javax.servlet.http.Cookie[] getCookies() {
       jakarta.servlet.http.Cookie[] cookies = this.httpRequest.getCookies();
-      ArrayList<javax.servlet.http.Cookie> newArrayList = new ArrayList();
-      jakarta.servlet.http.Cookie[] var6 = cookies;
-      int var5 = cookies.length;
+      ArrayList<javax.servlet.http.Cookie> newArrayList = new ArrayList<>();
 
-      for(int var4 = 0; var4 < var5; ++var4) {
-         jakarta.servlet.http.Cookie cookie = var6[var4];
+      for (jakarta.servlet.http.Cookie cookie : cookies) {
          newArrayList.add(new Cookie(cookie));
       }
 
-      return (javax.servlet.http.Cookie[])newArrayList.toArray(new javax.servlet.http.Cookie[cookies.length]);
+      return newArrayList.toArray(new javax.servlet.http.Cookie[cookies.length]);
    }
 
-   public long getDateHeader(String name) {
+   @Override public long getDateHeader(String name) {
       return this.httpRequest.getDateHeader(name);
    }
 
-   public String getHeader(String name) {
+   @Override public String getHeader(String name) {
       return this.httpRequest.getHeader(name);
    }
 
-   public Enumeration<String> getHeaders(String name) {
+   @Override public Enumeration<String> getHeaders(String name) {
       return this.httpRequest.getHeaders(name);
    }
 
-   public Enumeration<String> getHeaderNames() {
+   @Override public Enumeration<String> getHeaderNames() {
       return this.httpRequest.getHeaderNames();
    }
 
-   public int getIntHeader(String name) {
+   @Override public int getIntHeader(String name) {
       return this.httpRequest.getIntHeader(name);
    }
 
-   public String getMethod() {
+   @Override public String getMethod() {
       return this.httpRequest.getMethod();
    }
 
-   public String getPathInfo() {
+   @Override public String getPathInfo() {
       return this.httpRequest.getPathInfo();
    }
 
-   public String getPathTranslated() {
+   @Override public String getPathTranslated() {
       return this.httpRequest.getPathTranslated();
    }
 
-   public String getContextPath() {
+   @Override public String getContextPath() {
       return this.httpRequest.getContextPath();
    }
 
-   public String getQueryString() {
+   @Override public String getQueryString() {
       return this.httpRequest.getQueryString();
    }
 
-   public String getRemoteUser() {
+   @Override public String getRemoteUser() {
       return this.httpRequest.getRemoteUser();
    }
 
-   public boolean isUserInRole(String role) {
+   @Override public boolean isUserInRole(String role) {
       return this.httpRequest.isUserInRole(role);
    }
 
-   public Principal getUserPrincipal() {
+   @Override public Principal getUserPrincipal() {
       return this.httpRequest.getUserPrincipal();
    }
 
-   public String getRequestedSessionId() {
+   @Override public String getRequestedSessionId() {
       return this.httpRequest.getRequestedSessionId();
    }
 
-   public String getRequestURI() {
+   @Override public String getRequestURI() {
       return this.httpRequest.getRequestURI();
    }
 
-   public StringBuffer getRequestURL() {
+   @Override public StringBuffer getRequestURL() {
       return this.httpRequest.getRequestURL();
    }
 
-   public String getServletPath() {
+   @Override public String getServletPath() {
       return this.httpRequest.getServletPath();
    }
 
-   public javax.servlet.http.HttpSession getSession(boolean create) {
+   @Override public javax.servlet.http.HttpSession getSession(boolean create) {
       return new HttpSession(this.httpRequest.getSession(create));
    }
 
-   public javax.servlet.http.HttpSession getSession() {
+   @Override public javax.servlet.http.HttpSession getSession() {
       return new HttpSession(this.httpRequest.getSession());
    }
 
-   @Override
-   public String changeSessionId() {
+   @Override public String changeSessionId() {
       return this.httpRequest.changeSessionId();
    }
 
-   public boolean isRequestedSessionIdValid() {
+   @Override public boolean isRequestedSessionIdValid() {
       return this.httpRequest.isRequestedSessionIdValid();
    }
 
-   public boolean isRequestedSessionIdFromCookie() {
+   @Override public boolean isRequestedSessionIdFromCookie() {
       return this.httpRequest.isRequestedSessionIdFromCookie();
    }
 
-   public boolean isRequestedSessionIdFromURL() {
+   @Override public boolean isRequestedSessionIdFromURL() {
       return this.httpRequest.isRequestedSessionIdFromURL();
    }
 
-   public boolean isRequestedSessionIdFromUrl() {
+   @Override public boolean isRequestedSessionIdFromUrl() {
       return this.httpRequest.isRequestedSessionIdFromUrl();
    }
 
-   public boolean authenticate(javax.servlet.http.HttpServletResponse response) throws IOException, ServletException {
+   @Override public boolean authenticate(javax.servlet.http.HttpServletResponse response) throws IOException, ServletException {
       try {
          return this.httpRequest.authenticate(new adapter.jakarta.servlet.http.HttpServletResponse(response));
-      } catch (IOException var3) {
-         throw var3;
       } catch (jakarta.servlet.ServletException var4) {
          throw new ServletException(var4);
       }
    }
 
-   public void login(String username, String password) throws ServletException {
+   @Override public void login(String username, String password) throws ServletException {
       try {
          this.httpRequest.login(username, password);
       } catch (jakarta.servlet.ServletException var4) {
@@ -309,7 +302,7 @@ public class HttpServletRequest extends ServletRequest implements javax.servlet.
       }
    }
 
-   public void logout() throws ServletException {
+   @Override public void logout() throws ServletException {
       try {
          this.httpRequest.logout();
       } catch (jakarta.servlet.ServletException var2) {
@@ -317,37 +310,31 @@ public class HttpServletRequest extends ServletRequest implements javax.servlet.
       }
    }
 
-   public Collection<javax.servlet.http.Part> getParts() throws IOException, IllegalStateException, ServletException {
+   @Override public Collection<javax.servlet.http.Part> getParts() throws IOException, IllegalStateException, ServletException {
       try {
-         ArrayList<javax.servlet.http.Part> partList = new ArrayList();
+         ArrayList<javax.servlet.http.Part> partList = new ArrayList<>();
          Collection<jakarta.servlet.http.Part> jakartaParts = this.httpRequest.getParts();
-         Iterator var4 = jakartaParts.iterator();
 
-         while(var4.hasNext()) {
-            jakarta.servlet.http.Part jakartaPart = (jakarta.servlet.http.Part)var4.next();
+         for (jakarta.servlet.http.Part jakartaPart : jakartaParts) {
             partList.add(new Part(jakartaPart));
          }
 
          return partList;
-      } catch (IOException var5) {
-         throw var5;
       } catch (jakarta.servlet.ServletException var6) {
          throw new ServletException(var6);
       }
    }
 
-   public javax.servlet.http.Part getPart(String name) throws IOException, IllegalStateException, ServletException {
+   @Override public javax.servlet.http.Part getPart(String name) throws IOException, IllegalStateException, ServletException {
       try {
          return new Part(this.httpRequest.getPart(name));
-      } catch (IOException var3) {
-         throw var3;
       } catch (jakarta.servlet.ServletException var4) {
          throw new ServletException(var4);
       }
    }
 
-   @Override
-   public <T extends HttpUpgradeHandler> T upgrade(Class<T> handlerClass) throws IOException, ServletException {
+
+   @Override public <T extends HttpUpgradeHandler> T upgrade(Class<T> handlerClass) throws IOException, ServletException {
 
       return null;
    }

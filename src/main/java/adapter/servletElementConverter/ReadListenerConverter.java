@@ -1,6 +1,5 @@
 package adapter.servletElementConverter;
 
-import javax.servlet.ServletInputStream;
 import java.io.IOException;
 
 public class ReadListenerConverter {

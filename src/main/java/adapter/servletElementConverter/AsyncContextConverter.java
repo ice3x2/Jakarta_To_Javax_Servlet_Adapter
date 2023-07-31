@@ -16,11 +16,11 @@ public class AsyncContextConverter {
    public static AsyncContext convert(final javax.servlet.AsyncContext asyncContext) {
       return new AsyncContext() {
          public void addListener(AsyncListener listener) {
-            AsyncContextConverter.convert(listener);
+            asyncContext.addListener(AsyncContextConverter.convert(listener));
          }
 
-         public void addListener(AsyncListener arg0, ServletRequest arg1, ServletResponse arg2) {
-            asyncContext.addListener(AsyncContextConverter.convert(arg0), ServletReqResConverter.convert(arg1), ServletReqResConverter.convert(arg2));
+         public void addListener(AsyncListener asyncListener, ServletRequest servletRequest, ServletResponse servletResponse) {
+            asyncContext.addListener(AsyncContextConverter.convert(asyncListener), ServletReqResConverter.convert(servletRequest), ServletReqResConverter.convert(servletResponse));
          }
 
          public void complete() {
@@ -32,10 +32,8 @@ public class AsyncContextConverter {
                AsyncListener asyncListener = arg0.newInstance();
                javax.servlet.AsyncListener javaxAsyncListener =  AsyncContextConverter.convert(asyncListener);
                asyncContext.addListener(javaxAsyncListener);
-               return (T)javaxAsyncListener;
-            } catch (InstantiationException e) {
-               throw new ServletException(e);
-            } catch (IllegalAccessException e) {
+               return (T) javaxAsyncListener;
+            } catch (InstantiationException | IllegalAccessException e) {
                throw new ServletException(e);
             }
          }
@@ -81,7 +79,7 @@ public class AsyncContextConverter {
    public static javax.servlet.AsyncContext convert(final AsyncContext asyncContext) {
       return new javax.servlet.AsyncContext() {
          public void addListener(javax.servlet.AsyncListener listener) {
-            AsyncContextConverter.convert(listener);
+             asyncContext.addListener(AsyncContextConverter.convert(listener));
          }
 
          public void addListener(javax.servlet.AsyncListener arg0, javax.servlet.ServletRequest arg1, javax.servlet.ServletResponse arg2) {
@@ -133,10 +131,9 @@ public class AsyncContextConverter {
                javax.servlet.AsyncListener javaxAsyncListener = arg0.newInstance();
                AsyncListener asyncListener =  AsyncContextConverter.convert(javaxAsyncListener);
                asyncContext.addListener(asyncListener);
-                return (T)javaxAsyncListener;
-            } catch (InstantiationException e) {
-               throw new javax.servlet.ServletException(e);
-            } catch (IllegalAccessException e) {
+               //noinspection CastCanBeRemovedNarrowingVariableType
+               return (T)javaxAsyncListener;
+            } catch (InstantiationException | IllegalAccessException e) {
                throw new javax.servlet.ServletException(e);
             }
          }

@@ -16,7 +16,7 @@ public class HttpComponentConverter {
       } else if (type == jakarta.servlet.DispatcherType.INCLUDE) {
          return DispatcherType.INCLUDE;
       } else {
-         return type == jakarta.servlet.DispatcherType.REQUEST ? DispatcherType.REQUEST : DispatcherType.REQUEST;
+         return DispatcherType.REQUEST;
       }
    }
 }

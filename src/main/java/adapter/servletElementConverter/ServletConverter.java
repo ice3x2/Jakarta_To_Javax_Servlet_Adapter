@@ -1,57 +1,39 @@
 package adapter.servletElementConverter;
 
-import adapter.jakarta.servlet.FilterRegistrationDynamic;
-import adapter.jakarta.servlet.RegistrationDynamic;
-import adapter.jakarta.servlet.ServletRegistrationDynamic;
-import jakarta.servlet.Registration;
-import jakarta.servlet.annotation.ServletSecurity.EmptyRoleSemantic;
-import jakarta.servlet.annotation.ServletSecurity.TransportGuarantee;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.FilterRegistration;
-import javax.servlet.HttpMethodConstraintElement;
-import javax.servlet.MultipartConfigElement;
-import javax.servlet.Servlet;
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRegistration;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.ServletSecurityElement;
-import javax.servlet.SessionCookieConfig;
-import javax.servlet.annotation.ServletSecurity;
+
+
+
+
+
+
 
 public class ServletConverter {
    public ServletConverter() {
    }
 
-   public static Servlet convert(final jakarta.servlet.Servlet servlet) {
-      return new Servlet() {
-         public void init(ServletConfig config) throws ServletException {
+   public static javax.servlet.Servlet convert(final jakarta.servlet.Servlet servlet) {
+      return new javax.servlet.Servlet() {
+         public void init(javax.servlet.ServletConfig config) throws javax.servlet.ServletException {
             try {
                servlet.init(ServletConverter.convert(config));
-            } catch (jakarta.servlet.ServletException var3) {
-               throw new ServletException(var3);
+            } catch (jakarta.servlet.ServletException e) {
+               throw new javax.servlet.ServletException(e);
             }
          }
 
-         public ServletConfig getServletConfig() {
+         public javax.servlet.ServletConfig getServletConfig() {
             return ServletConverter.convert(servlet.getServletConfig());
          }
 
-         public void service(ServletRequest req, ServletResponse res) throws ServletException, IOException {
+         public void service(javax.servlet.ServletRequest req, javax.servlet.ServletResponse res) throws javax.servlet.ServletException, IOException {
             try {
                servlet.service(ServletReqResConverter.convert(req), ServletReqResConverter.convert(res));
-            } catch (jakarta.servlet.ServletException var4) {
-               throw new ServletException(var4);
-            } catch (IOException var5) {
-               throw var5;
+            } catch (jakarta.servlet.ServletException e) {
+               throw new javax.servlet.ServletException(e);
             }
          }
 
@@ -65,7 +47,7 @@ public class ServletConverter {
       };
    }
 
-   public static jakarta.servlet.Servlet convert(final Servlet servlet) {
+   public static jakarta.servlet.Servlet convert(final javax.servlet.Servlet servlet) {
       return new jakarta.servlet.Servlet() {
          public void destroy() {
             servlet.destroy();
@@ -82,38 +64,59 @@ public class ServletConverter {
          public void init(jakarta.servlet.ServletConfig config) throws jakarta.servlet.ServletException {
             try {
                servlet.init(ServletConverter.convert(config));
-            } catch (ServletException var3) {
-               throw new jakarta.servlet.ServletException(var3);
+            } catch (javax.servlet.ServletException e) {
+               throw new jakarta.servlet.ServletException(e);
             }
          }
 
          public void service(jakarta.servlet.ServletRequest req, jakarta.servlet.ServletResponse request) throws jakarta.servlet.ServletException, IOException {
             try {
                servlet.service(ServletReqResConverter.convert(req), ServletReqResConverter.convert(request));
-            } catch (ServletException var4) {
-               throw new jakarta.servlet.ServletException(var4);
-            } catch (IOException var5) {
-               throw var5;
+            } catch (javax.servlet.ServletException e) {
+               throw new jakarta.servlet.ServletException(e);
             }
          }
       };
    }
 
-   public static Registration convert(javax.servlet.Registration ori) {
-      if (ori instanceof ServletRegistration.Dynamic) {
-         return new ServletRegistrationDynamic((ServletRegistration.Dynamic)ori);
-      } else if (ori instanceof ServletRegistration) {
-         return new adapter.jakarta.servlet.ServletRegistration((ServletRegistration)ori);
-      } else if (ori instanceof FilterRegistration.Dynamic) {
-         return new FilterRegistrationDynamic((FilterRegistration.Dynamic)ori);
-      } else if (ori instanceof FilterRegistration) {
-         return new adapter.jakarta.servlet.FilterRegistration((FilterRegistration)ori);
+
+
+   public static jakarta.servlet.Registration convert(javax.servlet.Registration ori) {
+      if (ori instanceof javax.servlet.ServletRegistration.Dynamic) {
+         return new adapter.jakarta.servlet.ServletRegistrationDynamic((javax.servlet.ServletRegistration.Dynamic)ori);
+      } else if (ori instanceof javax.servlet.ServletRegistration) {
+         return new adapter.jakarta.servlet.ServletRegistration((javax.servlet.ServletRegistration)ori);
+      } else if (ori instanceof javax.servlet.FilterRegistration.Dynamic) {
+         return new adapter.jakarta.servlet.FilterRegistrationDynamic((javax.servlet.FilterRegistration.Dynamic)ori);
+      } else if (ori instanceof javax.servlet.FilterRegistration) {
+         return new adapter.jakarta.servlet.FilterRegistration((javax.servlet.FilterRegistration)ori);
       } else {
-         return (Registration)(ori instanceof javax.servlet.Registration.Dynamic ? new RegistrationDynamic((ServletRegistration.Dynamic)ori) : new adapter.jakarta.servlet.Registration(ori));
+         return ori instanceof javax.servlet.Registration.Dynamic ? new adapter.jakarta.servlet.RegistrationDynamic((javax.servlet.Registration.Dynamic)ori) : new adapter.jakarta.servlet.Registration(ori);
       }
    }
 
-   public static javax.servlet.Registration convert(Registration ori) {
+
+   public static adapter.jakarta.servlet.ServletRegistrationDynamic convert(javax.servlet.ServletRegistration.Dynamic ori) {
+      return new adapter.jakarta.servlet.ServletRegistrationDynamic(ori);
+   }
+
+   public static adapter.jakarta.servlet.ServletRegistration convert(javax.servlet.ServletRegistration ori) {
+      return new adapter.jakarta.servlet.ServletRegistration(ori);
+   }
+
+   public static adapter.jakarta.servlet.FilterRegistrationDynamic convert(javax.servlet.FilterRegistration.Dynamic ori) {
+      return new adapter.jakarta.servlet.FilterRegistrationDynamic(ori);
+   }
+
+   public static adapter.jakarta.servlet.FilterRegistration convert(javax.servlet.FilterRegistration ori) {
+      return new adapter.jakarta.servlet.FilterRegistration(ori);
+   }
+
+   public static adapter.jakarta.servlet.RegistrationDynamic convert(javax.servlet.Registration.Dynamic ori) {
+      return new adapter.jakarta.servlet.RegistrationDynamic(ori);
+   }
+
+   public static javax.servlet.Registration convert(jakarta.servlet.Registration ori) {
       if (ori instanceof jakarta.servlet.ServletRegistration.Dynamic) {
          return new adapter.javax.servlet.ServletRegistrationDynamic((jakarta.servlet.ServletRegistration.Dynamic)ori);
       } else if (ori instanceof jakarta.servlet.ServletRegistration) {
@@ -123,27 +126,43 @@ public class ServletConverter {
       } else if (ori instanceof jakarta.servlet.FilterRegistration) {
          return new adapter.javax.servlet.FilterRegistration((jakarta.servlet.FilterRegistration)ori);
       } else {
-         return (javax.servlet.Registration)(ori instanceof Registration.Dynamic ? new adapter.javax.servlet.RegistrationDynamic((jakarta.servlet.ServletRegistration.Dynamic)ori) : new adapter.javax.servlet.Registration(ori));
+         return ori instanceof jakarta.servlet.Registration.Dynamic ? new adapter.javax.servlet.RegistrationDynamic((jakarta.servlet.Registration.Dynamic)ori) : new adapter.javax.servlet.Registration(ori);
       }
    }
 
-   public static Filter convert(final jakarta.servlet.Filter filter) {
-      return new Filter() {
-         public void init(FilterConfig filterConfig) throws ServletException {
+   public static javax.servlet.ServletRegistration convert(jakarta.servlet.ServletRegistration.Dynamic ori) {
+      return new adapter.javax.servlet.ServletRegistrationDynamic(ori);
+   }
+
+   public static javax.servlet.ServletRegistration convert(jakarta.servlet.ServletRegistration ori) {
+      return new adapter.javax.servlet.ServletRegistration(ori);
+   }
+
+   public static javax.servlet.FilterRegistration convert(jakarta.servlet.FilterRegistration.Dynamic ori) {
+      return new adapter.javax.servlet.FilterRegistrationDynamic(ori);
+   }
+
+   public static javax.servlet.FilterRegistration convert(jakarta.servlet.FilterRegistration ori) {
+      return new adapter.javax.servlet.FilterRegistration(ori);
+   }
+
+
+
+   public static javax.servlet.Filter convert(final jakarta.servlet.Filter filter) {
+      return new javax.servlet.Filter() {
+         public void init(javax.servlet.FilterConfig filterConfig) throws javax.servlet.ServletException {
             try {
                filter.init(ServletConverter.convert(filterConfig));
-            } catch (jakarta.servlet.ServletException var3) {
-               throw new ServletException(var3);
+            } catch (jakarta.servlet.ServletException e) {
+               throw new javax.servlet.ServletException(e);
             }
          }
 
-         public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+         public void doFilter(javax.servlet.ServletRequest request, javax.servlet.ServletResponse response, javax.servlet.FilterChain chain) throws IOException, javax.servlet.ServletException {
             try {
                filter.doFilter(ServletReqResConverter.convert(request), ServletReqResConverter.convert(response), ServletConverter.convert(chain));
-            } catch (IOException var5) {
-               throw var5;
             } catch (jakarta.servlet.ServletException var6) {
-               throw new ServletException(var6);
+               throw new javax.servlet.ServletException(var6);
             }
          }
 
@@ -153,14 +172,12 @@ public class ServletConverter {
       };
    }
 
-   public static jakarta.servlet.Filter convert(final Filter filter) {
+   public static jakarta.servlet.Filter convert(final javax.servlet.Filter filter) {
       return new jakarta.servlet.Filter() {
          public void doFilter(jakarta.servlet.ServletRequest req, jakarta.servlet.ServletResponse res, jakarta.servlet.FilterChain chain) throws IOException, jakarta.servlet.ServletException {
             try {
                filter.doFilter(ServletReqResConverter.convert(req), ServletReqResConverter.convert(res), ServletConverter.convert(chain));
-            } catch (IOException var5) {
-               throw var5;
-            } catch (ServletException var6) {
+            } catch (javax.servlet.ServletException var6) {
                throw new jakarta.servlet.ServletException(var6);
             }
          }
@@ -172,20 +189,20 @@ public class ServletConverter {
          public void init(jakarta.servlet.FilterConfig filterConfig) throws jakarta.servlet.ServletException {
             try {
                filter.init(ServletConverter.convert(filterConfig));
-            } catch (ServletException var3) {
-               throw new jakarta.servlet.ServletException(var3);
+            } catch (javax.servlet.ServletException e) {
+               throw new jakarta.servlet.ServletException(e);
             }
          }
       };
    }
 
-   public static FilterConfig convert(final jakarta.servlet.FilterConfig filterConfig) {
-      return new FilterConfig() {
+   public static javax.servlet.FilterConfig convert(final jakarta.servlet.FilterConfig filterConfig) {
+      return new javax.servlet.FilterConfig() {
          public String getFilterName() {
             return filterConfig.getFilterName();
          }
 
-         public ServletContext getServletContext() {
+         public javax.servlet.ServletContext getServletContext() {
             return new adapter.javax.servlet.ServletContext(filterConfig.getServletContext());
          }
 
@@ -199,7 +216,7 @@ public class ServletConverter {
       };
    }
 
-   public static jakarta.servlet.FilterConfig convert(final FilterConfig filterConfig) {
+   public static jakarta.servlet.FilterConfig convert(final javax.servlet.FilterConfig filterConfig) {
       return new jakarta.servlet.FilterConfig() {
          public String getFilterName() {
             return filterConfig.getFilterName();
@@ -219,35 +236,27 @@ public class ServletConverter {
       };
    }
 
-   public static jakarta.servlet.FilterChain convert(final FilterChain filterChain) {
-      return new jakarta.servlet.FilterChain() {
-         public void doFilter(jakarta.servlet.ServletRequest req, jakarta.servlet.ServletResponse res) throws IOException, jakarta.servlet.ServletException {
-            try {
-               filterChain.doFilter(ServletReqResConverter.convert(req), ServletReqResConverter.convert(res));
-            } catch (IOException var4) {
-               throw var4;
-            } catch (ServletException var5) {
-               throw new jakarta.servlet.ServletException(var5);
-            }
+   public static jakarta.servlet.FilterChain convert(final javax.servlet.FilterChain filterChain) {
+      return (req, res) -> {
+         try {
+            filterChain.doFilter(ServletReqResConverter.convert(req), ServletReqResConverter.convert(res));
+         } catch (javax.servlet.ServletException e) {
+            throw new jakarta.servlet.ServletException(e);
          }
       };
    }
 
-   public static FilterChain convert(final jakarta.servlet.FilterChain filterChain) {
-      return new FilterChain() {
-         public void doFilter(ServletRequest req, ServletResponse res) throws IOException, ServletException {
-            try {
-               filterChain.doFilter(ServletReqResConverter.convert(req), ServletReqResConverter.convert(res));
-            } catch (IOException var4) {
-               throw var4;
-            } catch (jakarta.servlet.ServletException var5) {
-               throw new ServletException(var5);
-            }
+   public static javax.servlet.FilterChain convert(final jakarta.servlet.FilterChain filterChain) {
+      return (req, res) -> {
+         try {
+            filterChain.doFilter(ServletReqResConverter.convert(req), ServletReqResConverter.convert(res));
+         } catch (jakarta.servlet.ServletException e) {
+            throw new javax.servlet.ServletException(e);
          }
       };
    }
 
-   public static jakarta.servlet.ServletConfig convert(final ServletConfig config) {
+   public static jakarta.servlet.ServletConfig convert(final javax.servlet.ServletConfig config) {
       return new jakarta.servlet.ServletConfig() {
          public String getServletName() {
             return config.getServletName();
@@ -267,13 +276,13 @@ public class ServletConverter {
       };
    }
 
-   public static ServletConfig convert(final jakarta.servlet.ServletConfig config) {
-      return new ServletConfig() {
+   public static javax.servlet.ServletConfig convert(final jakarta.servlet.ServletConfig config) {
+      return new javax.servlet.ServletConfig() {
          public String getServletName() {
             return config.getServletName();
          }
 
-         public ServletContext getServletContext() {
+         public javax.servlet.ServletContext getServletContext() {
             return new adapter.javax.servlet.ServletContext(config.getServletContext());
          }
 
@@ -287,8 +296,8 @@ public class ServletConverter {
       };
    }
 
-   public static SessionCookieConfig convert(final jakarta.servlet.SessionCookieConfig ori) {
-      return new SessionCookieConfig() {
+   public static javax.servlet.SessionCookieConfig convert(final jakarta.servlet.SessionCookieConfig ori) {
+      return new javax.servlet.SessionCookieConfig() {
          public void setName(String name) {
             ori.setName(name);
          }
@@ -347,7 +356,7 @@ public class ServletConverter {
       };
    }
 
-   public static jakarta.servlet.SessionCookieConfig convert(final SessionCookieConfig ori) {
+   public static jakarta.servlet.SessionCookieConfig convert(final javax.servlet.SessionCookieConfig ori) {
       return new jakarta.servlet.SessionCookieConfig() {
          public void setName(String name) {
             ori.setName(name);
@@ -407,19 +416,19 @@ public class ServletConverter {
       };
    }
 
-   public static MultipartConfigElement convert(jakarta.servlet.MultipartConfigElement ori) {
-      return new MultipartConfigElement(ori.getLocation(), ori.getMaxFileSize(), ori.getMaxRequestSize(), ori.getFileSizeThreshold());
+   public static javax.servlet.MultipartConfigElement convert(jakarta.servlet.MultipartConfigElement ori) {
+      return new javax.servlet.MultipartConfigElement(ori.getLocation(), ori.getMaxFileSize(), ori.getMaxRequestSize(), ori.getFileSizeThreshold());
    }
 
-   public static jakarta.servlet.MultipartConfigElement convert(MultipartConfigElement ori) {
+   public static jakarta.servlet.MultipartConfigElement convert(javax.servlet.MultipartConfigElement ori) {
       return new jakarta.servlet.MultipartConfigElement(ori.getLocation(), ori.getMaxFileSize(), ori.getMaxRequestSize(), ori.getFileSizeThreshold());
    }
 
-   public static ServletSecurityElement convert(final jakarta.servlet.ServletSecurityElement ori) {
-      return new ServletSecurityElement() {
-         public Collection<HttpMethodConstraintElement> getHttpMethodConstraints() {
+   public static javax.servlet.ServletSecurityElement convert(final jakarta.servlet.ServletSecurityElement ori) {
+      return new javax.servlet.ServletSecurityElement() {
+         public Collection<javax.servlet.HttpMethodConstraintElement> getHttpMethodConstraints() {
             Collection<jakarta.servlet.HttpMethodConstraintElement> collectionsOri = ori.getHttpMethodConstraints();
-            ArrayList<HttpMethodConstraintElement> collectionsDest = new ArrayList();
+            ArrayList<javax.servlet.HttpMethodConstraintElement> collectionsDest = new ArrayList<>();
 
             for (jakarta.servlet.HttpMethodConstraintElement item : collectionsOri) {
                collectionsDest.add(ServletConverter.convert(item));
@@ -431,12 +440,12 @@ public class ServletConverter {
             return ori.getMethodNames();
          }
 
-         public ServletSecurity.EmptyRoleSemantic getEmptyRoleSemantic() {
-            return ServletSecurity.EmptyRoleSemantic.valueOf(ori.getEmptyRoleSemantic().name());
+         public javax.servlet.annotation.ServletSecurity.EmptyRoleSemantic getEmptyRoleSemantic() {
+            return javax.servlet.annotation.ServletSecurity.EmptyRoleSemantic.valueOf(ori.getEmptyRoleSemantic().name());
          }
 
-         public ServletSecurity.TransportGuarantee getTransportGuarantee() {
-            return ServletSecurity.TransportGuarantee.valueOf(ori.getTransportGuarantee().name());
+         public javax.servlet.annotation.ServletSecurity.TransportGuarantee getTransportGuarantee() {
+            return javax.servlet.annotation.ServletSecurity.TransportGuarantee.valueOf(ori.getTransportGuarantee().name());
          }
 
          public String[] getRolesAllowed() {
@@ -445,16 +454,13 @@ public class ServletConverter {
       };
    }
 
-   public static jakarta.servlet.ServletSecurityElement convert(final ServletSecurityElement ori) {
+   public static jakarta.servlet.ServletSecurityElement convert(final javax.servlet.ServletSecurityElement ori) {
       return new jakarta.servlet.ServletSecurityElement() {
          public Collection<jakarta.servlet.HttpMethodConstraintElement> getHttpMethodConstraints() {
-            Collection<HttpMethodConstraintElement> collectionsOri = ori.getHttpMethodConstraints();
-            ArrayList<jakarta.servlet.HttpMethodConstraintElement> collectionsDest = new ArrayList();
-            /*collectionsOri.forEach((item) -> {
-               collectionsDest.add(ServletConverter.convert(item));
-            });*/
+            Collection<javax.servlet.HttpMethodConstraintElement> collectionsOri = ori.getHttpMethodConstraints();
+            ArrayList<jakarta.servlet.HttpMethodConstraintElement> collectionsDest = new ArrayList<>();
 
-            for (HttpMethodConstraintElement item : collectionsOri) {
+            for (javax.servlet.HttpMethodConstraintElement item : collectionsOri) {
                collectionsDest.add(ServletConverter.convert(item));
             }
             return collectionsDest;
@@ -465,11 +471,11 @@ public class ServletConverter {
          }
 
          public jakarta.servlet.annotation.ServletSecurity.EmptyRoleSemantic getEmptyRoleSemantic() {
-            return EmptyRoleSemantic.valueOf(ori.getEmptyRoleSemantic().name());
+            return jakarta.servlet.annotation.ServletSecurity.EmptyRoleSemantic.valueOf(ori.getEmptyRoleSemantic().name());
          }
 
          public jakarta.servlet.annotation.ServletSecurity.TransportGuarantee getTransportGuarantee() {
-            return TransportGuarantee.valueOf(ori.getTransportGuarantee().name());
+            return jakarta.servlet.annotation.ServletSecurity.TransportGuarantee.valueOf(ori.getTransportGuarantee().name());
          }
 
          public String[] getRolesAllowed() {
@@ -478,14 +484,14 @@ public class ServletConverter {
       };
    }
 
-   public static HttpMethodConstraintElement convert(final jakarta.servlet.HttpMethodConstraintElement ori) {
-      return new HttpMethodConstraintElement(ori.getMethodName()) {
-         public ServletSecurity.EmptyRoleSemantic getEmptyRoleSemantic() {
-            return ServletSecurity.EmptyRoleSemantic.valueOf(ori.getEmptyRoleSemantic().name());
+   public static javax.servlet.HttpMethodConstraintElement convert(final jakarta.servlet.HttpMethodConstraintElement ori) {
+      return new javax.servlet.HttpMethodConstraintElement(ori.getMethodName()) {
+         public javax.servlet.annotation.ServletSecurity.EmptyRoleSemantic getEmptyRoleSemantic() {
+            return javax.servlet.annotation.ServletSecurity.EmptyRoleSemantic.valueOf(ori.getEmptyRoleSemantic().name());
          }
 
-         public ServletSecurity.TransportGuarantee getTransportGuarantee() {
-            return ServletSecurity.TransportGuarantee.valueOf(ori.getTransportGuarantee().name());
+         public javax.servlet.annotation.ServletSecurity.TransportGuarantee getTransportGuarantee() {
+            return javax.servlet.annotation.ServletSecurity.TransportGuarantee.valueOf(ori.getTransportGuarantee().name());
          }
 
          public String[] getRolesAllowed() {
@@ -498,14 +504,14 @@ public class ServletConverter {
       };
    }
 
-   public static jakarta.servlet.HttpMethodConstraintElement convert(final HttpMethodConstraintElement ori) {
+   public static jakarta.servlet.HttpMethodConstraintElement convert(final javax.servlet.HttpMethodConstraintElement ori) {
       return new jakarta.servlet.HttpMethodConstraintElement(ori.getMethodName()) {
          public jakarta.servlet.annotation.ServletSecurity.EmptyRoleSemantic getEmptyRoleSemantic() {
-            return EmptyRoleSemantic.valueOf(ori.getEmptyRoleSemantic().name());
+            return jakarta.servlet.annotation.ServletSecurity.EmptyRoleSemantic.valueOf(ori.getEmptyRoleSemantic().name());
          }
 
          public jakarta.servlet.annotation.ServletSecurity.TransportGuarantee getTransportGuarantee() {
-            return TransportGuarantee.valueOf(ori.getTransportGuarantee().name());
+            return jakarta.servlet.annotation.ServletSecurity.TransportGuarantee.valueOf(ori.getTransportGuarantee().name());
          }
 
          public String[] getRolesAllowed() {
