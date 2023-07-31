@@ -1,4 +1,4 @@
-# Javax_To_Jakarta_Servlet_Adapter
+# Jakarta_To_Javax_Servlet_Adapter
 Using this adapter module, you can use javax servlet web app in Jakarta servlet WAS.
 This module provides support for using legacy web applications on web application servers (WAS) that implement the jakarta.servlet package. As a result, HttpServletRequest and HttpServletResponse from the javax.servlet package can be used on WAS that supports Servlet 5 or above.
 
