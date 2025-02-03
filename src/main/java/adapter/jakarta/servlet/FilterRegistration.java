@@ -14,6 +14,7 @@ public class FilterRegistration extends Registration implements jakarta.servlet.
       this.filterRegistration = registration;
    }
 
+   @SuppressWarnings("DuplicatedCode")
    @Override
    public void addMappingForServletNames(EnumSet<DispatcherType> dispatcherTypes, boolean isMatchAfter, String... servletNames) {
       EnumSet<javax.servlet.DispatcherType> enumSet = EnumSet.allOf(javax.servlet.DispatcherType.class);
@@ -30,6 +31,7 @@ public class FilterRegistration extends Registration implements jakarta.servlet.
       return this.filterRegistration.getServletNameMappings();
    }
 
+   @SuppressWarnings("DuplicatedCode")
    @Override
    public void addMappingForUrlPatterns(EnumSet<DispatcherType> dispatcherTypes, boolean isMatchAfter, String... urlPatterns) {
       EnumSet<javax.servlet.DispatcherType> enumSet = EnumSet.allOf(javax.servlet.DispatcherType.class);

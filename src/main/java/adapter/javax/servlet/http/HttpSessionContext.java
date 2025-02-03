@@ -3,6 +3,7 @@ package adapter.javax.servlet.http;
 import java.util.Enumeration;
 
 /** @deprecated */
+@SuppressWarnings("ALL")
 public class HttpSessionContext implements javax.servlet.http.HttpSessionContext {
    private final jakarta.servlet.http.HttpSessionContext httpSessionContext;
 

@@ -9,6 +9,7 @@ public class ServletReqResConverter {
    public ServletReqResConverter() {
    }
 
+
    public static ServletResponse convert(javax.servlet.ServletResponse response) {
       return response instanceof HttpServletResponse ? new adapter.jakarta.servlet.http.HttpServletResponse((HttpServletResponse)response) : new adapter.jakarta.servlet.ServletResponse(response);
    }

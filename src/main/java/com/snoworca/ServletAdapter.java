@@ -3,6 +3,7 @@ package com.snoworca;
 import adapter.servletElementConverter.ServletReqResConverter;
 
 
+@SuppressWarnings("unused")
 public class ServletAdapter {
    private ServletAdapter() {
    }
@@ -11,6 +12,8 @@ public class ServletAdapter {
    public static javax.servlet.http.HttpServletResponse adaptToJavax(jakarta.servlet.http.HttpServletResponse response) {
       return new adapter.javax.servlet.http.HttpServletResponse(response);
    }
+
+
 
    public static javax.servlet.http.HttpServletResponse adaptToJavax(javax.servlet.http.HttpServletResponse response) {
       return response;

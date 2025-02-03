@@ -3,6 +3,7 @@ package adapter.servletElementConverter;
 import javax.servlet.SessionTrackingMode;
 
 public class EnumsConverter {
+
    public EnumsConverter() {
    }
 

@@ -14,7 +14,7 @@ import java.util.Locale;
 import java.util.Map;
 
  public class ServletRequest implements jakarta.servlet.ServletRequest {
-    private javax.servlet.ServletRequest request = null;
+    private final javax.servlet.ServletRequest request;
 
     public ServletRequest(javax.servlet.ServletRequest request) {
       this.request = request;
@@ -66,7 +66,7 @@ import java.util.Map;
    }
 
    @Override public Map<String, String[]> getParameterMap() {
-      return this.request.getParameterMap<>();
+      return this.request.getParameterMap();
    }
 
    @Override public String getProtocol() {
@@ -122,7 +122,8 @@ import java.util.Map;
    }
 
    @Override public String getRealPath(String path) {
-      return this.request.getRealPath(path);
+       //noinspection deprecation
+       return this.request.getRealPath(path);
    }
 
    @Override public int getRemotePort() {
@@ -173,7 +174,7 @@ import java.util.Map;
       try {
          return this.request.getContentLengthLong();
       } catch (Exception e) {
-         return (long)this.request.getContentLength();
+         return this.request.getContentLength();
       }
    }
 }

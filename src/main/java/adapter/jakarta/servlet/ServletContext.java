@@ -23,7 +23,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-@SuppressWarnings("deprecation")
+@SuppressWarnings({"deprecation", "DuplicatedCode"})
 public class ServletContext implements jakarta.servlet.ServletContext {
    private final javax.servlet.ServletContext servletContext;
 
@@ -74,6 +74,7 @@ public class ServletContext implements jakarta.servlet.ServletContext {
          throw new ServletException(var3);
       }
    }
+   @SuppressWarnings("DuplicatedCode")
    @Override public Enumeration<Servlet> getServlets() {
       final Enumeration<javax.servlet.Servlet> jakartaServlets = this.servletContext.getServlets();
       return new Enumeration<Servlet>() {
@@ -82,7 +83,7 @@ public class ServletContext implements jakarta.servlet.ServletContext {
          }
 
          @Override public Servlet nextElement() {
-            return ServletConverter.convert((javax.servlet.Servlet)jakartaServlets.nextElement());
+            return ServletConverter.convert(jakartaServlets.nextElement());
          }
       };
    }
@@ -129,9 +130,10 @@ public class ServletContext implements jakarta.servlet.ServletContext {
       return this.servletContext.getServletContextName();
    }
    @Override public jakarta.servlet.ServletRegistration.Dynamic addServlet(String servletName, String className) {
-      Servlet javaXservlet = null;
+      final Servlet javaXservlet;
 
-      try {
+       //noinspection DuplicatedCode
+       try {
          Class<?> servletClass = this.getClassLoader().loadClass(className);
          Constructor<?> constructor = servletClass.getDeclaredConstructor();
          constructor.setAccessible(true);
@@ -147,12 +149,12 @@ public class ServletContext implements jakarta.servlet.ServletContext {
       return (jakarta.servlet.ServletRegistration.Dynamic)ServletConverter.convert((javax.servlet.Registration)this.servletContext.addServlet(servletName, ServletConverter.convert(servlet)));
    }
    @Override public jakarta.servlet.ServletRegistration.Dynamic addServlet(String servletName, Class<? extends Servlet> servletClass) {
-      Servlet javaXservlet = null;
+      final Servlet javaXservlet;
 
       try {
          Constructor<? extends Servlet> constructor = servletClass.getDeclaredConstructor();
          constructor.setAccessible(true);
-         javaXservlet = (Servlet)constructor.newInstance();
+         javaXservlet = constructor.newInstance();
       } catch (Exception var5) {
          throw new RuntimeException(var5);
       }
@@ -160,8 +162,8 @@ public class ServletContext implements jakarta.servlet.ServletContext {
       return this.addServlet(servletName, javaXservlet);
    }
 
-   @Override public <T extends Servlet> T createServlet(Class<T> servletClass) throws ServletException {
-      T javaXservlet = null;
+   @Override public <T extends Servlet> T createServlet(Class<T> servletClass) {
+      final T javaXservlet;
 
       try {
          Constructor<T> constructor = servletClass.getDeclaredConstructor();
@@ -188,7 +190,7 @@ public class ServletContext implements jakarta.servlet.ServletContext {
       return dest;
    }
    @Override public jakarta.servlet.FilterRegistration.Dynamic addFilter(String filterName, String className) {
-      Filter javaXFilter = null;
+      final Filter javaXFilter;
 
       try {
          Class<?> filterClass = this.getClassLoader().loadClass(className);
@@ -213,7 +215,7 @@ public class ServletContext implements jakarta.servlet.ServletContext {
       }
    }
    @Override public <T extends Filter> T createFilter(Class<T> filterClass) throws ServletException {
-      T javaXFilter = null;
+      final T javaXFilter;
       try {
          Constructor<T> constructor = filterClass.getDeclaredConstructor();
          constructor.setAccessible(true);
@@ -303,12 +305,7 @@ public class ServletContext implements jakarta.servlet.ServletContext {
       this.servletContext.declareRoles(roleNames);
    }
    @Override public jakarta.servlet.ServletRegistration.Dynamic addJspFile(String arg0, String arg1) {
-      try {
-         return new ServletRegistrationDynamic(this.servletContext.addJspFile(arg0, arg1));
-      } catch (Exception e) {
-         e.printStackTrace();
-      }
-      return null;
+      return new ServletRegistrationDynamic(this.servletContext.addJspFile(arg0, arg1));
 
    }
    @Override public ServletContext getContext(String arg0) {
@@ -319,38 +316,18 @@ public class ServletContext implements jakarta.servlet.ServletContext {
       return new RequestDispatcher(this.servletContext.getNamedDispatcher(name));
    }
    @Override public String getRequestCharacterEncoding() {
-      try {
-         return this.servletContext.getRequestCharacterEncoding();
-      } catch (Exception e) {
-         e.printStackTrace();
-      }
-      return null;
+      return this.servletContext.getRequestCharacterEncoding();
    }
    @Override public String getResponseCharacterEncoding() {
-      try {
-         return this.servletContext.getResponseCharacterEncoding();
-      } catch (Exception e) {
-         e.printStackTrace();
-      }
-      return null;
+      return this.servletContext.getResponseCharacterEncoding();
    }
 
    @Override public int getSessionTimeout() {
-      try {
-         return this.servletContext.getSessionTimeout();
-      } catch (Exception e) {
-         e.printStackTrace();
-      }
-      return -1;
+      return this.servletContext.getSessionTimeout();
    }
 
    @Override public String getVirtualServerName() {
-      try {
-         return this.servletContext.getVirtualServerName();
-      } catch (Exception e) {
-         e.printStackTrace();
-      }
-      return null;
+      return this.servletContext.getVirtualServerName();
    }
 
    @Override public void setRequestCharacterEncoding(String arg0) {

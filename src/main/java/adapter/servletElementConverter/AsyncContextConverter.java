@@ -32,7 +32,7 @@ public class AsyncContextConverter {
                AsyncListener asyncListener = arg0.newInstance();
                javax.servlet.AsyncListener javaxAsyncListener =  AsyncContextConverter.convert(asyncListener);
                asyncContext.addListener(javaxAsyncListener);
-               return (T) javaxAsyncListener;
+               return arg0.cast(javaxAsyncListener);
             } catch (InstantiationException | IllegalAccessException e) {
                throw new ServletException(e);
             }
@@ -131,8 +131,7 @@ public class AsyncContextConverter {
                javax.servlet.AsyncListener javaxAsyncListener = arg0.newInstance();
                AsyncListener asyncListener =  AsyncContextConverter.convert(javaxAsyncListener);
                asyncContext.addListener(asyncListener);
-               //noinspection CastCanBeRemovedNarrowingVariableType
-               return (T)javaxAsyncListener;
+               return arg0.cast(javaxAsyncListener);
             } catch (InstantiationException | IllegalAccessException e) {
                throw new javax.servlet.ServletException(e);
             }

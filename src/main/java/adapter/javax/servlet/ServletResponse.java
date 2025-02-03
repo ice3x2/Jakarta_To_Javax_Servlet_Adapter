@@ -6,8 +6,9 @@ import java.io.PrintWriter;
 import java.util.Locale;
 import javax.servlet.ServletOutputStream;
 
+@SuppressWarnings("unused")
 public class ServletResponse implements javax.servlet.ServletResponse {
-   jakarta.servlet.ServletResponse response = null;
+   private final jakarta.servlet.ServletResponse response;
 
    public ServletResponse(jakarta.servlet.ServletResponse response) {
       this.response = response;
@@ -71,7 +72,7 @@ public class ServletResponse implements javax.servlet.ServletResponse {
    }
 
    public void reset() {
-      this.response.reSet<>();
+      this.response.reset();
    }
 
    public void setLocale(Locale loc) {

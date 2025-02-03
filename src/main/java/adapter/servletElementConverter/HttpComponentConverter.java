@@ -4,6 +4,7 @@ import javax.servlet.DispatcherType;
 
 public class HttpComponentConverter {
    public HttpComponentConverter() {
+
    }
 
    public static DispatcherType convert(jakarta.servlet.DispatcherType type) {

@@ -3,6 +3,7 @@ package adapter.jakarta.servlet.http;
 import java.util.Enumeration;
 
 /** @deprecated */
+ @SuppressWarnings({"deprecation", "DeprecatedIsStillUsed"})
  public class HttpSessionContext implements jakarta.servlet.http.HttpSessionContext {
    private final javax.servlet.http.HttpSessionContext httpSessionContext;
 

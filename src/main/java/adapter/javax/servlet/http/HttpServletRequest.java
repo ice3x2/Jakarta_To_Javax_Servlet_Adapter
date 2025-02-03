@@ -12,7 +12,6 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
-import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
 import javax.servlet.AsyncContext;
@@ -24,7 +23,7 @@ import javax.servlet.ServletInputStream;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpUpgradeHandler;
 public class HttpServletRequest extends ServletRequest implements javax.servlet.http.HttpServletRequest {
-   private jakarta.servlet.http.HttpServletRequest httpRequest = null;
+   private final jakarta.servlet.http.HttpServletRequest httpRequest;
 
     public HttpServletRequest(jakarta.servlet.http.HttpServletRequest request) {
       super(request);
@@ -127,6 +126,7 @@ public class HttpServletRequest extends ServletRequest implements javax.servlet.
       return new adapter.javax.servlet.RequestDispatcher(this.httpRequest.getRequestDispatcher(path));
    }
 
+   @SuppressWarnings("deprecation")
    @Override public String getRealPath(String path) {
       return this.httpRequest.getRealPath(path);
    }
@@ -282,6 +282,7 @@ public class HttpServletRequest extends ServletRequest implements javax.servlet.
       return this.httpRequest.isRequestedSessionIdFromURL();
    }
 
+   @SuppressWarnings("deprecation")
    @Override public boolean isRequestedSessionIdFromUrl() {
       return this.httpRequest.isRequestedSessionIdFromUrl();
    }
@@ -334,8 +335,14 @@ public class HttpServletRequest extends ServletRequest implements javax.servlet.
    }
 
 
-   @Override public <T extends HttpUpgradeHandler> T upgrade(Class<T> handlerClass) throws IOException, ServletException {
-
-      return null;
+   @Override public <T extends HttpUpgradeHandler> T upgrade(Class<T> handlerClass) throws ServletException {
+      try {
+         adapter.jakarta.servlet.http.HttpUpgradeHandler.setJakartaUpgradeHandlerClass(handlerClass);
+         adapter.jakarta.servlet.http.HttpUpgradeHandler handler = this.httpRequest.upgrade(adapter.jakarta.servlet.http.HttpUpgradeHandler.class);
+         javax.servlet.http.HttpUpgradeHandler  httpUpgradeHandler = new adapter.javax.servlet.http.HttpUpgradeHandler(handler);
+         return handlerClass.cast(httpUpgradeHandler);
+      } catch (Exception e) {
+         throw new javax.servlet.ServletException(e);
+      }
    }
 }

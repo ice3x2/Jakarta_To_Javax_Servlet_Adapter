@@ -6,8 +6,9 @@ import javax.servlet.ServletInputStream;
 import javax.servlet.ServletOutputStream;
 import java.io.IOException;
 
+ @SuppressWarnings("unused")
  public class WebConnection implements javax.servlet.http.WebConnection{
-    private jakarta.servlet.http.WebConnection webConnection;
+    private final jakarta.servlet.http.WebConnection webConnection;
 
      public jakarta.servlet.http.WebConnection getWebConnection() {
         return webConnection;

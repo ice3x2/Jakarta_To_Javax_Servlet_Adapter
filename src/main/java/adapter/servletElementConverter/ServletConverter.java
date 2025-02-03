@@ -11,12 +11,14 @@ import java.util.Enumeration;
 
 
 
+@SuppressWarnings("DuplicatedCode")
 public class ServletConverter {
    public ServletConverter() {
    }
 
    public static javax.servlet.Servlet convert(final jakarta.servlet.Servlet servlet) {
-      return new javax.servlet.Servlet() {
+       //noinspection DuplicatedCode
+       return new javax.servlet.Servlet() {
          public void init(javax.servlet.ServletConfig config) throws javax.servlet.ServletException {
             try {
                servlet.init(ServletConverter.convert(config));
@@ -48,7 +50,8 @@ public class ServletConverter {
    }
 
    public static jakarta.servlet.Servlet convert(final javax.servlet.Servlet servlet) {
-      return new jakarta.servlet.Servlet() {
+       //noinspection DuplicatedCode
+       return new jakarta.servlet.Servlet() {
          public void destroy() {
             servlet.destroy();
          }

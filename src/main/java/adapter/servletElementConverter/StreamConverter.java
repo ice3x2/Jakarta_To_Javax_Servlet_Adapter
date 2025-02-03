@@ -7,6 +7,7 @@ import java.io.IOException;
 import javax.servlet.ServletInputStream;
 
 public class StreamConverter {
+
    public StreamConverter() {
    }
 

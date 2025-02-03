@@ -86,6 +86,7 @@ import java.util.Locale;
       return this.httpResponse.encodeURL(url);
    }
 
+   @SuppressWarnings("deprecation")
    @Override public String encodeRedirectUrl(String url) {
       return this.httpResponse.encodeRedirectUrl(url);
    }
@@ -130,6 +131,7 @@ import java.util.Locale;
       this.httpResponse.setStatus(sc);
    }
 
+   @SuppressWarnings("deprecation")
    @Override public void setStatus(int sc, String sm) {
       this.httpResponse.setStatus(sc, sm);
    }

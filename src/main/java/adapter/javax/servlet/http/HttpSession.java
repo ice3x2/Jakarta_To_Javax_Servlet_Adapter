@@ -34,6 +34,7 @@ import javax.servlet.ServletContext;
       return this.httpSession.getMaxInactiveInterval();
    }
 
+   @SuppressWarnings("deprecation")
    @Override public javax.servlet.http.HttpSessionContext getSessionContext() {
       return new HttpSessionContext(this.httpSession.getSessionContext());
    }
@@ -42,6 +43,7 @@ import javax.servlet.ServletContext;
       return this.httpSession.getAttribute(name);
    }
 
+   @SuppressWarnings("deprecation")
    @Override public Object getValue(String name) {
       return this.httpSession.getValue(name);
    }
@@ -50,6 +52,7 @@ import javax.servlet.ServletContext;
       return this.httpSession.getAttributeNames();
    }
 
+   @SuppressWarnings("deprecation")
    @Override public String[] getValueNames() {
       return this.httpSession.getValueNames();
    }
@@ -58,6 +61,7 @@ import javax.servlet.ServletContext;
       this.httpSession.setAttribute(name, value);
    }
 
+   @SuppressWarnings("deprecation")
    @Override public void putValue(String name, Object value) {
       this.httpSession.putValue(name, value);
    }
@@ -66,6 +70,7 @@ import javax.servlet.ServletContext;
       this.httpSession.removeAttribute(name);
    }
 
+   @SuppressWarnings("deprecation")
    @Override public void removeValue(String name) {
       this.httpSession.removeValue(name);
    }

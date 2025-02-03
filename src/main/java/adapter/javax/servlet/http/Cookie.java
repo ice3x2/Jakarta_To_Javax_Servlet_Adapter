@@ -68,7 +68,7 @@ public class Cookie extends javax.servlet.http.Cookie {
       this.cookie.setVersion(v);
    }
 
-   @SuppressWarnings("MethodDoesntCallSuperMethod")
+
    @Override public Cookie clone() {
       return new Cookie((jakarta.servlet.http.Cookie)this.cookie.clone());
    }

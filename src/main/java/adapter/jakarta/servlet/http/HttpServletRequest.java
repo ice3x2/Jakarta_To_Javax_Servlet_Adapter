@@ -26,12 +26,7 @@ public class HttpServletRequest extends ServletRequest implements jakarta.servle
    }
 
    @Override public String changeSessionId() {
-      try {
          return this.httpRequest.changeSessionId();
-      } catch (Exception e) {
-         e.printStackTrace();
-         return null;
-      }
    }
 
    @Override public String getAuthType() {
@@ -157,11 +152,19 @@ public class HttpServletRequest extends ServletRequest implements jakarta.servle
       }
    }
 
-   @Override public <T extends HttpUpgradeHandler> T upgrade(Class<T> arg0) throws IOException, ServletException {
-      return null;
+   @Override public <T extends HttpUpgradeHandler> T upgrade(Class<T> handlerClass) throws ServletException {
+       try {
+          adapter.javax.servlet.http.HttpUpgradeHandler.setJakartaUpgradeHandlerClass(handlerClass);
+          adapter.javax.servlet.http.HttpUpgradeHandler handler = this.httpRequest.upgrade(adapter.javax.servlet.http.HttpUpgradeHandler.class);
+          jakarta.servlet.http.HttpUpgradeHandler  httpUpgradeHandler = new adapter.jakarta.servlet.http.HttpUpgradeHandler(handler);
+          return handlerClass.cast(httpUpgradeHandler);
+       } catch (Exception e) {
+          throw new ServletException(e);
+       }
    }
 
    @Override public jakarta.servlet.http.Cookie[] getCookies() {
+      @SuppressWarnings("DuplicatedCode")
       javax.servlet.http.Cookie[] cookies = this.httpRequest.getCookies();
       ArrayList<jakarta.servlet.http.Cookie> newArrayList = new ArrayList<>();
       for (javax.servlet.http.Cookie cookie : cookies) {
@@ -180,6 +183,7 @@ public class HttpServletRequest extends ServletRequest implements jakarta.servle
    }
 
    @Override public boolean isRequestedSessionIdFromUrl() {
-      return this.httpRequest.isRequestedSessionIdFromUrl();
+       //noinspection deprecation
+       return this.httpRequest.isRequestedSessionIdFromUrl();
    }
 }

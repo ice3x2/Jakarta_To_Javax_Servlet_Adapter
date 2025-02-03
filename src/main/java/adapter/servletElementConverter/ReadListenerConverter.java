@@ -4,6 +4,7 @@ import java.io.IOException;
 
 public class ReadListenerConverter {
 
+    @SuppressWarnings("DuplicatedCode")
     public static javax.servlet.ReadListener convert(final jakarta.servlet.ReadListener readListener) {
         return new javax.servlet.ReadListener() {
             @Override
@@ -23,6 +24,7 @@ public class ReadListenerConverter {
         };
     }
 
+    @SuppressWarnings("DuplicatedCode")
     public static jakarta.servlet.ReadListener convert(final javax.servlet.ReadListener readListener) {
         return new jakarta.servlet.ReadListener() {
             @Override

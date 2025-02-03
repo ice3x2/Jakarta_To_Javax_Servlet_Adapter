@@ -68,7 +68,6 @@ public class Cookie extends jakarta.servlet.http.Cookie implements Cloneable {
       this.cookie.setVersion(v);
    }
 
-   @SuppressWarnings("MethodDoesntCallSuperMethod")
    @Override public Cookie clone() {
       return new Cookie((javax.servlet.http.Cookie)this.cookie.clone());
    }
