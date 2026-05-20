@@ -1,0 +1,45 @@
+{
+  "run_id": "2026-05-19-jakarta-adapter-v1-0-0-v03",
+  "target": "v1.0.0",
+  "mcp": "ok",
+  "cli": "not-tested",
+  "halted": false,
+  "speckiwi_version": "2.2.2",
+  "active_target_source": "active-target",
+  "target_counts": {
+    "total": 44,
+    "evolving": 40,
+    "draft": 4
+  },
+  "draft_policy": "exclude-draft",
+  "tdd_policy": "relaxed",
+  "draft_reqs_excluded": ["FR-TEST-003", "FR-TEST-005", "OPS-TEST-001", "OPS-REL-001"],
+  "predecessor_plan": {
+    "run_id": "2026-05-19-jakarta-adapter-v1-0-0-v02",
+    "completed_tasks": 20,
+    "residual_queue_count": 53,
+    "state_session_id": "2026-05-19-jakarta-adapter-v1-0-0-v02.coder-0519"
+  },
+  "v03_scope": {
+    "task_count_target": 46,
+    "tasks_dropped_due_to_draft_only": 7,
+    "dropped_task_ids": ["T-PH005-03","T-PH005-04","T-PH005-05","T-PH006-01","T-PH006-02","T-PH007-05","T-PH007-06"],
+    "task_with_mixed_draft_evolving": 3,
+    "mixed_task_ids": ["T-PH005-07","T-PH006-03","T-PH007-07"],
+    "req_count_target": 32,
+    "phases_carried": ["PH-003","PH-004","PH-005","PH-006","PH-007"]
+  },
+  "preflight_checks": {
+    "phase0_validator_v02_warning_acked": true,
+    "external_module_impact": [],
+    "stability_blockers_count": 4,
+    "stability_blockers_excluded": true
+  },
+  "evaluation_topology_meta": {
+    "simplified_5call": "PH-003 잔여 6 페어 (FR-FIX-004~009)",
+    "full_8call": "PH-004 변환 의미론 SPEC-1~16 페어들",
+    "file_op_or_infra": "PH-005/006/007 의 TDD 면제 task"
+  },
+  "l_open_carryover_count": 18,
+  "timestamp": "2026-05-19T15:00:00Z"
+}

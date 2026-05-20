@@ -1,0 +1,51 @@
+{
+  "task_id": "T-PH004-10",
+  "started_at": "2026-05-20T00:00:00.000Z",
+  "completed_at": "2026-05-20T00:00:00.000Z",
+  "phase1": {
+    "tdd_draft_iters": [],
+    "sonnet4_reviews": [],
+    "red_evidence": null,
+    "note": "GREEN task — RED phase handled in T-PH004-09 (4/4 FAILED with missing helper signature). Test file unchanged."
+  },
+  "phase2": {
+    "impl_iters": [
+      {
+        "iter": 1,
+        "files_changed": [
+          "common/src/main/java/adapter/common/ConverterSupport.java"
+        ],
+        "loc_added": 84,
+        "loc_removed": 0,
+        "note": "Added FR-CONV-011 strict-mode helpers: STRICT_MODE_KEY constant, strictMode volatile flag, initStrictModeFromSystemProperty, initStrictModeFromServletContext (system-prop priority preserved), throwIfStrict, shouldBypassStrictFor (getRequestId/getServletConnection/getProtocolRequestId), resetStrictModeForTesting. ServletAdapter integration deferred to SPEC-specific tasks (T-PH004-11+) where each fallback branch invokes throwIfStrict — sidecar.files[] lists adapters as candidates but DoD scope is helper presence + 4 AC green."
+      }
+    ],
+    "formal_reviews": [],
+    "prickly_reviews": [],
+    "green_evidence": {
+      "command": "./gradlew :servlet5:test --tests *shouldEnforceStrictModeWithOptInAndDefaultLenient*",
+      "exit_code": 0,
+      "timestamp": "2026-05-20T00:00:00.000Z"
+    },
+    "green_evidence_meta": {
+      "passed_test_case_ids": [
+        "TC-REQ-FR-CONV-011-AC1-02",
+        "TC-REQ-FR-CONV-011-AC2-02",
+        "TC-REQ-FR-CONV-011-AC3-02",
+        "TC-REQ-FR-CONV-011-AC4-02"
+      ],
+      "tests_run": 4,
+      "tests_passed": 4,
+      "tests_failed": 0,
+      "test_report": "servlet5/build/test-results/test/TEST-com.snoworca.StrictModeTest.xml"
+    },
+    "dod_check": [
+      {"item": "green 단계: 4개 test case 가 모두 통과(green)", "satisfied": true},
+      {"item": "green 단계: 동일 test 가 모두 통과(green) 함을 확인", "satisfied": true}
+    ]
+  },
+  "phase3": {
+    "regression": {"scope": "full", "passed": true, "command": "./gradlew test", "exit_code": 0},
+    "mcp_calls": []
+  }
+}

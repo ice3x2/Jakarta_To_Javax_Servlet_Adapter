@@ -1,0 +1,69 @@
+{
+  "task_id": "T-PH005-01",
+  "phase_id": "PH-005",
+  "started_at": "2026-05-20T00:00:00Z",
+  "completed_at": "2026-05-20T00:00:00Z",
+  "status": "done_partial",
+  "type": "code",
+  "tdd": {
+    "applicable": false,
+    "exempt_reason": "Integration test harness/fixture authoring",
+    "exempted": true
+  },
+  "scope_assessment": {
+    "adapter_classes_total": {
+      "servlet5": 42,
+      "servlet6": 43,
+      "servlet61": 43,
+      "total": 128
+    },
+    "existing_adapter_tests": {
+      "servlet5": 9,
+      "servlet6": 0,
+      "servlet61": 0
+    },
+    "existing_com_snoworca_tests": {
+      "servlet5": 9,
+      "servlet6": 3,
+      "servlet61": 4
+    },
+    "returns_smart_nulls_usage": 0,
+    "legacy_root_src_test_files": [
+      "src/test/java/com/snoworca/ServletContextAdapterTest.java",
+      "src/test/java/com/snoworca/ServletRequestResponseAdapterTest.java"
+    ],
+    "dod_status": {
+      "adapter_class_per_module_unit_test": "DEFERRED — full coverage deferred to post-PH-007 plan per user decision B",
+      "all_delegation_methods_verified": "DEFERRED — equivalent coverage via T-PH005-02 (DelegationContractTest reflection driver) + T-PH005-06 (JaCoCo)",
+      "fallback_policy_default_strict_branches": "DEFERRED — same delegation to T-PH005-02/06",
+      "returns_smart_nulls_mock_creation": "DEFERRED — same delegation",
+      "legacy_root_src_test_files_migrated": "PASS — both legacy files moved to servlet5/src/test/java/com/snoworca/ and verified green"
+    }
+  },
+  "user_decision": {
+    "option_chosen": "B_legacy_move_only",
+    "scope_reduced_to": "Move 2 legacy files from root src/test/java/com/snoworca/ to servlet5 module + verify regression PASS",
+    "deferred_to": "Adapter class unit test authoring deferred to post-PH-007 separate plan; delegation verification covered by T-PH005-02 + T-PH005-06"
+  },
+  "phase2": {
+    "files_changed": [
+      "servlet5/src/test/java/com/snoworca/ServletContextAdapterTest.java",
+      "servlet5/src/test/java/com/snoworca/ServletRequestResponseAdapterTest.java"
+    ],
+    "files_deleted": [
+      "src/test/java/com/snoworca/ServletContextAdapterTest.java",
+      "src/test/java/com/snoworca/ServletRequestResponseAdapterTest.java"
+    ],
+    "green_evidence": {
+      "command": ".\\gradlew.bat :servlet5:test --rerun-tasks",
+      "exit_code": 0,
+      "timestamp": "2026-05-19T22:28:51Z"
+    },
+    "moved_test_results": {
+      "ServletContextAdapterTest": "tests=1, failures=0, errors=0",
+      "ServletRequestResponseAdapterTest": "tests=1, failures=0, errors=0"
+    }
+  },
+  "oq_resolved": ["OQ-003"],
+  "next_resume_hint": null
+}

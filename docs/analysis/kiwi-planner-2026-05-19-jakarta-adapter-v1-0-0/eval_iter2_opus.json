@@ -1,0 +1,90 @@
+{
+  "evaluator": "opus",
+  "round": 2,
+  "iter1_resolved": [
+    {"finding_id": "F-OPUS-001", "task_id": "T-PH001-02", "axis": "A5", "resolution": "req_ids=['NFR-MOD-001'] 적용 + TL-098 trace_link 신설 + coverage.NFR-MOD-001.covered_tasks 에 T-PH001-02 등재 + plan.md L96/sidecar L100 일관. orphan 해소."},
+    {"finding_id": "F-OPUS-002", "task_id": "T-PH003-08", "axis": "A8", "resolution": "files 에 servlet6/jakarta/servlet6/ServletContext.java, servlet6/jakarta/servlet6/ServletRequest.java, servlet61/jakarta/servlet61/ServletContext.java, servlet61/jakarta/servlet61/ServletRequest.java 4개 추가 (총 6개 path). FR-FIX-007 AC-2 (3개 모듈 컴파일) 충족."},
+    {"finding_id": "F-OPUS-003", "task_id": "T-PH003-11", "axis": "A6", "resolution": "acceptance_tests kind=checklist 로 변경 + items 배열에 'BM01~BM10 모두 통과 / FR-FIX-001~009 git log 확인 / servlet6/61 ServletContext 동기화 누락 없음' 체크리스트 3개. 자동화 검증은 verification_cmd 에 ./gradlew :servletN:test --tests *BugMuseum* 로 이전. §9.3 review→checklist 매트릭스 준수."},
+    {"finding_id": "F-OPUS-004", "task_id": "T-PH004-12", "axis": "A6", "resolution": "acceptance_tests kind=checklist 로 변경 + items 배열에 SPEC-1~16 / AdapterUnwrap / strict 모드 / Cookie attribute 4개 체크리스트. verification_cmd 로 ./gradlew test 이전. §9.3 review→checklist 매트릭스 준수."},
+    {"finding_id": "F-OPUS-005", "task_id": "T-PH005-07", "axis": "A6", "resolution": "acceptance_tests kind=checklist 로 변경 + items 배열에 IT01~IT15 통과 / JaCoCo 라인 커버리지 / BM10 회귀 포함 3개 체크리스트. verification_cmd 로 ./gradlew check integrationTest 이전. §9.3 review→checklist 매트릭스 준수."},
+    {"finding_id": "F-OPUS-006", "task_id": "T-PH006-01", "axis": "A6", "resolution": "acceptance_tests 가 kind=file_state (path 검증) + kind=shell (yq matrix 검사) 의 2개 entry 로 변경. §9.3 infra→file_state/shell 매트릭스 준수. checklist 항목은 dod 로 이동."},
+    {"finding_id": "F-OPUS-007", "task_id": "T-PH006-03", "axis": "A6", "resolution": "acceptance_tests 가 kind=file_state + kind=shell 의 2개 entry 로 변경. §9.3 infra→file_state/shell 매트릭스 준수. checklist 항목은 dod 로 이동."},
+    {"finding_id": "F-OPUS-008", "task_id": "T-PH007-05", "axis": "A6", "resolution": "acceptance_tests 가 kind=file_state (release.yml 존재) + kind=shell (env-var grep) 의 2개 entry 로 변경. §9.3 infra→file_state/shell 매트릭스 준수. GitHub Secrets 등록 체크리스트는 dod 로 이동."},
+    {"finding_id": "F-OPUS-009", "task_id": "T-PH007-06", "axis": "A6", "resolution": "acceptance_tests kind=shell ('./gradlew publishAllPublicationsToStagingRepository --dry-run' + stdout_regex 5개 module 매칭) 으로 변경. §9.3 infra→shell 매트릭스 준수. checklist 항목은 dod 로 이동."}
+  ],
+  "findings": [
+    {
+      "finding_id": "F-OPUS-010",
+      "finding_hash": "1e6c3a9f7b4d2e8c5a1f3d7b9e4c6a2d8f5b3c91",
+      "req_id": "_",
+      "task_id": "T-PH006-01",
+      "axis": "A10",
+      "severity": "MEDIUM",
+      "evidence_path": "sidecar.tasks[T-PH006-01].acceptance_tests[0]",
+      "description": "T-PH006-01 의 acceptance_tests[0] 가 file_state kind 의 신규 속성 형식 ('path': '.github/workflows/ci.yml', 'exists': true) 을 사용한다. 본 sidecar 의 다른 file_state acceptance_tests (예: T-PH002-03, T-PH002-04, T-PH007-02, T-PH007-03) 는 모두 {kind: 'file_state', cmd: 'test -f <path>', expected_exit: 0} 패턴으로 일관 사용. 동일 sidecar 내에서 file_state schema 가 두 가지 형태로 존재하면 validator.mjs / downstream coder skill 의 dual-read 가 일관 파싱하지 못할 위험 (plan-contract-v1.1 의 acceptance_tests 결정성 원칙 위반). dod 명제는 검증 가능하나 schema 일관성이 깨진다.",
+      "recommendation": "T-PH006-01 의 acceptance_tests[0] 를 {kind: 'file_state', cmd: 'test -f .github/workflows/ci.yml', expected_exit: 0} 형태로 통일. acceptance_tests[1] 의 stdout_regex 도 expected_stdout_regex 로 변경 (이미 sidecar 다른 곳에서 사용 중인 표준)."
+    },
+    {
+      "finding_id": "F-OPUS-011",
+      "finding_hash": "2f7d4b8e9c5a1d3e7b2f8d4c6a9e5b1c3d7f8a02",
+      "req_id": "_",
+      "task_id": "T-PH006-03",
+      "axis": "A10",
+      "severity": "MEDIUM",
+      "evidence_path": "sidecar.tasks[T-PH006-03].acceptance_tests[0]",
+      "description": "T-PH006-03 의 acceptance_tests[0] 가 file_state kind 의 신규 속성 형식 ('path': 'build.gradle', 'exists': true) 을 사용. 본 task 는 JaCoCo PR 댓글 / Codecov 업로드 검증이라 build.gradle 의 존재 확인만으로는 dod 의 '의도적 게이트 미달 PR 이 빌드 실패' 명제를 자동 검증하지 못함. 그리고 file_state schema 가 F-OPUS-010 과 동일하게 inconsistent.",
+      "recommendation": "acceptance_tests[0] 를 {kind: 'file_state', cmd: 'grep -E \"jacoco\\\\|codecov\" .github/workflows/ci.yml', expected_exit: 0} 형태로 변경 (coverage job 정의 grounding). schema 일관성 회복 + 검증 명제 강화."
+    },
+    {
+      "finding_id": "F-OPUS-012",
+      "finding_hash": "3a8e5c9b6d4f2a7e1b8c4d9f5a2e6b3c7d9f8a13",
+      "req_id": "_",
+      "task_id": "T-PH007-05",
+      "axis": "A10",
+      "severity": "MEDIUM",
+      "evidence_path": "sidecar.tasks[T-PH007-05].acceptance_tests[0]",
+      "description": "T-PH007-05 의 acceptance_tests[0] 가 file_state kind 의 신규 속성 형식 ('path': '.github/workflows/release.yml', 'exists': true) 을 사용 — F-OPUS-010/011 와 동일한 schema inconsistency. 본 task 는 GPG 서명 키 + GitHub Secrets 설정이라 release.yml 단순 존재 확인은 verifiable 명제로 부족.",
+      "recommendation": "acceptance_tests[0] 를 {kind: 'file_state', cmd: 'test -f .github/workflows/release.yml', expected_exit: 0} 로 일관화 + acceptance_tests[1] (env-var grep) 와 결합하여 schema 통일. GitHub Secrets 자체는 외부 의존 (dod 에 명시됨) 으로 분리."
+    }
+  ],
+  "summary": {
+    "critical": 0,
+    "high": 0,
+    "medium": 3,
+    "low": 0
+  },
+  "pass": true,
+  "decision_violations": [],
+  "notes": {
+    "iter1_finding_count": 9,
+    "iter1_resolved_count": 9,
+    "iter2_new_finding_count": 3,
+    "trace_link_total": 98,
+    "active_req_total": 44,
+    "excluded_req_total": 2,
+    "ac_coverage": "All 44 active REQ have full AC coverage (no missing_ac_ids). 2 excluded REQ (NFR-MOD-002, OPS-TEST-002) listed in excluded_reqs with v1.1.0 deferral rationale.",
+    "orphans": "[] (empty) — T-PH001-02 orphan 해소 후 신규 orphan 없음.",
+    "mcp_call_log": "[] (empty) — §5.4 Phase 2/3 종료 시 정상.",
+    "axes_summary": {
+      "A1_golden_rule": "PASS (mcp_call_log 빈 배열, Phase 2/3 종료 시 정상)",
+      "A2_external_module": "PASS (모든 files path 가 cwd 내부)",
+      "A3_req_coverage": "PASS (44 REQ 전수 매핑 + excluded 2)",
+      "A4_ac_coverage": "PASS (missing_ac_ids 전수 0)",
+      "A5_orphan_task": "PASS (T-PH001-02 NFR-MOD-001 등재 완료, orphans 빈 배열)",
+      "A6_type_fit": "PASS (iter=1 7건 모두 해소: review→checklist, infra→shell/file_state)",
+      "A7_depends_on_cycle": "PASS (PH-001 → PH-002 → PH-003/PH-004 → PH-005 → PH-006 → PH-007 + PH-007↔PH-001 비순환)",
+      "A8_files_grounding": "PASS (T-PH003-08 servlet6/61 ServletContext+ServletRequest 4 path 추가 완료)",
+      "A9_non_coding_completeness": "PASS (issue / review / doc / file_op / infra / pr / code 7 type 균형 사용)",
+      "A10_dod_specificity": "PARTIAL (3건 MEDIUM — T-PH006-01/03 + T-PH007-05 의 file_state schema inconsistency; dod 명제 자체는 verifiable)"
+    },
+    "decision_check": {
+      "D1_critical_defects": "PASS (BM01~BM09 + T-PH003-02~10 9건 일괄 수정 + T-PH003-11 통합 회귀)",
+      "D2_separate_modules": "PASS (servlet5/6/61 분리 유지, CON-MOD-001 게이트 T-PH002-08)",
+      "D3_cookie_attribute_no_op_warn": "PASS (T-PH004-08 javax Cookie no-op + WARN once)",
+      "D4_lenient_default_strict_opt_in": "PASS (T-PH004-05 시스템 프로퍼티 + init-param 우선순위 구현)",
+      "D5_artifact_naming_version": "PASS (T-PH002-01 rootProject.name kebab-case + T-PH002-02 version=1.0.0 + T-PH007-01 5개 artifactId 명명)",
+      "D6_pit_phase5": "PASS (OPS-TEST-002 excluded_reqs 명시, v1.1.0 이연)",
+      "D7_tomcat_embed": "PASS (T-PH005-03 3개 모듈 testImplementation Tomcat 10.0.27/10.1.30/11.0.0 + javax-host 9.0.85 + awaitility 4.2.1)"
+    }
+  }
+}

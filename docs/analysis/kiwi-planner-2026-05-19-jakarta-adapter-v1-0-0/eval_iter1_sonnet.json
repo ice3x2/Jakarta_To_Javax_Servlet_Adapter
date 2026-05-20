@@ -1,0 +1,137 @@
+{
+  "evaluator": "sonnet",
+  "round": 1,
+  "findings": [
+    {
+      "finding_id": "F-SONNET-001",
+      "finding_hash": "974f403822eaa584c5e970d241650d42321b9b72",
+      "req_id": "_",
+      "task_id": "_",
+      "axis": "A1",
+      "severity": "CRITICAL",
+      "evidence_path": "docs/plans/2026-05-19-jakarta-adapter-v1-0-0.sidecar.json:1680",
+      "description": "sidecar.mcp_call_log 가 빈 배열([]). 플래너가 MCP 도구를 사용하지 않았거나 로그 기록을 생략했음. golden_rule 위반.",
+      "recommendation": "sidecar.mcp_call_log 에 실제 speckiwi MCP 호출 기록(tool_name, call_id, timestamp 등)을 등재해야 한다. 도구 사용 불가 환경이면 免除 사유를 별도 필드에 명시한다."
+    },
+    {
+      "finding_id": "F-SONNET-002",
+      "finding_hash": "e0e7971c82844b4f3b33e235292363a0c154193e",
+      "req_id": "_",
+      "task_id": "T-PH001-02",
+      "axis": "A5",
+      "severity": "HIGH",
+      "evidence_path": "sidecar.tasks[1].id",
+      "description": "T-PH001-02 (type=review, 'OQ-002 JPMS 유보 명시 확인') 의 req_ids 가 빈 배열. 이 task 는 어떤 active REQ 도 커버하지 않는다. A5(orphan_task) 위반.",
+      "recommendation": "T-PH001-02 는 NFR-MOD-002 (v1.1.0 이연 확인) 를 검토하는 review task 이므로 excluded_reqs 에 있는 NFR-MOD-002 를 참조하는 trace_link 를 추가하거나, plan 의 excluded_reqs 에 대한 review 임을 명시하는 별도 표기(예: excluded_req_ids 필드)를 도입해야 한다. req_ids=[] 인 채로 두면 orphan_task 조건에 해당한다."
+    },
+    {
+      "finding_id": "F-SONNET-003",
+      "finding_hash": "c26aa365f7989b98fe267606432565e410d5adff",
+      "req_id": "_",
+      "task_id": "T-PH003-11",
+      "axis": "A6",
+      "severity": "MEDIUM",
+      "evidence_path": "sidecar.tasks[21].id",
+      "description": "T-PH003-11 (type=review) 의 acceptance_tests[0].kind=shell. §9.3 매트릭스에서 review 허용 kind 는 checklist 뿐. shell 은 review 에 허용되지 않음.",
+      "recommendation": "acceptance_tests 의 kind 를 checklist 로 변경하거나, task.type 을 shell 검증이 적합한 code 로 변경해야 한다."
+    },
+    {
+      "finding_id": "F-SONNET-004",
+      "finding_hash": "795a31d90a31ae89cb15a9574565660f781d92e8",
+      "req_id": "_",
+      "task_id": "T-PH004-12",
+      "axis": "A6",
+      "severity": "MEDIUM",
+      "evidence_path": "sidecar.tasks[32].id",
+      "description": "T-PH004-12 (type=review) 의 acceptance_tests[0].kind=shell. §9.3 매트릭스에서 review 허용 kind 는 checklist 뿐. shell 은 허용되지 않음.",
+      "recommendation": "acceptance_tests 의 kind 를 checklist 로 변경하거나, task.type 을 code 로 변경해야 한다. 통합 회귀 검증은 code 타입이 더 적합하다."
+    },
+    {
+      "finding_id": "F-SONNET-005",
+      "finding_hash": "5991bef975c89ea880c0e305cedb5d998b0c27c1",
+      "req_id": "_",
+      "task_id": "T-PH005-07",
+      "axis": "A6",
+      "severity": "MEDIUM",
+      "evidence_path": "sidecar.tasks[39].id",
+      "description": "T-PH005-07 (type=review) 의 acceptance_tests[0].kind=shell. §9.3 매트릭스에서 review 허용 kind 는 checklist 뿐. shell 은 허용되지 않음.",
+      "recommendation": "acceptance_tests 의 kind 를 checklist 로 변경하거나 task.type 을 code 로 수정해야 한다."
+    },
+    {
+      "finding_id": "F-SONNET-006",
+      "finding_hash": "14a0eac285d41248521c12d55200ea0394b6faff",
+      "req_id": "OPS-TEST-001",
+      "task_id": "T-PH006-01",
+      "axis": "A6",
+      "severity": "MEDIUM",
+      "evidence_path": "sidecar.tasks[40].id",
+      "description": "T-PH006-01 (type=infra) 의 acceptance_tests 중 kind=checklist 항목 존재. §9.3 매트릭스에서 infra 허용 kind 는 shell/file_state/http 뿐. checklist 는 허용되지 않음.",
+      "recommendation": "acceptance_tests 의 checklist kind 를 shell 또는 file_state 로 교체하거나, task.type 을 issue/review 로 변경해야 한다."
+    },
+    {
+      "finding_id": "F-SONNET-007",
+      "finding_hash": "d035f1ce1f536ea106511dec6dc17b0aa3f4c2f6",
+      "req_id": "OPS-TEST-001",
+      "task_id": "T-PH006-03",
+      "axis": "A6",
+      "severity": "MEDIUM",
+      "evidence_path": "sidecar.tasks[42].id",
+      "description": "T-PH006-03 (type=infra) 의 acceptance_tests[0].kind=checklist. §9.3 매트릭스에서 infra 는 checklist 불허.",
+      "recommendation": "acceptance_tests 의 kind 를 shell 또는 file_state 로 교체해야 한다."
+    },
+    {
+      "finding_id": "F-SONNET-008",
+      "finding_hash": "dedc8b69426fe24497ee7a30e421192a11af3a25",
+      "req_id": "OPS-REL-001",
+      "task_id": "T-PH007-05",
+      "axis": "A6",
+      "severity": "MEDIUM",
+      "evidence_path": "sidecar.tasks[46].id",
+      "description": "T-PH007-05 (type=infra) 의 acceptance_tests[0].kind=checklist. §9.3 매트릭스에서 infra 는 checklist 불허.",
+      "recommendation": "checklist 를 shell/file_state 로 교체하거나 task.type 을 issue 로 변경해야 한다."
+    },
+    {
+      "finding_id": "F-SONNET-009",
+      "finding_hash": "37c1a18d4ffda208517302104cc32e2be6512703",
+      "req_id": "OPS-REL-001",
+      "task_id": "T-PH007-06",
+      "axis": "A6",
+      "severity": "MEDIUM",
+      "evidence_path": "sidecar.tasks[47].id",
+      "description": "T-PH007-06 (type=infra) 의 acceptance_tests[0].kind=checklist. §9.3 매트릭스에서 infra 는 checklist 불허.",
+      "recommendation": "checklist 를 shell/file_state 로 교체해야 한다."
+    }
+  ],
+  "summary": {"critical": 1, "high": 1, "medium": 7, "low": 0},
+  "pass": false,
+  "structure_checks": {
+    "frontmatter_complete": true,
+    "heading_level_ok": true,
+    "id_regex_ok": true,
+    "task_count_match": true,
+    "phase_count_match": true,
+    "link_id_unique": true,
+    "verification_cmd_valid": true
+  },
+  "structure_check_notes": {
+    "frontmatter_complete": "run_id/target/plan_version/plan_contract/generated_at/tool_versions/sidecar_path 7개 필드 모두 존재. md_sha256=TBD 는 값이 미확정이지만 필드 자체는 존재하므로 통과.",
+    "heading_level_ok": "plan.md 에 h5(#####) 이하 없음. §3 task 는 모두 h4(####), phase 는 h3(###), section 은 h2(##). 규칙 준수.",
+    "id_regex_ok": "모든 phase_id 가 ^PH-\\d{3}$ 패턴 충족 (PH-001~PH-007). 모든 task_id 가 ^T-PH\\d{3}-\\d{2}$ 패턴 충족. 위반 0건.",
+    "task_count_match": "plan.md §3 의 h4 task 헤딩 52개 == sidecar.tasks.length 52. 일치.",
+    "phase_count_match": "plan.md §2 phase 표 행 7개 == sidecar.phases.length 7. 일치.",
+    "link_id_unique": "sidecar 전체 trace_links 97개 모두 고유 (TL-001~TL-097 중 중복 없음). 빈 link_id 없음.",
+    "verification_cmd_valid": "모든 task 의 verification_cmd 가 null 또는 {posix: 비어있지않음, windows: 비어있지않음} 형식. 위반 0건."
+  },
+  "additional_checks": {
+    "a1_mcp_call_log_empty": true,
+    "a2_external_paths": 0,
+    "a3_req_coverage": "44/44 active REQ 커버됨. 2개(NFR-MOD-002, OPS-TEST-002)는 excluded_reqs 에 등재됨.",
+    "a4_ac_coverage_consistent": "coverage[].ac_covered + missing_ac_ids.length == ac_total 모든 항목 일치.",
+    "a5_orphan_tasks": ["T-PH001-02"],
+    "a6_type_fit_violations": 7,
+    "a7_dag_cycle": false,
+    "a8_files_grounding_note": "신설 파일 경로는 addition_sites 기준으로 확인 필요 — 현 cwd 에 미존재 경로는 신설 예정 파일이므로 구조적 위반으로 보지 않음.",
+    "a9_non_coding_completeness": "CHANGELOG(T-PH007-03), README(T-PH007-02), migration guide(T-PH007-04), decision tracking(T-PH001-01/03) 등 비-코딩 task 적절히 포함됨.",
+    "a10_dod_specificity": "검토한 dod 항목들은 파일명/커맨드/숫자 조건 등 검증 가능한 명제로 작성됨. 명백히 애매한 표현('잘 동작한다' 류) 없음."
+  }
+}

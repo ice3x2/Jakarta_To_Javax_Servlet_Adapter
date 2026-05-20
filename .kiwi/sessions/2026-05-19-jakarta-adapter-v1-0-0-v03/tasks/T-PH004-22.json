@@ -1,0 +1,48 @@
+{
+  "task_id": "T-PH004-22",
+  "phase_id": "PH-004",
+  "title": "NFR-CONV-001 스레드 안전성 + HttpUpgradeHandler ThreadLocal 잠금 (BM10) — TDD green (impl)",
+  "type": "code",
+  "req_ids": ["NFR-CONV-001"],
+  "started_at": "2026-05-20T00:00:00Z",
+  "completed_at": "2026-05-20T00:00:00Z",
+  "coder_run_id": "2026-05-19-jakarta-adapter-v1-0-0-v03",
+  "phase2": {
+    "impl_iters": [
+      {
+        "iter": 1,
+        "files_changed": [
+          "servlet5/src/main/java/adapter/javax/servlet5/FilterRegistration.java",
+          "servlet5/src/main/java/adapter/javax/servlet5/Registration.java",
+          "servlet5/src/main/java/adapter/javax/servlet5/ServletRequest.java"
+        ],
+        "loc_added": 3,
+        "loc_removed": 3,
+        "strategy": "T-PH004-21 RED 에서 AC-1 으로 식별된 3개 non-final 인스턴스 필드 (FilterRegistration.filterRegistration / Registration.registration / ServletRequest.request) 에 final 키워드 추가. 각 클래스의 생성자에서 1회 대입만 존재하므로 final 화 안전. ServletRequest 의 = null 명시 초기화도 제거 (final 필드는 생성자에서만 대입 가능). AC-2 (ConverterSupport ConcurrentMap/AtomicLong) 와 AC-3 (HttpUpgradeHandler ThreadLocal lock-in) 은 RED 단계에서 이미 PASS — 추가 구현 불필요."
+      }
+    ],
+    "green_evidence": {
+      "command": ".\\gradlew.bat :servlet5:test --tests *shouldEnforceFinalFieldsAndConcurrentMapsAndBM10LockIn* --rerun-tasks",
+      "exit_code": 0,
+      "timestamp": "2026-05-20T00:00:00Z"
+    },
+    "green_evidence_meta": {
+      "passed_test_case_ids": [
+        "TC-REQ-NFR-CONV-001-AC1-02",
+        "TC-REQ-NFR-CONV-001-AC2-02",
+        "TC-REQ-NFR-CONV-001-AC3-02"
+      ],
+      "passed_test_count": 3,
+      "failed_test_count": 0,
+      "stdout_excerpt": "BUILD SUCCESSFUL in 3s — 5 actionable tasks: 5 executed"
+    },
+    "dod_check": [
+      {"item": "green 단계: 3개 test case 가 모두 통과(green)", "satisfied": true},
+      {"item": "green 단계: 동일 test 가 모두 통과(green) 함을 확인", "satisfied": true}
+    ]
+  },
+  "phase3": {
+    "regression": {"scope": "servlet5-module", "passed": "all", "failed": 0, "note": "./gradlew :servlet5:test BUILD SUCCESSFUL — 회귀 없음"},
+    "mcp_calls": []
+  }
+}

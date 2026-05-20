@@ -1,0 +1,749 @@
+{
+  "validator_version": "0.6.0",
+  "run_id": "2026-05-19-jakarta-adapter-v1-0-0-v02",
+  "target": "v1.0.0",
+  "plan_path": "C:\\Work\\git\\_Snoworca\\Jakarta_To_Javax_Servlet_Adapter\\docs\\plans\\2026-05-19-jakarta-adapter-v1-0-0-v02.plan.md",
+  "sidecar_path": "C:\\Work\\git\\_Snoworca\\Jakarta_To_Javax_Servlet_Adapter\\docs\\plans\\2026-05-19-jakarta-adapter-v1-0-0-v02.sidecar.json",
+  "mode": "live",
+  "summary": {
+    "errors": 1,
+    "warnings": 0,
+    "checks_total": 25
+  },
+  "results": [
+    {
+      "id": "C01",
+      "title": "sidecar JSON parse",
+      "status": "pass",
+      "severity": null,
+      "detail": null
+    },
+    {
+      "id": "C02",
+      "title": "plan.md frontmatter required fields + parse errors",
+      "status": "pass",
+      "severity": null,
+      "detail": null
+    },
+    {
+      "id": "R01",
+      "title": "id regex (run_id / phase.id / task.id) + max constraints",
+      "status": "pass",
+      "severity": null,
+      "detail": null
+    },
+    {
+      "id": "C03",
+      "title": "id uniqueness: phase + task + trace_link.link_id (link_id required)",
+      "status": "pass",
+      "severity": null,
+      "detail": null
+    },
+    {
+      "id": "C04",
+      "title": "task.phase_id FK + phase.task_ids bidirectional",
+      "status": "pass",
+      "severity": null,
+      "detail": null
+    },
+    {
+      "id": "C05",
+      "title": "task.req_ids ⊆ inventory (non-deprecated)",
+      "status": "pass",
+      "severity": null,
+      "detail": null
+    },
+    {
+      "id": "C06",
+      "title": "plan.md §2 phase rows == sidecar.phases.length",
+      "status": "pass",
+      "severity": null,
+      "detail": null
+    },
+    {
+      "id": "C07",
+      "title": "plan.md §3 task headings (h4) == sidecar.tasks.length",
+      "status": "pass",
+      "severity": null,
+      "detail": null
+    },
+    {
+      "id": "C08",
+      "title": "task md ↔ sidecar canonical signature match",
+      "status": "pass",
+      "severity": null,
+      "detail": null
+    },
+    {
+      "id": "C09",
+      "title": "coverage arithmetic + non-negative integers + req_id unique",
+      "status": "pass",
+      "severity": null,
+      "detail": null
+    },
+    {
+      "id": "C10",
+      "title": "orphans threshold (0=ok, 1-2=warn, ≥3=error)",
+      "status": "pass",
+      "severity": null,
+      "detail": null
+    },
+    {
+      "id": "C11",
+      "title": "unreferenced_reqs (non-deprecated) ≥1 = error",
+      "status": "pass",
+      "severity": null,
+      "detail": null
+    },
+    {
+      "id": "C12",
+      "title": "acceptance_tests.kind ↔ task.type compatibility",
+      "status": "pass",
+      "severity": null,
+      "detail": null
+    },
+    {
+      "id": "C13",
+      "title": "verification_cmd: null OR {posix, windows} both non-empty",
+      "status": "pass",
+      "severity": null,
+      "detail": null
+    },
+    {
+      "id": "C14",
+      "title": "trace_links.target.reference ⊆ task.req_ids (Requirement)",
+      "status": "pass",
+      "severity": null,
+      "detail": null
+    },
+    {
+      "id": "C15",
+      "title": "mcp_call_log multiset (uses args per §9.5 SSOT)",
+      "status": "error",
+      "severity": "error",
+      "detail": {
+        "issues": [
+          {
+            "kind": "add_trace_link_mismatch",
+            "only_in_log": [],
+            "only_in_trace_links": [
+              {
+                "key": "T-PH001-01|Requirement|MIG-REL-001",
+                "count": 1
+              },
+              {
+                "key": "T-PH001-02|Requirement|NFR-MOD-001",
+                "count": 1
+              },
+              {
+                "key": "T-PH001-03|Requirement|OPS-REL-001",
+                "count": 1
+              },
+              {
+                "key": "T-PH002-01|Requirement|FR-MOD-001",
+                "count": 1
+              },
+              {
+                "key": "T-PH002-01|Requirement|IR-REL-001",
+                "count": 1
+              },
+              {
+                "key": "T-PH002-02|Requirement|FR-MOD-001",
+                "count": 1
+              },
+              {
+                "key": "T-PH002-02|Requirement|IR-REL-001",
+                "count": 1
+              },
+              {
+                "key": "T-PH002-03|Requirement|FR-MOD-002",
+                "count": 1
+              },
+              {
+                "key": "T-PH002-03|Requirement|FR-MOD-004",
+                "count": 1
+              },
+              {
+                "key": "T-PH002-04|Requirement|FR-MOD-002",
+                "count": 1
+              },
+              {
+                "key": "T-PH002-04|Requirement|FR-MOD-003",
+                "count": 1
+              },
+              {
+                "key": "T-PH002-04|Requirement|FR-MOD-005",
+                "count": 1
+              },
+              {
+                "key": "T-PH002-04|Requirement|FR-MOD-006",
+                "count": 1
+              },
+              {
+                "key": "T-PH002-05|Requirement|FR-MOD-002",
+                "count": 1
+              },
+              {
+                "key": "T-PH002-05|Requirement|FR-MOD-003",
+                "count": 1
+              },
+              {
+                "key": "T-PH002-05|Requirement|FR-MOD-005",
+                "count": 1
+              },
+              {
+                "key": "T-PH002-05|Requirement|FR-MOD-006",
+                "count": 1
+              },
+              {
+                "key": "T-PH002-06|Requirement|FR-MOD-002",
+                "count": 1
+              },
+              {
+                "key": "T-PH002-06|Requirement|FR-MOD-003",
+                "count": 1
+              },
+              {
+                "key": "T-PH002-06|Requirement|FR-MOD-005",
+                "count": 1
+              },
+              {
+                "key": "T-PH002-06|Requirement|FR-MOD-006",
+                "count": 1
+              },
+              {
+                "key": "T-PH002-07|Requirement|FR-MOD-007",
+                "count": 1
+              },
+              {
+                "key": "T-PH002-08|Requirement|CON-MOD-001",
+                "count": 1
+              },
+              {
+                "key": "T-PH002-09|Requirement|NFR-MOD-001",
+                "count": 1
+              },
+              {
+                "key": "T-PH003-01|Requirement|FR-TEST-004",
+                "count": 1
+              },
+              {
+                "key": "T-PH003-02|Requirement|FR-TEST-004",
+                "count": 1
+              },
+              {
+                "key": "T-PH003-03|Requirement|FR-FIX-001",
+                "count": 1
+              },
+              {
+                "key": "T-PH003-04|Requirement|FR-FIX-001",
+                "count": 1
+              },
+              {
+                "key": "T-PH003-05|Requirement|FR-FIX-002",
+                "count": 1
+              },
+              {
+                "key": "T-PH003-06|Requirement|FR-FIX-002",
+                "count": 1
+              },
+              {
+                "key": "T-PH003-07|Requirement|FR-FIX-003",
+                "count": 1
+              },
+              {
+                "key": "T-PH003-08|Requirement|FR-FIX-003",
+                "count": 1
+              },
+              {
+                "key": "T-PH003-09|Requirement|FR-FIX-004",
+                "count": 1
+              },
+              {
+                "key": "T-PH003-10|Requirement|FR-FIX-004",
+                "count": 1
+              },
+              {
+                "key": "T-PH003-11|Requirement|FR-FIX-005",
+                "count": 1
+              },
+              {
+                "key": "T-PH003-12|Requirement|FR-FIX-005",
+                "count": 1
+              },
+              {
+                "key": "T-PH003-13|Requirement|FR-FIX-006",
+                "count": 1
+              },
+              {
+                "key": "T-PH003-14|Requirement|FR-FIX-006",
+                "count": 1
+              },
+              {
+                "key": "T-PH003-15|Requirement|FR-FIX-007",
+                "count": 1
+              },
+              {
+                "key": "T-PH003-16|Requirement|FR-FIX-007",
+                "count": 1
+              },
+              {
+                "key": "T-PH003-17|Requirement|FR-FIX-008",
+                "count": 1
+              },
+              {
+                "key": "T-PH003-18|Requirement|FR-FIX-008",
+                "count": 1
+              },
+              {
+                "key": "T-PH003-19|Requirement|FR-FIX-009",
+                "count": 1
+              },
+              {
+                "key": "T-PH003-20|Requirement|FR-FIX-009",
+                "count": 1
+              },
+              {
+                "key": "T-PH003-21|Requirement|FR-FIX-001",
+                "count": 1
+              },
+              {
+                "key": "T-PH003-21|Requirement|FR-FIX-002",
+                "count": 1
+              },
+              {
+                "key": "T-PH003-21|Requirement|FR-FIX-003",
+                "count": 1
+              },
+              {
+                "key": "T-PH003-21|Requirement|FR-FIX-004",
+                "count": 1
+              },
+              {
+                "key": "T-PH003-21|Requirement|FR-FIX-005",
+                "count": 1
+              },
+              {
+                "key": "T-PH003-21|Requirement|FR-FIX-006",
+                "count": 1
+              },
+              {
+                "key": "T-PH003-21|Requirement|FR-FIX-007",
+                "count": 1
+              },
+              {
+                "key": "T-PH003-21|Requirement|FR-FIX-008",
+                "count": 1
+              },
+              {
+                "key": "T-PH003-21|Requirement|FR-FIX-009",
+                "count": 1
+              },
+              {
+                "key": "T-PH003-21|Requirement|FR-TEST-004",
+                "count": 1
+              },
+              {
+                "key": "T-PH004-01|Requirement|FR-CONV-003",
+                "count": 1
+              },
+              {
+                "key": "T-PH004-02|Requirement|FR-CONV-003",
+                "count": 1
+              },
+              {
+                "key": "T-PH004-03|Requirement|FR-CONV-003",
+                "count": 1
+              },
+              {
+                "key": "T-PH004-03|Requirement|FR-CONV-004",
+                "count": 1
+              },
+              {
+                "key": "T-PH004-04|Requirement|FR-CONV-003",
+                "count": 1
+              },
+              {
+                "key": "T-PH004-04|Requirement|FR-CONV-004",
+                "count": 1
+              },
+              {
+                "key": "T-PH004-05|Requirement|FR-CONV-005",
+                "count": 1
+              },
+              {
+                "key": "T-PH004-06|Requirement|FR-CONV-005",
+                "count": 1
+              },
+              {
+                "key": "T-PH004-07|Requirement|FR-CONV-006",
+                "count": 1
+              },
+              {
+                "key": "T-PH004-07|Requirement|FR-CONV-007",
+                "count": 1
+              },
+              {
+                "key": "T-PH004-07|Requirement|FR-CONV-008",
+                "count": 1
+              },
+              {
+                "key": "T-PH004-07|Requirement|FR-CONV-009",
+                "count": 1
+              },
+              {
+                "key": "T-PH004-08|Requirement|FR-CONV-006",
+                "count": 1
+              },
+              {
+                "key": "T-PH004-08|Requirement|FR-CONV-007",
+                "count": 1
+              },
+              {
+                "key": "T-PH004-08|Requirement|FR-CONV-008",
+                "count": 1
+              },
+              {
+                "key": "T-PH004-08|Requirement|FR-CONV-009",
+                "count": 1
+              },
+              {
+                "key": "T-PH004-09|Requirement|FR-CONV-011",
+                "count": 1
+              },
+              {
+                "key": "T-PH004-10|Requirement|FR-CONV-011",
+                "count": 1
+              },
+              {
+                "key": "T-PH004-11|Requirement|FR-CONV-012",
+                "count": 1
+              },
+              {
+                "key": "T-PH004-12|Requirement|FR-CONV-012",
+                "count": 1
+              },
+              {
+                "key": "T-PH004-13|Requirement|FR-CONV-010",
+                "count": 1
+              },
+              {
+                "key": "T-PH004-13|Requirement|FR-CONV-014",
+                "count": 1
+              },
+              {
+                "key": "T-PH004-14|Requirement|FR-CONV-010",
+                "count": 1
+              },
+              {
+                "key": "T-PH004-14|Requirement|FR-CONV-014",
+                "count": 1
+              },
+              {
+                "key": "T-PH004-15|Requirement|FR-CONV-013",
+                "count": 1
+              },
+              {
+                "key": "T-PH004-16|Requirement|FR-CONV-013",
+                "count": 1
+              },
+              {
+                "key": "T-PH004-17|Requirement|FR-CONV-001",
+                "count": 1
+              },
+              {
+                "key": "T-PH004-18|Requirement|FR-CONV-001",
+                "count": 1
+              },
+              {
+                "key": "T-PH004-19|Requirement|FR-CONV-001",
+                "count": 1
+              },
+              {
+                "key": "T-PH004-19|Requirement|FR-CONV-014",
+                "count": 1
+              },
+              {
+                "key": "T-PH004-20|Requirement|FR-CONV-001",
+                "count": 1
+              },
+              {
+                "key": "T-PH004-20|Requirement|FR-CONV-014",
+                "count": 1
+              },
+              {
+                "key": "T-PH004-21|Requirement|NFR-CONV-001",
+                "count": 1
+              },
+              {
+                "key": "T-PH004-22|Requirement|NFR-CONV-001",
+                "count": 1
+              },
+              {
+                "key": "T-PH004-23|Requirement|FR-CONV-001",
+                "count": 1
+              },
+              {
+                "key": "T-PH004-23|Requirement|FR-CONV-002",
+                "count": 1
+              },
+              {
+                "key": "T-PH004-23|Requirement|FR-CONV-003",
+                "count": 1
+              },
+              {
+                "key": "T-PH004-23|Requirement|FR-CONV-004",
+                "count": 1
+              },
+              {
+                "key": "T-PH004-23|Requirement|FR-CONV-005",
+                "count": 1
+              },
+              {
+                "key": "T-PH004-23|Requirement|FR-CONV-010",
+                "count": 1
+              },
+              {
+                "key": "T-PH004-23|Requirement|FR-CONV-011",
+                "count": 1
+              },
+              {
+                "key": "T-PH004-23|Requirement|FR-CONV-012",
+                "count": 1
+              },
+              {
+                "key": "T-PH004-23|Requirement|FR-CONV-013",
+                "count": 1
+              },
+              {
+                "key": "T-PH004-23|Requirement|FR-CONV-014",
+                "count": 1
+              },
+              {
+                "key": "T-PH004-23|Requirement|NFR-CONV-001",
+                "count": 1
+              },
+              {
+                "key": "T-PH005-01|Requirement|FR-TEST-001",
+                "count": 1
+              },
+              {
+                "key": "T-PH005-02|Requirement|FR-TEST-002",
+                "count": 1
+              },
+              {
+                "key": "T-PH005-03|Requirement|FR-TEST-003",
+                "count": 1
+              },
+              {
+                "key": "T-PH005-04|Requirement|FR-TEST-003",
+                "count": 1
+              },
+              {
+                "key": "T-PH005-05|Requirement|FR-TEST-005",
+                "count": 1
+              },
+              {
+                "key": "T-PH005-06|Requirement|NFR-TEST-001",
+                "count": 1
+              },
+              {
+                "key": "T-PH005-07|Requirement|FR-TEST-001",
+                "count": 1
+              },
+              {
+                "key": "T-PH005-07|Requirement|FR-TEST-002",
+                "count": 1
+              },
+              {
+                "key": "T-PH005-07|Requirement|FR-TEST-003",
+                "count": 1
+              },
+              {
+                "key": "T-PH005-07|Requirement|FR-TEST-005",
+                "count": 1
+              },
+              {
+                "key": "T-PH005-07|Requirement|NFR-TEST-001",
+                "count": 1
+              },
+              {
+                "key": "T-PH006-01|Requirement|OPS-TEST-001",
+                "count": 1
+              },
+              {
+                "key": "T-PH006-02|Requirement|OPS-TEST-001",
+                "count": 1
+              },
+              {
+                "key": "T-PH006-03|Requirement|NFR-TEST-001",
+                "count": 1
+              },
+              {
+                "key": "T-PH006-03|Requirement|OPS-TEST-001",
+                "count": 1
+              },
+              {
+                "key": "T-PH007-01|Requirement|IR-REL-001",
+                "count": 1
+              },
+              {
+                "key": "T-PH007-01|Requirement|FR-MOD-007",
+                "count": 1
+              },
+              {
+                "key": "T-PH007-02|Requirement|FR-REL-001",
+                "count": 1
+              },
+              {
+                "key": "T-PH007-03|Requirement|FR-REL-001",
+                "count": 1
+              },
+              {
+                "key": "T-PH007-04|Requirement|MIG-REL-001",
+                "count": 1
+              },
+              {
+                "key": "T-PH007-05|Requirement|OPS-REL-001",
+                "count": 1
+              },
+              {
+                "key": "T-PH007-06|Requirement|OPS-REL-001",
+                "count": 1
+              },
+              {
+                "key": "T-PH007-07|Requirement|IR-REL-001",
+                "count": 1
+              },
+              {
+                "key": "T-PH007-07|Requirement|FR-REL-001",
+                "count": 1
+              },
+              {
+                "key": "T-PH007-07|Requirement|MIG-REL-001",
+                "count": 1
+              },
+              {
+                "key": "T-PH007-07|Requirement|OPS-REL-001",
+                "count": 1
+              }
+            ]
+          },
+          {
+            "kind": "add_verification_evidence_mismatch",
+            "only_in_log": [],
+            "only_in_coverage": [
+              "FR-MOD-001",
+              "FR-MOD-002",
+              "FR-MOD-003",
+              "FR-MOD-004",
+              "FR-MOD-005",
+              "FR-MOD-006",
+              "FR-MOD-007",
+              "CON-MOD-001",
+              "NFR-MOD-001",
+              "FR-CONV-001",
+              "FR-CONV-002",
+              "FR-CONV-003",
+              "FR-CONV-004",
+              "FR-CONV-005",
+              "FR-CONV-006",
+              "FR-CONV-007",
+              "FR-CONV-008",
+              "FR-CONV-009",
+              "FR-CONV-010",
+              "FR-CONV-011",
+              "FR-CONV-012",
+              "FR-CONV-013",
+              "NFR-CONV-001",
+              "FR-CONV-014",
+              "FR-FIX-001",
+              "FR-FIX-002",
+              "FR-FIX-003",
+              "FR-FIX-004",
+              "FR-FIX-005",
+              "FR-FIX-006",
+              "FR-FIX-007",
+              "FR-FIX-008",
+              "FR-FIX-009",
+              "FR-TEST-001",
+              "FR-TEST-002",
+              "FR-TEST-003",
+              "FR-TEST-004",
+              "FR-TEST-005",
+              "NFR-TEST-001",
+              "OPS-TEST-001",
+              "IR-REL-001",
+              "FR-REL-001",
+              "MIG-REL-001",
+              "OPS-REL-001"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "C16",
+      "title": "phase.depends_on DAG (no cycles)",
+      "status": "pass",
+      "severity": null,
+      "detail": null
+    },
+    {
+      "id": "C18",
+      "title": "plan_contract enum",
+      "status": "pass",
+      "severity": null,
+      "detail": null
+    },
+    {
+      "id": "C20",
+      "title": "plan.fm.sidecar_path == sidecar input path (canonical)",
+      "status": "pass",
+      "severity": null,
+      "detail": null
+    },
+    {
+      "id": "R04",
+      "title": "test_case.id regex + uniqueness + REQ-prefix matches task.req_ids",
+      "status": "pass",
+      "severity": null,
+      "detail": null
+    },
+    {
+      "id": "C21",
+      "title": "code task tdd field required + phase/test_cases per applicable",
+      "status": "pass",
+      "severity": null,
+      "detail": null
+    },
+    {
+      "id": "C22",
+      "title": "applicable=false reason policy (type-aware) + strict no-exempt",
+      "status": "pass",
+      "severity": null,
+      "detail": null
+    },
+    {
+      "id": "C23",
+      "title": "test_case.req_id ∈ task.req_ids + ac_refs ⊆ inventory(req_id).ac_ids",
+      "status": "pass",
+      "severity": null,
+      "detail": null
+    },
+    {
+      "id": "C24",
+      "title": "depends_on_task DAG + reference integrity (dedup cycles)",
+      "status": "pass",
+      "severity": null,
+      "detail": null
+    },
+    {
+      "id": "C25",
+      "title": "green_evidence present → red_evidence present + red.exit_code ≠ 0",
+      "status": "pass",
+      "severity": null,
+      "detail": null
+    }
+  ]
+}

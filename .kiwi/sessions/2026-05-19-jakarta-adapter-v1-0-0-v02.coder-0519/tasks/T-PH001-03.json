@@ -1,0 +1,36 @@
+{
+  "task_id": "T-PH001-03",
+  "phase_id": "PH-001",
+  "type": "issue",
+  "tdd": {"applicable": false, "reason": "auto-exempt by type (issue)"},
+  "started_at": "2026-05-19T10:41:00Z",
+  "completed_at": "2026-05-19T10:51:02Z",
+  "phase1": {"skipped": "tdd-exempt"},
+  "phase2": {
+    "impl_iters": [{
+      "iter": 1,
+      "files_changed": ["docs/spec/50.compatibility.srs.md"],
+      "external_action": {
+        "type": "github_issue_create",
+        "url": "https://github.com/ice3x2/Jakarta_To_Javax_Servlet_Adapter/issues/3",
+        "title": "[v1.0.0] Maven Central credentials prep — Sonatype + GPG + GitHub Secrets (OQ-003)",
+        "sub_tasks": ["Sonatype 계정 발급", "com.clipsoft namespace 점유 검증 + GPG 키서버 등록", "GitHub Secrets 등록", "PH-007 진입 시 closed 게이트 해제"]
+      },
+      "edits": [
+        "50.compatibility.srs.md OPS-REL-001 본문: '외부 트래킹 이슈: #3 URL' 라인 추가",
+        "50.compatibility.srs.md OPS-REL-001 Change Notes: 2026-05-19 entry (외부 트래킹 이슈 생성)"
+      ]
+    }],
+    "formal_reviews": [{"iter": 1, "spawned": false, "self_validated": true}],
+    "prickly_reviews": [{"iter": 1, "spawned": false, "self_validated": true}],
+    "dod_check": [
+      {"item": "GitHub Issue URL 이 acceptance evidence 로 등재", "satisfied": true, "evidence": "https://github.com/ice3x2/Jakarta_To_Javax_Servlet_Adapter/issues/3 (OPS-REL-001 본문 등재)"},
+      {"item": "Issue 본문에 4개 sub-task 체크박스 포함", "satisfied": true, "evidence": "Issue #3 본문 markdown checklist 4건"},
+      {"item": "PH-007 진입 시 closed 상태 README/CHANGELOG 표기", "satisfied": false, "deferred_to": "T-PH007-02 (README 작성) / T-PH007-03 (CHANGELOG 작성)", "note": "README/CHANGELOG 작성 자체가 PH-007 task. 본 task 는 Issue 본문 acceptance 섹션에 명시으로 갈음."}
+    ]
+  },
+  "phase3": {
+    "regression": {"scope": "skipped", "passed": 0, "failed": 0, "skip_reason": "docs-only changes"},
+    "mcp_calls": [{"tool": "add_completed_work", "ok": true, "summary_excerpt": "OQ-003 Sonatype + GPG + GitHub Secrets 외부 트래킹..."}]
+  }
+}

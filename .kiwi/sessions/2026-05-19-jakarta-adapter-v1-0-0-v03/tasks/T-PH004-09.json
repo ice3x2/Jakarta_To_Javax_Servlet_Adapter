@@ -1,0 +1,35 @@
+{
+  "task_id": "T-PH004-09",
+  "started_at": "2026-05-19T17:00:55.069Z",
+  "completed_at": "2026-05-19T17:00:55.069Z",
+  "phase1": {
+    "tdd_draft_iters": [
+      {
+        "iter": 1,
+        "file_paths": [
+          "servlet5/src/test/java/com/snoworca/StrictModeTest.java"
+        ]
+      }
+    ],
+    "sonnet4_reviews": [],
+    "red_evidence": {
+      "command": "./gradlew :servlet5:test --tests *shouldEnforceStrictModeWithOptInAndDefaultLenient*",
+      "exit_code": 1,
+      "captured_failure": "4 tests completed, 4 failed. StrictModeTest AC-1/AC-2/AC-3/AC-4 all FAILED at StrictModeTest.java:94 (lookupStaticMethod) — adapter.common.ConverterSupport#initStrictModeFromSystemProperty / initStrictModeFromServletContext / throwIfStrict / shouldBypassStrictFor / resetStrictModeForTesting helpers absent.",
+      "timestamp": "2026-05-19T17:00:55.069Z"
+    },
+    "red_evidence_meta": {
+      "test_case_ids": [
+        "TC-REQ-FR-CONV-011-AC1-01",
+        "TC-REQ-FR-CONV-011-AC2-01",
+        "TC-REQ-FR-CONV-011-AC3-01",
+        "TC-REQ-FR-CONV-011-AC4-01"
+      ],
+      "red_count": 4,
+      "signature_match": "missing helper adapter.common.ConverterSupport (strict mode helpers)",
+      "compile_fix": "Added private static helper newServletContextWithInitParam + static nested InitParamServletContextFake extending AbstractFakeServletContext (Mock 사용 없음)."
+    }
+  },
+  "phase2": null,
+  "phase3": null
+}

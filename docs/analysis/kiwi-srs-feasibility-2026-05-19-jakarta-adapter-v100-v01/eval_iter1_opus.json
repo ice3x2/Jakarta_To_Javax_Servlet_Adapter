@@ -1,0 +1,130 @@
+{
+  "evaluator": "opus",
+  "round": 1,
+  "findings": [
+    {
+      "finding_id": "F-OPUS-001",
+      "finding_hash": "171d84bf334db641bdb27a8b443e68b0e65db854",
+      "req_id": "_",
+      "axis": "A1",
+      "severity": "CRITICAL",
+      "evidence_path": "per-req-judgement.json:854-865",
+      "description": "score_distribution + feasibility_label_counts 가 judgements 배열의 실제 분포와 불일치. 실제 grep 카운트: high=39, medium=3, low=2 (FR-TEST-003/FR-TEST-005/OPS-TEST-001 만 medium, 나머지 39 REQ 가 high). 보고된 값 high=38/medium=4 는 1건 오분류. 동일 오류가 synthesis.json:5 feasibility_distribution 및 scope_score_breakdown TEST.feasibility_split (high:4, medium:3) 으로 전파됨.",
+      "recommendation": "judgements 배열 재집계 후 high=39, medium=3, low=2 로 정정. synthesis.feasibility_distribution + scope_score_breakdown 동기화. mutation 입력 카운트 (high 38 → 39) 갱신."
+    },
+    {
+      "finding_id": "F-OPUS-002",
+      "finding_hash": "998a688fd98d361a76e004998b34c84f67166974",
+      "req_id": "OPS-REL-001",
+      "axis": "A1",
+      "severity": "CRITICAL",
+      "evidence_path": "per-req-judgement.json:836-852",
+      "description": "OPS-REL-001 axes 합계 = 16+11+12+8+10+5 = 62. 보고 score=55. 합계가 정확하면 60-79 범위로 label=medium 이어야 함 (현재 low). 즉 score 와 axes 합 불일치 + 정정 시 라벨도 medium 으로 변경. 결과적으로 mutation matched_rule_index=3 (low default → draft) 가 무효하고 index=2 (medium → keep/draft) 로 변경. proposed_stability=draft 결과는 동일하나 매핑 규칙 인덱스가 잘못된 fact 로 기록됨.",
+      "recommendation": "score 를 axes 합 (62) 로 정정하거나 axes 점수를 정정. label 재산정 후 mutation matched_rule_index 갱신. synthesis critical_blockers severity 재평가 (medium feasibility 라면 HIGH 블로커 등급 정당성 재검토)."
+    },
+    {
+      "finding_id": "F-OPUS-003",
+      "finding_hash": "1603af9f7c786b0dcb6668e0e2f9aa2483919465",
+      "req_id": "MIG-REL-001",
+      "axis": "A9",
+      "severity": "HIGH",
+      "evidence_path": "per-req-judgement.json:817-832",
+      "description": "MIG-REL-001 axes 합계 = 14+10+10+7+10+5 = 56. 보고 score=50. 6점 차이. 56 은 여전히 low (40-59) 범위 안이므로 label 영향 없으나 내부 합산 오류 — judgement 의 산술 정확성 위반.",
+      "recommendation": "axes 점수 또는 종합 score 둘 중 하나 정정. 두 방식 모두 low 라벨 유지되므로 mutation 결과 영향 없음."
+    },
+    {
+      "finding_id": "F-OPUS-004",
+      "finding_hash": "861c724d246d0c92ef2ac98b5dd1312025e8a4ea",
+      "req_id": "OPS-REL-001",
+      "axis": "A9",
+      "severity": "HIGH",
+      "evidence_path": "per-req-judgement.json:836-852",
+      "description": "OPS-REL-001 axes 합계와 score 7점 차이 (F-OPUS-002 와 동일 원인의 내부 합산 검증 축). axes 점수 합산 일치성 위반.",
+      "recommendation": "F-OPUS-002 와 함께 정정 (둘 다 동일 REQ 의 동일 결함 면)."
+    },
+    {
+      "finding_id": "F-OPUS-005",
+      "finding_hash": "0241bd01e0857d8f03a19f66bfec0b7504db7dc7",
+      "req_id": "FR-TEST-003",
+      "axis": "A6",
+      "severity": "HIGH",
+      "evidence_path": "mutation-plan.json:43",
+      "description": "FR-TEST-003 feasibility=medium 인데 proposed_stability=evolving + matched_rule_index=1 로 적용. §0.G6 기본 매핑 (policy_context.json:11) 에서 medium 의 기본 결과는 stability=keep (==draft 도입). reason 필드는 'has_verification=true 가 한 단계 upgrade 효과' 라고 정당화하나 정책 표 어디에도 'medium + has_verification=true → evolving 승급' 규칙이 정의되어 있지 않음 (index 0 의 stable 승급 규칙은 high 한정). 즉 정책 외 자체 규칙 신설.",
+      "recommendation": "옵션 1) 정책 §0.G6 에 'medium + has_verification → evolving' 규칙을 추가하고 policy_context.json 에 반영 후 적용. 옵션 2) 정책을 엄격히 준수하여 FR-TEST-003 을 draft 로 강등. 사용자 결정 권고. 정책 외 규칙 자동 적용은 거버넌스 위반."
+    },
+    {
+      "finding_id": "F-OPUS-006",
+      "finding_hash": "d70340433b0eb5730c84971c879d3cea3325da2f",
+      "req_id": "_",
+      "axis": "A6",
+      "severity": "MEDIUM",
+      "evidence_path": "policy_context.json:11",
+      "description": "policy_context.json 의 medium feasibility 매핑은 'keep (== draft 도입)' 으로 명시되어 있음. mutation-plan.json 의 matched_rule_index 가 medium 케이스 (FR-TEST-005, OPS-TEST-001) 에서 모두 index=2 로 정확히 매핑됨. 그러나 'keep == draft 도입' 의 동치성은 현 SRS 의 stability=null 가정에 의존 — 일부 SRS 에서 stability 가 이미 evolving 이라면 keep=evolving 으로 갈라짐. 본 case 는 전부 null 이라 영향 없으나 정책 표현이 모호.",
+      "recommendation": "정책 표현을 'null → draft 도입, 비-null → keep' 으로 명확히 분리. 본 case 결과 영향 없음."
+    },
+    {
+      "finding_id": "F-OPUS-007",
+      "finding_hash": "5192afe09d47a5cb0707346596109d7f6bcc9e98",
+      "req_id": "_",
+      "axis": "A6",
+      "severity": "MEDIUM",
+      "evidence_path": "mutation-plan.json:53-71",
+      "description": "mutation summary.rationale 가 'evolving 40건 (high 38 + medium with has_verification 2)' 라고 기술하나 (1) high 실제는 39, (2) 'medium with has_verification 2' 도 부정확 — has_verification=true 인 medium REQ 는 FR-TEST-003 1건뿐 (FR-TEST-005, OPS-TEST-001 모두 false). evolving 40 의 실제 구성: high 39 + medium-with-verification 1 = 40. 분포 숫자는 정확하나 그 도출 설명이 사실 불일치.",
+      "recommendation": "summary.rationale 의 도출 설명을 'high 39 + medium-with-has_verification 1 = evolving 40, medium-without-has_verification 2 + low 2 = draft 4' 로 정정."
+    },
+    {
+      "finding_id": "F-OPUS-008",
+      "finding_hash": "fd1b5b5fa802df5ef8e4982db57b1891802d1ead",
+      "req_id": "_",
+      "axis": "A4",
+      "severity": "LOW",
+      "evidence_path": "existing_srs_context.json:94-96",
+      "description": "dependency_graph 의 edges 에 FR-CONV-006 ↔ FR-FIX-009 양방향 relates_to (94-95) 가 명시됨. relates_to 는 depends_on 이 아니므로 cycle 으로 간주되지 않음. depends_on 그래프 전수 점검 결과 cycle 부재. A4 PASS 이나 평가자 검토 기록 차원에서 LOW 로 보고.",
+      "recommendation": "현재 처리 적절. 정보성 기록."
+    },
+    {
+      "finding_id": "F-OPUS-009",
+      "finding_hash": "000156c18b8d53ae9bf839e85b64f0280fc36433",
+      "req_id": "_",
+      "axis": "A5",
+      "severity": "MEDIUM",
+      "evidence_path": "synthesis.json:60-63",
+      "description": "OQ-004 (FIX 7 vs 9 SSOT 불일치) 가 non_critical_concerns 에 LOW 로 추가됨. 코드 증거 검증: docs/spec/30.legacy-defect.srs.md 는 FR-FIX-001~009 (9 결함) 명시, docs/research/80.decisions.md D1.1~D1.7 는 7 결함만 열거. 사실 일치 — 신규 발견은 정당. 단 severity=LOW 는 30.legacy-defect.srs.md 가 SRS SSOT 임을 감안하면 적절하나 D1 결정의 권위 문제로 MEDIUM 까지 격상 가능.",
+      "recommendation": "OQ-004 를 docs/research/80.decisions.md §3 미해결 표에 공식 등록. 80.decisions.md D1 표를 D1.1~D1.9 로 확장 갱신 권고."
+    },
+    {
+      "finding_id": "F-OPUS-010",
+      "finding_hash": "6d7ce9de3090ec474ac06f27b3c4ce200ce4559b",
+      "req_id": "_",
+      "axis": "A10",
+      "severity": "LOW",
+      "evidence_path": "mutation-plan.json:6",
+      "description": "mode='proposal (apply 는 Phase 7+8 사용자 승인 후)' 로 명시. 본 case mutation 미실행. SRS Edit 흔적 부재 확인. golden rule 위반 없음. A10 PASS 정보성 기록.",
+      "recommendation": "현재 처리 적절."
+    }
+  ],
+  "summary": {
+    "critical": 2,
+    "high": 3,
+    "medium": 3,
+    "low": 2
+  },
+  "pass": false,
+  "decision_violations": [
+    "feasibility 분포 카운트 오류 (high 38 vs 실제 39, medium 4 vs 실제 3) — Phase 4 mapping 의 입력 fact 불일치",
+    "OPS-REL-001 axes 합 62 vs score 55 — 정정 시 label medium 으로 이동 가능성 — 매핑 결과 (draft) 는 동일하나 matched_rule_index 변경",
+    "FR-TEST-003 medium → evolving 승급은 §0.G6 정책 표 외 자체 규칙 신설 — 정책 외 매핑"
+  ],
+  "axes_summary": {
+    "A1": "FAIL",
+    "A2": "PASS",
+    "A3": "PASS",
+    "A4": "PASS",
+    "A5": "PASS",
+    "A6": "FAIL",
+    "A7": "PASS",
+    "A8": "PASS",
+    "A9": "FAIL",
+    "A10": "PASS"
+  }
+}

@@ -1,0 +1,153 @@
+apply plugin: 'java-test-fixtures'
+// @req NFR-TEST-001 — JaCoCo coverage gate (T-PH005-06)
+apply plugin: 'jacoco'
+// @req FR-MOD-007 — Maven Central publication (T-PH007-01).
+// @req IR-REL-001 — Maven publication infrastructure (T-PH007-01).
+apply plugin: 'maven-publish'
+apply plugin: 'signing'
+
+java {
+    withSourcesJar()
+    withJavadocJar()
+}
+
+// @req FR-MOD-007 — Recognize @req requirement tag, relax doclint, and pin UTF-8 for Maven Central javadoc jar (T-PH007-01).
+tasks.withType(Javadoc).configureEach {
+    options.encoding = 'UTF-8'
+    options.charSet = 'UTF-8'
+    options.docEncoding = 'UTF-8'
+    options.addStringOption('tag', 'req:a:Requirement:')
+    options.addStringOption('Xdoclint:none', '-quiet')
+}
+
+jacoco {
+    toolVersion = jacocoVersion
+}
+
+tasks.withType(Test).configureEach {
+    finalizedBy 'jacocoTestReport'
+}
+
+tasks.named('jacocoTestReport') {
+    dependsOn tasks.named('test')
+    reports {
+        xml.required = true
+        html.required = true
+    }
+}
+
+base {
+    archivesName = "jakarta-to-javax-servlet-adapter-${project.name}"
+}
+
+jar {
+    manifest {
+        attributes 'Automatic-Module-Name': 'com.clipsoft.servlet.adapter.common'
+    }
+}
+
+dependencies {
+    compileOnly "jakarta.servlet:jakarta.servlet-api:${jakartaServletApi5Version}"
+    compileOnly "javax.servlet:javax.servlet-api:${javaxServletApiVersion}"
+    testImplementation "jakarta.servlet:jakarta.servlet-api:${jakartaServletApi5Version}"
+    testImplementation "javax.servlet:javax.servlet-api:${javaxServletApiVersion}"
+
+    // FR-TEST-002 — DelegationContractTest driver in testFixtures uses
+    // JUnit (assertions) + Mockito (mock origin / verify delegation).
+    testFixturesApi "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
+    testFixturesApi "org.mockito:mockito-core:${mockitoVersion}"
+}
+
+// @req NFR-TEST-001 — common module coverage gate (T-PH005-06).
+// v1.0.0 release threshold: line >= 70%, branch >= 60% (relaxed per T-PH005-07 user decision A).
+// v1.0.1 will tighten to line >= 95%, branch >= 100% after adapter unit tests are added.
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            element = 'BUNDLE'
+            limit {
+                counter = 'LINE'
+                value = 'COVEREDRATIO'
+                minimum = 0.70
+            }
+            limit {
+                counter = 'BRANCH'
+                value = 'COVEREDRATIO'
+                minimum = 0.60
+            }
+        }
+    }
+}
+
+// @req NFR-TEST-001 — JaCoCo coverage gate decoupled from `check` (T-PH005-07 user decision B2).
+// v1.0.0: gate is opt-in via `./gradlew jacocoCoverageGate` so that `./gradlew check` PASSes
+// for release while adapter unit tests are deferred to v1.0.1. The underlying
+// jacocoTestCoverageVerification task and its violationRules are preserved for the explicit gate.
+// v1.0.1 plan: add adapter unit tests, then re-wire `check.dependsOn(jacocoTestCoverageVerification)`.
+tasks.register('jacocoCoverageGate') {
+    group = 'verification'
+    description = 'Explicit JaCoCo coverage gate (decoupled from check in v1.0.0).'
+    dependsOn tasks.named('jacocoTestCoverageVerification')
+}
+
+// @req FR-MOD-007 — Maven Central publication for common module (T-PH007-01).
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId = 'jakarta-to-javax-servlet-adapter-common'
+            from components.java
+            pom {
+                name = 'jakarta-to-javax-servlet-adapter-common'
+                description = 'Shared adapter contracts and converter infrastructure for jakarta<->javax servlet adapters.'
+                url = 'https://github.com/Snoworca/Jakarta_To_Javax_Servlet_Adapter'
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'https://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'snoworca'
+                        name = 'Snoworca'
+                        organization = 'Clipsoft'
+                        organizationUrl = 'https://github.com/Snoworca'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git://github.com/Snoworca/Jakarta_To_Javax_Servlet_Adapter.git'
+                    developerConnection = 'scm:git:ssh://github.com:Snoworca/Jakarta_To_Javax_Servlet_Adapter.git'
+                    url = 'https://github.com/Snoworca/Jakarta_To_Javax_Servlet_Adapter'
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            name = 'OSSRH'
+            def releasesUrl = (project.findProperty('ossrhReleasesUrl')
+                    ?: 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/')
+            def snapshotsUrl = (project.findProperty('ossrhSnapshotsUrl')
+                    ?: 'https://s01.oss.sonatype.org/content/repositories/snapshots/')
+            url = version.toString().endsWith('SNAPSHOT') ? snapshotsUrl : releasesUrl
+            credentials {
+                username = (project.findProperty('ossrhUsername') ?: System.getenv('OSSRH_USERNAME')) ?: ''
+                password = (project.findProperty('ossrhPassword') ?: System.getenv('OSSRH_PASSWORD')) ?: ''
+            }
+        }
+    }
+}
+
+// @req FR-MOD-007 — GPG signing for Maven Central (T-PH007-01).
+// Signing required only for remote publish; publishToMavenLocal does not need GPG.
+signing {
+    def signingKey = project.findProperty('signingInMemoryKey') ?: System.getenv('SIGNING_KEY')
+    def signingPassword = project.findProperty('signingInMemoryKeyPassword') ?: System.getenv('SIGNING_PASSWORD')
+    if (signingKey) {
+        useInMemoryPgpKeys(signingKey, signingPassword ?: '')
+    } else if (project.findProperty('signing.gnupg.keyName') != null) {
+        useGpgCmd()
+    }
+    required = { gradle.taskGraph.allTasks.any { it.name.startsWith('publish') && !it.name.endsWith('ToMavenLocal') } }
+    sign publishing.publications.mavenJava
+}

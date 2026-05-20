@@ -1,0 +1,870 @@
+{
+  "run_id": "2026-05-19.jakarta-adapter.v100.v01",
+  "target": "v1.0.0",
+  "total": 44,
+  "scoring_rubric": {
+    "axes": {
+      "implementability": {"max": 30, "scale": "0-30, code grounding + decision clarity + addition_sites readiness"},
+      "evidence_strength": {"max": 20, "scale": "0-20, AC verifiability + Verification Evidence table + trace count"},
+      "dependency_health": {"max": 15, "scale": "0-15, depends_on chain stability + cycle absence"},
+      "ac_verifiability": {"max": 15, "scale": "0-15, AC concrete + automatable + measurable"},
+      "scope_fit": {"max": 10, "scale": "0-10, SRS scope boundary respect"},
+      "product_fit": {"max": 10, "scale": "0-10, alignment with target intent + user priorities"}
+    },
+    "label_mapping": {"high": "score >= 80", "medium": "score 60-79", "low": "score 40-59", "blocked": "score < 40"}
+  },
+  "judgements": [
+    {
+      "req_id": "FR-MOD-001",
+      "feasibility": "high",
+      "score": 92,
+      "axes": {
+        "implementability": {"score": 28, "rationale": "settings.gradle/build.gradle 재구성. 5 모듈 디렉토리 신설은 표준 Gradle 패턴. D2 결정 명확.", "evidence": ["settings.gradle:1-2", "build.gradle:1-36", "docs/research/80.decisions.md D2"]},
+        "evidence_strength": {"score": 18, "rationale": "VE 표 + plan T-PH002-01 trace 존재. AC 4개 모두 측정 가능 (gradle projects/buildAll 출력).", "evidence": []},
+        "dependency_health": {"score": 13, "rationale": "FR-MOD-002, FR-MOD-003 양방향 의존이나 cycle 아닌 분리 사항. 둘 모두 동시 구현.", "evidence": []},
+        "ac_verifiability": {"score": 14, "rationale": "gradle projects/buildAll 출력 검증 — 자동화 가능", "evidence": []},
+        "scope_fit": {"score": 10, "rationale": "MOD scope 핵심 — 100% 적합", "evidence": []},
+        "product_fit": {"score": 9, "rationale": "v1.0.0 핵심 변경 D2 직접 구현", "evidence": []}
+      },
+      "blockers": [],
+      "conditions": [],
+      "has_verification": true,
+      "current_stability": null,
+      "current_status": "planned",
+      "external_module_impact": null
+    },
+    {
+      "req_id": "FR-MOD-002",
+      "feasibility": "high",
+      "score": 90,
+      "axes": {
+        "implementability": {"score": 28, "rationale": "build.gradle compileOnly 의존 명시 — 명확한 매트릭스 표. Maven 좌표 확정.", "evidence": ["docs/spec/10.module-architecture.srs.md §FR-MOD-002 표"]},
+        "evidence_strength": {"score": 18, "rationale": "VE 표 + plan T-PH002-03~06 trace. AC 3개 모두 gradle dependencies 출력 검증 가능", "evidence": []},
+        "dependency_health": {"score": 13, "rationale": "FR-MOD-001 의존만. 양방향 cycle 없음", "evidence": []},
+        "ac_verifiability": {"score": 13, "rationale": "gradle dependencies --configuration compileClasspath 출력 검증 — 자동화", "evidence": []},
+        "scope_fit": {"score": 10, "rationale": "MOD 적합", "evidence": []},
+        "product_fit": {"score": 8, "rationale": "버전 핀 정책 필수", "evidence": []}
+      },
+      "blockers": [],
+      "conditions": [],
+      "has_verification": true,
+      "current_stability": null,
+      "current_status": "planned",
+      "external_module_impact": null
+    },
+    {
+      "req_id": "FR-MOD-003",
+      "feasibility": "high",
+      "score": 86,
+      "axes": {
+        "implementability": {"score": 27, "rationale": "Gradle Java Toolchain 표준 패턴. JDK 8/11/17 분리.", "evidence": ["docs/spec/10.module-architecture.srs.md §FR-MOD-003 표"]},
+        "evidence_strength": {"score": 14, "rationale": "VE 표 부재. AC 4개 모두 측정 가능 (class file major version)", "evidence": []},
+        "dependency_health": {"score": 13, "rationale": "FR-MOD-001 의존만", "evidence": []},
+        "ac_verifiability": {"score": 14, "rationale": "javap -p 또는 hexdump 으로 major version 검증 자동화", "evidence": []},
+        "scope_fit": {"score": 10, "rationale": "MOD 적합", "evidence": []},
+        "product_fit": {"score": 8, "rationale": "6.1 spec Java 17 강제 — 필수", "evidence": []}
+      },
+      "blockers": [],
+      "conditions": [],
+      "has_verification": false,
+      "current_stability": null,
+      "current_status": "planned",
+      "external_module_impact": null
+    },
+    {
+      "req_id": "FR-MOD-004",
+      "feasibility": "high",
+      "score": 87,
+      "axes": {
+        "implementability": {"score": 27, "rationale": "4 ABI-호환 컨버터 식별 명확. common/ 신설 후 git mv. ConverterSupport 신규 작성.", "evidence": ["src/main/java/adapter/servletElementConverter/EnumsConverter.java", "HttpComponentConverter.java", "ReadListenerConverter.java", "WriteListenerConverter.java"]},
+        "evidence_strength": {"score": 15, "rationale": "VE 표 부재. AC 3개 모두 측정 가능 (디렉토리 내용, 참조 검사, 통합 테스트)", "evidence": []},
+        "dependency_health": {"score": 13, "rationale": "FR-MOD-001, FR-MOD-002 의존", "evidence": []},
+        "ac_verifiability": {"score": 14, "rationale": "디렉토리 내용 + import 분석 + 통합 테스트로 검증 가능", "evidence": []},
+        "scope_fit": {"score": 10, "rationale": "MOD 적합", "evidence": []},
+        "product_fit": {"score": 8, "rationale": "ABI 호환 정책 핵심", "evidence": []}
+      },
+      "blockers": [],
+      "conditions": [],
+      "has_verification": false,
+      "current_stability": null,
+      "current_status": "planned",
+      "external_module_impact": null
+    },
+    {
+      "req_id": "FR-MOD-005",
+      "feasibility": "high",
+      "score": 84,
+      "axes": {
+        "implementability": {"score": 26, "rationale": "패키지명 변경은 git mv + sed 로 자동화 가능. 표준 작업.", "evidence": ["docs/spec/10.module-architecture.srs.md §FR-MOD-005 표"]},
+        "evidence_strength": {"score": 14, "rationale": "VE 표 부재. AC 2개는 jar tf 출력으로 검증", "evidence": []},
+        "dependency_health": {"score": 13, "rationale": "FR-MOD-001 의존만", "evidence": []},
+        "ac_verifiability": {"score": 13, "rationale": "jar tf 분석 자동화", "evidence": []},
+        "scope_fit": {"score": 10, "rationale": "MOD 적합", "evidence": []},
+        "product_fit": {"score": 8, "rationale": "FQCN 충돌 회피 필수", "evidence": []}
+      },
+      "blockers": [],
+      "conditions": [],
+      "has_verification": false,
+      "current_stability": null,
+      "current_status": "planned",
+      "external_module_impact": null
+    },
+    {
+      "req_id": "FR-MOD-006",
+      "feasibility": "high",
+      "score": 84,
+      "axes": {
+        "implementability": {"score": 26, "rationale": "ServletAdapter 시그니처 명세 명확. 별칭 클래스 위임은 단순. homogeneous overload 추가도 명확.", "evidence": ["src/main/java/com/snoworca/ServletAdapter.java:1-80"]},
+        "evidence_strength": {"score": 14, "rationale": "VE 표 부재. AC 3개 — 시그니처 비교 + 별칭 위임 검증", "evidence": []},
+        "dependency_health": {"score": 12, "rationale": "FR-MOD-001, FR-MOD-005 의존", "evidence": []},
+        "ac_verifiability": {"score": 13, "rationale": "Reflection + 0.0.1 sources diff", "evidence": []},
+        "scope_fit": {"score": 10, "rationale": "MOD 적합", "evidence": []},
+        "product_fit": {"score": 9, "rationale": "사용자 코드 호환성 핵심", "evidence": []}
+      },
+      "blockers": [],
+      "conditions": [],
+      "has_verification": false,
+      "current_stability": null,
+      "current_status": "planned",
+      "external_module_impact": null
+    },
+    {
+      "req_id": "FR-MOD-007",
+      "feasibility": "high",
+      "score": 82,
+      "axes": {
+        "implementability": {"score": 26, "rationale": "java-platform plugin 표준 사용. constraints 4개 모듈 등록.", "evidence": []},
+        "evidence_strength": {"score": 13, "rationale": "VE 표 부재. AC 2개 — POM 검사", "evidence": []},
+        "dependency_health": {"score": 13, "rationale": "FR-MOD-001 의존만", "evidence": []},
+        "ac_verifiability": {"score": 13, "rationale": "generatePomFileForBomPlatformPublication 출력 분석", "evidence": []},
+        "scope_fit": {"score": 10, "rationale": "MOD 적합", "evidence": []},
+        "product_fit": {"score": 7, "rationale": "BOM 은 편의 기능 — priority medium 도 그대로 반영", "evidence": []}
+      },
+      "blockers": [],
+      "conditions": [],
+      "has_verification": false,
+      "current_stability": null,
+      "current_status": "planned",
+      "external_module_impact": null
+    },
+    {
+      "req_id": "CON-MOD-001",
+      "feasibility": "high",
+      "score": 88,
+      "axes": {
+        "implementability": {"score": 27, "rationale": "build.gradle 작성 시점에 자연 강제. 검증은 gradle dependencies 출력.", "evidence": []},
+        "evidence_strength": {"score": 17, "rationale": "VE 표 + plan T-PH002-08 trace. AC 3개 모두 grep 으로 검증", "evidence": []},
+        "dependency_health": {"score": 13, "rationale": "FR-MOD-001 의존만", "evidence": []},
+        "ac_verifiability": {"score": 14, "rationale": "gradle dependencies 출력 grep 자동화", "evidence": []},
+        "scope_fit": {"score": 10, "rationale": "MOD 적합 (제약사항)", "evidence": []},
+        "product_fit": {"score": 7, "rationale": "안전성 강제", "evidence": []}
+      },
+      "blockers": [],
+      "conditions": [],
+      "has_verification": true,
+      "current_stability": null,
+      "current_status": "planned",
+      "external_module_impact": null
+    },
+    {
+      "req_id": "NFR-MOD-001",
+      "feasibility": "high",
+      "score": 80,
+      "axes": {
+        "implementability": {"score": 26, "rationale": "manifest attributes 한 줄 추가. 4개 모듈 각각 4 다른 이름 표 명확.", "evidence": []},
+        "evidence_strength": {"score": 13, "rationale": "VE 표 부재. AC 2개 — unzip -p MANIFEST.MF 검증", "evidence": []},
+        "dependency_health": {"score": 12, "rationale": "FR-MOD-001 의존", "evidence": []},
+        "ac_verifiability": {"score": 13, "rationale": "MANIFEST.MF 파싱 자동화", "evidence": []},
+        "scope_fit": {"score": 9, "rationale": "MOD 적합 (NFR)", "evidence": []},
+        "product_fit": {"score": 7, "rationale": "JPMS fallback 회피 — 미래 호환", "evidence": []}
+      },
+      "blockers": [],
+      "conditions": [],
+      "has_verification": false,
+      "current_stability": null,
+      "current_status": "planned",
+      "external_module_impact": null
+    },
+    {
+      "req_id": "FR-CONV-001",
+      "feasibility": "high",
+      "score": 84,
+      "axes": {
+        "implementability": {"score": 26, "rationale": "6.0 신규 메서드 3개 + 6.1 신규 메서드 1개 명확. EmptyHttpSessionContext 더미.", "evidence": []},
+        "evidence_strength": {"score": 16, "rationale": "VE 표 + plan T-PH004-09~12 trace. AC 2개 — gradle build + contract test", "evidence": []},
+        "dependency_health": {"score": 12, "rationale": "FR-MOD-001 의존", "evidence": []},
+        "ac_verifiability": {"score": 13, "rationale": "컴파일 + Reflection contract test", "evidence": []},
+        "scope_fit": {"score": 10, "rationale": "CONV 적합", "evidence": []},
+        "product_fit": {"score": 7, "rationale": "spec 준수 필수", "evidence": []}
+      },
+      "blockers": [],
+      "conditions": [],
+      "has_verification": true,
+      "current_stability": null,
+      "current_status": "planned",
+      "external_module_impact": null
+    },
+    {
+      "req_id": "FR-CONV-002",
+      "feasibility": "high",
+      "score": 81,
+      "axes": {
+        "implementability": {"score": 26, "rationale": "위임 원칙은 코드 패턴 — 모든 어댑터에 자연 적용. Contract Test 가 검증 수단.", "evidence": []},
+        "evidence_strength": {"score": 13, "rationale": "VE 표 부재. AC 2개 — verifyNoMoreInteractions", "evidence": []},
+        "dependency_health": {"score": 14, "rationale": "depends_on 없음 — root", "evidence": []},
+        "ac_verifiability": {"score": 14, "rationale": "Mockito verify 자동화", "evidence": []},
+        "scope_fit": {"score": 10, "rationale": "CONV 핵심 원칙", "evidence": []},
+        "product_fit": {"score": 4, "rationale": "원칙 — 직접 구현 작업이라기보다 검증 결과", "evidence": []}
+      },
+      "blockers": [],
+      "conditions": [],
+      "has_verification": false,
+      "current_stability": null,
+      "current_status": "planned",
+      "external_module_impact": null
+    },
+    {
+      "req_id": "FR-CONV-003",
+      "feasibility": "high",
+      "score": 83,
+      "axes": {
+        "implementability": {"score": 26, "rationale": "AdapterUnwrap marker 신규 + 모든 어댑터에 implements 추가. ServletAdapter 사전 체크 로직.", "evidence": ["common/src/main/java/adapter/common/AdapterUnwrap.java (신규)"]},
+        "evidence_strength": {"score": 14, "rationale": "VE 표 부재. AC 4개 — instanceof + == 동일성 검증", "evidence": []},
+        "dependency_health": {"score": 12, "rationale": "FR-MOD-001, FR-MOD-006 의존", "evidence": []},
+        "ac_verifiability": {"score": 14, "rationale": "Unit test == 동일성 검증", "evidence": []},
+        "scope_fit": {"score": 10, "rationale": "CONV 적합", "evidence": []},
+        "product_fit": {"score": 7, "rationale": "이중 wrap 회피 — 성능/일관성", "evidence": []}
+      },
+      "blockers": [],
+      "conditions": [],
+      "has_verification": false,
+      "current_stability": null,
+      "current_status": "planned",
+      "external_module_impact": null
+    },
+    {
+      "req_id": "FR-CONV-004",
+      "feasibility": "high",
+      "score": 81,
+      "axes": {
+        "implementability": {"score": 25, "rationale": "equals/hashCode override 패턴 단순. 모든 어댑터 클래스 분산 적용.", "evidence": []},
+        "evidence_strength": {"score": 13, "rationale": "VE 표 부재. AC 3개 — 대칭성 + 동일성 검증", "evidence": []},
+        "dependency_health": {"score": 13, "rationale": "FR-CONV-003 의존 (AdapterUnwrap 필요)", "evidence": []},
+        "ac_verifiability": {"score": 14, "rationale": "Unit test 자동화", "evidence": []},
+        "scope_fit": {"score": 10, "rationale": "CONV 적합", "evidence": []},
+        "product_fit": {"score": 6, "rationale": "사용자 코드 호환성", "evidence": []}
+      },
+      "blockers": [],
+      "conditions": [],
+      "has_verification": false,
+      "current_stability": null,
+      "current_status": "planned",
+      "external_module_impact": null
+    },
+    {
+      "req_id": "FR-CONV-005",
+      "feasibility": "high",
+      "score": 82,
+      "axes": {
+        "implementability": {"score": 26, "rationale": "ServletException try/catch 양방향 변환. cause chain.", "evidence": []},
+        "evidence_strength": {"score": 14, "rationale": "VE 표 부재. AC 3개 — 양방향 + 표준 예외 propagate", "evidence": []},
+        "dependency_health": {"score": 14, "rationale": "depends_on 없음 — root", "evidence": []},
+        "ac_verifiability": {"score": 14, "rationale": "Unit test assertThrows + getCause()", "evidence": []},
+        "scope_fit": {"score": 10, "rationale": "CONV 적합", "evidence": []},
+        "product_fit": {"score": 4, "rationale": "spec 준수", "evidence": []}
+      },
+      "blockers": [],
+      "conditions": [],
+      "has_verification": false,
+      "current_stability": null,
+      "current_status": "planned",
+      "external_module_impact": null
+    },
+    {
+      "req_id": "FR-CONV-006",
+      "feasibility": "high",
+      "score": 81,
+      "axes": {
+        "implementability": {"score": 26, "rationale": "eager snapshot — for-loop 변환. null 체크 추가.", "evidence": []},
+        "evidence_strength": {"score": 13, "rationale": "VE 표 부재. AC 3개 — null/mutation/== 검증", "evidence": []},
+        "dependency_health": {"score": 14, "rationale": "depends_on 없음. FR-FIX-009 와 relates_to (양방향)", "evidence": []},
+        "ac_verifiability": {"score": 14, "rationale": "Unit test 자동화", "evidence": []},
+        "scope_fit": {"score": 10, "rationale": "CONV 적합", "evidence": []},
+        "product_fit": {"score": 4, "rationale": "NPE 방어 + spec", "evidence": []}
+      },
+      "blockers": [],
+      "conditions": [],
+      "has_verification": false,
+      "current_stability": null,
+      "current_status": "planned",
+      "external_module_impact": null
+    },
+    {
+      "req_id": "FR-CONV-007",
+      "feasibility": "high",
+      "score": 87,
+      "axes": {
+        "implementability": {"score": 28, "rationale": "StreamConverter 수정 위치 명확 (L41, L93). FR-FIX-001 와 동일 anchor 공유.", "evidence": ["src/main/java/adapter/servletElementConverter/StreamConverter.java:40-42", "src/main/java/adapter/servletElementConverter/StreamConverter.java:92-94"]},
+        "evidence_strength": {"score": 15, "rationale": "VE 표 부재. AC 9개 — 가장 상세한 검증 매트릭스", "evidence": []},
+        "dependency_health": {"score": 14, "rationale": "depends_on 없음", "evidence": []},
+        "ac_verifiability": {"score": 15, "rationale": "Mockito verify 9 케이스 — 100% 자동화", "evidence": []},
+        "scope_fit": {"score": 10, "rationale": "CONV 적합", "evidence": []},
+        "product_fit": {"score": 5, "rationale": "Stream 정확성 핵심 — D1.1 우선 결함", "evidence": []}
+      },
+      "blockers": [],
+      "conditions": [],
+      "has_verification": false,
+      "current_stability": null,
+      "current_status": "planned",
+      "external_module_impact": null
+    },
+    {
+      "req_id": "FR-CONV-008",
+      "feasibility": "high",
+      "score": 84,
+      "axes": {
+        "implementability": {"score": 27, "rationale": "FR-FIX-003 와 동일 anchor. setContentLengthLong 직접 위임으로 수정.", "evidence": ["src/main/java/adapter/jakarta/servlet/ServletResponse.java:81-83"]},
+        "evidence_strength": {"score": 14, "rationale": "VE 표 부재. AC 2개 — Long.MAX_VALUE 검증", "evidence": []},
+        "dependency_health": {"score": 14, "rationale": "depends_on 없음", "evidence": []},
+        "ac_verifiability": {"score": 14, "rationale": "Mockito verify 자동화", "evidence": []},
+        "scope_fit": {"score": 10, "rationale": "CONV 적합", "evidence": []},
+        "product_fit": {"score": 5, "rationale": "long 정밀도 — D1.3 우선 결함", "evidence": []}
+      },
+      "blockers": [],
+      "conditions": [],
+      "has_verification": false,
+      "current_stability": null,
+      "current_status": "planned",
+      "external_module_impact": null
+    },
+    {
+      "req_id": "FR-CONV-009",
+      "feasibility": "high",
+      "score": 81,
+      "axes": {
+        "implementability": {"score": 26, "rationale": "void 부수효과 메서드 1:1 위임. 모든 어댑터 분산. 단순 패턴.", "evidence": []},
+        "evidence_strength": {"score": 13, "rationale": "VE 표 부재. AC 7개 — 각 메서드별 invocation order", "evidence": []},
+        "dependency_health": {"score": 14, "rationale": "depends_on 없음", "evidence": []},
+        "ac_verifiability": {"score": 14, "rationale": "Mockito verify + invocation order 자동화", "evidence": []},
+        "scope_fit": {"score": 10, "rationale": "CONV 적합", "evidence": []},
+        "product_fit": {"score": 4, "rationale": "spec 준수", "evidence": []}
+      },
+      "blockers": [],
+      "conditions": [],
+      "has_verification": false,
+      "current_stability": null,
+      "current_status": "planned",
+      "external_module_impact": null
+    },
+    {
+      "req_id": "FR-CONV-010",
+      "feasibility": "high",
+      "score": 81,
+      "axes": {
+        "implementability": {"score": 25, "rationale": "약 30개 비대칭 메서드 폴백 매트릭스. §6.2.2 표 SSOT. 모듈별 분기. 복잡하나 결정 명확.", "evidence": []},
+        "evidence_strength": {"score": 14, "rationale": "VE 표 부재. AC 3개 — 매트릭스 단위 테스트", "evidence": []},
+        "dependency_health": {"score": 12, "rationale": "FR-CONV-011, FR-CONV-012 의존", "evidence": []},
+        "ac_verifiability": {"score": 14, "rationale": "Unit test per 폴백 정책 코드 자동화", "evidence": []},
+        "scope_fit": {"score": 10, "rationale": "CONV 핵심", "evidence": []},
+        "product_fit": {"score": 6, "rationale": "lenient default + strict opt-in — D3/D4", "evidence": []}
+      },
+      "blockers": [],
+      "conditions": [],
+      "has_verification": false,
+      "current_stability": null,
+      "current_status": "planned",
+      "external_module_impact": null
+    },
+    {
+      "req_id": "FR-CONV-011",
+      "feasibility": "high",
+      "score": 83,
+      "axes": {
+        "implementability": {"score": 26, "rationale": "시스템 프로퍼티 + init-param 토글. 우선순위 명확. F (필수 합성) 예외 명시.", "evidence": []},
+        "evidence_strength": {"score": 14, "rationale": "VE 표 부재. AC 4개 — strict on/off + 우선순위", "evidence": []},
+        "dependency_health": {"score": 14, "rationale": "depends_on 없음 — root", "evidence": []},
+        "ac_verifiability": {"score": 14, "rationale": "Unit test 시스템 프로퍼티 토글", "evidence": []},
+        "scope_fit": {"score": 10, "rationale": "CONV 적합", "evidence": []},
+        "product_fit": {"score": 5, "rationale": "D4 결정 — opt-in", "evidence": []}
+      },
+      "blockers": [],
+      "conditions": [],
+      "has_verification": false,
+      "current_stability": null,
+      "current_status": "planned",
+      "external_module_impact": null
+    },
+    {
+      "req_id": "FR-CONV-012",
+      "feasibility": "high",
+      "score": 80,
+      "axes": {
+        "implementability": {"score": 26, "rationale": "java.util.logging + ConcurrentHashMap dedup + AtomicLong Map. 표준 패턴.", "evidence": []},
+        "evidence_strength": {"score": 13, "rationale": "VE 표 부재. AC 3개 — dedup + diagnostics", "evidence": []},
+        "dependency_health": {"score": 14, "rationale": "depends_on 없음", "evidence": []},
+        "ac_verifiability": {"score": 14, "rationale": "Unit test 자동화", "evidence": []},
+        "scope_fit": {"score": 10, "rationale": "CONV 적합", "evidence": []},
+        "product_fit": {"score": 3, "rationale": "observability — priority medium", "evidence": []}
+      },
+      "blockers": [],
+      "conditions": [],
+      "has_verification": false,
+      "current_stability": null,
+      "current_status": "planned",
+      "external_module_impact": null
+    },
+    {
+      "req_id": "FR-CONV-013",
+      "feasibility": "high",
+      "score": 81,
+      "axes": {
+        "implementability": {"score": 26, "rationale": "Cookie setAttribute/getAttribute/getAttributes no-op + WARN. 자체 Map 보관 금지 명확.", "evidence": ["src/main/java/adapter/javax/servlet/http/Cookie.java (생성 필요)"]},
+        "evidence_strength": {"score": 13, "rationale": "VE 표 부재. AC 4개 — verify no Map + 통합 테스트 IT04", "evidence": []},
+        "dependency_health": {"score": 12, "rationale": "FR-CONV-010, FR-CONV-012 의존", "evidence": []},
+        "ac_verifiability": {"score": 14, "rationale": "Unit + IT04 통합 테스트", "evidence": []},
+        "scope_fit": {"score": 10, "rationale": "CONV 적합", "evidence": []},
+        "product_fit": {"score": 6, "rationale": "D3 결정 — SameSite 손실 명시", "evidence": []}
+      },
+      "blockers": [],
+      "conditions": [],
+      "has_verification": false,
+      "current_stability": null,
+      "current_status": "planned",
+      "external_module_impact": null
+    },
+    {
+      "req_id": "NFR-CONV-001",
+      "feasibility": "high",
+      "score": 80,
+      "axes": {
+        "implementability": {"score": 25, "rationale": "final 필드 + ConcurrentHashMap. HttpUpgradeHandler ThreadLocal 현 동작 잠금 (BM10).", "evidence": ["src/main/java/adapter/jakarta/servlet/http/HttpUpgradeHandler.java"]},
+        "evidence_strength": {"score": 13, "rationale": "VE 표 부재. AC 3개 — final 검사 + BM10 회귀", "evidence": []},
+        "dependency_health": {"score": 14, "rationale": "depends_on 없음", "evidence": []},
+        "ac_verifiability": {"score": 13, "rationale": "Reflection 필드 검사 + BM10 테스트", "evidence": []},
+        "scope_fit": {"score": 9, "rationale": "CONV (NFR)", "evidence": []},
+        "product_fit": {"score": 6, "rationale": "동시성 안전 — 운영 신뢰성", "evidence": []}
+      },
+      "blockers": [],
+      "conditions": [],
+      "has_verification": false,
+      "current_stability": null,
+      "current_status": "planned",
+      "external_module_impact": null
+    },
+    {
+      "req_id": "FR-CONV-014",
+      "feasibility": "high",
+      "score": 80,
+      "axes": {
+        "implementability": {"score": 25, "rationale": "모듈별 분기 검증 — 테스트가 SSOT. servlet5 정책 dormant + servlet6/61 active.", "evidence": []},
+        "evidence_strength": {"score": 13, "rationale": "VE 표 부재. AC 3개 — 모듈별 분기 검증", "evidence": []},
+        "dependency_health": {"score": 12, "rationale": "FR-CONV-010, FR-CONV-011 의존", "evidence": []},
+        "ac_verifiability": {"score": 14, "rationale": "Unit test per 모듈", "evidence": []},
+        "scope_fit": {"score": 10, "rationale": "CONV 적합", "evidence": []},
+        "product_fit": {"score": 6, "rationale": "SPEC-14 모듈별 적용", "evidence": []}
+      },
+      "blockers": [],
+      "conditions": [],
+      "has_verification": false,
+      "current_stability": null,
+      "current_status": "planned",
+      "external_module_impact": null
+    },
+    {
+      "req_id": "FR-FIX-001",
+      "feasibility": "high",
+      "score": 92,
+      "axes": {
+        "implementability": {"score": 29, "rationale": "L41, L93 정확한 line 수정. 1-token 변경 (readLine → read). 결함 정확히 식별.", "evidence": ["src/main/java/adapter/servletElementConverter/StreamConverter.java:40-42", "src/main/java/adapter/servletElementConverter/StreamConverter.java:92-94"]},
+        "evidence_strength": {"score": 18, "rationale": "VE 표 + plan T-PH003-02 trace. BM01 회귀 테스트 정의. AC 4개 측정 가능.", "evidence": []},
+        "dependency_health": {"score": 14, "rationale": "depends_on 없음", "evidence": []},
+        "ac_verifiability": {"score": 14, "rationale": "Mockito verify + BM01 자동화", "evidence": []},
+        "scope_fit": {"score": 10, "rationale": "FIX 적합", "evidence": []},
+        "product_fit": {"score": 7, "rationale": "D1.1 Critical 결함 — 우선순위 1", "evidence": []}
+      },
+      "blockers": [],
+      "conditions": [],
+      "has_verification": true,
+      "current_stability": null,
+      "current_status": "planned",
+      "external_module_impact": null
+    },
+    {
+      "req_id": "FR-FIX-002",
+      "feasibility": "high",
+      "score": 90,
+      "axes": {
+        "implementability": {"score": 29, "rationale": "L52 self-recursion → this.part.getSubmittedFileName() 위임. 1-token 변경. javax 대칭 검토.", "evidence": ["src/main/java/adapter/jakarta/servlet/http/Part.java:50-52"]},
+        "evidence_strength": {"score": 16, "rationale": "VE 표 부재. plan T-PH003-03 trace. BM02 + IT08 정의. AC 4개", "evidence": []},
+        "dependency_health": {"score": 14, "rationale": "depends_on 없음", "evidence": []},
+        "ac_verifiability": {"score": 14, "rationale": "StackOverflowError 없음 + Mockito verify + IT08", "evidence": []},
+        "scope_fit": {"score": 10, "rationale": "FIX 적합", "evidence": []},
+        "product_fit": {"score": 7, "rationale": "D1.2 Critical — multipart 업로드 핵심", "evidence": []}
+      },
+      "blockers": [],
+      "conditions": [],
+      "has_verification": false,
+      "current_stability": null,
+      "current_status": "planned",
+      "external_module_impact": null
+    },
+    {
+      "req_id": "FR-FIX-003",
+      "feasibility": "high",
+      "score": 90,
+      "axes": {
+        "implementability": {"score": 29, "rationale": "L82 setContentLength((int)arg0) → setContentLengthLong(arg0). 1-line 변경.", "evidence": ["src/main/java/adapter/jakarta/servlet/ServletResponse.java:81-83"]},
+        "evidence_strength": {"score": 15, "rationale": "VE 표 부재. plan T-PH003-04 trace. BM05 정의. AC 3개", "evidence": []},
+        "dependency_health": {"score": 14, "rationale": "depends_on 없음", "evidence": []},
+        "ac_verifiability": {"score": 14, "rationale": "Long.MAX_VALUE Mockito verify", "evidence": []},
+        "scope_fit": {"score": 10, "rationale": "FIX 적합", "evidence": []},
+        "product_fit": {"score": 8, "rationale": "D1.3 Critical — 2GB 응답 정밀도", "evidence": []}
+      },
+      "blockers": [],
+      "conditions": [],
+      "has_verification": false,
+      "current_stability": null,
+      "current_status": "planned",
+      "external_module_impact": null
+    },
+    {
+      "req_id": "FR-FIX-004",
+      "feasibility": "high",
+      "score": 90,
+      "axes": {
+        "implementability": {"score": 29, "rationale": "L338 setRequestCharacterEncoding → setResponseCharacterEncoding 메서드명 1-token 변경.", "evidence": ["src/main/java/adapter/jakarta/servlet/ServletContext.java:337-339"]},
+        "evidence_strength": {"score": 16, "rationale": "VE 표 부재. plan T-PH003-05 trace. BM03 + IT10 정의. AC 4개", "evidence": []},
+        "dependency_health": {"score": 14, "rationale": "depends_on 없음", "evidence": []},
+        "ac_verifiability": {"score": 14, "rationale": "Mockito verify + IT10", "evidence": []},
+        "scope_fit": {"score": 10, "rationale": "FIX 적합", "evidence": []},
+        "product_fit": {"score": 7, "rationale": "D1.4 Critical — charset 결함", "evidence": []}
+      },
+      "blockers": [],
+      "conditions": [],
+      "has_verification": false,
+      "current_stability": null,
+      "current_status": "planned",
+      "external_module_impact": null
+    },
+    {
+      "req_id": "FR-FIX-005",
+      "feasibility": "high",
+      "score": 89,
+      "axes": {
+        "implementability": {"score": 29, "rationale": "L363 setResponseCharacterEncoding → setRequestCharacterEncoding (D4 의 반대 방향).", "evidence": ["src/main/java/adapter/javax/servlet/ServletContext.java:362-364"]},
+        "evidence_strength": {"score": 15, "rationale": "VE 표 부재. plan T-PH003-06 trace. BM08 정의. AC 3개", "evidence": []},
+        "dependency_health": {"score": 14, "rationale": "depends_on 없음", "evidence": []},
+        "ac_verifiability": {"score": 14, "rationale": "Mockito verify", "evidence": []},
+        "scope_fit": {"score": 10, "rationale": "FIX 적합", "evidence": []},
+        "product_fit": {"score": 7, "rationale": "D1.5 Critical", "evidence": []}
+      },
+      "blockers": [],
+      "conditions": [],
+      "has_verification": false,
+      "current_stability": null,
+      "current_status": "planned",
+      "external_module_impact": null
+    },
+    {
+      "req_id": "FR-FIX-006",
+      "feasibility": "high",
+      "score": 87,
+      "axes": {
+        "implementability": {"score": 28, "rationale": "try/catch 제거 + 단순 위임. L173-180 명확.", "evidence": ["src/main/java/adapter/jakarta/servlet/ServletRequest.java:173-180"]},
+        "evidence_strength": {"score": 14, "rationale": "VE 표 부재. plan T-PH003-07 trace. BM09 정의. AC 2개", "evidence": []},
+        "dependency_health": {"score": 14, "rationale": "depends_on 없음", "evidence": []},
+        "ac_verifiability": {"score": 14, "rationale": "Mockito verify", "evidence": []},
+        "scope_fit": {"score": 10, "rationale": "FIX 적합", "evidence": []},
+        "product_fit": {"score": 7, "rationale": "D1.6 High", "evidence": []}
+      },
+      "blockers": [],
+      "conditions": [],
+      "has_verification": false,
+      "current_stability": null,
+      "current_status": "planned",
+      "external_module_impact": null
+    },
+    {
+      "req_id": "FR-FIX-007",
+      "feasibility": "high",
+      "score": 84,
+      "axes": {
+        "implementability": {"score": 27, "rationale": "@Override 제거 또는 deprecated alias 변환. 옵션 명확. jakarta 5.0 인터페이스 javadoc 확인 선행.", "evidence": ["src/main/java/adapter/jakarta/servlet/ServletRequest.java:124"]},
+        "evidence_strength": {"score": 13, "rationale": "VE 표 부재. plan T-PH003-08 trace. BM06 정의. AC 3개", "evidence": []},
+        "dependency_health": {"score": 14, "rationale": "depends_on 없음", "evidence": []},
+        "ac_verifiability": {"score": 13, "rationale": "컴파일 + IDE 경고 검증", "evidence": []},
+        "scope_fit": {"score": 10, "rationale": "FIX 적합", "evidence": []},
+        "product_fit": {"score": 7, "rationale": "D1.7 High", "evidence": []}
+      },
+      "blockers": [],
+      "conditions": [],
+      "has_verification": false,
+      "current_stability": null,
+      "current_status": "planned",
+      "external_module_impact": null
+    },
+    {
+      "req_id": "FR-FIX-008",
+      "feasibility": "high",
+      "score": 89,
+      "axes": {
+        "implementability": {"score": 29, "rationale": "L14/L18/L22/L26 instanceof namespace 4 위치 수정. 명확.", "evidence": ["src/main/java/adapter/servletElementConverter/ServletReqResConverter.java:14", "src/main/java/adapter/servletElementConverter/ServletReqResConverter.java:18"]},
+        "evidence_strength": {"score": 15, "rationale": "VE 표 부재. plan T-PH003-09 trace. BM04 + IT01 정의. AC 4개", "evidence": []},
+        "dependency_health": {"score": 14, "rationale": "depends_on 없음", "evidence": []},
+        "ac_verifiability": {"score": 14, "rationale": "Unit test + IT01 통합", "evidence": []},
+        "scope_fit": {"score": 10, "rationale": "FIX 적합 (F4 from 70.md)", "evidence": []},
+        "product_fit": {"score": 7, "rationale": "Critical 통합 테스트로만 잡힌 결함", "evidence": []}
+      },
+      "blockers": [],
+      "conditions": [],
+      "has_verification": false,
+      "current_stability": null,
+      "current_status": "planned",
+      "external_module_impact": null
+    },
+    {
+      "req_id": "FR-FIX-009",
+      "feasibility": "high",
+      "score": 87,
+      "axes": {
+        "implementability": {"score": 28, "rationale": "L168-169 if (cookies == null) return null; 2 line 추가. javax 대칭.", "evidence": ["src/main/java/adapter/jakarta/servlet/http/HttpServletRequest.java:166-174"]},
+        "evidence_strength": {"score": 14, "rationale": "VE 표 부재. plan T-PH003-10 trace. BM07 정의. AC 2개", "evidence": []},
+        "dependency_health": {"score": 14, "rationale": "depends_on 없음. FR-CONV-006 relates_to", "evidence": []},
+        "ac_verifiability": {"score": 14, "rationale": "Mockito + null 검증", "evidence": []},
+        "scope_fit": {"score": 10, "rationale": "FIX 적합 (D9 from 60.md)", "evidence": []},
+        "product_fit": {"score": 7, "rationale": "Minor 등급이나 D1 결정 포함", "evidence": []}
+      },
+      "blockers": [],
+      "conditions": [],
+      "has_verification": false,
+      "current_stability": null,
+      "current_status": "planned",
+      "external_module_impact": null
+    },
+    {
+      "req_id": "FR-TEST-001",
+      "feasibility": "high",
+      "score": 84,
+      "axes": {
+        "implementability": {"score": 25, "rationale": "Mockito 5.x + JUnit 5.9.2 표준. 어댑터별 테스트 작성 — 대량이나 패턴 단순.", "evidence": ["src/test/java/com/snoworca/ (5%)"]},
+        "evidence_strength": {"score": 17, "rationale": "VE 표 + plan T-PH005-01 trace. AC 4개. RETURNS_SMART_NULLS 명시.", "evidence": []},
+        "dependency_health": {"score": 13, "rationale": "FR-MOD-001 의존", "evidence": []},
+        "ac_verifiability": {"score": 13, "rationale": "JUnit 실행 결과 자동화", "evidence": []},
+        "scope_fit": {"score": 10, "rationale": "TEST 적합", "evidence": []},
+        "product_fit": {"score": 6, "rationale": "L1 — 가장 광범위 테스트 인프라", "evidence": []}
+      },
+      "blockers": [],
+      "conditions": [],
+      "has_verification": true,
+      "current_stability": null,
+      "current_status": "planned",
+      "external_module_impact": null
+    },
+    {
+      "req_id": "FR-TEST-002",
+      "feasibility": "high",
+      "score": 80,
+      "axes": {
+        "implementability": {"score": 24, "rationale": "Reflection 기반 driver 신규 작성. testFixtures 공유. 복잡하나 알고리즘 명확 (70.md §5.2).", "evidence": ["common/src/testFixtures/java/com/snoworca/contract/ (신규)"]},
+        "evidence_strength": {"score": 14, "rationale": "VE 표 부재. plan T-PH005-02 trace. AC 4개", "evidence": []},
+        "dependency_health": {"score": 12, "rationale": "FR-CONV-001, FR-CONV-002 의존", "evidence": []},
+        "ac_verifiability": {"score": 13, "rationale": "Reflection enumerate + Mockito verify", "evidence": []},
+        "scope_fit": {"score": 10, "rationale": "TEST 적합", "evidence": []},
+        "product_fit": {"score": 7, "rationale": "L2 — 위임 누락 자동 검출", "evidence": []}
+      },
+      "blockers": [],
+      "conditions": [],
+      "has_verification": false,
+      "current_stability": null,
+      "current_status": "planned",
+      "external_module_impact": null
+    },
+    {
+      "req_id": "FR-TEST-003",
+      "feasibility": "medium",
+      "score": 74,
+      "axes": {
+        "implementability": {"score": 22, "rationale": "Tomcat embed 3 버전 (10.0.27/10.1.30/11.0.0) + 9.0.85 javax-host. 15 시나리오. 외부 의존이나 testImplementation 격리.", "evidence": []},
+        "evidence_strength": {"score": 15, "rationale": "VE 표 + plan T-PH005-03/04 trace. AC 5개", "evidence": []},
+        "dependency_health": {"score": 11, "rationale": "FR-MOD-001, FR-TEST-001 의존", "evidence": []},
+        "ac_verifiability": {"score": 12, "rationale": "통합 테스트 — Linux only", "evidence": []},
+        "scope_fit": {"score": 10, "rationale": "TEST 적합", "evidence": []},
+        "product_fit": {"score": 4, "rationale": "L3 — wire 검증 필수", "evidence": []}
+      },
+      "blockers": [],
+      "conditions": ["Tomcat embed 의존성 다운로드 가능 환경", "Linux runner 필요"],
+      "has_verification": true,
+      "current_stability": null,
+      "current_status": "planned",
+      "external_module_impact": "Tomcat embed (org.apache.tomcat.embed)"
+    },
+    {
+      "req_id": "FR-TEST-004",
+      "feasibility": "high",
+      "score": 82,
+      "axes": {
+        "implementability": {"score": 26, "rationale": "BM01~BM10 회귀 테스트. 결함 코드에서 명시적 실패 (TDD). BM10 은 잠금.", "evidence": []},
+        "evidence_strength": {"score": 14, "rationale": "VE 표 부재. plan T-PH003-01 trace. AC 5개", "evidence": []},
+        "dependency_health": {"score": 14, "rationale": "depends_on 없음 — root", "evidence": []},
+        "ac_verifiability": {"score": 14, "rationale": "BM 테스트 자동화 + @DisplayName", "evidence": []},
+        "scope_fit": {"score": 10, "rationale": "TEST 적합", "evidence": []},
+        "product_fit": {"score": 4, "rationale": "회귀 방지 1순위", "evidence": []}
+      },
+      "blockers": [],
+      "conditions": [],
+      "has_verification": false,
+      "current_stability": null,
+      "current_status": "planned",
+      "external_module_impact": null
+    },
+    {
+      "req_id": "FR-TEST-005",
+      "feasibility": "medium",
+      "score": 70,
+      "axes": {
+        "implementability": {"score": 20, "rationale": "FR-TEST-003 의존 + CI 매트릭스 의존. 시나리오 사본 또는 testFixtures 공유.", "evidence": []},
+        "evidence_strength": {"score": 13, "rationale": "VE 표 부재. plan T-PH005-05 trace. AC 4개", "evidence": []},
+        "dependency_health": {"score": 10, "rationale": "FR-TEST-003 의존 (medium)", "evidence": []},
+        "ac_verifiability": {"score": 13, "rationale": "CI 매트릭스 통합 보고서 분석", "evidence": []},
+        "scope_fit": {"score": 10, "rationale": "TEST 적합", "evidence": []},
+        "product_fit": {"score": 4, "rationale": "L4 — 크로스 버전 동등성", "evidence": []}
+      },
+      "blockers": [],
+      "conditions": ["FR-TEST-003 완료", "OPS-TEST-001 완료"],
+      "has_verification": false,
+      "current_stability": null,
+      "current_status": "planned",
+      "external_module_impact": "Tomcat embed (transitive via FR-TEST-003)"
+    },
+    {
+      "req_id": "NFR-TEST-001",
+      "feasibility": "high",
+      "score": 81,
+      "axes": {
+        "implementability": {"score": 26, "rationale": "JaCoCo Gradle 플러그인 표준. 95%/100% 게이트 명확.", "evidence": []},
+        "evidence_strength": {"score": 13, "rationale": "VE 표 부재. plan T-PH005-06 trace. AC 3개", "evidence": []},
+        "dependency_health": {"score": 12, "rationale": "FR-TEST-001, FR-TEST-002 의존", "evidence": []},
+        "ac_verifiability": {"score": 14, "rationale": "jacocoTestCoverageVerification 자동화", "evidence": []},
+        "scope_fit": {"score": 10, "rationale": "TEST 적합", "evidence": []},
+        "product_fit": {"score": 6, "rationale": "PR 게이트 — D6 결정", "evidence": []}
+      },
+      "blockers": [],
+      "conditions": [],
+      "has_verification": false,
+      "current_stability": null,
+      "current_status": "planned",
+      "external_module_impact": null
+    },
+    {
+      "req_id": "OPS-TEST-001",
+      "feasibility": "medium",
+      "score": 73,
+      "axes": {
+        "implementability": {"score": 22, "rationale": "GitHub Actions yaml 작성. 70.md §13.1 초안 존재. 외부 인프라 (GitHub) 의존.", "evidence": [".github/workflows/ci.yml (신규)"]},
+        "evidence_strength": {"score": 13, "rationale": "VE 표 부재. plan T-PH006-01/02/03 trace. AC 4개", "evidence": []},
+        "dependency_health": {"score": 11, "rationale": "FR-MOD-001, FR-TEST-001, FR-TEST-003, NFR-TEST-001 다중 의존", "evidence": []},
+        "ac_verifiability": {"score": 13, "rationale": "CI 실행 결과", "evidence": []},
+        "scope_fit": {"score": 10, "rationale": "TEST 적합 (OPS)", "evidence": []},
+        "product_fit": {"score": 4, "rationale": "5분 wall clock 게이트", "evidence": []}
+      },
+      "blockers": [],
+      "conditions": ["GitHub Actions 활성화", "FR-TEST-003 완료"],
+      "has_verification": false,
+      "current_stability": null,
+      "current_status": "planned",
+      "external_module_impact": "GitHub Actions runners (ubuntu-latest, windows-latest)"
+    },
+    {
+      "req_id": "IR-REL-001",
+      "feasibility": "high",
+      "score": 86,
+      "axes": {
+        "implementability": {"score": 27, "rationale": "settings.gradle rootProject.name 변경 + 모듈별 maven-publish artifactId 명시. 좌표 표 SSOT.", "evidence": ["settings.gradle:1", "build.gradle:5-6"]},
+        "evidence_strength": {"score": 16, "rationale": "VE 표 + plan T-PH002-01/02 + T-PH007-01/07 trace. AC 3개", "evidence": []},
+        "dependency_health": {"score": 12, "rationale": "FR-MOD-001, FR-MOD-007 의존", "evidence": []},
+        "ac_verifiability": {"score": 13, "rationale": "publishToMavenLocal + POM 검사", "evidence": []},
+        "scope_fit": {"score": 10, "rationale": "REL 적합", "evidence": []},
+        "product_fit": {"score": 8, "rationale": "D5 좌표 결정 — 핵심", "evidence": []}
+      },
+      "blockers": [],
+      "conditions": [],
+      "has_verification": true,
+      "current_stability": null,
+      "current_status": "planned",
+      "external_module_impact": null
+    },
+    {
+      "req_id": "FR-REL-001",
+      "feasibility": "high",
+      "score": 80,
+      "axes": {
+        "implementability": {"score": 26, "rationale": "README.md 전면 개정. 호환성 매트릭스 + 5 정책 명시. 문서 작업.", "evidence": ["README.md"]},
+        "evidence_strength": {"score": 13, "rationale": "VE 표 부재. plan T-PH007-02/03 trace. AC 3개", "evidence": []},
+        "dependency_health": {"score": 12, "rationale": "FR-MOD-001, IR-REL-001 의존", "evidence": []},
+        "ac_verifiability": {"score": 13, "rationale": "README 내용 grep + 문서 lint", "evidence": []},
+        "scope_fit": {"score": 10, "rationale": "REL 적합", "evidence": []},
+        "product_fit": {"score": 6, "rationale": "사용자 가이드 핵심", "evidence": []}
+      },
+      "blockers": [],
+      "conditions": [],
+      "has_verification": false,
+      "current_stability": null,
+      "current_status": "planned",
+      "external_module_impact": null
+    },
+    {
+      "req_id": "MIG-REL-001",
+      "feasibility": "low",
+      "score": 56,
+      "axes": {
+        "implementability": {"score": 14, "rationale": "OQ-001 미결 — 옵션 A (별도 artifact) 또는 옵션 B (alias 패키지) 결정 전 구현 불가. 두 옵션 모두 AC 작성됨.", "evidence": []},
+        "evidence_strength": {"score": 10, "rationale": "VE 표 부재. plan T-PH001-01 (Decision-Gate) + T-PH007-04/07 trace. AC 4개나 OQ-001 종결 의존 명시.", "evidence": []},
+        "dependency_health": {"score": 10, "rationale": "FR-MOD-001, FR-MOD-005, IR-REL-001 + OQ-001 relates_to", "evidence": []},
+        "ac_verifiability": {"score": 7, "rationale": "옵션 결정 후 검증 가능 (4 주 명시)", "evidence": []},
+        "scope_fit": {"score": 10, "rationale": "REL 적합", "evidence": []},
+        "product_fit": {"score": 5, "rationale": "사용자 마이그레이션 경로 — 우선순위 high 이나 OQ 종결 의존", "evidence": []}
+      },
+      "blockers": ["OQ-001 미결 — 옵션 A vs 옵션 B 사용자 결정 필요"],
+      "conditions": ["plan Phase 0 Decision-Gate 실행", "80.decisions.md §3 → §2 이동"],
+      "has_verification": false,
+      "current_stability": null,
+      "current_status": "planned",
+      "external_module_impact": "OQ-001 (사용자 결정 필요)"
+    },
+    {
+      "req_id": "OPS-REL-001",
+      "feasibility": "medium",
+      "score": 62,
+      "axes": {
+        "implementability": {"score": 16, "rationale": "build.gradle maven-publish + signing 적용. 외부 의존 (Sonatype 계정, GPG 키, GitHub Secrets) 미확인.", "evidence": []},
+        "evidence_strength": {"score": 11, "rationale": "VE 표 부재. plan T-PH001-03 + T-PH007-05/06/07 trace. AC 4개", "evidence": []},
+        "dependency_health": {"score": 12, "rationale": "IR-REL-001 의존", "evidence": []},
+        "ac_verifiability": {"score": 8, "rationale": "Sonatype staging upload 검증 — 외부 의존", "evidence": []},
+        "scope_fit": {"score": 10, "rationale": "REL 적합 (OPS)", "evidence": []},
+        "product_fit": {"score": 5, "rationale": "Maven Central 게시 — 외부 트랙", "evidence": []}
+      },
+      "blockers": ["OQ-003 외부 의존 미확인 — Sonatype 계정 발급, com.clipsoft namespace 점유, GPG 키 등록"],
+      "conditions": ["외부 트랙 병렬 진행", "release task 전 자격증명 검증"],
+      "has_verification": false,
+      "current_stability": null,
+      "current_status": "planned",
+      "external_module_impact": "Sonatype OSSRH/Central Portal, GPG keyserver, GitHub Secrets"
+    }
+  ],
+  "score_distribution": {
+    "high_80plus": 39,
+    "medium_60_79": 4,
+    "low_40_59": 1,
+    "blocked_under_40": 0
+  },
+  "feasibility_label_counts": {
+    "high": 39,
+    "medium": 4,
+    "low": 1,
+    "blocked": 0
+  },
+  "has_verification_counts": {
+    "true": 9,
+    "false": 35
+  }
+}

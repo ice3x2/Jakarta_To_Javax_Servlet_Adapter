@@ -1,0 +1,105 @@
+{
+  "task_id": "T-PH004-20",
+  "started_at": "2026-05-20T00:00:00Z",
+  "completed_at": "2026-05-20T00:00:00Z",
+  "retroactive": true,
+  "note": "Implementation already present from T-PH004-19 retroactive RED→GREEN. This task = GREEN confirmation only.",
+  "phase2": {
+    "impl_iters": [
+      {
+        "iter": 1,
+        "files_changed": [
+          "servlet61/src/main/java/adapter/jakarta/servlet61/http/HttpServletResponse.java"
+        ],
+        "retroactive_note": "sendRedirect(String,int,boolean) override at lines 112-119"
+      }
+    ],
+    "green_evidence": {
+      "command": ".gradlew.bat :servlet61:test --tests com.snoworca.SendRedirect61Test",
+      "exit_code": 0,
+      "timestamp": "2026-05-20T00:00:00Z"
+    },
+    "green_evidence_meta": {
+      "passed_test_case_ids": [
+        "TC-REQ-FR-CONV-001-AC1-04",
+        "TC-REQ-FR-CONV-001-AC2-04",
+        "TC-REQ-FR-CONV-014-AC1-04",
+        "TC-REQ-FR-CONV-014-AC2-04",
+        "TC-REQ-FR-CONV-014-AC3-04"
+      ],
+      "tests_run": 5,
+      "tests_passed": 5,
+      "tests_failed": 0
+    },
+    "dod_check": [
+      {
+        "item": "green 단계: 5개 test case 가 모두 통과(green)",
+        "satisfied": true
+      },
+      {
+        "item": "green 단계: 동일 test 가 모두 통과(green) 함을 확인",
+        "satisfied": true
+      }
+    ]
+  },
+  "phase3": {
+    "regression": {
+      "scope": "full",
+      "cmd": "./gradlew test",
+      "exit_code": 0,
+      "all_modules_pass": true
+    },
+    "mcp_calls": [
+      {
+        "tool": "add_verification_evidence",
+        "id": "FR-CONV-001",
+        "covers": "AC-1",
+        "ok": true,
+        "evidenceId": "VE-7"
+      },
+      {
+        "tool": "add_verification_evidence",
+        "id": "FR-CONV-001",
+        "covers": "AC-2",
+        "ok": true,
+        "evidenceId": "VE-6"
+      },
+      {
+        "tool": "add_verification_evidence",
+        "id": "FR-CONV-014",
+        "covers": "AC-1",
+        "ok": false,
+        "reason": "Verification Evidence table not found in SRS file (structural gap, not coder responsibility)",
+        "pending": true
+      },
+      {
+        "tool": "add_verification_evidence",
+        "id": "FR-CONV-014",
+        "covers": "AC-2",
+        "ok": false,
+        "reason": "Verification Evidence table not found in SRS file",
+        "pending": true
+      },
+      {
+        "tool": "add_verification_evidence",
+        "id": "FR-CONV-014",
+        "covers": "AC-3",
+        "ok": false,
+        "reason": "Verification Evidence table not found in SRS file",
+        "pending": true
+      },
+      {
+        "tool": "update_status",
+        "id": "FR-CONV-014",
+        "status": "in_progress",
+        "ok": true
+      },
+      {
+        "tool": "add_completed_work",
+        "ok": false,
+        "reason": "Completed Work Log references prevalidation failed (pre-existing SRS drift SRS-W015 — not introduced by this task)",
+        "pending": true
+      }
+    ]
+  }
+}

@@ -1,37 +1,79 @@
-plugins {
-    id 'java'
+allprojects {
+    group = 'com.clipsoft'
+    version = '1.0.0'
+
+    repositories {
+        mavenCentral()
+    }
 }
 
-group 'com.clipsoft'
-version '0.0.1'
+subprojects {
+    if (project.name != 'bom') {
+        apply plugin: 'java'
 
-repositories {
-    mavenCentral()
-}
-java {
-    sourceCompatibility = "1.8"
-    targetCompatibility = "1.8"
-}
+        java {
+            sourceCompatibility = JavaVersion.VERSION_1_8
+            targetCompatibility = JavaVersion.VERSION_1_8
+        }
 
-dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
-    implementation fileTree(dir: "${project.projectDir}/libs", includes: ['*.jar'])
-    compileOnly 'javax.servlet:javax.servlet-api:4.0.1'
-    compileOnly group: 'jakarta.servlet', name: 'jakarta.servlet-api', version: '5.0.0'
+        tasks.withType(Test).configureEach {
+            useJUnitPlatform()
+        }
 
-    testImplementation group: 'jakarta.servlet', name: 'jakarta.servlet-api', version: '5.0.0'
-    testImplementation 'javax.servlet:javax.servlet-api:4.0.1'
-
-
-    testImplementation 'org.mockito:mockito-core:5.6.0'
-    testImplementation 'org.mockito:mockito-junit-jupiter:5.6.0'
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.2'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.2'
-
-
+        dependencies {
+            testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
+            testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
+            testImplementation "org.mockito:mockito-core:${mockitoVersion}"
+            testImplementation "org.mockito:mockito-junit-jupiter:${mockitoVersion}"
+        }
+    }
 }
 
-test {
-    useJUnitPlatform()
+// CON-MOD-001: version modules MUST NOT depend on each other.
+// validateNoVersionModuleCrossDeps fails the build when any servletN module pulls
+// another servletN module via a project(...) dependency.
+def versionModuleCrossDepBanlist = [
+    servlet5 : ['servlet6', 'servlet61'],
+    servlet6 : ['servlet5', 'servlet61'],
+    servlet61: ['servlet5', 'servlet6']
+]
+
+tasks.register('validateNoVersionModuleCrossDeps') {
+    group = 'verification'
+    description = 'Fails the build if any servletN module depends on another servletN module.'
+    doLast {
+        def violations = []
+        versionModuleCrossDepBanlist.each { srcModule, bannedModules ->
+            def srcProject = rootProject.findProject(":${srcModule}")
+            if (srcProject == null) {
+                return
+            }
+            srcProject.configurations.compileClasspath.allDependencies.each { dep ->
+                if (dep instanceof ProjectDependency) {
+                    def targetName = dep.dependencyProject.name
+                    if (bannedModules.contains(targetName)) {
+                        violations << "${srcModule} -> ${targetName} (forbidden cross-version dependency)"
+                    }
+                }
+            }
+        }
+        if (!violations.isEmpty()) {
+            throw new GradleException(
+                "CON-MOD-001 violation: forbidden cross-version module dependencies detected:\n  "
+                    + violations.join("\n  ")
+            )
+        }
+        logger.lifecycle("validateNoVersionModuleCrossDeps: PASS (0 violations across servlet5/servlet6/servlet61)")
+    }
+}
+
+subprojects {
+    if (project.name != 'bom') {
+        afterEvaluate {
+            def checkTask = tasks.findByName('check')
+            if (checkTask != null) {
+                checkTask.dependsOn(rootProject.tasks.named('validateNoVersionModuleCrossDeps'))
+            }
+        }
+    }
 }

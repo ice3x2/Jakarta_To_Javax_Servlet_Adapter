@@ -1,0 +1,37 @@
+{
+  "task_id": "T-PH004-04",
+  "phase_id": "PH-004",
+  "req_ids": ["FR-CONV-003", "FR-CONV-004"],
+  "started_at": "2026-05-19T18:00:00Z",
+  "completed_at": "2026-05-19T18:05:00Z",
+  "phase1": {"skipped": true, "reason": "tdd.phase=green — RED 산출물은 T-PH004-03"},
+  "phase2": {
+    "impl_iters": [{"iter": 1, "files_changed_count": 69, "summary": "66 adapter base classes + 3 ServletAdapter.java + 2 HttpSessionContext placeholder"}],
+    "green_evidence": {
+      "command": "./gradlew :servlet5:test :servlet6:test :servlet61:test --tests com.snoworca.AdapterUnwrapAllClassesTest",
+      "exit_code": 0,
+      "timestamp": "2026-05-19T18:00:00Z"
+    },
+    "green_evidence_meta": {
+      "passed_test_case_ids": [
+        "TC-REQ-FR-CONV-003-AC1-04",
+        "TC-REQ-FR-CONV-003-AC2-04",
+        "TC-REQ-FR-CONV-003-AC3-04",
+        "TC-REQ-FR-CONV-003-AC4-04",
+        "TC-REQ-FR-CONV-004-AC1-02",
+        "TC-REQ-FR-CONV-004-AC2-02",
+        "TC-REQ-FR-CONV-004-AC3-02"
+      ],
+      "modules_passed_count": "7 per module x 3 modules = 21",
+      "regression_full": "BUILD SUCCESSFUL — all modules ./gradlew test"
+    },
+    "dod_check": [
+      {"item": "7 test cases pass (per module x 3 = 21)", "satisfied": true},
+      {"item": "regression suite passes", "satisfied": true}
+    ]
+  },
+  "phase3": {
+    "regression": {"scope": "full", "result": "BUILD SUCCESSFUL"},
+    "test_correction_note": "T-PH004-03 RED 테스트의 scanAdapterClasses 가 multi-classpath URL walk 시 src/test 의 *DefectTest 클래스까지 production 어댑터로 잡아 false-positive missing 발생. *Test 접미사 필터 추가로 보정 (production semantics 영향 없음)."
+  }
+}

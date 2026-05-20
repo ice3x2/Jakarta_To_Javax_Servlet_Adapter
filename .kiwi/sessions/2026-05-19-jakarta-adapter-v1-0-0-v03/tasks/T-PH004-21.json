@@ -1,0 +1,46 @@
+{
+  "task_id": "T-PH004-21",
+  "phase_id": "PH-004",
+  "title": "NFR-CONV-001 스레드 안전성 + HttpUpgradeHandler ThreadLocal 잠금 (BM10) — TDD red (failing test)",
+  "type": "code",
+  "req_ids": ["NFR-CONV-001"],
+  "started_at": "2026-05-20T00:00:00Z",
+  "completed_at": "2026-05-20T00:00:00Z",
+  "coder_run_id": "2026-05-19-jakarta-adapter-v1-0-0-v03",
+  "phase1": {
+    "tdd_draft_iters": [
+      {
+        "iter": 1,
+        "file_paths": ["servlet5/src/test/java/com/snoworca/ThreadSafetyTest.java"],
+        "test_symbols": [
+          "shouldEnforceFinalFieldsAndConcurrentMapsAndBM10LockIn_NFRCONV001_AC1",
+          "shouldEnforceFinalFieldsAndConcurrentMapsAndBM10LockIn_NFRCONV001_AC2",
+          "shouldEnforceFinalFieldsAndConcurrentMapsAndBM10LockIn_NFRCONV001_AC3"
+        ]
+      }
+    ],
+    "red_evidence": {
+      "command": ".\\gradlew.bat :servlet5:test --tests *shouldEnforceFinalFieldsAndConcurrentMapsAndBM10LockIn*",
+      "exit_code": 1,
+      "captured_failure": "ThreadSafetyTest > AC-1: 모든 servlet5 어댑터 인스턴스 필드는 final 또는 thread-safe 타입 (NFR-CONV-001) FAILED\n  org.opentest4j.AssertionFailedError: expected: every servlet5 adapter instance field is `final` or thread-safe, got: mutable field or non-thread-safe map. violations=[adapter.javax.servlet5.FilterRegistration.filterRegistration (type=jakarta.servlet.FilterRegistration, mods=private), adapter.javax.servlet5.Registration.registration (type=jakarta.servlet.Registration, mods=private), adapter.javax.servlet5.ServletRequest.request (type=jakarta.servlet.ServletRequest, mods=private)]\n3 tests completed, 1 failed\nBUILD FAILED",
+      "timestamp": "2026-05-20T00:00:00Z"
+    },
+    "red_evidence_meta": {
+      "test_case_ids": [
+        "TC-REQ-NFR-CONV-001-AC1-01",
+        "TC-REQ-NFR-CONV-001-AC2-01",
+        "TC-REQ-NFR-CONV-001-AC3-01"
+      ],
+      "failed_test_count": 1,
+      "passed_test_count": 2,
+      "red_strategy": "AC-1 reflection-driven adapter field scan detects non-final FilterRegistration.filterRegistration, Registration.registration, ServletRequest.request (3 violations). AC-2 and AC-3 already satisfied by ConverterSupport ConcurrentHashMap+AtomicLong + HttpUpgradeHandler ThreadLocal pattern; expected to pass at red stage and remain green after T-PH004-22 finalizes the 3 violation fields.",
+      "matched_expected_failure_signatures": [
+        "expected: all final/thread-safe + ConcurrentHashMap/AtomicLong + BM10 pass, got: mutable field or non-thread-safe map"
+      ]
+    }
+  },
+  "phase3": {
+    "regression": {"scope": "task-only", "passed": 2, "failed": 1, "note": "red phase — expected failure"},
+    "mcp_calls": []
+  }
+}

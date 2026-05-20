@@ -1,0 +1,52 @@
+{
+  "task_id": "T-PH004-13",
+  "phase_id": "PH-004",
+  "started_at": "2026-05-19T17:18:00Z",
+  "completed_at": "2026-05-19T17:24:35Z",
+  "coder_run_id": "2026-05-19-jakarta-adapter-v1-0-0-v03",
+  "tdd_phase": "red",
+  "trace_req_ids": ["FR-CONV-010", "FR-CONV-014"],
+  "files_changed": [
+    "servlet6/src/test/java/com/snoworca/FallbackPolicyTest.java",
+    "servlet61/src/test/java/com/snoworca/FallbackPolicyTest.java"
+  ],
+  "phase1": {
+    "tdd_draft_iters": [
+      {
+        "iter": 1,
+        "file_paths": [
+          "servlet6/src/test/java/com/snoworca/FallbackPolicyTest.java",
+          "servlet61/src/test/java/com/snoworca/FallbackPolicyTest.java"
+        ]
+      }
+    ],
+    "red_evidence": {
+      "command": "./gradlew :servlet6:test :servlet61:test --tests *shouldApplyFallbackMatrixForServlet6And61AndKeepServlet5Dormant* --quiet",
+      "exit_code": 1,
+      "captured_failure": "12 tests completed, 12 failed (servlet6: 6 failed, servlet61: 6 failed). All failure messages start with the expected signature: 'expected: 6 asymmetric method groups follow SRS policy matrix, got: at least one wrong branch — ...'",
+      "timestamp": "2026-05-19T17:24:35Z"
+    },
+    "red_evidence_meta": {
+      "test_case_ids": [
+        "TC-REQ-FR-CONV-010-AC1-01",
+        "TC-REQ-FR-CONV-010-AC2-01",
+        "TC-REQ-FR-CONV-010-AC3-01",
+        "TC-REQ-FR-CONV-014-AC1-01",
+        "TC-REQ-FR-CONV-014-AC2-01",
+        "TC-REQ-FR-CONV-014-AC3-01"
+      ],
+      "test_case_files": {
+        "servlet6/src/test/java/com/snoworca/FallbackPolicyTest.java": 6,
+        "servlet61/src/test/java/com/snoworca/FallbackPolicyTest.java": 6
+      },
+      "matched_signatures": "all 12 failures contain expected_failure_signature prefix",
+      "regression_impacted": {
+        "servlet6:AdapterUnwrapAllClassesTest": "7/7 PASS",
+        "servlet61:AdapterUnwrapAllClassesTest": "7/7 PASS",
+        "servlet5:test": "PASS (unchanged)",
+        "common:test": "PASS (unchanged)"
+      }
+    }
+  },
+  "result_summary": "RED: FR-CONV-010 + FR-CONV-014 FallbackPolicyTest 2 files × 6 cases = 12 test, all 12 FAILED with expected_failure_signature. servlet6 + servlet61 module. Pre-existing tests (AdapterUnwrapAllClassesTest 7/7 per module) remain PASS — no regression."
+}

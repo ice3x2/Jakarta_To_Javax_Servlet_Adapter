@@ -1,0 +1,78 @@
+plugins {
+    id 'java-platform'
+    id 'maven-publish'
+    id 'signing'
+}
+
+dependencies {
+    constraints {
+        api project(':common')
+        api project(':servlet5')
+        api project(':servlet6')
+        api project(':servlet61')
+    }
+}
+
+// @req FR-MOD-007 — Maven Central publication for BOM (T-PH007-01).
+// @req IR-REL-001 — Maven publication infrastructure (T-PH007-01).
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId = 'jakarta-to-javax-servlet-adapter-bom'
+            from components.javaPlatform
+            pom {
+                name = 'jakarta-to-javax-servlet-adapter-bom'
+                description = 'BOM (Bill of Materials) aligning common/servlet5/servlet6/servlet61 module versions for the jakarta-to-javax servlet adapter.'
+                url = 'https://github.com/Snoworca/Jakarta_To_Javax_Servlet_Adapter'
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'https://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'snoworca'
+                        name = 'Snoworca'
+                        organization = 'Clipsoft'
+                        organizationUrl = 'https://github.com/Snoworca'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git://github.com/Snoworca/Jakarta_To_Javax_Servlet_Adapter.git'
+                    developerConnection = 'scm:git:ssh://github.com:Snoworca/Jakarta_To_Javax_Servlet_Adapter.git'
+                    url = 'https://github.com/Snoworca/Jakarta_To_Javax_Servlet_Adapter'
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            name = 'OSSRH'
+            def releasesUrl = (project.findProperty('ossrhReleasesUrl')
+                    ?: 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/')
+            def snapshotsUrl = (project.findProperty('ossrhSnapshotsUrl')
+                    ?: 'https://s01.oss.sonatype.org/content/repositories/snapshots/')
+            url = version.toString().endsWith('SNAPSHOT') ? snapshotsUrl : releasesUrl
+            credentials {
+                username = (project.findProperty('ossrhUsername') ?: System.getenv('OSSRH_USERNAME')) ?: ''
+                password = (project.findProperty('ossrhPassword') ?: System.getenv('OSSRH_PASSWORD')) ?: ''
+            }
+        }
+    }
+}
+
+// @req FR-MOD-007 — GPG signing for Maven Central (T-PH007-01).
+// Signing is required only for remote publish tasks. publishToMavenLocal skips signing
+// so local verification works without GPG keys configured.
+signing {
+    def signingKey = project.findProperty('signingInMemoryKey') ?: System.getenv('SIGNING_KEY')
+    def signingPassword = project.findProperty('signingInMemoryKeyPassword') ?: System.getenv('SIGNING_PASSWORD')
+    if (signingKey) {
+        useInMemoryPgpKeys(signingKey, signingPassword ?: '')
+    } else if (project.findProperty('signing.gnupg.keyName') != null) {
+        useGpgCmd()
+    }
+    required = { gradle.taskGraph.allTasks.any { it.name.startsWith('publish') && !it.name.endsWith('ToMavenLocal') } }
+    sign publishing.publications.mavenJava
+}

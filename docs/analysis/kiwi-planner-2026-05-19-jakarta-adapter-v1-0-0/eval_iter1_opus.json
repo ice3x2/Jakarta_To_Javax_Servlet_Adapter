@@ -1,0 +1,113 @@
+{
+  "evaluator": "opus",
+  "round": 1,
+  "findings": [
+    {
+      "finding_id": "F-OPUS-001",
+      "finding_hash": "3e8403db624859fc5f4a5cb7f3efc0c79d00f61a",
+      "req_id": "_",
+      "task_id": "T-PH001-02",
+      "axis": "A5",
+      "severity": "HIGH",
+      "evidence_path": "sidecar.tasks[T-PH001-02].req_ids",
+      "description": "T-PH001-02 (OQ-002 JPMS 유보 명시 확인) 의 req_ids 가 빈 배열이다. plan.md L96 / sidecar L100 에서 'req_ids: []' 확인. NFR-MOD-002 는 excluded_reqs 에 등재되어 있으므로 trace 대상이 될 수 없지만, 본 task 가 NFR-MOD-001 (v1.0.0 Automatic-Module-Name) 의 사전 게이트 (module-info.java 생성 금지 확인) 로 기능하므로 NFR-MOD-001 을 req_ids 에 등재해야 orphan 이 해소된다. 현 상태로는 §9.4 의 orphan 규칙에 의해 비-REQ-driven task 로 분류되어 plan 의 trace 그래프 일관성을 깬다.",
+      "recommendation": "T-PH001-02 의 req_ids 를 ['NFR-MOD-001'] 로 변경 (review task 가 'PH-002 의 어떤 task 도 module-info.java 생성을 포함하지 않음을 확인' 하는 게이트이므로 NFR-MOD-001 의 AC-2 '4개 모듈의 module-name 이 NFR-MOD-001 표와 일치' 의 사전 조건으로 trace). 또는 sidecar.orphans 에 명시적으로 등재하여 의도된 review task 임을 표명."
+    },
+    {
+      "finding_id": "F-OPUS-002",
+      "finding_hash": "9cb7b41a4f67f7d305680d25a12d2178497c9b8e",
+      "req_id": "FR-FIX-007",
+      "task_id": "T-PH003-08",
+      "axis": "A8",
+      "severity": "MEDIUM",
+      "evidence_path": "sidecar.tasks[T-PH003-08].files",
+      "description": "T-PH003-08 의 action 본문은 'jakarta ServletContext.java 의 getRealPath 도 동일 검토. 3개 모듈 (servlet5/6/61) 모두 적용' 이라 명시하나 files 배열에는 servlet5 의 ServletContext.java 만 포함되고 servlet6 / servlet61 의 ServletContext.java 는 누락. FR-FIX-007 의 Implementation Notes ('servlet5/6/61 모두 적용') 와 AC-2 ('3개 모듈 컴파일 success') 를 만족하려면 servlet6/61 의 ServletContext.java 도 files 에 추가 필요. plan.md L435 동일 누락.",
+      "recommendation": "files 에 'servlet6/src/main/java/adapter/jakarta/servlet6/ServletContext.java' 와 'servlet61/src/main/java/adapter/jakarta/servlet61/ServletContext.java' 를 추가하여 grounding 완비."
+    },
+    {
+      "finding_id": "F-OPUS-003",
+      "finding_hash": "a53dc3e81a19990a51ec0971f2fa81663cd065cc",
+      "req_id": "_",
+      "task_id": "T-PH003-11",
+      "axis": "A6",
+      "severity": "MEDIUM",
+      "evidence_path": "sidecar.tasks[T-PH003-11].acceptance_tests",
+      "description": "T-PH003-11 type=review 이지만 acceptance_tests 의 kind=shell 사용. §9.3 acceptance_tests kind 매트릭스에 따르면 review type 은 checklist 만 허용. shell 호출은 verification_cmd 로 옮기거나 type=code 로 재분류하거나 acceptance_tests 를 checklist 형식으로 재작성해야 매트릭스 준수.",
+      "recommendation": "kind=checklist 로 변경하고 'BM01~BM10 회귀가 3 모듈 모두 통과 + servlet6/61 사본 결함 수정 동기화 누락 없음' 체크리스트로 변경, 자동 검증 명령어는 verification_cmd 에 유지. 또는 type=code 로 재분류."
+    },
+    {
+      "finding_id": "F-OPUS-004",
+      "finding_hash": "a56ef36e46bd5e1e91824c5a54f0f205ab40f394",
+      "req_id": "_",
+      "task_id": "T-PH004-12",
+      "axis": "A6",
+      "severity": "MEDIUM",
+      "evidence_path": "sidecar.tasks[T-PH004-12].acceptance_tests",
+      "description": "T-PH004-12 type=review 이지만 acceptance_tests kind=shell ('./gradlew test --quiet'). §9.3 매트릭스 위배 (review → checklist 만 허용). T-PH003-11 과 동일 패턴.",
+      "recommendation": "kind=checklist 로 변경 + verification_cmd 로 shell 명령 이전. 또는 task type 을 code 로 재분류."
+    },
+    {
+      "finding_id": "F-OPUS-005",
+      "finding_hash": "b9e8eba3bf5d49bfe92366adfbc2b139193c46d9",
+      "req_id": "_",
+      "task_id": "T-PH005-07",
+      "axis": "A6",
+      "severity": "MEDIUM",
+      "evidence_path": "sidecar.tasks[T-PH005-07].acceptance_tests",
+      "description": "T-PH005-07 type=review 이지만 acceptance_tests kind=shell ('./gradlew check integrationTest --quiet'). §9.3 매트릭스 위배 (review → checklist 만 허용).",
+      "recommendation": "kind=checklist 로 변경 + verification_cmd 로 shell 명령 이전. 또는 task type 을 code 로 재분류."
+    },
+    {
+      "finding_id": "F-OPUS-006",
+      "finding_hash": "449699a55285547e746facfe44c1cda4716aaa60",
+      "req_id": "_",
+      "task_id": "T-PH006-01",
+      "axis": "A6",
+      "severity": "MEDIUM",
+      "evidence_path": "sidecar.tasks[T-PH006-01].acceptance_tests",
+      "description": "T-PH006-01 type=infra 이지만 acceptance_tests kind=checklist. §9.3 매트릭스에 따르면 infra type 은 shell, file_state, http 만 허용 (checklist 불허). 본 task 는 PR 푸시 후 GitHub Actions 동작 검증이라 검증이 외부 인프라 의존이지만 type-kind 정합을 위해서는 매트릭스 준수 필요.",
+      "recommendation": "kind 를 file_state 로 변경 (.github/workflows/ci.yml 파일 존재 + 매트릭스 셀 정의 확인) + checklist 항목들은 dod 로 이동. 또는 task type 을 issue 또는 review 로 재분류 (PR 검증 작업이므로 review 가 적합)."
+    },
+    {
+      "finding_id": "F-OPUS-007",
+      "finding_hash": "05a85ba90cabdb7bbd833e1d54243c5741490283",
+      "req_id": "_",
+      "task_id": "T-PH006-03",
+      "axis": "A6",
+      "severity": "MEDIUM",
+      "evidence_path": "sidecar.tasks[T-PH006-03].acceptance_tests",
+      "description": "T-PH006-03 type=infra 이지만 acceptance_tests kind=checklist. §9.3 매트릭스 위배 (infra → shell/file_state/http 만 허용).",
+      "recommendation": "kind 를 file_state 또는 shell 로 변경. 또는 type 을 review 로 재분류 (게이트 검증 작업).."
+    },
+    {
+      "finding_id": "F-OPUS-008",
+      "finding_hash": "60e8f937f1c2a41488756731e3349cb75ee655e7",
+      "req_id": "_",
+      "task_id": "T-PH007-05",
+      "axis": "A6",
+      "severity": "MEDIUM",
+      "evidence_path": "sidecar.tasks[T-PH007-05].acceptance_tests",
+      "description": "T-PH007-05 type=infra 이지만 acceptance_tests kind=checklist. §9.3 매트릭스 위배 (infra → shell/file_state/http 만 허용). GitHub Secrets 등록은 외부 의존이라 자동 검증이 어려운 본질이 있지만 매트릭스 준수 필요.",
+      "recommendation": "kind 를 file_state 로 변경 (.github/workflows/release.yml + README GPG fingerprint 파일 존재 검증) + checklist 항목 (Secrets 4개 등록) 은 별도 issue task 또는 dod 항목으로 이동."
+    },
+    {
+      "finding_id": "F-OPUS-009",
+      "finding_hash": "44fce327037ef08ca8ff3eaff3489acfa053d08b",
+      "req_id": "_",
+      "task_id": "T-PH007-06",
+      "axis": "A6",
+      "severity": "MEDIUM",
+      "evidence_path": "sidecar.tasks[T-PH007-06].acceptance_tests",
+      "description": "T-PH007-06 type=infra 이지만 acceptance_tests kind=checklist. §9.3 매트릭스 위배 (infra → shell/file_state/http 만 허용).",
+      "recommendation": "kind 를 shell 로 변경 ('./gradlew publishAll --dry-run' 실행 + 5개 staging URL 출력 grep) 또는 type 을 review 로 재분류."
+    }
+  ],
+  "summary": {
+    "critical": 0,
+    "high": 1,
+    "medium": 8,
+    "low": 0
+  },
+  "pass": false,
+  "decision_violations": []
+}

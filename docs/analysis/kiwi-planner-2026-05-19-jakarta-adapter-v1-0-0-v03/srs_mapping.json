@@ -1,0 +1,50 @@
+{
+  "scope_note": "v03 plan target REQ 집합 = 32 evolving (4 draft 제외). 각 REQ 의 AC 매핑은 v02 sidecar 의 task.req_ids/covers_ac 를 인계.",
+  "target_total": 44,
+  "evolving": 40,
+  "draft": 4,
+  "v03_in_scope_reqs": [
+    "FR-CONV-001","FR-CONV-002","FR-CONV-003","FR-CONV-004","FR-CONV-005","FR-CONV-006","FR-CONV-007","FR-CONV-008","FR-CONV-009","FR-CONV-010","FR-CONV-011","FR-CONV-012","FR-CONV-013","FR-CONV-014",
+    "FR-FIX-001","FR-FIX-002","FR-FIX-003","FR-FIX-004","FR-FIX-005","FR-FIX-006","FR-FIX-007","FR-FIX-008","FR-FIX-009",
+    "FR-MOD-007","FR-REL-001","FR-TEST-001","FR-TEST-002","FR-TEST-004",
+    "IR-REL-001","MIG-REL-001","NFR-CONV-001","NFR-TEST-001"
+  ],
+  "v03_excluded_reqs": [
+    {"req_id":"FR-TEST-003","stability":"draft","reason":"--draft-policy=exclude-draft (v1.1.0 이연)"},
+    {"req_id":"FR-TEST-005","stability":"draft","reason":"--draft-policy=exclude-draft (v1.1.0 이연)"},
+    {"req_id":"OPS-TEST-001","stability":"draft","reason":"--draft-policy=exclude-draft (PIT mutation testing, v1.1.0 이연)"},
+    {"req_id":"OPS-REL-001","stability":"draft","reason":"--draft-policy=exclude-draft (Sonatype/GPG 외부 인프라 설정, v1.1.0 이연)"}
+  ],
+  "v03_evolving_not_in_scope": [
+    "CON-MOD-001","NFR-MOD-001","FR-MOD-001","FR-MOD-002","FR-MOD-003","FR-MOD-004","FR-MOD-005","FR-MOD-006"
+  ],
+  "evolving_not_in_scope_reason": "PH-001 + PH-002 에서 이미 완료 (v02 completed_task_ids 20건). v03 은 잔여 phase 만 처리하므로 plan 대상 외. unreferenced_reqs 가 아닌 'previously implemented' 로 분류.",
+  "previously_implemented_reqs": [
+    {"req_id":"FR-MOD-001","completed_task":"T-PH002-01,T-PH002-02"},
+    {"req_id":"FR-MOD-002","completed_task":"T-PH002-03,T-PH002-04,T-PH002-05,T-PH002-06"},
+    {"req_id":"FR-MOD-003","completed_task":"T-PH002-05,T-PH002-06"},
+    {"req_id":"FR-MOD-004","completed_task":"T-PH002-03"},
+    {"req_id":"FR-MOD-005","completed_task":"T-PH002-05,T-PH002-06"},
+    {"req_id":"FR-MOD-006","completed_task":"T-PH002-05,T-PH002-06"},
+    {"req_id":"CON-MOD-001","completed_task":"T-PH002-08"},
+    {"req_id":"NFR-MOD-001","completed_task":"T-PH002-09"},
+    {"req_id":"IR-REL-001","completed_task":"T-PH002-01,T-PH002-02 (부분 cover, PH-007 보강 예정)"},
+    {"req_id":"FR-FIX-001","completed_task":"T-PH003-03,T-PH003-04"},
+    {"req_id":"FR-FIX-002","completed_task":"T-PH003-05,T-PH003-06"},
+    {"req_id":"FR-FIX-003","completed_task":"T-PH003-07,T-PH003-08"},
+    {"req_id":"FR-TEST-004","completed_task":"T-PH003-01,T-PH003-02 (부분, T-PH003-21 review 잔여)"},
+    {"req_id":"MIG-REL-001","completed_task":"T-PH001-01 (부분, T-PH007-04 D8 alias)"}
+  ],
+  "dependency_graph": [
+    {"from":"PH-004","to":"PH-003","note":"FR-CONV-* 변환 의미론은 결함 9건 (FR-FIX-*) 안정화 후"},
+    {"from":"PH-005","to":"PH-004","note":"테스트 인프라는 의미론 페어 완료 후"},
+    {"from":"PH-006","to":"PH-005","note":"CI 매트릭스는 테스트 인프라 정착 후"},
+    {"from":"PH-007","to":"PH-006","note":"publish 는 CI 통과 후"}
+  ],
+  "feasibility_hint_summary": {
+    "high": ["FR-FIX-004","FR-FIX-005","FR-FIX-006","FR-FIX-007","FR-FIX-008","FR-FIX-009","FR-CONV-001~014","NFR-CONV-001","FR-REL-001","MIG-REL-001","NFR-TEST-001","FR-TEST-001","FR-TEST-002","FR-MOD-007"],
+    "medium": ["IR-REL-001 (CI 매트릭스 + JaCoCo 통합 — 외부 GitHub Actions 환경 의존)"],
+    "low": [],
+    "unknown": []
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "task_id": "T-PH004-12",
+  "started_at": "2026-05-20T00:00:00.000Z",
+  "completed_at": "2026-05-20T00:00:00.000Z",
+  "phase1": {
+    "note": "GREEN-only task. RED is T-PH004-11 (separate task) — tests already drafted."
+  },
+  "phase2": {
+    "impl_iters": [
+      {
+        "iter": 1,
+        "files_changed": [
+          "common/src/main/java/adapter/common/ConverterSupport.java",
+          "servlet5/src/main/java/com/snoworca/ServletAdapter.java",
+          "servlet6/src/main/java/com/snoworca/ServletAdapter.java",
+          "servlet61/src/main/java/com/snoworca/ServletAdapter.java"
+        ],
+        "note": "ConverterSupport: LOGGER_NAME/DIAGNOSTICS_KEY 상수 + LOGGING_DEDUP ConcurrentHashMap + DIAGNOSTICS ConcurrentHashMap<String,AtomicLong> + logFallbackOnce / initDiagnosticsFromSystemProperty / incrementDiagnostics / diagnosticsSnapshot / resetLoggingDedupForTesting / resetDiagnosticsForTesting 도입. ServletAdapter (servlet5/6/61 동일 시그니처): diagnostics() static method 가 initDiagnosticsFromSystemProperty 호출 후 diagnosticsSnapshot 반환."
+      },
+      {
+        "iter": 2,
+        "files_changed": [
+          "common/src/main/java/adapter/common/ConverterSupport.java"
+        ],
+        "note": "logFallbackOnce message 포맷 수정 — '[methodKey] message' 형태로 methodKey 를 LogRecord message 에 포함시켜 RecordingHandler.countContaining(methodKey) assertion 정합. Test 가 methodKey 토큰을 메시지에서 grep 하므로 raw message 만 emit 하면 0건으로 count → fail."
+      }
+    ],
+    "green_evidence": {
+      "command": "./gradlew :servlet5:test --tests *shouldProvideFallbackVisibilityWithLoggingAndDiagnostics*",
+      "exit_code": 0,
+      "timestamp": "2026-05-20T00:00:00.000Z"
+    },
+    "green_evidence_meta": {
+      "tests_run": 3,
+      "tests_passed": 3,
+      "passed_test_case_ids": [
+        "TC-REQ-FR-CONV-012-AC1-02",
+        "TC-REQ-FR-CONV-012-AC2-02",
+        "TC-REQ-FR-CONV-012-AC3-02"
+      ],
+      "supplementary_LoggingDedupTest": "2/2 PASS (shouldDedupLogFallbackPerMethodKeyAndRespectLevel + shouldReemitAfterResetForTesting)"
+    }
+  },
+  "phase3": {
+    "regression": {
+      "scope": "full",
+      "passed": true,
+      "command": "./gradlew test",
+      "exit_code": 0,
+      "note": "Full regression across common + servlet5 + servlet6 + servlet61 PASS."
+    },
+    "mcp_calls": []
+  },
+  "dod_check": [
+    {"item": "green 단계: 3개 test case 가 모두 통과(green)", "satisfied": true, "evidence": "DiagnosticsTest _FRCONV012_AC1/AC2/AC3 3/3 PASS"},
+    {"item": "green 단계: 동일 test 가 모두 통과(green) 함을 확인", "satisfied": true, "evidence": "exit_code=0, tests_passed=3"}
+  ]
+}

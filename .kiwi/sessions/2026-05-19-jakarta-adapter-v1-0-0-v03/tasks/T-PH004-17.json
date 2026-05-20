@@ -1,0 +1,65 @@
+{
+  "task_id": "T-PH004-17",
+  "phase_id": "PH-004",
+  "started_at": "2026-05-19T17:40:00Z",
+  "completed_at": "2026-05-19T17:46:00Z",
+  "type": "code",
+  "tdd_phase": "red",
+  "phase1": {
+    "tdd_draft_iters": [
+      {
+        "iter": 1,
+        "file_paths": [
+          "servlet6/src/test/java/com/snoworca/RequestIdTest.java",
+          "servlet61/src/test/java/com/snoworca/RequestIdTest.java"
+        ]
+      }
+    ],
+    "red_evidence": {
+      "command": ".\\gradlew.bat :servlet6:test :servlet61:test --tests *shouldImplementJakarta6NewAbstractMethods*",
+      "exit_code": 1,
+      "captured_failure": "servlet6: 2 tests completed, 2 failed (FR-CONV-001 AC-1 + AC-2). servlet61: 2 tests completed, 2 failed (FR-CONV-001 AC-1 + AC-2). All 4 RED tests fail with: getRequestId returns null (placeholder), getProtocolRequestId returns null (placeholder), getServletConnection throws UnsupportedOperationException (placeholder).",
+      "timestamp": "2026-05-19T17:44:52Z"
+    },
+    "red_evidence_meta": {
+      "matched_signatures": [
+        "adapter.jakarta.servlet6.ServletRequest#getRequestId() returns null (placeholder pending PH-004)",
+        "adapter.jakarta.servlet6.ServletRequest#getProtocolRequestId() returns null (placeholder pending PH-004)",
+        "adapter.jakarta.servlet6.ServletRequest#getServletConnection() throws UnsupportedOperationException (placeholder pending PH-004)",
+        "adapter.jakarta.servlet61.ServletRequest#getRequestId() returns null (placeholder pending PH-004)",
+        "adapter.jakarta.servlet61.ServletRequest#getProtocolRequestId() returns null (placeholder pending PH-004)",
+        "adapter.jakarta.servlet61.ServletRequest#getServletConnection() throws UnsupportedOperationException (placeholder pending PH-004)"
+      ],
+      "test_case_ids": [
+        "TC-REQ-FR-CONV-001-AC1-01",
+        "TC-REQ-FR-CONV-001-AC2-01"
+      ],
+      "expected_signature_match": true,
+      "regression_impact": "0 — pre-existing servlet6/61 tests (AdapterUnwrapAllClassesTest, FallbackPolicyTest) still pass; only the new RED tests fail in both modules (4/4 RED).",
+      "note": "Sidecar test_cases[] declares servlet6 paths only, but task.files[] + test_files[] include both servlet6 and servlet61. Per pair convention (cf. T-PH004-15), both modules receive mirrored RED tests with identical symbol names."
+    }
+  },
+  "phase2": {
+    "skipped_reason": "Pair tdd-red task — green/impl handled by T-PH004-18."
+  },
+  "phase3": {
+    "regression": {
+      "scope": "impacted-only",
+      "passed": "pre-existing servlet6/61 tests unaffected",
+      "failed": 4,
+      "note": "4 failures are the intended RED tests (FR-CONV-001 AC-1 + AC-2 in servlet6 + servlet61)."
+    },
+    "mcp_calls": [
+      {
+        "tool": "update_status",
+        "args": { "id": "FR-CONV-001", "status": "in_progress" },
+        "ok": true,
+        "note": "RED test authored; impl pending T-PH004-18."
+      }
+    ]
+  },
+  "dod_check": [
+    { "item": "red 단계: 2개 test case 작성됨 (각 REQ AC 별 1개씩)", "satisfied": true, "evidence": "servlet6 + servlet61 RequestIdTest.java each declare 2 @Test methods (AC-1, AC-2) → 4 test cases total across both modules" },
+    { "item": "red 단계: 작성된 test 가 모두 실패(red) 함을 확인", "satisfied": true, "evidence": "gradle exit_code=1; 4/4 tests failed with placeholder-related assertion messages; expected_failure_signature semantically matched (placeholder behavior fails SRS-required behavior)" }
+  ]
+}

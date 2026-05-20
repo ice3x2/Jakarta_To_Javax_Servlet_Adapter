@@ -1,0 +1,136 @@
+{
+  "run_id": "2026-05-19.jakarta-adapter.v100.v01",
+  "generated_at": "2026-05-19",
+  "source": "Re-validated from kiwi-planner code_context.json (29 anchors + 9 addition_sites). Anchors confirm: src/main/java/adapter/servletElementConverter/StreamConverter.java L41+L93 (readLine bug), src/main/java/adapter/jakarta/servlet/http/Part.java L50-52 (self-recursion), src/main/java/adapter/jakarta/servlet/ServletResponse.java L81-83 (narrow cast), src/main/java/adapter/jakarta/servlet/ServletContext.java L337-339 + adapter/javax/servlet/ServletContext.java L362-364 (encoding swap), src/main/java/adapter/jakarta/servlet/ServletRequest.java L124 + L173-180 (getRealPath + getContentLengthLong), src/main/java/adapter/servletElementConverter/ServletReqResConverter.java L14/L18/L22/L26 (instanceof namespace), src/main/java/adapter/jakarta/servlet/http/HttpServletRequest.java L166-174 (getCookies null).",
+  "modules": [
+    {
+      "path": "src/main/java/com/snoworca/",
+      "exports": ["ServletAdapter (static factory, 10+ overloads)"],
+      "complexity_estimate": "low",
+      "loc_total": 80,
+      "v1.0.0_target": "servlet5/src/main/java/com/snoworca/ (이동)"
+    },
+    {
+      "path": "src/main/java/adapter/jakarta/servlet/",
+      "exports": ["ServletContext", "ServletRequest", "ServletResponse", "FilterRegistration"],
+      "complexity_estimate": "medium",
+      "loc_total": 608,
+      "v1.0.0_target": "servlet5/src/main/java/adapter/jakarta/servlet5/ (이동 + 패키지 변경 + 결함 수정)"
+    },
+    {
+      "path": "src/main/java/adapter/jakarta/servlet/http/",
+      "exports": ["HttpServletRequest", "HttpServletResponse", "Part", "HttpSession", "HttpSessionContext", "HttpUpgradeHandler"],
+      "complexity_estimate": "medium",
+      "loc_total": 560,
+      "v1.0.0_target": "servlet5/src/main/java/adapter/jakarta/servlet5/http/ (이동 + 결함 수정)"
+    },
+    {
+      "path": "src/main/java/adapter/javax/servlet/",
+      "exports": ["ServletContext", "ServletRequest", "ServletResponse", "FilterRegistration"],
+      "complexity_estimate": "medium",
+      "loc_total": 678,
+      "v1.0.0_target": "servlet5/src/main/java/adapter/javax/servlet5/ (이동 + 결함 수정)"
+    },
+    {
+      "path": "src/main/java/adapter/javax/servlet/http/",
+      "exports": ["HttpServletRequest", "HttpServletResponse", "Part", "HttpSession"],
+      "complexity_estimate": "medium",
+      "loc_total": 649,
+      "v1.0.0_target": "servlet5/src/main/java/adapter/javax/servlet5/http/ (이동 + 대칭 결함 수정)"
+    },
+    {
+      "path": "src/main/java/adapter/servletElementConverter/",
+      "exports": ["ServletConverter", "StreamConverter", "AsyncContextConverter", "DescriptorConverter", "ServletReqResConverter", "EnumsConverter", "HttpComponentConverter", "ReadListenerConverter", "WriteListenerConverter"],
+      "complexity_estimate": "high",
+      "loc_total": 1135,
+      "v1.0.0_target": "common/ (4 ABI-호환) + servlet5/src/main/java/adapter/servletElementConverter5/ (잔여 5개) 분리"
+    },
+    {
+      "path": "common/ (신설)",
+      "exports": ["EnumsConverter", "HttpComponentConverter", "ReadListenerConverter", "WriteListenerConverter", "ConverterSupport", "AdapterUnwrap<T>"],
+      "complexity_estimate": "low",
+      "loc_total": 0,
+      "v1.0.0_target": "신규 모듈, jakarta 5.0.0 compileOnly, Java 8"
+    },
+    {
+      "path": "servlet6/ (신설)",
+      "exports": ["ServletAdapter6", "adapter.jakarta.servlet6.*", "adapter.javax.servlet6.*", "EmptyHttpSessionContext"],
+      "complexity_estimate": "high",
+      "loc_total": 0,
+      "v1.0.0_target": "신규 모듈, jakarta 6.0.0 compileOnly, Java 11, servlet5 사본 + 6.0 신규 추상 메서드 (getRequestId/getProtocolRequestId/getServletConnection) + 폴백 정책 실행 분기"
+    },
+    {
+      "path": "servlet61/ (신설)",
+      "exports": ["ServletAdapter61", "adapter.jakarta.servlet61.*", "adapter.javax.servlet61.*"],
+      "complexity_estimate": "high",
+      "loc_total": 0,
+      "v1.0.0_target": "신규 모듈, jakarta 6.1.0 compileOnly, Java 17, servlet6 사본 + sendRedirect(loc,sc,clearBuffer) 신규 오버로드"
+    },
+    {
+      "path": "bom/ (신설)",
+      "exports": ["java-platform constraints"],
+      "complexity_estimate": "low",
+      "loc_total": 0,
+      "v1.0.0_target": "신규 모듈, BOM POM dependencyManagement"
+    }
+  ],
+  "trace_validation": [
+    {"req_id": "FR-MOD-001", "trace_paths": ["settings.gradle", "build.gradle", "{common,servlet5,servlet6,servlet61,bom}/build.gradle"], "all_paths_exist": "mixed", "external_paths_detected": [], "note": "현 settings.gradle/build.gradle 존재. 4개 신규 모듈 디렉토리는 addition_sites — Phase 1 작업"},
+    {"req_id": "FR-MOD-002", "trace_paths": ["{common,servlet5,servlet6,servlet61}/build.gradle"], "all_paths_exist": false, "external_paths_detected": [], "note": "4개 모두 신규 — addition_sites"},
+    {"req_id": "FR-MOD-003", "trace_paths": ["{servlet5,servlet6,servlet61}/build.gradle"], "all_paths_exist": false, "external_paths_detected": [], "note": "Java toolchain 설정. addition_sites"},
+    {"req_id": "FR-MOD-004", "trace_paths": ["src/main/java/adapter/servletElementConverter/{Enums,HttpComponent,ReadListener,WriteListener}Converter.java", "common/src/main/java/adapter/common/ConverterSupport.java"], "all_paths_exist": "mixed", "external_paths_detected": [], "note": "원본 4개 파일 존재. ConverterSupport 는 신규"},
+    {"req_id": "FR-MOD-005", "trace_paths": ["servlet5/src/main/java/adapter/jakarta/servlet5/**", "servlet5/src/main/java/adapter/javax/servlet5/**", "servlet5/src/main/java/adapter/servletElementConverter5/**"], "all_paths_exist": false, "external_paths_detected": [], "note": "패키지 재배치. 모두 addition_sites"},
+    {"req_id": "FR-MOD-006", "trace_paths": ["src/main/java/com/snoworca/ServletAdapter.java", "{servlet5,servlet6,servlet61}/src/main/java/com/snoworca/ServletAdapter{5,6,61}.java"], "all_paths_exist": "mixed", "external_paths_detected": [], "note": "원본 ServletAdapter 존재 (servlet5 로 이동). 별칭 3개는 신규"},
+    {"req_id": "FR-MOD-007", "trace_paths": ["bom/build.gradle"], "all_paths_exist": false, "external_paths_detected": [], "note": "신규"},
+    {"req_id": "CON-MOD-001", "trace_paths": ["{servlet5,servlet6,servlet61}/build.gradle"], "all_paths_exist": false, "external_paths_detected": [], "note": "검증 대상 build.gradle 신규"},
+    {"req_id": "NFR-MOD-001", "trace_paths": ["{common,servlet5,servlet6,servlet61}/build.gradle"], "all_paths_exist": false, "external_paths_detected": [], "note": "manifest 설정 신규"},
+    {"req_id": "FR-CONV-001", "trace_paths": ["servlet6/**", "servlet61/**"], "all_paths_exist": false, "external_paths_detected": [], "note": "6.0/6.1 신규 추상 메서드 구현"},
+    {"req_id": "FR-CONV-002", "trace_paths": [], "all_paths_exist": true, "external_paths_detected": [], "note": "설계 원칙 — Reflection Contract Test 로 검증"},
+    {"req_id": "FR-CONV-003", "trace_paths": ["common/src/main/java/adapter/common/AdapterUnwrap.java", "src/main/java/adapter/jakarta/servlet/**", "src/main/java/com/snoworca/ServletAdapter.java"], "all_paths_exist": "mixed", "external_paths_detected": [], "note": "AdapterUnwrap marker 신규, 모든 어댑터에 implements 추가"},
+    {"req_id": "FR-CONV-004", "trace_paths": [], "all_paths_exist": true, "external_paths_detected": [], "note": "equals/hashCode override — 모든 어댑터 분산"},
+    {"req_id": "FR-CONV-005", "trace_paths": [], "all_paths_exist": true, "external_paths_detected": [], "note": "예외 변환 try/catch — 분산 적용"},
+    {"req_id": "FR-CONV-006", "trace_paths": [], "all_paths_exist": true, "external_paths_detected": [], "note": "eager snapshot — 분산. FR-FIX-009 가 대표 anchor"},
+    {"req_id": "FR-CONV-007", "trace_paths": ["src/main/java/adapter/servletElementConverter/StreamConverter.java"], "all_paths_exist": true, "external_paths_detected": [], "note": "FR-FIX-001 anchor 공유"},
+    {"req_id": "FR-CONV-008", "trace_paths": ["src/main/java/adapter/jakarta/servlet/ServletResponse.java"], "all_paths_exist": true, "external_paths_detected": [], "note": "FR-FIX-003 anchor 공유"},
+    {"req_id": "FR-CONV-009", "trace_paths": [], "all_paths_exist": true, "external_paths_detected": [], "note": "부수효과 보존 — 설계 원칙"},
+    {"req_id": "FR-CONV-010", "trace_paths": ["servlet6/src/main/java/adapter/jakarta/servlet6/http/**", "src/main/java/adapter/javax/servlet/http/Cookie.java"], "all_paths_exist": "mixed", "external_paths_detected": [], "note": "폴백 정책 매트릭스 — servlet6/servlet61 에 실제 분기 구현"},
+    {"req_id": "FR-CONV-011", "trace_paths": ["servlet5/src/main/java/com/snoworca/ServletAdapter.java", "common/src/main/java/adapter/common/ConverterSupport.java"], "all_paths_exist": false, "external_paths_detected": [], "note": "strict 모드 토글 — 신규"},
+    {"req_id": "FR-CONV-012", "trace_paths": ["common/src/main/java/adapter/common/ConverterSupport.java"], "all_paths_exist": false, "external_paths_detected": [], "note": "Logger + diagnostics Map — 신규"},
+    {"req_id": "FR-CONV-013", "trace_paths": ["src/main/java/adapter/javax/servlet/http/Cookie.java"], "all_paths_exist": "unknown", "external_paths_detected": [], "note": "Cookie 어댑터 — 0.0.1 에 Cookie 어댑터 클래스가 있는지 확인 필요. v1.0.0 에서 setAttribute/getAttribute/getAttributes 폴백 구현"},
+    {"req_id": "NFR-CONV-001", "trace_paths": ["src/main/java/adapter/jakarta/servlet/http/HttpUpgradeHandler.java"], "all_paths_exist": true, "external_paths_detected": [], "note": "ThreadLocal 패턴 잠금 — BM10 회귀 테스트"},
+    {"req_id": "FR-CONV-014", "trace_paths": ["{servlet5,servlet6,servlet61}/src/test/java/**"], "all_paths_exist": false, "external_paths_detected": [], "note": "모듈별 정책 적용 범위 검증 — 테스트 분산"},
+    {"req_id": "FR-FIX-001", "trace_paths": ["src/main/java/adapter/servletElementConverter/StreamConverter.java"], "all_paths_exist": true, "external_paths_detected": [], "note": "L41, L93 확인 완료 (readLine 호출 결함 grep 검증)"},
+    {"req_id": "FR-FIX-002", "trace_paths": ["src/main/java/adapter/jakarta/servlet/http/Part.java", "src/main/java/adapter/javax/servlet/http/Part.java"], "all_paths_exist": true, "external_paths_detected": [], "note": "L50-52 자기 재귀 결함"},
+    {"req_id": "FR-FIX-003", "trace_paths": ["src/main/java/adapter/jakarta/servlet/ServletResponse.java"], "all_paths_exist": true, "external_paths_detected": [], "note": "L81-83 narrow cast 결함"},
+    {"req_id": "FR-FIX-004", "trace_paths": ["src/main/java/adapter/jakarta/servlet/ServletContext.java"], "all_paths_exist": true, "external_paths_detected": [], "note": "L337-339 setResponseCharacterEncoding → setRequestCharacterEncoding"},
+    {"req_id": "FR-FIX-005", "trace_paths": ["src/main/java/adapter/javax/servlet/ServletContext.java"], "all_paths_exist": true, "external_paths_detected": [], "note": "L362-364 setRequestCharacterEncoding → setResponseCharacterEncoding"},
+    {"req_id": "FR-FIX-006", "trace_paths": ["src/main/java/adapter/jakarta/servlet/ServletRequest.java", "src/main/java/adapter/javax/servlet/ServletRequest.java"], "all_paths_exist": true, "external_paths_detected": [], "note": "L173-177 try/catch fallback"},
+    {"req_id": "FR-FIX-007", "trace_paths": ["src/main/java/adapter/jakarta/servlet/ServletRequest.java", "src/main/java/adapter/jakarta/servlet/ServletContext.java"], "all_paths_exist": true, "external_paths_detected": [], "note": "L124 getRealPath @Override"},
+    {"req_id": "FR-FIX-008", "trace_paths": ["src/main/java/adapter/servletElementConverter/ServletReqResConverter.java"], "all_paths_exist": true, "external_paths_detected": [], "note": "L14/L18/L22/L26 instanceof namespace 오류"},
+    {"req_id": "FR-FIX-009", "trace_paths": ["src/main/java/adapter/jakarta/servlet/http/HttpServletRequest.java", "src/main/java/adapter/javax/servlet/http/HttpServletRequest.java"], "all_paths_exist": true, "external_paths_detected": [], "note": "L166-174 cookies 배열 null 체크 누락"},
+    {"req_id": "FR-TEST-001", "trace_paths": ["src/test/java/com/snoworca/**", "{servlet5,servlet6,servlet61}/src/test/java/**"], "all_paths_exist": "mixed", "external_paths_detected": [], "note": "현 5% 커버리지 테스트 2건 존재. 신규 작성 대량 필요"},
+    {"req_id": "FR-TEST-002", "trace_paths": ["common/src/testFixtures/java/com/snoworca/contract/DelegationContractTest.java"], "all_paths_exist": false, "external_paths_detected": [], "note": "Reflection 기반 driver 신규"},
+    {"req_id": "FR-TEST-003", "trace_paths": ["{servlet5,servlet6,servlet61}/src/test/java/com/snoworca/integration/TomcatRunner.java"], "all_paths_exist": false, "external_paths_detected": ["org.apache.tomcat.embed:tomcat-embed-core:10.0.27/10.1.30/11.0.0"], "note": "Tomcat embed testImplementation — 외부 의존"},
+    {"req_id": "FR-TEST-004", "trace_paths": ["servlet5/src/test/java/com/snoworca/regression/BugMuseumTest.java"], "all_paths_exist": false, "external_paths_detected": [], "note": "BM01~BM10 회귀 테스트 신규"},
+    {"req_id": "FR-TEST-005", "trace_paths": [], "all_paths_exist": true, "external_paths_detected": [], "note": "CI 매트릭스 레벨 — OPS-TEST-001 의존"},
+    {"req_id": "NFR-TEST-001", "trace_paths": ["{servlet5,servlet6,servlet61}/build.gradle"], "all_paths_exist": false, "external_paths_detected": [], "note": "JaCoCo 게이트 신규"},
+    {"req_id": "OPS-TEST-001", "trace_paths": [".github/workflows/ci.yml"], "all_paths_exist": false, "external_paths_detected": ["GitHub Actions runner ubuntu-latest/windows-latest"], "note": "CI yaml 신규"},
+    {"req_id": "IR-REL-001", "trace_paths": ["settings.gradle", "build.gradle", "{common,servlet5,servlet6,servlet61,bom}/build.gradle"], "all_paths_exist": "mixed", "external_paths_detected": [], "note": "rootProject.name 변경 + version 1.0.0 + publishing"},
+    {"req_id": "FR-REL-001", "trace_paths": ["README.md"], "all_paths_exist": true, "external_paths_detected": [], "note": "README 전면 개정 — 호환성 매트릭스 + 정책 명시"},
+    {"req_id": "MIG-REL-001", "trace_paths": [], "all_paths_exist": "unknown", "external_paths_detected": ["OQ-001 사용자 결정"], "note": "옵션 A (별도 alias artifact) 또는 옵션 B (alias 패키지) — OQ-001 미결로 anchor 확정 불가"},
+    {"req_id": "OPS-REL-001", "trace_paths": ["{common,servlet5,servlet6,servlet61,bom}/build.gradle"], "all_paths_exist": false, "external_paths_detected": ["Sonatype OSSRH 계정", "com.clipsoft namespace 점유", "GPG 키 + 키서버 등록", "GitHub Secrets"], "note": "OQ-003 외부 의존"}
+  ],
+  "code_metrics": {
+    "total_files": 31,
+    "total_loc_main": 4109,
+    "total_loc_test": 50,
+    "test_coverage_files": 2,
+    "test_coverage_estimate_percent": 5,
+    "new_module_directories_required": 5,
+    "new_files_estimated": 60,
+    "addition_sites_count": 9,
+    "anchors_with_existing_code": 29,
+    "anchors_unique_files": 19,
+    "external_infra_dependencies": ["Tomcat embed 10.0.27/10.1.30/11.0.0", "Tomcat embed 9.0.85 (javax-host)", "Sonatype OSSRH", "GitHub Actions runners", "GPG keyserver"]
+  }
+}

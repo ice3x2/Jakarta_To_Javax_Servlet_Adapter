@@ -1,0 +1,555 @@
+[
+  {
+    "id": "CON-MOD-001",
+    "stability": "evolving",
+    "status": "planned",
+    "type": "constraint",
+    "ac_total": 3,
+    "ac_ids": [
+      "AC-1",
+      "AC-2",
+      "AC-3"
+    ]
+  },
+  {
+    "id": "FR-CONV-001",
+    "stability": "evolving",
+    "status": "planned",
+    "type": "functional",
+    "ac_total": 2,
+    "ac_ids": [
+      "AC-1",
+      "AC-2"
+    ]
+  },
+  {
+    "id": "FR-CONV-002",
+    "stability": "evolving",
+    "status": "planned",
+    "type": "functional",
+    "ac_total": 2,
+    "ac_ids": [
+      "AC-1",
+      "AC-2"
+    ]
+  },
+  {
+    "id": "FR-CONV-003",
+    "stability": "evolving",
+    "status": "planned",
+    "type": "functional",
+    "ac_total": 4,
+    "ac_ids": [
+      "AC-1",
+      "AC-2",
+      "AC-3",
+      "AC-4"
+    ]
+  },
+  {
+    "id": "FR-CONV-004",
+    "stability": "evolving",
+    "status": "planned",
+    "type": "functional",
+    "ac_total": 3,
+    "ac_ids": [
+      "AC-1",
+      "AC-2",
+      "AC-3"
+    ]
+  },
+  {
+    "id": "FR-CONV-005",
+    "stability": "evolving",
+    "status": "planned",
+    "type": "functional",
+    "ac_total": 3,
+    "ac_ids": [
+      "AC-1",
+      "AC-2",
+      "AC-3"
+    ]
+  },
+  {
+    "id": "FR-CONV-006",
+    "stability": "evolving",
+    "status": "planned",
+    "type": "functional",
+    "ac_total": 3,
+    "ac_ids": [
+      "AC-1",
+      "AC-2",
+      "AC-3"
+    ]
+  },
+  {
+    "id": "FR-CONV-007",
+    "stability": "evolving",
+    "status": "planned",
+    "type": "functional",
+    "ac_total": 9,
+    "ac_ids": [
+      "AC-1",
+      "AC-2",
+      "AC-3",
+      "AC-4",
+      "AC-5",
+      "AC-6",
+      "AC-7",
+      "AC-8",
+      "AC-9"
+    ]
+  },
+  {
+    "id": "FR-CONV-008",
+    "stability": "evolving",
+    "status": "planned",
+    "type": "functional",
+    "ac_total": 2,
+    "ac_ids": [
+      "AC-1",
+      "AC-2"
+    ]
+  },
+  {
+    "id": "FR-CONV-009",
+    "stability": "evolving",
+    "status": "planned",
+    "type": "functional",
+    "ac_total": 7,
+    "ac_ids": [
+      "AC-1",
+      "AC-2",
+      "AC-3",
+      "AC-4",
+      "AC-5",
+      "AC-6",
+      "AC-7"
+    ]
+  },
+  {
+    "id": "FR-CONV-010",
+    "stability": "evolving",
+    "status": "planned",
+    "type": "functional",
+    "ac_total": 3,
+    "ac_ids": [
+      "AC-1",
+      "AC-2",
+      "AC-3"
+    ]
+  },
+  {
+    "id": "FR-CONV-011",
+    "stability": "evolving",
+    "status": "planned",
+    "type": "functional",
+    "ac_total": 4,
+    "ac_ids": [
+      "AC-1",
+      "AC-2",
+      "AC-3",
+      "AC-4"
+    ]
+  },
+  {
+    "id": "FR-CONV-012",
+    "stability": "evolving",
+    "status": "planned",
+    "type": "functional",
+    "ac_total": 3,
+    "ac_ids": [
+      "AC-1",
+      "AC-2",
+      "AC-3"
+    ]
+  },
+  {
+    "id": "FR-CONV-013",
+    "stability": "evolving",
+    "status": "planned",
+    "type": "functional",
+    "ac_total": 4,
+    "ac_ids": [
+      "AC-1",
+      "AC-2",
+      "AC-3",
+      "AC-4"
+    ]
+  },
+  {
+    "id": "FR-CONV-014",
+    "stability": "evolving",
+    "status": "planned",
+    "type": "functional",
+    "ac_total": 3,
+    "ac_ids": [
+      "AC-1",
+      "AC-2",
+      "AC-3"
+    ]
+  },
+  {
+    "id": "FR-FIX-001",
+    "stability": "evolving",
+    "status": "planned",
+    "type": "functional",
+    "ac_total": 4,
+    "ac_ids": [
+      "AC-1",
+      "AC-2",
+      "AC-3",
+      "AC-4"
+    ]
+  },
+  {
+    "id": "FR-FIX-002",
+    "stability": "evolving",
+    "status": "planned",
+    "type": "functional",
+    "ac_total": 4,
+    "ac_ids": [
+      "AC-1",
+      "AC-2",
+      "AC-3",
+      "AC-4"
+    ]
+  },
+  {
+    "id": "FR-FIX-003",
+    "stability": "evolving",
+    "status": "planned",
+    "type": "functional",
+    "ac_total": 3,
+    "ac_ids": [
+      "AC-1",
+      "AC-2",
+      "AC-3"
+    ]
+  },
+  {
+    "id": "FR-FIX-004",
+    "stability": "evolving",
+    "status": "planned",
+    "type": "functional",
+    "ac_total": 4,
+    "ac_ids": [
+      "AC-1",
+      "AC-2",
+      "AC-3",
+      "AC-4"
+    ]
+  },
+  {
+    "id": "FR-FIX-005",
+    "stability": "evolving",
+    "status": "planned",
+    "type": "functional",
+    "ac_total": 3,
+    "ac_ids": [
+      "AC-1",
+      "AC-2",
+      "AC-3"
+    ]
+  },
+  {
+    "id": "FR-FIX-006",
+    "stability": "evolving",
+    "status": "planned",
+    "type": "functional",
+    "ac_total": 2,
+    "ac_ids": [
+      "AC-1",
+      "AC-2"
+    ]
+  },
+  {
+    "id": "FR-FIX-007",
+    "stability": "evolving",
+    "status": "planned",
+    "type": "functional",
+    "ac_total": 3,
+    "ac_ids": [
+      "AC-1",
+      "AC-2",
+      "AC-3"
+    ]
+  },
+  {
+    "id": "FR-FIX-008",
+    "stability": "evolving",
+    "status": "planned",
+    "type": "functional",
+    "ac_total": 4,
+    "ac_ids": [
+      "AC-1",
+      "AC-2",
+      "AC-3",
+      "AC-4"
+    ]
+  },
+  {
+    "id": "FR-FIX-009",
+    "stability": "evolving",
+    "status": "planned",
+    "type": "functional",
+    "ac_total": 2,
+    "ac_ids": [
+      "AC-1",
+      "AC-2"
+    ]
+  },
+  {
+    "id": "FR-MOD-001",
+    "stability": "evolving",
+    "status": "planned",
+    "type": "functional",
+    "ac_total": 4,
+    "ac_ids": [
+      "AC-1",
+      "AC-2",
+      "AC-3",
+      "AC-4"
+    ]
+  },
+  {
+    "id": "FR-MOD-002",
+    "stability": "evolving",
+    "status": "planned",
+    "type": "functional",
+    "ac_total": 3,
+    "ac_ids": [
+      "AC-1",
+      "AC-2",
+      "AC-3"
+    ]
+  },
+  {
+    "id": "FR-MOD-003",
+    "stability": "evolving",
+    "status": "planned",
+    "type": "functional",
+    "ac_total": 4,
+    "ac_ids": [
+      "AC-1",
+      "AC-2",
+      "AC-3",
+      "AC-4"
+    ]
+  },
+  {
+    "id": "FR-MOD-004",
+    "stability": "evolving",
+    "status": "planned",
+    "type": "functional",
+    "ac_total": 3,
+    "ac_ids": [
+      "AC-1",
+      "AC-2",
+      "AC-3"
+    ]
+  },
+  {
+    "id": "FR-MOD-005",
+    "stability": "evolving",
+    "status": "planned",
+    "type": "functional",
+    "ac_total": 2,
+    "ac_ids": [
+      "AC-1",
+      "AC-2"
+    ]
+  },
+  {
+    "id": "FR-MOD-006",
+    "stability": "evolving",
+    "status": "planned",
+    "type": "functional",
+    "ac_total": 3,
+    "ac_ids": [
+      "AC-1",
+      "AC-2",
+      "AC-3"
+    ]
+  },
+  {
+    "id": "FR-MOD-007",
+    "stability": "evolving",
+    "status": "planned",
+    "type": "functional",
+    "ac_total": 2,
+    "ac_ids": [
+      "AC-1",
+      "AC-2"
+    ]
+  },
+  {
+    "id": "FR-REL-001",
+    "stability": "evolving",
+    "status": "planned",
+    "type": "functional",
+    "ac_total": 3,
+    "ac_ids": [
+      "AC-1",
+      "AC-2",
+      "AC-3"
+    ]
+  },
+  {
+    "id": "FR-TEST-001",
+    "stability": "evolving",
+    "status": "planned",
+    "type": "functional",
+    "ac_total": 4,
+    "ac_ids": [
+      "AC-1",
+      "AC-2",
+      "AC-3",
+      "AC-4"
+    ]
+  },
+  {
+    "id": "FR-TEST-002",
+    "stability": "evolving",
+    "status": "planned",
+    "type": "functional",
+    "ac_total": 4,
+    "ac_ids": [
+      "AC-1",
+      "AC-2",
+      "AC-3",
+      "AC-4"
+    ]
+  },
+  {
+    "id": "FR-TEST-003",
+    "stability": "draft",
+    "status": "planned",
+    "type": "functional",
+    "ac_total": 5,
+    "ac_ids": [
+      "AC-1",
+      "AC-2",
+      "AC-3",
+      "AC-4",
+      "AC-5"
+    ]
+  },
+  {
+    "id": "FR-TEST-004",
+    "stability": "evolving",
+    "status": "planned",
+    "type": "functional",
+    "ac_total": 5,
+    "ac_ids": [
+      "AC-1",
+      "AC-2",
+      "AC-3",
+      "AC-4",
+      "AC-5"
+    ]
+  },
+  {
+    "id": "FR-TEST-005",
+    "stability": "draft",
+    "status": "planned",
+    "type": "functional",
+    "ac_total": 4,
+    "ac_ids": [
+      "AC-1",
+      "AC-2",
+      "AC-3",
+      "AC-4"
+    ]
+  },
+  {
+    "id": "IR-REL-001",
+    "stability": "evolving",
+    "status": "planned",
+    "type": "interface",
+    "ac_total": 3,
+    "ac_ids": [
+      "AC-1",
+      "AC-2",
+      "AC-3"
+    ]
+  },
+  {
+    "id": "MIG-REL-001",
+    "stability": "evolving",
+    "status": "planned",
+    "type": "migration",
+    "ac_total": 8,
+    "ac_ids": [
+      "AC-1",
+      "AC-2",
+      "AC-3",
+      "AC-4",
+      "AC-5",
+      "AC-6",
+      "AC-7",
+      "AC-8"
+    ]
+  },
+  {
+    "id": "NFR-CONV-001",
+    "stability": "evolving",
+    "status": "planned",
+    "type": "non_functional",
+    "ac_total": 3,
+    "ac_ids": [
+      "AC-1",
+      "AC-2",
+      "AC-3"
+    ]
+  },
+  {
+    "id": "NFR-MOD-001",
+    "stability": "evolving",
+    "status": "planned",
+    "type": "non_functional",
+    "ac_total": 2,
+    "ac_ids": [
+      "AC-1",
+      "AC-2"
+    ]
+  },
+  {
+    "id": "NFR-TEST-001",
+    "stability": "evolving",
+    "status": "planned",
+    "type": "non_functional",
+    "ac_total": 3,
+    "ac_ids": [
+      "AC-1",
+      "AC-2",
+      "AC-3"
+    ]
+  },
+  {
+    "id": "OPS-REL-001",
+    "stability": "draft",
+    "status": "planned",
+    "type": "operational",
+    "ac_total": 4,
+    "ac_ids": [
+      "AC-1",
+      "AC-2",
+      "AC-3",
+      "AC-4"
+    ]
+  },
+  {
+    "id": "OPS-TEST-001",
+    "stability": "draft",
+    "status": "planned",
+    "type": "operational",
+    "ac_total": 4,
+    "ac_ids": [
+      "AC-1",
+      "AC-2",
+      "AC-3",
+      "AC-4"
+    ]
+  }
+]

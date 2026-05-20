@@ -1,0 +1,31 @@
+{
+  "task_id": "T-PH001-01",
+  "phase_id": "PH-001",
+  "type": "issue",
+  "tdd": {"applicable": false, "reason": "auto-exempt by type (issue)"},
+  "started_at": "2026-05-19T10:31:00Z",
+  "completed_at": "2026-05-19T10:51:00Z",
+  "phase1": {"skipped": "tdd-exempt"},
+  "phase2": {
+    "impl_iters": [{
+      "iter": 1,
+      "files_changed": ["docs/spec/00.index.md", "docs/spec/50.compatibility.srs.md"],
+      "edits": [
+        "00.index.md L105: OQ-001 row open → closed (strikethrough + closed reason)",
+        "50.compatibility.srs.md L30: Open Question label → 옵션 A out-of-scope + OQ-001 closed"
+      ]
+    }],
+    "formal_reviews": [{"iter": 1, "spawned": false, "self_validated": true, "reason": "issue-type meta-sync, no code/test review axes apply"}],
+    "prickly_reviews": [{"iter": 1, "spawned": false, "self_validated": true, "reason": "issue-type meta-sync, no code review axes apply"}],
+    "dod_check": [
+      {"item": "00.index.md §9 OQ-001 status closed", "satisfied": true, "evidence": "L105 strikethrough + 'closed (2026-05-19)' + D8 reference link"},
+      {"item": "50.compatibility.srs.md MIG-REL-001 옵션 B 분기 active", "satisfied": true, "evidence": "본문 L160~205 옵션 B 명시 (이미 작성된 상태), L30 out-of-scope 갱신"},
+      {"item": "T-PH007-04 가 D8 결정 참조", "satisfied": true, "evidence": "plan.md L1469/1477/1481 title+action+dod 모두 D8 옵션 B 명시"},
+      {"item": "GitHub Issue closed (있는 경우)", "satisfied": true, "note": "별도 GitHub Issue 없음 — D8 SSOT 가 80.decisions.md"}
+    ]
+  },
+  "phase3": {
+    "regression": {"scope": "skipped", "passed": 0, "failed": 0, "skip_reason": "docs-only changes"},
+    "mcp_calls": [{"tool": "add_completed_work", "ok": true, "summary_excerpt": "OQ-001 D8 결정문 SRS 인덱스 갱신..."}]
+  }
+}

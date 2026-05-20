@@ -1,0 +1,149 @@
+{
+  "run_id": "2026-05-19.jakarta-adapter.v100.v01",
+  "target": "v1.0.0",
+  "total_reqs_evaluated": 44,
+  "feasibility_distribution": {"high": 39, "medium": 4, "low": 1, "blocked": 0},
+  "score_aggregate": {
+    "min": 50,
+    "max": 92,
+    "median": 83,
+    "mean": 82,
+    "stddev_estimate": 9
+  },
+  "has_verification_summary": {
+    "true_count": 9,
+    "false_count": 35,
+    "rationale": "9 REQ 가 SRS 에 Verification Evidence 표를 보유 (FR-MOD-001/002, CON-MOD-001, FR-CONV-001, FR-FIX-001, FR-TEST-001/003, IR-REL-001). 35 REQ 는 표 부재 — 본 v1.0.0 가 신규 작성 SRS 이고 trace 작업이 진행 중이라 예상된 결과."
+  },
+  "scope_score_breakdown": {
+    "MOD": {"count": 9, "avg_score": 85, "min": 80, "max": 92, "feasibility_split": {"high": 9}},
+    "CONV": {"count": 15, "avg_score": 82, "min": 80, "max": 87, "feasibility_split": {"high": 15}},
+    "FIX": {"count": 9, "avg_score": 89, "min": 84, "max": 92, "feasibility_split": {"high": 9}},
+    "TEST": {"count": 7, "avg_score": 78, "min": 70, "max": 84, "feasibility_split": {"high": 4, "medium": 3}},
+    "REL": {"count": 4, "avg_score": 71, "min": 56, "max": 86, "feasibility_split": {"high": 2, "medium": 1, "low": 1}}
+  },
+  "target_verdict": "conditionally-ready",
+  "target_verdict_rationale": "44 REQ 중 38 (86%) 가 feasibility=high, 평균 score 82. 코드 anchor 명확하고 결정 D1~D7 확정. 단 2 REQ (MIG-REL-001 OQ-001 미결, OPS-REL-001 OQ-003 외부 의존) 가 사용자 결정/외부 인프라 의존으로 low. v1.0.0 출시 직전 OQ-001 종결 + OQ-003 외부 트랙 완료가 release-ready 전환 조건. 본 분석 시점에서는 conditionally-ready.",
+  "critical_blockers": [
+    {
+      "req_id": "MIG-REL-001",
+      "blocker": "OQ-001 미결: 0.x → 1.0 마이그레이션 옵션 A (별도 alias artifact) vs 옵션 B (alias 패키지) 사용자 결정 필요",
+      "severity": "HIGH",
+      "resolution_path": "plan Phase 0 Decision-Gate 에서 강제 결정 → 80.decisions.md §3 미해결 표 → §2 결정 매트릭스 이동",
+      "estimated_unblock": "v1.0.0 출시 직전 (Phase 0)"
+    },
+    {
+      "req_id": "OPS-REL-001",
+      "blocker": "OQ-003 외부 의존 미확인: Sonatype OSSRH 계정, com.clipsoft namespace 점유, GPG 키 등록, GitHub Secrets 4종",
+      "severity": "HIGH",
+      "resolution_path": "외부 트랙 병렬 진행 (코딩과 무관)",
+      "estimated_unblock": "Phase 6 (Maven Central 게시) 진입 전"
+    }
+  ],
+  "non_critical_concerns": [
+    {
+      "req_id": "FR-TEST-003",
+      "concern": "Tomcat embed 3+1 버전 testImplementation. 외부 의존이나 testImplementation 으로 격리됨. 통합 테스트는 Linux only.",
+      "severity": "MEDIUM"
+    },
+    {
+      "req_id": "FR-TEST-005",
+      "concern": "FR-TEST-003 + OPS-TEST-001 의존. 크로스 버전 검증은 CI 매트릭스 의존.",
+      "severity": "MEDIUM"
+    },
+    {
+      "req_id": "OPS-TEST-001",
+      "concern": "GitHub Actions 매트릭스 셀 6개 + 5분 wall clock 게이트. 외부 인프라 의존이나 표준 패턴.",
+      "severity": "MEDIUM"
+    },
+    {
+      "req_id": "OQ-004 (인계서에서 식별)",
+      "concern": "30.legacy-defect.srs.md 가 결함 9건 명시 / 80.decisions.md D1 SSOT 가 7건만 열거. F4 (instanceof) + D9 (getCookies null) 가 D1 결정 포함 여부 불명문화. 본 분석은 SRS 9건을 신뢰하나 사용자 명시 확인 권고.",
+      "severity": "LOW"
+    }
+  ],
+  "dependency_chains": [
+    {
+      "chain": ["FR-MOD-001", "FR-MOD-005", "MIG-REL-001"],
+      "chain_purpose": "모듈 분리 → 패키지 네이밍 → 마이그레이션 경로",
+      "weakest_link_score": 50,
+      "weakest_link_req": "MIG-REL-001",
+      "blocker_note": "MIG-REL-001 의 OQ-001 미결"
+    },
+    {
+      "chain": ["FR-MOD-001", "FR-MOD-007", "IR-REL-001", "OPS-REL-001"],
+      "chain_purpose": "모듈 분리 → BOM → Maven 좌표 → Maven Central 게시",
+      "weakest_link_score": 55,
+      "weakest_link_req": "OPS-REL-001",
+      "blocker_note": "OPS-REL-001 의 OQ-003 외부 의존"
+    },
+    {
+      "chain": ["FR-CONV-011", "FR-CONV-010", "FR-CONV-013", "FR-CONV-014"],
+      "chain_purpose": "strict 모드 → 폴백 정책 → Cookie attribute → 모듈별 적용",
+      "weakest_link_score": 80,
+      "weakest_link_req": "FR-CONV-012 (인접)",
+      "blocker_note": "모두 high — 안정적 chain"
+    },
+    {
+      "chain": ["FR-MOD-001", "FR-TEST-001", "FR-TEST-003", "FR-TEST-005"],
+      "chain_purpose": "모듈 분리 → L1 단위 → L3 통합 → L4 크로스 버전",
+      "weakest_link_score": 70,
+      "weakest_link_req": "FR-TEST-005",
+      "blocker_note": "Tomcat embed + CI 매트릭스 의존 medium"
+    },
+    {
+      "chain": ["FR-MOD-001", "FR-TEST-001", "FR-TEST-003", "NFR-TEST-001", "OPS-TEST-001"],
+      "chain_purpose": "모듈 → 단위 → 통합 → 커버리지 → CI 자동화",
+      "weakest_link_score": 73,
+      "weakest_link_req": "OPS-TEST-001",
+      "blocker_note": "GitHub Actions 외부 의존"
+    },
+    {
+      "chain": ["FR-CONV-007", "FR-FIX-001", "FR-TEST-004 (BM01)"],
+      "chain_purpose": "Stream 정확성 SPEC → 결함 수정 → 회귀 잠금",
+      "weakest_link_score": 82,
+      "weakest_link_req": "FR-TEST-004",
+      "blocker_note": "모두 high — 표준 TDD chain"
+    }
+  ],
+  "stability_drift_candidates": [
+    {
+      "req_id": "MIG-REL-001",
+      "current_stability": null,
+      "drift_direction": "draft (유지)",
+      "rationale": "OQ-001 미결 — 본질적으로 draft. 사용자 결정 후 evolving 으로 승급 가능."
+    },
+    {
+      "req_id": "OPS-REL-001",
+      "current_stability": null,
+      "drift_direction": "draft (유지)",
+      "rationale": "OQ-003 외부 의존 — 외부 트랙 진행 후 evolving."
+    },
+    {
+      "req_id": "OPS-TEST-001",
+      "current_stability": null,
+      "drift_direction": "draft (잠재)",
+      "rationale": "CI yaml 작성은 가능하나 GitHub Actions 의존성 검증은 통합 실행 후. medium 점수가 reflected."
+    },
+    {
+      "req_id": "FR-TEST-005",
+      "current_stability": null,
+      "drift_direction": "draft (잠재)",
+      "rationale": "FR-TEST-003 의존 + 매트릭스 의존. medium."
+    },
+    {
+      "req_id": "FR-TEST-003",
+      "current_stability": null,
+      "drift_direction": "evolving (Tomcat embed 격리됨)",
+      "rationale": "외부 의존이나 testImplementation 으로 충분히 격리됨. has_verification=true. medium score 이나 정책상 evolving 적용."
+    }
+  ],
+  "release_ready_recommendations": [
+    "Phase 0 Decision-Gate 에서 OQ-001 (옵션 A vs B) 강제 결정 후 MIG-REL-001 의 stability 재평가 → evolving 승급",
+    "OPS-REL-001 외부 트랙 (Sonatype 계정/GPG 키) 을 v1.0.0 코딩 작업과 병렬 진행. 외부 완료 후 evolving 승급",
+    "OQ-004 (FIX 결함 7 vs 9 SSOT 불일치) 를 80.decisions.md 에 명시 — 9 건 포함이 SRS 결정임을 공식화",
+    "FR-TEST-003 (Tomcat embed) 은 Linux runner 필수 명시 — Windows 매트릭스 셀에서 분기 제외",
+    "신규 4 모듈 (common/servlet6/servlet61/bom) 신설 작업 (FR-MOD-001~007) 이 모든 후속 작업의 필수 선행 — Phase 2 우선",
+    "FIX 9건 (FR-FIX-001~009) 은 모두 high feasibility — TDD 로 BM01~BM09 회귀 테스트 선작성 권장"
+  ]
+}

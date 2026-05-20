@@ -1,0 +1,53 @@
+{
+  "run_id": "2026-05-19-jakarta-adapter-v1-0-0-v02.coder-0519",
+  "checked_at": "2026-05-19T10:25:00Z",
+  "mcp": {
+    "available": true,
+    "tools_detected": [
+      "get_active_target",
+      "list_requirements",
+      "add_trace_link",
+      "add_verification_evidence",
+      "update_status",
+      "add_completed_work"
+    ],
+    "active_target": "v1.0.0"
+  },
+  "cli": {
+    "available": "untested",
+    "note": "MCP available, CLI fallback unused"
+  },
+  "halted": false,
+  "node_version": "via Bash",
+  "git_repo": true,
+  "plan_integrity": {
+    "plan_contract": "1.2.0",
+    "schema_version": "1.1.0",
+    "tdd_policy": "relaxed",
+    "run_id": "2026-05-19-jakarta-adapter-v1-0-0-v02",
+    "target": "v1.0.0",
+    "active_target_match": true,
+    "phases": 7,
+    "tasks": 73,
+    "tdd_distribution": {
+      "code/tdd-on": 42,
+      "code/tdd-exempt": 10,
+      "issue/tdd-exempt": 2,
+      "review/tdd-exempt": 5,
+      "file_op/tdd-exempt": 5,
+      "infra/tdd-exempt": 6,
+      "doc/tdd-exempt": 2,
+      "pr/tdd-exempt": 1
+    }
+  },
+  "validator_result": {
+    "exit_code_nonzero": true,
+    "errors": 1,
+    "warnings": 0,
+    "checks_total": 25,
+    "checks_pass": 24,
+    "remaining_error": "C15 (mcp_call_log multiset) — planner Phase 5 mutation 미실행 흔적",
+    "impact_on_coder": "none — kiwi-coder 의 mutation 4종 (add_trace_link Code/add_verification_evidence test/update_status/add_completed_work) 은 planner mutation (add_trace_link Requirement/add_verification_evidence plan) 과 독립",
+    "user_consent_required": true
+  }
+}

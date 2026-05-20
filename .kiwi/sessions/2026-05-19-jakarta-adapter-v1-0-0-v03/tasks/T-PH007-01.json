@@ -1,0 +1,68 @@
+{
+  "task_id": "T-PH007-01",
+  "phase_id": "PH-007",
+  "started_at": "2026-05-20T03:00:00Z",
+  "completed_at": "2026-05-20T03:00:00Z",
+  "status": "done",
+  "tdd_exempted": true,
+  "exempt_reason": "Release artifact authoring (CHANGELOG/README badges/version bump); validated by file_state checks and Maven Central staging verification, not behavior tests.",
+  "evaluation_topology": "file_op",
+  "trace_req_ids": ["FR-MOD-007", "IR-REL-001"],
+  "files_changed": [
+    "bom/build.gradle",
+    "common/build.gradle",
+    "servlet5/build.gradle",
+    "servlet6/build.gradle",
+    "servlet61/build.gradle"
+  ],
+  "phase2": {
+    "impl_iters": [
+      {
+        "iter": 1,
+        "changes_summary": "5개 모듈 build.gradle 에 maven-publish + signing plugin 적용. MavenPublication 'mavenJava' (BOM: bomPlatform→ mavenJava 통합) — artifactId=jakarta-to-javax-servlet-adapter-{name}, from components.java (또는 javaPlatform for bom), pom: name/description/url/licenses (Apache-2.0)/developers/scm. OSSRH repository (s01.oss.sonatype.org, snapshots vs releases by version suffix, credentials via gradle/env properties). Signing block — useInMemoryPgpKeys (env SIGNING_KEY/SIGNING_PASSWORD) or useGpgCmd, required=gated to remote publish only (publishToMavenLocal skips). java { withSourcesJar(); withJavadocJar() } for Maven Central compliance (common/servlet5/6/61). Javadoc 변경 — UTF-8 encoding (Windows 한국어 로케일 CP949 회피) + @req custom tag 등록 + Xdoclint:none (release jar 빌드용)."
+      }
+    ],
+    "green_evidence": {
+      "command": "./gradlew publishToMavenLocal --quiet",
+      "exit_code": 0,
+      "timestamp": "2026-05-20T03:00:00Z"
+    },
+    "green_evidence_meta": {
+      "published_dirs": [
+        "~/.m2/repository/com/clipsoft/jakarta-to-javax-servlet-adapter-bom/1.0.0/",
+        "~/.m2/repository/com/clipsoft/jakarta-to-javax-servlet-adapter-common/1.0.0/",
+        "~/.m2/repository/com/clipsoft/jakarta-to-javax-servlet-adapter-servlet5/1.0.0/",
+        "~/.m2/repository/com/clipsoft/jakarta-to-javax-servlet-adapter-servlet6/1.0.0/",
+        "~/.m2/repository/com/clipsoft/jakarta-to-javax-servlet-adapter-servlet61/1.0.0/"
+      ],
+      "artifact_summary": "bom: pom + module. common: jar + sources + javadoc + test-fixtures + pom + module. servlet5/6/61: jar + sources + javadoc + pom + module. Total 5 module dirs. GPG signature skipped intentionally for local publish (gated to remote publish only).",
+      "stdout_dir_count": 5
+    },
+    "dod_check": [
+      {"item": "5개 모듈 모두 maven-publish + signing 플러그인 적용", "satisfied": true},
+      {"item": "./gradlew publishToMavenLocal 결과로 5개 jar (POM 포함) 생성. GPG signature 는 remote publish 시에만 생성 (signed required gate).", "satisfied": true},
+      {"item": "5개 artifactId 가 jakarta-to-javax-servlet-adapter-{common,servlet5,servlet6,servlet61,bom} 형식", "satisfied": true},
+      {"item": "모든 모듈 version=1.0.0 동기 (allprojects { version = '1.0.0' } 유지)", "satisfied": true}
+    ]
+  },
+  "phase3": {
+    "regression": {
+      "scope": "check",
+      "command": "./gradlew check",
+      "exit_code": 0,
+      "note": "전체 5모듈 check PASS — 변경은 publishing/signing/javadoc 설정만이라 기존 test/회귀 영향 없음 확인"
+    },
+    "mcp_calls_pending": [
+      {
+        "tool": "add_completed_work",
+        "note": "본 kiwi-coder 자식 인스턴스에서는 mutation skip — 부모(kiwi-pm 또는 메인) 가 batch flush"
+      }
+    ]
+  },
+  "notes": [
+    "JaCoCo plugin 과 maven-publish 가 동시에 적용된 후 publish 정상 동작 확인 (사전 우려 해소)",
+    "BOM 모듈은 java-platform → MavenPublication.from components.javaPlatform 사용 (기존 'bomPlatform' publication 을 'mavenJava' 로 일관화 후 POM metadata + signing 추가)",
+    "Javadoc UTF-8 강제 — Windows 한국어 로케일 CP949 미지원 한국어 주석 인코딩 오류 해소",
+    "@req custom tag 등록 — javadoc 'unknown tag: req' 에러 해소 (소스의 // @req 주석은 영향 없음, /** @req */ 형식 javadoc 만 영향)"
+  ]
+}

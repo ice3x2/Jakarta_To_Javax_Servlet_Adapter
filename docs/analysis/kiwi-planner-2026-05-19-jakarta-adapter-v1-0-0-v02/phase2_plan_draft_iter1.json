@@ -1,0 +1,57 @@
+{
+  "status": "completed",
+  "total_phases": 7,
+  "total_tasks": 73,
+  "total_test_cases": 96,
+  "by_type": {
+    "issue": 2,
+    "review": 5,
+    "file_op": 5,
+    "code": 52,
+    "infra": 6,
+    "doc": 2,
+    "pr": 1
+  },
+  "by_phase": {
+    "PH-001": 3,
+    "PH-002": 9,
+    "PH-003": 21,
+    "PH-004": 23,
+    "PH-005": 7,
+    "PH-006": 3,
+    "PH-007": 7
+  },
+  "tdd_pair_count": 21,
+  "exempted_code_tasks": 10,
+  "coverage_summary": {
+    "req_total": 44,
+    "req_full_covered": 44,
+    "ac_total": 153,
+    "ac_covered": 153
+  },
+  "self_check_results": {
+    "1_frontmatter_contract_policy": true,
+    "2_sidecar_schema_contract": true,
+    "3_phase_task_count_match": true,
+    "4_plan_phase_rows": true,
+    "5_plan_h4_count": true,
+    "6_all_code_has_tdd": true,
+    "7_tdd_applicable_constraint": true,
+    "8_exempt_code_reason": true,
+    "9_test_case_id_regex": true,
+    "10_test_case_req_in_task": true,
+    "11_ac_refs_subset_inventory": true,
+    "12_dag_no_cycle": true,
+    "13_depends_referential_integrity": true,
+    "14_green_red_pair_covers_ac": true,
+    "15_coverage_44_reqs": true,
+    "16_no_orphans_or_unreferenced": true,
+    "17_trace_link_unique": true
+  },
+  "violations": [],
+  "files_written": [
+    "docs/plans/2026-05-19-jakarta-adapter-v1-0-0-v02.plan.md",
+    "docs/plans/2026-05-19-jakarta-adapter-v1-0-0-v02.sidecar.json",
+    "docs/analysis/kiwi-planner-2026-05-19-jakarta-adapter-v1-0-0-v02/phase2_plan_draft_iter1.json"
+  ]
+}

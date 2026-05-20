@@ -1,0 +1,64 @@
+{
+  "task_id": "T-PH004-14",
+  "phase_id": "PH-004",
+  "started_at": "2026-05-19T17:30:00Z",
+  "completed_at": "2026-05-19T17:31:40Z",
+  "tdd_phase": "green",
+  "phase2": {
+    "impl_iters": [
+      {
+        "iter": 1,
+        "files_changed": [
+          "servlet6/src/main/java/adapter/jakarta/servlet6/http/EmptyHttpSessionContext.java",
+          "servlet61/src/main/java/adapter/jakarta/servlet61/http/EmptyHttpSessionContext.java",
+          "servlet6/src/main/java/adapter/jakarta/servlet6/http/HttpSession.java",
+          "servlet61/src/main/java/adapter/jakarta/servlet61/http/HttpSession.java",
+          "servlet6/src/main/java/adapter/jakarta/servlet6/http/HttpServletResponse.java",
+          "servlet61/src/main/java/adapter/jakarta/servlet61/http/HttpServletResponse.java",
+          "servlet6/src/main/java/adapter/jakarta/servlet6/http/HttpServletRequest.java",
+          "servlet61/src/main/java/adapter/jakarta/servlet61/http/HttpServletRequest.java",
+          "servlet6/src/main/java/adapter/jakarta/servlet6/ServletContext.java",
+          "servlet61/src/main/java/adapter/jakarta/servlet61/ServletContext.java"
+        ]
+      }
+    ],
+    "green_evidence": {
+      "command": ".\\gradlew.bat test --tests *shouldApplyFallbackMatrixForServlet6And61AndKeepServlet5Dormant*",
+      "exit_code": 0,
+      "timestamp": "2026-05-19T17:31:30Z"
+    },
+    "green_evidence_meta": {
+      "passed_test_case_ids": [
+        "TC-REQ-FR-CONV-010-AC1-02",
+        "TC-REQ-FR-CONV-010-AC2-02",
+        "TC-REQ-FR-CONV-010-AC3-02",
+        "TC-REQ-FR-CONV-014-AC1-02",
+        "TC-REQ-FR-CONV-014-AC2-02",
+        "TC-REQ-FR-CONV-014-AC3-02"
+      ],
+      "servlet6_test_count": 6,
+      "servlet61_test_count": 6,
+      "total_pass": 12,
+      "regression_observation": "AdapterUnwrapAllClassesTest 7/7 PASS after EmptyHttpSessionContext implements AdapterUnwrap<Void>"
+    },
+    "dod_check": [
+      {"item": "green 단계: 6개 test case 가 모두 통과(green)", "satisfied": true},
+      {"item": "green 단계: 동일 test 가 모두 통과(green) 함을 확인", "satisfied": true}
+    ]
+  },
+  "phase3": {
+    "regression": {
+      "scope": "full",
+      "command": "./gradlew test",
+      "exit_code": 0,
+      "all_modules_passed": true
+    }
+  },
+  "policy_applied": {
+    "B (attribute fallback)": ["HttpSession.getValue", "HttpSession.putValue", "HttpSession.getValueNames", "HttpSession.removeValue (servlet6+61)"],
+    "D (empty dummy)": ["HttpSession.getSessionContext returns EmptyHttpSessionContext (servlet6+61)"],
+    "E (rewrite to non-deprecated)": ["HttpServletResponse.encodeRedirectUrl -> encodeRedirectURL", "HttpServletRequest.isRequestedSessionIdFromUrl -> isRequestedSessionIdFromURL", "ServletContext.log(Exception,String) -> log(String,Throwable)", "servlet61 HttpServletResponse.sendRedirect(loc,sc,clearBuffer) -> setStatus+setHeader+optional resetBuffer+flushBuffer"],
+    "E1 (drop reason)": ["HttpServletResponse.setStatus(int,String) -> setStatus(int) only"]
+  },
+  "servlet5_dormant": true
+}

@@ -1,0 +1,58 @@
+{
+  "evaluator": "sonnet",
+  "round": 2,
+  "findings": [],
+  "summary": {"critical": 0, "high": 0, "medium": 0, "low": 0},
+  "pass": true,
+  "structure_checks": {
+    "frontmatter_complete": true,
+    "heading_level_ok": true,
+    "id_regex_ok": true,
+    "task_count_match": true,
+    "phase_count_match": true,
+    "link_id_unique": true,
+    "verification_cmd_valid": true
+  },
+  "structure_check_notes": {
+    "frontmatter_complete": "run_id/target/plan_version/plan_contract/generated_at/tool_versions/sidecar_path 7개 필드 모두 존재. md_sha256=TBD 는 값이 미확정이지만 필드 자체는 존재하므로 통과.",
+    "heading_level_ok": "plan.md 에 h5(#####) 이하 없음 (count=0). §3 task 는 모두 h4(####), phase 는 h3(###), section 은 h2(##). 규칙 준수.",
+    "id_regex_ok": "52개 task_id 모두 ^T-PH\\d{3}-\\d{2}$ 패턴 충족. 7개 phase_id 모두 ^PH-\\d{3}$ 패턴 충족. 위반 0건.",
+    "task_count_match": "plan.md §3 의 h4 task 헤딩 52개 == sidecar.tasks.length 52. 일치.",
+    "phase_count_match": "plan.md §2 phase 표 행 7개 == sidecar.phases.length 7. 일치.",
+    "link_id_unique": "sidecar 전체 trace_links 98개 모두 고유 (TL-001~TL-098). 중복 없음. TL-098 신규 추가 (T-PH001-02 → NFR-MOD-001 링크) 확인.",
+    "verification_cmd_valid": "모든 task 의 verification_cmd 가 null 또는 {posix: 비어있지않음, windows: 비어있지않음} 형식. 위반 0건."
+  },
+  "additional_checks": {
+    "a1_mcp_call_log_empty": "[] — 정상 (Phase 2 산출물 초기화값. Phase 5 mutation 이전에는 빈 배열이 정상. iter=1 의 false positive 정정 적용).",
+    "a2_external_paths": 0,
+    "a3_req_coverage": "44/44 active REQ 커버됨 (coverage 44건). 2개 (NFR-MOD-002, OPS-TEST-002) 는 excluded_reqs 에 등재. 위반 0건.",
+    "a4_ac_coverage_consistent": "44개 coverage 항목 모두 ac_covered == ac_total. missing_ac_ids 빈 배열 일치. 위반 0건.",
+    "a5_orphan_tasks": "[] — F-SONNET-002 patch 적용 완료. T-PH001-02.req_ids=['NFR-MOD-001'] + TL-098 trace_link 추가 확인. orphan 0건.",
+    "a6_type_fit_violations": 0,
+    "a6_detail": {
+      "T-PH003-11": "type=review, acceptance_tests[0].kind=checklist — 정상 (F-SONNET-003 patch 완료)",
+      "T-PH004-12": "type=review, acceptance_tests[0].kind=checklist — 정상 (F-SONNET-004 patch 완료)",
+      "T-PH005-07": "type=review, acceptance_tests[0].kind=checklist — 정상 (F-SONNET-005 patch 완료)",
+      "T-PH006-01": "type=infra, acceptance_tests=[{kind:file_state}, {kind:shell}] — 정상 (F-SONNET-006 patch 완료, checklist 제거됨)",
+      "T-PH006-03": "type=infra, acceptance_tests=[{kind:file_state}, {kind:shell}] — 정상 (F-SONNET-007 patch 완료)",
+      "T-PH007-05": "type=infra, acceptance_tests=[{kind:file_state}, {kind:shell}] — 정상 (F-SONNET-008 patch 완료)",
+      "T-PH007-06": "type=infra, acceptance_tests=[{kind:shell}] — 정상 (F-SONNET-009 patch 완료)"
+    },
+    "a7_dag_cycle": false,
+    "a7_detail": "PH-001→[], PH-002→[PH-001], PH-003→[PH-002], PH-004→[PH-002], PH-005→[PH-003,PH-004], PH-006→[PH-005], PH-007→[PH-006,PH-001]. 사이클 없음.",
+    "a8_files_grounding": "T-PH003-08.files 에 servlet6/src/main/java/adapter/jakarta/servlet6/ServletContext.java + servlet61/src/main/java/adapter/jakarta/servlet61/ServletContext.java 포함 확인. iter=1 언급 요구사항 충족.",
+    "a9_non_coding_completeness": "CHANGELOG(T-PH007-03/doc), README(T-PH007-02/doc), migration guide(T-PH007-04/doc), decision tracking(T-PH001-01/issue, T-PH001-03/issue), review gate(T-PH003-11, T-PH004-12, T-PH005-07, T-PH006-02) 포함. 비-코딩 task 적절히 포함됨.",
+    "a10_dod_specificity": "검토한 dod 항목들이 파일명/커맨드/숫자 조건 등 검증 가능한 명제로 작성됨. '잘 동작한다' 류 애매 표현 없음."
+  },
+  "iter1_patch_verification": {
+    "F-SONNET-001_false_positive_confirmed": "mcp_call_log=[] 는 Phase 2 정상값. iter=2 에서 위반으로 재보고하지 않음.",
+    "F-SONNET-002_patched": "T-PH001-02.req_ids=['NFR-MOD-001'] 확인 + TL-098 trace_link (T-PH001-02→NFR-MOD-001) sidecar 등재 확인.",
+    "F-SONNET-003_patched": "T-PH003-11 acceptance_tests[0].kind=checklist 확인 (이전 shell → checklist).",
+    "F-SONNET-004_patched": "T-PH004-12 acceptance_tests[0].kind=checklist 확인 (이전 shell → checklist).",
+    "F-SONNET-005_patched": "T-PH005-07 acceptance_tests[0].kind=checklist 확인 (이전 shell → checklist).",
+    "F-SONNET-006_patched": "T-PH006-01 acceptance_tests=[{kind:file_state},{kind:shell}] 확인 (이전 checklist 제거).",
+    "F-SONNET-007_patched": "T-PH006-03 acceptance_tests=[{kind:file_state},{kind:shell}] 확인 (이전 checklist 제거).",
+    "F-SONNET-008_patched": "T-PH007-05 acceptance_tests=[{kind:file_state},{kind:shell}] 확인 (이전 checklist 제거).",
+    "F-SONNET-009_patched": "T-PH007-06 acceptance_tests=[{kind:shell}] 확인 (이전 checklist 제거)."
+  }
+}

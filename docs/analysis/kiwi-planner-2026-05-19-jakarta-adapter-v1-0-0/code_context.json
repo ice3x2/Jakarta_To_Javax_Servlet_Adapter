@@ -1,0 +1,968 @@
+{
+  "run_id": "2026-05-19-jakarta-adapter-v1-0-0",
+  "generated_at": "2026-05-19",
+  "current_structure": {
+    "modules": ["root"],
+    "packages": [
+      "adapter.jakarta.servlet",
+      "adapter.jakarta.servlet.http",
+      "adapter.javax.servlet",
+      "adapter.javax.servlet.http",
+      "adapter.servletElementConverter",
+      "com.snoworca"
+    ],
+    "key_files": [
+      {
+        "path": "src/main/java/com/snoworca/ServletAdapter.java",
+        "loc": 80,
+        "purpose": "공개 진입점 — adaptToJakarta / adaptToJavax 정적 팩토리 메서드 10개 오버로드"
+      },
+      {
+        "path": "src/main/java/adapter/servletElementConverter/ServletConverter.java",
+        "loc": 529,
+        "purpose": "Servlet/Filter/Registration/SessionCookieConfig 등 양방향 변환 주요 컨버터"
+      },
+      {
+        "path": "src/main/java/adapter/servletElementConverter/StreamConverter.java",
+        "loc": 215,
+        "purpose": "ServletInputStream / ServletOutputStream 양방향 변환. L41/L93 에 FR-FIX-001 결함 존재"
+      },
+      {
+        "path": "src/main/java/adapter/servletElementConverter/AsyncContextConverter.java",
+        "loc": 189,
+        "purpose": "AsyncContext / AsyncListener 양방향 변환"
+      },
+      {
+        "path": "src/main/java/adapter/servletElementConverter/DescriptorConverter.java",
+        "loc": 193,
+        "purpose": "JspConfigDescriptor / JspPropertyGroupDescriptor / TaglibDescriptor 변환"
+      },
+      {
+        "path": "src/main/java/adapter/servletElementConverter/ServletReqResConverter.java",
+        "loc": 28,
+        "purpose": "jakarta.servlet.ServletRequest/Response → javax 방향 및 역방향 dispatcher. L14/L22 에 FR-FIX-008 결함 (instanceof namespace 오류)"
+      },
+      {
+        "path": "src/main/java/adapter/servletElementConverter/EnumsConverter.java",
+        "loc": 25,
+        "purpose": "SessionTrackingMode enum 양방향 매핑 (common 이전 후보)"
+      },
+      {
+        "path": "src/main/java/adapter/servletElementConverter/HttpComponentConverter.java",
+        "loc": 23,
+        "purpose": "DispatcherType enum 양방향 매핑 (common 이전 후보)"
+      },
+      {
+        "path": "src/main/java/adapter/servletElementConverter/ReadListenerConverter.java",
+        "loc": 46,
+        "purpose": "ReadListener 양방향 변환 (common 이전 후보)"
+      },
+      {
+        "path": "src/main/java/adapter/servletElementConverter/WriteListenerConverter.java",
+        "loc": 37,
+        "purpose": "WriteListener 양방향 변환 (common 이전 후보)"
+      },
+      {
+        "path": "src/main/java/adapter/jakarta/servlet/ServletContext.java",
+        "loc": 344,
+        "purpose": "jakarta ServletContext 어댑터. L337-339 에 FR-FIX-004 결함 (setResponseCharacterEncoding → setRequestCharacterEncoding 호출)"
+      },
+      {
+        "path": "src/main/java/adapter/jakarta/servlet/ServletRequest.java",
+        "loc": 180,
+        "purpose": "jakarta ServletRequest 어댑터. L124 getRealPath (FR-FIX-007), L173-177 getContentLengthLong try/catch (FR-FIX-006)"
+      },
+      {
+        "path": "src/main/java/adapter/jakarta/servlet/ServletResponse.java",
+        "loc": 84,
+        "purpose": "jakarta ServletResponse 어댑터. L81-83 에 FR-FIX-003 결함 (setContentLengthLong → (int) narrow 캐스트)"
+      },
+      {
+        "path": "src/main/java/adapter/jakarta/servlet/http/HttpServletRequest.java",
+        "loc": 189,
+        "purpose": "jakarta HttpServletRequest 어댑터. L166-174 에 FR-FIX-009 결함 (getCookies null 체크 없음)"
+      },
+      {
+        "path": "src/main/java/adapter/jakarta/servlet/http/HttpServletResponse.java",
+        "loc": 162,
+        "purpose": "jakarta HttpServletResponse 어댑터"
+      },
+      {
+        "path": "src/main/java/adapter/jakarta/servlet/http/Part.java",
+        "loc": 57,
+        "purpose": "jakarta Part 어댑터. L50-52 에 FR-FIX-002 결함 (getSubmittedFileName 자기 재귀)"
+      },
+      {
+        "path": "src/main/java/adapter/jakarta/servlet/http/HttpSession.java",
+        "loc": 81,
+        "purpose": "jakarta HttpSession 어댑터"
+      },
+      {
+        "path": "src/main/java/adapter/jakarta/servlet/http/HttpSessionContext.java",
+        "loc": 21,
+        "purpose": "jakarta HttpSessionContext 어댑터 (jakarta 6.0에서 타입 삭제 → servlet6/61에서 EmptyHttpSessionContext 더미 대체 예정)"
+      },
+      {
+        "path": "src/main/java/adapter/jakarta/servlet/http/HttpUpgradeHandler.java",
+        "loc": 50,
+        "purpose": "jakarta HttpUpgradeHandler. ThreadLocal 패턴 — NFR-CONV-001 BM10 잠금 대상"
+      },
+      {
+        "path": "src/main/java/adapter/javax/servlet/ServletContext.java",
+        "loc": 373,
+        "purpose": "javax ServletContext 어댑터. L362-363 에 FR-FIX-005 결함 (setRequestCharacterEncoding → setResponseCharacterEncoding 호출)"
+      },
+      {
+        "path": "src/main/java/adapter/javax/servlet/ServletRequest.java",
+        "loc": 176,
+        "purpose": "javax ServletRequest 어댑터"
+      },
+      {
+        "path": "src/main/java/adapter/javax/servlet/ServletResponse.java",
+        "loc": 85,
+        "purpose": "javax ServletResponse 어댑터. L46-47 setContentLengthLong — 올바른 위임 (참조용)"
+      },
+      {
+        "path": "src/main/java/adapter/javax/servlet/http/HttpServletRequest.java",
+        "loc": 348,
+        "purpose": "javax HttpServletRequest 어댑터"
+      },
+      {
+        "path": "src/main/java/adapter/javax/servlet/http/HttpServletResponse.java",
+        "loc": 164,
+        "purpose": "javax HttpServletResponse 어댑터"
+      },
+      {
+        "path": "src/main/java/adapter/javax/servlet/http/Part.java",
+        "loc": 52,
+        "purpose": "javax Part 어댑터 (FR-FIX-002 대칭 수정 대상)"
+      },
+      {
+        "path": "src/main/java/adapter/javax/servlet/http/HttpSession.java",
+        "loc": 85,
+        "purpose": "javax HttpSession 어댑터"
+      },
+      {
+        "path": "src/main/java/adapter/jakarta/servlet/FilterRegistration.java",
+        "loc": 50,
+        "purpose": "jakarta FilterRegistration 어댑터"
+      },
+      {
+        "path": "src/main/java/adapter/javax/servlet/FilterRegistration.java",
+        "loc": 44,
+        "purpose": "javax FilterRegistration 어댑터"
+      },
+      {
+        "path": "build.gradle",
+        "loc": 36,
+        "purpose": "현 단일 모듈 빌드. v1.0.0에서 root build.gradle로 재구성 (allprojects/subprojects)"
+      },
+      {
+        "path": "settings.gradle",
+        "loc": 2,
+        "purpose": "현 rootProject.name='JavaXServletToJakartaAdapter'. v1.0.0에서 include 5개 모듈 + rootProject.name 변경"
+      },
+      {
+        "path": "src/test/java/com/snoworca/ServletContextAdapterTest.java",
+        "loc": 19,
+        "purpose": "현 단위 테스트 (getContextPath 1개 메서드만 검증, ~5% 커버리지)"
+      },
+      {
+        "path": "src/test/java/com/snoworca/ServletRequestResponseAdapterTest.java",
+        "loc": 31,
+        "purpose": "현 단위 테스트 (null 체크 위주, 위임 검증 없음)"
+      }
+    ]
+  },
+  "req_anchors": [
+    {
+      "req_id": "FR-MOD-001",
+      "files": [
+        {
+          "path": "settings.gradle",
+          "line_range": "1-2",
+          "signature": "rootProject.name 변경 + include 'common','servlet5','servlet6','servlet61','bom' 추가 (현 파일 전체 재작성)",
+          "inferred": false
+        },
+        {
+          "path": "build.gradle",
+          "line_range": "1-36",
+          "signature": "현 단일 모듈 build.gradle → allprojects/subprojects 공통 설정으로 변환 (전체 재구성)",
+          "inferred": false
+        }
+      ]
+    },
+    {
+      "req_id": "FR-MOD-002",
+      "files": [
+        {
+          "path": "common/build.gradle",
+          "line_range": "전체",
+          "signature": "신규 — jakarta 5.0.0 compileOnly 핀 (Java 8 타깃)",
+          "inferred": true
+        },
+        {
+          "path": "servlet5/build.gradle",
+          "line_range": "전체",
+          "signature": "신규 — jakarta 5.0.0 compileOnly, javax 4.0.1 compileOnly",
+          "inferred": true
+        },
+        {
+          "path": "servlet6/build.gradle",
+          "line_range": "전체",
+          "signature": "신규 — jakarta 6.0.0 compileOnly, javax 4.0.1 compileOnly",
+          "inferred": true
+        },
+        {
+          "path": "servlet61/build.gradle",
+          "line_range": "전체",
+          "signature": "신규 — jakarta 6.1.0 compileOnly, javax 4.0.1 compileOnly",
+          "inferred": true
+        }
+      ]
+    },
+    {
+      "req_id": "FR-MOD-003",
+      "files": [
+        {
+          "path": "servlet5/build.gradle",
+          "line_range": "전체",
+          "signature": "신규 — sourceCompatibility=1.8, targetCompatibility=1.8",
+          "inferred": true
+        },
+        {
+          "path": "servlet6/build.gradle",
+          "line_range": "전체",
+          "signature": "신규 — Gradle Toolchain JavaLanguageVersion.of(11)",
+          "inferred": true
+        },
+        {
+          "path": "servlet61/build.gradle",
+          "line_range": "전체",
+          "signature": "신규 — Gradle Toolchain JavaLanguageVersion.of(17)",
+          "inferred": true
+        }
+      ]
+    },
+    {
+      "req_id": "FR-MOD-004",
+      "files": [
+        {
+          "path": "src/main/java/adapter/servletElementConverter/EnumsConverter.java",
+          "line_range": "1-25",
+          "signature": "common/src/main/java/adapter/common/EnumsConverter.java 로 이동 (SessionTrackingMode 매핑)",
+          "inferred": false
+        },
+        {
+          "path": "src/main/java/adapter/servletElementConverter/HttpComponentConverter.java",
+          "line_range": "1-23",
+          "signature": "common/src/main/java/adapter/common/HttpComponentConverter.java 로 이동",
+          "inferred": false
+        },
+        {
+          "path": "src/main/java/adapter/servletElementConverter/ReadListenerConverter.java",
+          "line_range": "1-46",
+          "signature": "common/src/main/java/adapter/common/ReadListenerConverter.java 로 이동",
+          "inferred": false
+        },
+        {
+          "path": "src/main/java/adapter/servletElementConverter/WriteListenerConverter.java",
+          "line_range": "1-37",
+          "signature": "common/src/main/java/adapter/common/WriteListenerConverter.java 로 이동",
+          "inferred": false
+        },
+        {
+          "path": "common/src/main/java/adapter/common/ConverterSupport.java",
+          "line_range": "전체",
+          "signature": "신규 — 공용 예외 변환 헬퍼",
+          "inferred": true
+        }
+      ]
+    },
+    {
+      "req_id": "FR-MOD-005",
+      "files": [
+        {
+          "path": "src/main/java/adapter/jakarta/servlet/",
+          "line_range": "디렉토리 전체",
+          "signature": "servlet5/src/main/java/adapter/jakarta/servlet5/ 로 이동 + 패키지 선언 변경",
+          "inferred": true
+        },
+        {
+          "path": "src/main/java/adapter/javax/servlet/",
+          "line_range": "디렉토리 전체",
+          "signature": "servlet5/src/main/java/adapter/javax/servlet5/ 로 이동 + 패키지 선언 변경",
+          "inferred": true
+        },
+        {
+          "path": "src/main/java/adapter/servletElementConverter/",
+          "line_range": "디렉토리 전체 (ABI 불가 파일들)",
+          "signature": "servlet5/src/main/java/adapter/servletElementConverter5/ 로 이동 (ServletConverter, StreamConverter, DescriptorConverter, AsyncContextConverter, ServletReqResConverter)",
+          "inferred": true
+        }
+      ]
+    },
+    {
+      "req_id": "FR-MOD-006",
+      "files": [
+        {
+          "path": "src/main/java/com/snoworca/ServletAdapter.java",
+          "line_range": "1-80",
+          "signature": "servlet5/src/main/java/com/snoworca/ServletAdapter.java 로 이동 + 시그니처 확장 (adaptToJakarta(jakarta X) 항등 오버로드 추가)",
+          "inferred": false
+        },
+        {
+          "path": "servlet5/src/main/java/com/snoworca/ServletAdapter5.java",
+          "line_range": "전체",
+          "signature": "신규 — ServletAdapter 별칭 진입점",
+          "inferred": true
+        },
+        {
+          "path": "servlet6/src/main/java/com/snoworca/ServletAdapter6.java",
+          "line_range": "전체",
+          "signature": "신규 — ServletAdapter 별칭 진입점",
+          "inferred": true
+        },
+        {
+          "path": "servlet61/src/main/java/com/snoworca/ServletAdapter61.java",
+          "line_range": "전체",
+          "signature": "신규 — ServletAdapter 별칭 진입점",
+          "inferred": true
+        }
+      ]
+    },
+    {
+      "req_id": "FR-MOD-007",
+      "files": [
+        {
+          "path": "bom/build.gradle",
+          "line_range": "전체",
+          "signature": "신규 — java-platform plugin + constraints (common/servlet5/6/61)",
+          "inferred": true
+        }
+      ]
+    },
+    {
+      "req_id": "CON-MOD-001",
+      "files": [
+        {
+          "path": "servlet5/build.gradle",
+          "line_range": "dependencies 블록",
+          "signature": "신규 — implementation project(':common') 만 존재, :servlet6/:servlet61 없음",
+          "inferred": true
+        },
+        {
+          "path": "servlet6/build.gradle",
+          "line_range": "dependencies 블록",
+          "signature": "신규 — implementation project(':common') 만 존재",
+          "inferred": true
+        },
+        {
+          "path": "servlet61/build.gradle",
+          "line_range": "dependencies 블록",
+          "signature": "신규 — implementation project(':common') 만 존재",
+          "inferred": true
+        }
+      ]
+    },
+    {
+      "req_id": "NFR-MOD-001",
+      "files": [
+        {
+          "path": "common/build.gradle",
+          "line_range": "jar 블록",
+          "signature": "신규 — manifest { attributes 'Automatic-Module-Name': 'com.clipsoft.servlet.adapter.common' }",
+          "inferred": true
+        },
+        {
+          "path": "servlet5/build.gradle",
+          "line_range": "jar 블록",
+          "signature": "신규 — manifest Automatic-Module-Name 설정",
+          "inferred": true
+        }
+      ]
+    },
+    {
+      "req_id": "FR-CONV-001",
+      "files": [
+        {
+          "path": "servlet6/src/main/java/adapter/jakarta/servlet6/ServletRequest.java",
+          "line_range": "전체",
+          "signature": "신규 — getRequestId(), getProtocolRequestId(), getServletConnection() 구현 필수",
+          "inferred": true
+        },
+        {
+          "path": "servlet61/src/main/java/adapter/jakarta/servlet61/http/HttpServletResponse.java",
+          "line_range": "전체",
+          "signature": "신규 — sendRedirect(String, int, boolean) 구현 필수",
+          "inferred": true
+        },
+        {
+          "path": "servlet6/src/main/java/adapter/jakarta/servlet6/http/HttpSessionContext.java",
+          "line_range": "전체",
+          "signature": "신규 — EmptyHttpSessionContext 더미 (jakarta 6.0에서 HttpSessionContext 타입 삭제)",
+          "inferred": true
+        }
+      ]
+    },
+    {
+      "req_id": "FR-CONV-003",
+      "files": [
+        {
+          "path": "common/src/main/java/adapter/common/AdapterUnwrap.java",
+          "line_range": "전체",
+          "signature": "신규 — marker interface AdapterUnwrap<T> { T unwrap(); }",
+          "inferred": true
+        },
+        {
+          "path": "src/main/java/adapter/jakarta/servlet/",
+          "line_range": "각 어댑터 클래스",
+          "signature": "모든 어댑터 클래스에 implements AdapterUnwrap<원본타입> + unwrap() 추가",
+          "inferred": true
+        },
+        {
+          "path": "src/main/java/com/snoworca/ServletAdapter.java",
+          "line_range": "1-80",
+          "signature": "adaptToJakarta/adaptToJavax 메서드에 instanceof AdapterUnwrap 사전 체크 추가",
+          "inferred": false
+        }
+      ]
+    },
+    {
+      "req_id": "FR-CONV-010",
+      "files": [
+        {
+          "path": "servlet6/src/main/java/adapter/jakarta/servlet6/http/HttpSession.java",
+          "line_range": "전체",
+          "signature": "신규 — getValue/putValue/removeValue 폴백 정책 B (attribute alias + WARN once) 구현",
+          "inferred": true
+        },
+        {
+          "path": "servlet6/src/main/java/adapter/jakarta/servlet6/http/HttpServletResponse.java",
+          "line_range": "전체",
+          "signature": "신규 — encodeUrl/encodeRedirectUrl/setStatus(int, String) 폴백 정책 E",
+          "inferred": true
+        },
+        {
+          "path": "servlet5/src/main/java/adapter/jakarta/servlet5/http/Cookie.java",
+          "line_range": "전체",
+          "signature": "이동 + setAttribute/getAttribute/getAttributes 폴백 정책 D (no-op + WARN once)",
+          "inferred": true
+        }
+      ]
+    },
+    {
+      "req_id": "FR-CONV-011",
+      "files": [
+        {
+          "path": "servlet5/src/main/java/com/snoworca/ServletAdapter.java",
+          "line_range": "전체",
+          "signature": "신규 — 시스템 프로퍼티 com.snoworca.adapter.strict=true 읽기 + init-param 처리 로직",
+          "inferred": true
+        },
+        {
+          "path": "common/src/main/java/adapter/common/ConverterSupport.java",
+          "line_range": "전체",
+          "signature": "strict 모드 상태 공유 (스레드 안전 static 또는 ThreadLocal 패턴)",
+          "inferred": true
+        }
+      ]
+    },
+    {
+      "req_id": "FR-CONV-012",
+      "files": [
+        {
+          "path": "common/src/main/java/adapter/common/ConverterSupport.java",
+          "line_range": "전체",
+          "signature": "신규 — java.util.logging.Logger ('com.snoworca.servletadapter') + dedup ConcurrentHashMap + diagnostics AtomicLong Map",
+          "inferred": true
+        },
+        {
+          "path": "servlet5/src/main/java/com/snoworca/ServletAdapter.java",
+          "line_range": "전체",
+          "signature": "diagnostics() 정적 메서드 추가",
+          "inferred": true
+        }
+      ]
+    },
+    {
+      "req_id": "FR-CONV-013",
+      "files": [
+        {
+          "path": "src/main/java/adapter/javax/servlet/http/Cookie.java",
+          "line_range": "1-83",
+          "signature": "setAttribute/getAttribute/getAttributes 폴백 no-op + WARN once (자체 Map 보관 금지)",
+          "inferred": false
+        }
+      ]
+    },
+    {
+      "req_id": "FR-FIX-001",
+      "files": [
+        {
+          "path": "src/main/java/adapter/servletElementConverter/StreamConverter.java",
+          "line_range": "40-42",
+          "signature": "L41: inputstream.readLine(b, off, len) → inputstream.read(b, off, len) 수정",
+          "inferred": false
+        },
+        {
+          "path": "src/main/java/adapter/servletElementConverter/StreamConverter.java",
+          "line_range": "92-94",
+          "signature": "L93: 대칭 방향 동일 수정",
+          "inferred": false
+        }
+      ]
+    },
+    {
+      "req_id": "FR-FIX-002",
+      "files": [
+        {
+          "path": "src/main/java/adapter/jakarta/servlet/http/Part.java",
+          "line_range": "50-53",
+          "signature": "L52: this.getSubmittedFileName() → this.part.getSubmittedFileName() 수정",
+          "inferred": false
+        },
+        {
+          "path": "src/main/java/adapter/javax/servlet/http/Part.java",
+          "line_range": "1-52",
+          "signature": "대칭 방향 getSubmittedFileName 검토 및 수정",
+          "inferred": true
+        }
+      ]
+    },
+    {
+      "req_id": "FR-FIX-003",
+      "files": [
+        {
+          "path": "src/main/java/adapter/jakarta/servlet/ServletResponse.java",
+          "line_range": "81-83",
+          "signature": "L82: this.response.setContentLength((int)arg0) → this.response.setContentLengthLong(arg0) 수정",
+          "inferred": false
+        }
+      ]
+    },
+    {
+      "req_id": "FR-FIX-004",
+      "files": [
+        {
+          "path": "src/main/java/adapter/jakarta/servlet/ServletContext.java",
+          "line_range": "337-339",
+          "signature": "L338: this.setRequestCharacterEncoding(arg0) → this.servletContext.setResponseCharacterEncoding(arg0) 수정",
+          "inferred": false
+        }
+      ]
+    },
+    {
+      "req_id": "FR-FIX-005",
+      "files": [
+        {
+          "path": "src/main/java/adapter/javax/servlet/ServletContext.java",
+          "line_range": "362-364",
+          "signature": "L363: this.setResponseCharacterEncoding(encoding) → this.servletContext.setRequestCharacterEncoding(encoding) 수정",
+          "inferred": false
+        }
+      ]
+    },
+    {
+      "req_id": "FR-FIX-006",
+      "files": [
+        {
+          "path": "src/main/java/adapter/jakarta/servlet/ServletRequest.java",
+          "line_range": "173-180",
+          "signature": "try/catch 제거 후 return this.request.getContentLengthLong() 단순 위임으로 수정",
+          "inferred": false
+        },
+        {
+          "path": "src/main/java/adapter/javax/servlet/ServletRequest.java",
+          "line_range": "전체",
+          "signature": "대칭 방향 동일 검토",
+          "inferred": true
+        }
+      ]
+    },
+    {
+      "req_id": "FR-FIX-007",
+      "files": [
+        {
+          "path": "src/main/java/adapter/jakarta/servlet/ServletRequest.java",
+          "line_range": "124-127",
+          "signature": "L124: @Override getRealPath 제거 또는 @Override 없는 deprecated alias 로 변경",
+          "inferred": false
+        },
+        {
+          "path": "src/main/java/adapter/jakarta/servlet/ServletContext.java",
+          "line_range": "102-103",
+          "signature": "jakarta ServletContext에도 getRealPath @Override 검토",
+          "inferred": false
+        }
+      ]
+    },
+    {
+      "req_id": "FR-FIX-008",
+      "files": [
+        {
+          "path": "src/main/java/adapter/servletElementConverter/ServletReqResConverter.java",
+          "line_range": "14",
+          "signature": "L14: instanceof javax.servlet.http.HttpServletResponse → instanceof jakarta.servlet.http.HttpServletResponse 수정",
+          "inferred": false
+        },
+        {
+          "path": "src/main/java/adapter/servletElementConverter/ServletReqResConverter.java",
+          "line_range": "18",
+          "signature": "L18: instanceof javax.servlet.http.HttpServletRequest → instanceof jakarta.servlet.http.HttpServletRequest 수정",
+          "inferred": false
+        },
+        {
+          "path": "src/main/java/adapter/servletElementConverter/ServletReqResConverter.java",
+          "line_range": "22",
+          "signature": "L22: javax→jakarta 방향 HttpServletResponse 분기 동일 검토",
+          "inferred": false
+        },
+        {
+          "path": "src/main/java/adapter/servletElementConverter/ServletReqResConverter.java",
+          "line_range": "26",
+          "signature": "L26: javax→jakarta 방향 HttpServletRequest 분기 동일 검토",
+          "inferred": false
+        }
+      ]
+    },
+    {
+      "req_id": "FR-FIX-009",
+      "files": [
+        {
+          "path": "src/main/java/adapter/jakarta/servlet/http/HttpServletRequest.java",
+          "line_range": "166-174",
+          "signature": "L168-169: cookies 배열 null 체크 (if (cookies == null) return null;) 추가",
+          "inferred": false
+        },
+        {
+          "path": "src/main/java/adapter/javax/servlet/http/HttpServletRequest.java",
+          "line_range": "전체",
+          "signature": "대칭 방향 getCookies null 체크 검토",
+          "inferred": true
+        }
+      ]
+    },
+    {
+      "req_id": "FR-TEST-001",
+      "files": [
+        {
+          "path": "src/test/java/com/snoworca/ServletContextAdapterTest.java",
+          "line_range": "1-19",
+          "signature": "현 테스트 — servlet5 모듈로 이동 후 Mockito RETURNS_SMART_NULLS + verify 패턴으로 전면 재작성",
+          "inferred": false
+        },
+        {
+          "path": "src/test/java/com/snoworca/ServletRequestResponseAdapterTest.java",
+          "line_range": "1-31",
+          "signature": "현 테스트 — servlet5 모듈로 이동 후 모든 위임 메서드 verify 테스트로 확장",
+          "inferred": false
+        },
+        {
+          "path": "servlet5/src/test/java/adapter/jakarta/servlet5/",
+          "line_range": "디렉토리",
+          "signature": "신규 — 어댑터 클래스당 단위 테스트 클래스 (모든 메서드 verify)",
+          "inferred": true
+        },
+        {
+          "path": "servlet6/src/test/java/adapter/jakarta/servlet6/",
+          "line_range": "디렉토리",
+          "signature": "신규 — 폴백 정책 분기 검증 포함",
+          "inferred": true
+        },
+        {
+          "path": "servlet61/src/test/java/adapter/jakarta/servlet61/",
+          "line_range": "디렉토리",
+          "signature": "신규 — sendRedirect(loc, sc, clearBuffer) 명시 override 검증",
+          "inferred": true
+        }
+      ]
+    },
+    {
+      "req_id": "FR-TEST-002",
+      "files": [
+        {
+          "path": "common/src/testFixtures/java/com/snoworca/contract/DelegationContractTest.java",
+          "line_range": "전체",
+          "signature": "신규 — Reflection 기반 Contract 테스트 driver (testFixtures로 5/6/61 공유)",
+          "inferred": true
+        }
+      ]
+    },
+    {
+      "req_id": "FR-TEST-003",
+      "files": [
+        {
+          "path": "servlet5/src/test/java/com/snoworca/integration/TomcatRunner.java",
+          "line_range": "전체",
+          "signature": "신규 — Tomcat 10.0.27 embed 헬퍼",
+          "inferred": true
+        },
+        {
+          "path": "servlet6/src/test/java/com/snoworca/integration/TomcatRunner.java",
+          "line_range": "전체",
+          "signature": "신규 — Tomcat 10.1.30 embed 헬퍼",
+          "inferred": true
+        },
+        {
+          "path": "servlet61/src/test/java/com/snoworca/integration/TomcatRunner.java",
+          "line_range": "전체",
+          "signature": "신규 — Tomcat 11.0.0 embed 헬퍼",
+          "inferred": true
+        },
+        {
+          "path": "servlet5/build.gradle",
+          "line_range": "testImplementation 블록",
+          "signature": "신규 — tomcat-embed-core:10.0.27 + tomcat-embed-core:9.0.85 (javax-host 시나리오) testImplementation 추가",
+          "inferred": true
+        }
+      ]
+    },
+    {
+      "req_id": "FR-TEST-004",
+      "files": [
+        {
+          "path": "servlet5/src/test/java/com/snoworca/regression/BugMuseumTest.java",
+          "line_range": "전체",
+          "signature": "신규 — BM01~BM10 회귀 테스트 (TDD — 결함 코드에서 명시적 실패)",
+          "inferred": true
+        }
+      ]
+    },
+    {
+      "req_id": "NFR-TEST-001",
+      "files": [
+        {
+          "path": "servlet5/build.gradle",
+          "line_range": "jacoco 블록",
+          "signature": "신규 — apply plugin: 'jacoco' + jacocoTestCoverageVerification (라인 ≥95%, 분기 100%)",
+          "inferred": true
+        },
+        {
+          "path": "servlet6/build.gradle",
+          "line_range": "jacoco 블록",
+          "signature": "신규 — 동일",
+          "inferred": true
+        },
+        {
+          "path": "servlet61/build.gradle",
+          "line_range": "jacoco 블록",
+          "signature": "신규 — 동일",
+          "inferred": true
+        }
+      ]
+    },
+    {
+      "req_id": "OPS-TEST-001",
+      "files": [
+        {
+          "path": ".github/workflows/ci.yml",
+          "line_range": "전체",
+          "signature": "신규 — build-matrix (OS×servlet-line) + integration-tests (ubuntu-latest) + coverage (JaCoCo+Codecov)",
+          "inferred": true
+        }
+      ]
+    },
+    {
+      "req_id": "IR-REL-001",
+      "files": [
+        {
+          "path": "settings.gradle",
+          "line_range": "1",
+          "signature": "rootProject.name = 'jakarta-to-javax-servlet-adapter' 로 변경 (현 'JavaXServletToJakartaAdapter')",
+          "inferred": false
+        },
+        {
+          "path": "build.gradle",
+          "line_range": "5-6",
+          "signature": "group='com.clipsoft' 유지, version='1.0.0' 으로 변경 + allprojects 적용",
+          "inferred": false
+        },
+        {
+          "path": "common/build.gradle",
+          "line_range": "publishing 블록",
+          "signature": "신규 — maven-publish: artifactId='jakarta-to-javax-servlet-adapter-common'",
+          "inferred": true
+        }
+      ]
+    },
+    {
+      "req_id": "FR-REL-001",
+      "files": [
+        {
+          "path": "README.md",
+          "line_range": "전체",
+          "signature": "호환성 매트릭스 + Cookie attribute 손실 정책 + strict 모드 안내 + 0.x 마이그레이션 추가",
+          "inferred": true
+        }
+      ]
+    }
+  ],
+  "missing_anchors": [
+    {
+      "req_id": "NFR-MOD-002",
+      "reason": "Stability=draft, Target=v1.1.0 — v1.0.0 범위 밖. 코드 grounding 없음 (구현하지 않는 것이 요구사항)"
+    },
+    {
+      "req_id": "FR-CONV-002",
+      "reason": "위임 우선 원칙은 모든 어댑터 클래스에 적용되는 설계 원칙이므로 단일 파일 anchor 없음. FR-TEST-002 (DelegationContractTest) 가 검증 수단"
+    },
+    {
+      "req_id": "FR-CONV-004",
+      "reason": "equals/hashCode override는 모든 어댑터 클래스에 분산 적용. 현 코드에 해당 override 없으므로 모든 어댑터 파일이 수정 대상 — 특정 anchor 없음"
+    },
+    {
+      "req_id": "FR-CONV-005",
+      "reason": "예외 변환 try/catch 패턴도 모든 위임 메서드에 분산 적용. 현 코드에 ServletException 변환 없음 — anchor 특정 불가"
+    },
+    {
+      "req_id": "FR-CONV-006",
+      "reason": "컬렉션 eager snapshot 정책은 getCookies/getParts/getServletRegistrations 등 여러 파일에 분산. FR-FIX-009가 대표 anchor"
+    },
+    {
+      "req_id": "FR-CONV-007",
+      "reason": "FR-FIX-001이 동일 파일을 커버. 별도 anchor 없음 — FR-FIX-001 anchor 공유"
+    },
+    {
+      "req_id": "FR-CONV-008",
+      "reason": "FR-FIX-003이 동일 파일을 커버. 별도 anchor 없음 — FR-FIX-003 anchor 공유"
+    },
+    {
+      "req_id": "FR-CONV-009",
+      "reason": "부수효과 보존은 모든 void 메서드 위임 정확성 요구 — 설계 원칙. 특정 file anchor 없음"
+    },
+    {
+      "req_id": "FR-CONV-014",
+      "reason": "모듈별 폴백 적용 범위 차이는 servlet5/6/61 빌드 결과에서만 확인 가능 — 구현 단계에서 각 모듈 소스에 분산됨. 현 단일 모듈 코드에 anchor 없음"
+    },
+    {
+      "req_id": "NFR-CONV-001",
+      "reason": "스레드 안전성은 설계 원칙 (final 필드, ConcurrentHashMap 등). HttpUpgradeHandler ThreadLocal 잠금은 BM10 테스트 anchor로 대체"
+    },
+    {
+      "req_id": "FR-TEST-005",
+      "reason": "크로스버전 호환성 검증은 CI 매트릭스 레벨 기능 — 단일 코드 파일 anchor 없음. OPS-TEST-001 CI yaml에 의존"
+    },
+    {
+      "req_id": "OPS-TEST-002",
+      "reason": "Stability=draft, Target=v1.1.0 — v1.0.0 범위 밖"
+    },
+    {
+      "req_id": "MIG-REL-001",
+      "reason": "OQ-001 미결 (옵션 A/B 선택 전). 0.x alias 패키지 위치가 결정되지 않아 코드 anchor 확정 불가"
+    },
+    {
+      "req_id": "OPS-REL-001",
+      "reason": "Sonatype 계정·GPG 키 등 외부 인프라 의존 — 코드 anchor 없음. GitHub Actions secrets 설정 + build.gradle signing 블록으로 부분 커버"
+    }
+  ],
+  "external_paths_detected": [],
+  "addition_sites": [
+    {
+      "purpose": "settings.gradle 변경 — 5개 서브 프로젝트 include + rootProject.name 변경",
+      "target_paths": [
+        "settings.gradle"
+      ],
+      "req_ids": ["FR-MOD-001", "IR-REL-001"]
+    },
+    {
+      "purpose": "root build.gradle 변경 — allprojects/subprojects 공통 설정으로 재구성",
+      "target_paths": [
+        "build.gradle"
+      ],
+      "req_ids": ["FR-MOD-001", "FR-MOD-002", "FR-MOD-003"]
+    },
+    {
+      "purpose": "gradle.properties 신설 — group, version, JDK toolchain 등 공통 프로퍼티",
+      "target_paths": [
+        "gradle.properties"
+      ],
+      "req_ids": ["FR-MOD-001", "IR-REL-001"]
+    },
+    {
+      "purpose": "common 모듈 신설 — ABI 호환 컨버터 + AdapterUnwrap marker + ConverterSupport",
+      "target_paths": [
+        "common/build.gradle",
+        "common/src/main/java/adapter/common/",
+        "common/src/main/java/adapter/common/EnumsConverter.java",
+        "common/src/main/java/adapter/common/HttpComponentConverter.java",
+        "common/src/main/java/adapter/common/ReadListenerConverter.java",
+        "common/src/main/java/adapter/common/WriteListenerConverter.java",
+        "common/src/main/java/adapter/common/ConverterSupport.java",
+        "common/src/main/java/adapter/common/AdapterUnwrap.java",
+        "common/src/testFixtures/java/com/snoworca/contract/DelegationContractTest.java",
+        "common/src/test/java/"
+      ],
+      "req_ids": ["FR-MOD-001", "FR-MOD-004", "FR-CONV-003", "FR-CONV-012", "FR-TEST-002"]
+    },
+    {
+      "purpose": "servlet5 모듈 신설 — 현 0.0.1 소스 이동 + 패키지명 변경 + 결함 수정 + BugMuseum 테스트",
+      "target_paths": [
+        "servlet5/build.gradle",
+        "servlet5/src/main/java/adapter/jakarta/servlet5/",
+        "servlet5/src/main/java/adapter/javax/servlet5/",
+        "servlet5/src/main/java/adapter/servletElementConverter5/",
+        "servlet5/src/main/java/com/snoworca/ServletAdapter.java",
+        "servlet5/src/main/java/com/snoworca/ServletAdapter5.java",
+        "servlet5/src/test/java/adapter/jakarta/servlet5/",
+        "servlet5/src/test/java/adapter/javax/servlet5/",
+        "servlet5/src/test/java/com/snoworca/regression/BugMuseumTest.java",
+        "servlet5/src/test/java/com/snoworca/integration/TomcatRunner.java",
+        "servlet5/src/test/java/com/snoworca/integration/"
+      ],
+      "req_ids": ["FR-MOD-001", "FR-MOD-002", "FR-MOD-003", "FR-MOD-005", "FR-MOD-006",
+                  "FR-FIX-001", "FR-FIX-002", "FR-FIX-003", "FR-FIX-004", "FR-FIX-005",
+                  "FR-FIX-006", "FR-FIX-007", "FR-FIX-008", "FR-FIX-009",
+                  "FR-TEST-001", "FR-TEST-003", "FR-TEST-004", "NFR-TEST-001"]
+    },
+    {
+      "purpose": "servlet6 모듈 신설 — jakarta 6.0 어댑터 (servlet5 수정본 사본 기준 + 6.0 신규 메서드 구현 + 폴백 정책)",
+      "target_paths": [
+        "servlet6/build.gradle",
+        "servlet6/src/main/java/adapter/jakarta/servlet6/",
+        "servlet6/src/main/java/adapter/javax/servlet6/",
+        "servlet6/src/main/java/adapter/servletElementConverter6/",
+        "servlet6/src/main/java/com/snoworca/ServletAdapter.java",
+        "servlet6/src/main/java/com/snoworca/ServletAdapter6.java",
+        "servlet6/src/main/java/adapter/jakarta/servlet6/http/EmptyHttpSessionContext.java",
+        "servlet6/src/test/java/adapter/jakarta/servlet6/",
+        "servlet6/src/test/java/com/snoworca/integration/TomcatRunner.java",
+        "servlet6/src/test/java/com/snoworca/integration/"
+      ],
+      "req_ids": ["FR-MOD-001", "FR-MOD-002", "FR-MOD-003", "FR-MOD-005", "FR-MOD-006",
+                  "FR-CONV-001", "FR-CONV-010", "FR-CONV-014",
+                  "FR-TEST-001", "FR-TEST-003", "NFR-TEST-001"]
+    },
+    {
+      "purpose": "servlet61 모듈 신설 — jakarta 6.1 어댑터 (servlet6 기준 + 6.1 신규 메서드 sendRedirect 오버로드 등)",
+      "target_paths": [
+        "servlet61/build.gradle",
+        "servlet61/src/main/java/adapter/jakarta/servlet61/",
+        "servlet61/src/main/java/adapter/javax/servlet61/",
+        "servlet61/src/main/java/adapter/servletElementConverter61/",
+        "servlet61/src/main/java/com/snoworca/ServletAdapter.java",
+        "servlet61/src/main/java/com/snoworca/ServletAdapter61.java",
+        "servlet61/src/test/java/adapter/jakarta/servlet61/",
+        "servlet61/src/test/java/com/snoworca/integration/TomcatRunner.java",
+        "servlet61/src/test/java/com/snoworca/integration/"
+      ],
+      "req_ids": ["FR-MOD-001", "FR-MOD-002", "FR-MOD-003", "FR-MOD-005", "FR-MOD-006",
+                  "FR-CONV-001", "FR-CONV-010", "FR-CONV-014",
+                  "FR-TEST-001", "FR-TEST-003", "NFR-TEST-001"]
+    },
+    {
+      "purpose": "bom 모듈 신설 — java-platform plugin + constraints (common/servlet5/6/61)",
+      "target_paths": [
+        "bom/build.gradle"
+      ],
+      "req_ids": ["FR-MOD-001", "FR-MOD-007", "IR-REL-001"]
+    },
+    {
+      "purpose": "GitHub Actions CI 매트릭스 신설",
+      "target_paths": [
+        ".github/workflows/ci.yml"
+      ],
+      "req_ids": ["OPS-TEST-001"]
+    }
+  ]
+}

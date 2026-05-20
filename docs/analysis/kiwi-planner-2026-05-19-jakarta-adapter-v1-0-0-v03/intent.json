@@ -1,0 +1,20 @@
+{
+  "target_intent": "v1.0.0 잔여 작업 (PH-003 잔여 결함 6건 페어 + PH-004 변환 의미론 페어 + PH-005 테스트 인프라 + PH-006 CI + PH-007 Maven Central 게시) 을 v02 의 완료 20 task 위에 이어서 수행. draft 4건은 v1.1.0 으로 이연.",
+  "user_priorities": [
+    "v02 의 53 잔여 task 중 draft-only 7건 drop, mixed 3건 req_ids 정제 후 46 task 로 진행",
+    "task ID/phase ID 가능한 한 v02 유지 (kiwi-coder state 재개 호환 도모)",
+    "PH-003 잔여 6 페어 simplified 토폴로지 (5 호출/페어), PH-004 SPEC 변환 full 토폴로지 (8 호출/페어)",
+    "TDD relaxed, draft exclude-draft",
+    "L-OPEN 18건 인계 (priority 별 open_questions/deferred_ac 로 분류)"
+  ],
+  "ambiguities": [
+    "v02 의 'deferred 처리' 라는 사용자 표현이 sidecar 실제와 불일치 (v02 excluded_reqs 는 NFR-MOD-002/OPS-TEST-002 만 등재) — v03 에서 4 draft REQ 명시 등재로 정정 적용",
+    "T-PH005-07/T-PH006-03/T-PH007-07 의 mixed req_ids 처리: draft 만 제거하면 task 의미 유지 가능 (review/infra/pr task)"
+  ],
+  "non_coding_signals": [
+    "T-PH003-21 / T-PH004-23 review task (TDD 면제)",
+    "T-PH005 인프라 (CI matrix, JaCoCo)",
+    "T-PH006 CI 매트릭스 (infra)",
+    "T-PH007 Maven Central publish + README/CHANGELOG (doc + code + pr)"
+  ]
+}

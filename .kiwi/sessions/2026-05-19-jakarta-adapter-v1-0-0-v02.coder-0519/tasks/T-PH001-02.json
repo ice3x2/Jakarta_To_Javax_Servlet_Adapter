@@ -1,0 +1,23 @@
+{
+  "task_id": "T-PH001-02",
+  "phase_id": "PH-001",
+  "type": "review",
+  "tdd": {"applicable": false, "reason": "auto-exempt by type (review)"},
+  "started_at": "2026-05-19T10:36:00Z",
+  "completed_at": "2026-05-19T10:51:01Z",
+  "phase1": {"skipped": "tdd-exempt"},
+  "phase2": {
+    "impl_iters": [{"iter": 1, "files_changed": [], "note": "review-only, no edits"}],
+    "formal_reviews": [{"iter": 1, "spawned": false, "self_validated": true}],
+    "prickly_reviews": [{"iter": 1, "spawned": false, "self_validated": true}],
+    "dod_check": [
+      {"item": "00.index.md §9 OQ-002 status=deferred 확인", "satisfied": true, "evidence": "L107 (post-T-PH001-01 edit) status=deferred"},
+      {"item": "plan excluded_reqs[] 에 NFR-MOD-002 등재", "satisfied": true, "evidence": "plan.md L39, sidecar.json L9337"},
+      {"item": "PH-002 어떤 task 도 module-info.java 생성 포함 안 함", "satisfied": true, "evidence": "T-PH002-09 action 명시 'module-info.java 생성 금지', dod 'module-info.java 는 생성되지 않음'"}
+    ]
+  },
+  "phase3": {
+    "regression": {"scope": "skipped", "passed": 0, "failed": 0, "skip_reason": "no changes"},
+    "mcp_calls": [{"tool": "add_completed_work", "ok": true, "summary_excerpt": "OQ-002 JPMS 유보 명시 확인..."}]
+  }
+}

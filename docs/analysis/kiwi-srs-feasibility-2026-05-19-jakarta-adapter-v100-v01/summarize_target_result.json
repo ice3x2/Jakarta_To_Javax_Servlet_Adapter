@@ -1,0 +1,45 @@
+{
+  "run_id": "2026-05-19.jakarta-adapter.v100.v01",
+  "phase": "8.2",
+  "executed_at": "2026-05-19",
+  "ok": true,
+  "value": {
+    "target": "v1.0.0",
+    "targetSource": "explicit",
+    "countsByStatus": {"planned": 44},
+    "countsByType": {
+      "functional": 36,
+      "constraint": 1,
+      "non_functional": 3,
+      "operational": 2,
+      "interface": 1,
+      "migration": 1
+    },
+    "countsByStability": {
+      "evolving": 39,
+      "draft": 5
+    },
+    "total": 44,
+    "blocked": [],
+    "implementedNotVerified": [],
+    "missingEvidence": [],
+    "draftRequirements": ["FR-TEST-003", "FR-TEST-005", "OPS-TEST-001", "MIG-REL-001", "OPS-REL-001"],
+    "deprecatedRequirements": [],
+    "newWorkCandidates": [
+      "FR-MOD-001", "FR-MOD-002", "FR-MOD-003", "FR-MOD-004", "FR-MOD-005",
+      "FR-MOD-006", "FR-MOD-007", "CON-MOD-001", "NFR-MOD-001",
+      "FR-CONV-001", "FR-CONV-002", "FR-CONV-003", "FR-CONV-004", "FR-CONV-005",
+      "FR-CONV-006", "FR-CONV-007", "FR-CONV-008", "FR-CONV-009", "FR-CONV-010",
+      "FR-CONV-011", "FR-CONV-012", "FR-CONV-013", "NFR-CONV-001", "FR-CONV-014",
+      "FR-FIX-001", "FR-FIX-002", "FR-FIX-003", "FR-FIX-004", "FR-FIX-005",
+      "FR-FIX-006", "FR-FIX-007", "FR-FIX-008", "FR-FIX-009",
+      "FR-TEST-001", "FR-TEST-002", "FR-TEST-004", "NFR-TEST-001",
+      "IR-REL-001", "FR-REL-001"
+    ],
+    "stabilityBlockers": ["FR-TEST-003", "FR-TEST-005", "OPS-TEST-001", "MIG-REL-001", "OPS-REL-001"],
+    "stabilityWarnings": [],
+    "diagnosticsSummary": {"errors": 0, "warnings": 5, "byCode": {"SRS-W023": 5}},
+    "completedWork": [],
+    "goal": null
+  }
+}

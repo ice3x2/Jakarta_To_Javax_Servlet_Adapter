@@ -1,0 +1,19 @@
+{"event":"phase_start","at":"2026-05-19T10:30:00Z","run_id":"2026-05-19-jakarta-adapter-v1-0-0-v02.coder-0519","plan_path":"docs/plans/2026-05-19-jakarta-adapter-v1-0-0-v02.plan.md","target":"v1.0.0","mode":"normal","flags":[],"session_scope":"PH-001 only"}
+{"event":"task_start","at":"2026-05-19T10:31:00Z","task_id":"T-PH001-01","phase_id":"PH-001","type":"issue"}
+{"event":"tdd_exempted","at":"2026-05-19T10:31:01Z","task_id":"T-PH001-01","reason":"auto-exempt by type (issue)"}
+{"event":"impl_done","at":"2026-05-19T10:35:00Z","task_id":"T-PH001-01","iter":1,"files_changed":["docs/spec/00.index.md","docs/spec/50.compatibility.srs.md"]}
+{"event":"task_start","at":"2026-05-19T10:36:00Z","task_id":"T-PH001-02","phase_id":"PH-001","type":"review"}
+{"event":"tdd_exempted","at":"2026-05-19T10:36:01Z","task_id":"T-PH001-02","reason":"auto-exempt by type (review)"}
+{"event":"impl_done","at":"2026-05-19T10:40:00Z","task_id":"T-PH001-02","iter":1,"files_changed":[],"note":"review-only, no changes"}
+{"event":"task_start","at":"2026-05-19T10:41:00Z","task_id":"T-PH001-03","phase_id":"PH-001","type":"issue"}
+{"event":"tdd_exempted","at":"2026-05-19T10:41:01Z","task_id":"T-PH001-03","reason":"auto-exempt by type (issue)"}
+{"event":"impl_done","at":"2026-05-19T10:46:00Z","task_id":"T-PH001-03","iter":1,"files_changed":["docs/spec/50.compatibility.srs.md"],"github_issue":"https://github.com/ice3x2/Jakarta_To_Javax_Servlet_Adapter/issues/3"}
+{"event":"regression_done","at":"2026-05-19T10:50:00Z","task_id":"PH-001","scope":"skipped","passed":0,"failed":0,"skip_reason":"docs-only changes, no build/test impact"}
+{"event":"mcp_call","at":"2026-05-19T10:50:01Z","task_id":"T-PH001-01","tool":"add_completed_work","ok":true}
+{"event":"mcp_call","at":"2026-05-19T10:50:02Z","task_id":"T-PH001-02","tool":"add_completed_work","ok":true}
+{"event":"mcp_call","at":"2026-05-19T10:50:03Z","task_id":"T-PH001-03","tool":"add_completed_work","ok":true}
+{"event":"task_done","at":"2026-05-19T10:51:00Z","task_id":"T-PH001-01","phase_id":"PH-001","green":null,"regression":"skip","duration_ms":300000}
+{"event":"task_done","at":"2026-05-19T10:51:01Z","task_id":"T-PH001-02","phase_id":"PH-001","green":null,"regression":"skip","duration_ms":240000}
+{"event":"task_done","at":"2026-05-19T10:51:02Z","task_id":"T-PH001-03","phase_id":"PH-001","green":null,"regression":"skip","duration_ms":480000}
+{"event":"checkpoint","at":"2026-05-19T10:55:00Z","task_id":null,"resume_hint":"phase-0 (PH-002 진입 queue 의 head=T-PH002-01)"}
+{"event":"phase_end","at":"2026-05-19T10:55:00Z","run_id":"2026-05-19-jakarta-adapter-v1-0-0-v02.coder-0519","summary":"PH-001 3/3 completed (TDD-exempt). 70 tasks remaining."}

@@ -1,0 +1,4957 @@
+{
+  "schema_version": "1.1.0",
+  "plan_contract": "1.2.0",
+  "run_id": "2026-05-20.jakarta-adapter-v100.e2e",
+  "target": "v1.0.0",
+  "plan_version": "0.1.0",
+  "generated_at": "2026-05-20T13:00:00Z",
+  "tool_versions": {
+    "speckiwi": "2.2.2",
+    "kiwi_planner": "0.6.0",
+    "validator": "0.6.0"
+  },
+  "tdd_policy": "relaxed",
+  "md_path": "docs/plans/2026-05-20.jakarta-adapter-v100.e2e.plan.md",
+  "md_sha256": "3f2c766d806935642d49ad45d15c51fb696ef512afa43708874a9bee8ad91b1e",
+  "phases": [
+    {
+      "id": "PH-001",
+      "title": "IT-INFRA",
+      "goal": "Tomcat embed 의존성 + integrationTest task + TomcatRunner 헬퍼 3 모듈 구축",
+      "depends_on": [],
+      "task_ids": [
+        "T-PH001-01",
+        "T-PH001-02",
+        "T-PH001-03",
+        "T-PH001-04"
+      ]
+    },
+    {
+      "id": "PH-002",
+      "title": "IT-SCENARIO-P0",
+      "goal": "IT01~IT10 P0 시나리오 작성 (GET/POST/Cookie/SameSite/Session/Filter/Async/MultiPart/Redirect/Charset)",
+      "depends_on": [
+        "PH-001"
+      ],
+      "task_ids": [
+        "T-PH002-01",
+        "T-PH002-02",
+        "T-PH002-03",
+        "T-PH002-04",
+        "T-PH002-05",
+        "T-PH002-06",
+        "T-PH002-07",
+        "T-PH002-08",
+        "T-PH002-09",
+        "T-PH002-10"
+      ]
+    },
+    {
+      "id": "PH-003",
+      "title": "IT-SCENARIO-P1",
+      "goal": "IT11~IT15 P1 시나리오 작성 (Status/ContentLength/ErrorPage/ServletConnection/WebSocket)",
+      "depends_on": [
+        "PH-002"
+      ],
+      "task_ids": [
+        "T-PH003-01",
+        "T-PH003-02",
+        "T-PH003-03",
+        "T-PH003-04",
+        "T-PH003-05"
+      ]
+    },
+    {
+      "id": "PH-004",
+      "title": "BugMuseum 확장",
+      "goal": "servlet5 BM01~BM10 회귀 + servlet6/61 미러",
+      "depends_on": [],
+      "task_ids": [
+        "T-PH004-01",
+        "T-PH004-02",
+        "T-PH004-03"
+      ]
+    },
+    {
+      "id": "PH-005",
+      "title": "UNIT-BACKFILL",
+      "goal": "어댑터 단위 테스트 servlet6=43/43, servlet61=43/43, servlet5=42/42 달성",
+      "depends_on": [],
+      "task_ids": [
+        "T-PH005-01",
+        "T-PH005-02",
+        "T-PH005-03",
+        "T-PH005-04",
+        "T-PH005-05",
+        "T-PH005-06",
+        "T-PH005-07",
+        "T-PH005-08"
+      ]
+    },
+    {
+      "id": "PH-006",
+      "title": "CI",
+      "goal": ".github/workflows/ci.yml build-matrix + integration-tests + coverage job 작성",
+      "depends_on": [
+        "PH-001"
+      ],
+      "task_ids": [
+        "T-PH006-01",
+        "T-PH006-02",
+        "T-PH006-03",
+        "T-PH006-04"
+      ]
+    },
+    {
+      "id": "PH-007",
+      "title": "RELEASE-VERIFICATION",
+      "goal": "NFR 정합성 결정 + FR-TEST-002 evidence 통합 회귀 보고",
+      "depends_on": [
+        "PH-002",
+        "PH-005",
+        "PH-006"
+      ],
+      "task_ids": [
+        "T-PH007-01",
+        "T-PH007-02"
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "id": "T-PH001-01",
+      "phase_id": "PH-001",
+      "title": "servlet5 build.gradle Tomcat embed 10.0.27 + awaitility testImplementation 추가",
+      "type": "code",
+      "req_ids": [
+        "FR-TEST-003"
+      ],
+      "files": [
+        {
+          "path": "servlet5/build.gradle"
+        }
+      ],
+      "action": "servlet5/build.gradle dependencies 블록에 testImplementation 'org.apache.tomcat.embed:tomcat-embed-core:10.0.27', testImplementation 'org.awaitility:awaitility:4.2.1' 추가. javax.servlet-api 4.0.1 compileOnly 유지(충돌 방지).",
+      "acceptance_tests": [
+        {
+          "kind": "shell",
+          "cmd": "./gradlew :servlet5:dependencies --configuration testRuntimeClasspath",
+          "expected_exit": 0,
+          "stdout_regex": "tomcat-embed-core:10\\.0\\.27"
+        }
+      ],
+      "verification_cmd": {
+        "posix": "./gradlew :servlet5:dependencies --configuration testRuntimeClasspath",
+        "windows": "gradlew.bat :servlet5:dependencies --configuration testRuntimeClasspath"
+      },
+      "dod": [
+        "dependencies 명령 출력에 tomcat-embed-core:10.0.27 및 awaitility:4.2.1 포함",
+        "기존 단위 테스트 106건 회귀 PASS"
+      ],
+      "rollback": "추가한 두 dependency 라인 제거 후 ./gradlew :servlet5:test 회귀 확인",
+      "trace_links": [
+        {
+          "link_id": "TL-T-PH001-01-01",
+          "source": {
+            "type": "Task",
+            "id": "T-PH001-01"
+          },
+          "target": {
+            "type": "Requirement",
+            "reference": "FR-TEST-003"
+          },
+          "relation": "depends_on"
+        }
+      ],
+      "estimated_effort": "S",
+      "tdd": {
+        "applicable": false,
+        "exempt_reason": "build.gradle 의존성 추가는 빌드 구성 변경으로 단위 테스트 대상이 아니며, AC 검증은 acceptance_tests 의 dependencies 명령 출력으로 수행",
+        "phase": "n/a",
+        "test_cases": [],
+        "red_evidence": null,
+        "green_evidence": null
+      },
+      "depends_on_task": [],
+      "covers_ac": [
+        "AC-1"
+      ]
+    },
+    {
+      "id": "T-PH001-02",
+      "phase_id": "PH-001",
+      "title": "servlet6 build.gradle Tomcat embed 10.1.30 + awaitility testImplementation 추가",
+      "type": "code",
+      "req_ids": [
+        "FR-TEST-003"
+      ],
+      "files": [
+        {
+          "path": "servlet6/build.gradle"
+        }
+      ],
+      "action": "servlet6/build.gradle dependencies 블록에 testImplementation 'org.apache.tomcat.embed:tomcat-embed-core:10.1.30', testImplementation 'org.awaitility:awaitility:4.2.1' 추가.",
+      "acceptance_tests": [
+        {
+          "kind": "shell",
+          "cmd": "./gradlew :servlet6:dependencies --configuration testRuntimeClasspath",
+          "expected_exit": 0,
+          "stdout_regex": "tomcat-embed-core:10\\.1\\.30"
+        }
+      ],
+      "verification_cmd": {
+        "posix": "./gradlew :servlet6:dependencies --configuration testRuntimeClasspath",
+        "windows": "gradlew.bat :servlet6:dependencies --configuration testRuntimeClasspath"
+      },
+      "dod": [
+        "dependencies 명령 출력에 tomcat-embed-core:10.1.30 및 awaitility:4.2.1 포함",
+        "servlet6 단위 테스트 28건 회귀 PASS"
+      ],
+      "rollback": "추가한 두 dependency 라인 제거 후 ./gradlew :servlet6:test 회귀 확인",
+      "trace_links": [
+        {
+          "link_id": "TL-T-PH001-02-01",
+          "source": {
+            "type": "Task",
+            "id": "T-PH001-02"
+          },
+          "target": {
+            "type": "Requirement",
+            "reference": "FR-TEST-003"
+          },
+          "relation": "depends_on"
+        }
+      ],
+      "estimated_effort": "S",
+      "tdd": {
+        "applicable": false,
+        "exempt_reason": "build.gradle 의존성 추가는 빌드 구성 변경으로 단위 테스트 대상이 아니며, AC 검증은 dependencies 명령 출력으로 수행",
+        "phase": "n/a",
+        "test_cases": [],
+        "red_evidence": null,
+        "green_evidence": null
+      },
+      "depends_on_task": [],
+      "covers_ac": [
+        "AC-1"
+      ]
+    },
+    {
+      "id": "T-PH001-03",
+      "phase_id": "PH-001",
+      "title": "servlet61 build.gradle Tomcat embed 11.0.0 + awaitility testImplementation 추가",
+      "type": "code",
+      "req_ids": [
+        "FR-TEST-003"
+      ],
+      "files": [
+        {
+          "path": "servlet61/build.gradle"
+        }
+      ],
+      "action": "servlet61/build.gradle dependencies 블록에 testImplementation 'org.apache.tomcat.embed:tomcat-embed-core:11.0.0', testImplementation 'org.awaitility:awaitility:4.2.1' 추가. JDK 17 toolchain 일관성 유지.",
+      "acceptance_tests": [
+        {
+          "kind": "shell",
+          "cmd": "./gradlew :servlet61:dependencies --configuration testRuntimeClasspath",
+          "expected_exit": 0,
+          "stdout_regex": "tomcat-embed-core:11\\.0\\.0"
+        }
+      ],
+      "verification_cmd": {
+        "posix": "./gradlew :servlet61:dependencies --configuration testRuntimeClasspath",
+        "windows": "gradlew.bat :servlet61:dependencies --configuration testRuntimeClasspath"
+      },
+      "dod": [
+        "dependencies 명령 출력에 tomcat-embed-core:11.0.0 및 awaitility:4.2.1 포함",
+        "servlet61 단위 테스트 33건 회귀 PASS"
+      ],
+      "rollback": "추가한 두 dependency 라인 제거 후 ./gradlew :servlet61:test 회귀 확인",
+      "trace_links": [
+        {
+          "link_id": "TL-T-PH001-03-01",
+          "source": {
+            "type": "Task",
+            "id": "T-PH001-03"
+          },
+          "target": {
+            "type": "Requirement",
+            "reference": "FR-TEST-003"
+          },
+          "relation": "depends_on"
+        }
+      ],
+      "estimated_effort": "S",
+      "tdd": {
+        "applicable": false,
+        "exempt_reason": "build.gradle 의존성 추가는 빌드 구성 변경으로 단위 테스트 대상이 아니며, AC 검증은 dependencies 명령 출력으로 수행",
+        "phase": "n/a",
+        "test_cases": [],
+        "red_evidence": null,
+        "green_evidence": null
+      },
+      "depends_on_task": [],
+      "covers_ac": [
+        "AC-1"
+      ]
+    },
+    {
+      "id": "T-PH001-04",
+      "phase_id": "PH-001",
+      "title": "integrationTest task 분리 + TomcatRunner 헬퍼 3 모듈 작성",
+      "type": "code",
+      "req_ids": [
+        "FR-TEST-003"
+      ],
+      "files": [
+        {
+          "path": "build.gradle"
+        },
+        {
+          "path": "servlet5/src/test/java/com/snoworca/adapter/it/TomcatRunner.java"
+        },
+        {
+          "path": "servlet6/src/test/java/com/snoworca/adapter/it/TomcatRunner.java"
+        },
+        {
+          "path": "servlet61/src/test/java/com/snoworca/adapter/it/TomcatRunner.java"
+        }
+      ],
+      "action": "루트 build.gradle subprojects 블록에 JUnit Platform useJUnitPlatform { excludeTags 'integration' } 적용 후 별도 integrationTest task 등록 useJUnitPlatform { includeTags 'integration' }. 각 모듈 test source set 에 TomcatRunner 헬퍼 작성 — 임시 디렉토리에 Tomcat 인스턴스 부팅(랜덤 포트), Servlet/Filter 등록 API 제공, AutoCloseable 구현.",
+      "acceptance_tests": [
+        {
+          "kind": "shell",
+          "cmd": "./gradlew :servlet5:integrationTest :servlet6:integrationTest :servlet61:integrationTest --dry-run",
+          "expected_exit": 0,
+          "stdout_regex": ":integrationTest"
+        }
+      ],
+      "verification_cmd": {
+        "posix": "./gradlew :servlet5:integrationTest :servlet6:integrationTest :servlet61:integrationTest --dry-run",
+        "windows": "gradlew.bat :servlet5:integrationTest :servlet6:integrationTest :servlet61:integrationTest --dry-run"
+      },
+      "dod": [
+        "3 모듈 모두 integrationTest task 노출(--dry-run 통과)",
+        "TomcatRunner 임시 디렉토리 생성/정리 동작 unit-smoke test 통과",
+        "기존 test task 가 @Tag(\"integration\") 클래스를 실행하지 않음 확인"
+      ],
+      "rollback": "build.gradle 변경 revert + 3 TomcatRunner.java 파일 삭제",
+      "trace_links": [
+        {
+          "link_id": "TL-T-PH001-04-01",
+          "source": {
+            "type": "Task",
+            "id": "T-PH001-04"
+          },
+          "target": {
+            "type": "Requirement",
+            "reference": "FR-TEST-003"
+          },
+          "relation": "depends_on"
+        }
+      ],
+      "estimated_effort": "M",
+      "tdd": {
+        "applicable": true,
+        "exempt_reason": "",
+        "phase": "green",
+        "test_cases": [
+          {
+            "id": "TC-REQ-FR-TEST-003-AC1-01",
+            "req_id": "FR-TEST-003",
+            "ac_refs": [
+              "AC-1"
+            ],
+            "test_file": "servlet5/src/test/java/com/snoworca/adapter/it/TomcatRunnerSmokeTest.java",
+            "test_symbol": "shouldBootAndShutdownCleanly",
+            "kind": "integration",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-003-AC1-02",
+            "req_id": "FR-TEST-003",
+            "ac_refs": [
+              "AC-1"
+            ],
+            "test_file": "servlet6/src/test/java/com/snoworca/adapter/it/TomcatRunnerSmokeTest.java",
+            "test_symbol": "shouldBootAndShutdownCleanly",
+            "kind": "integration",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-003-AC1-03",
+            "req_id": "FR-TEST-003",
+            "ac_refs": [
+              "AC-1"
+            ],
+            "test_file": "servlet61/src/test/java/com/snoworca/adapter/it/TomcatRunnerSmokeTest.java",
+            "test_symbol": "shouldBootAndShutdownCleanly",
+            "kind": "integration",
+            "expected_failure_signature": null
+          }
+        ],
+        "red_evidence": null,
+        "green_evidence": null
+      },
+      "depends_on_task": [
+        "T-PH001-01",
+        "T-PH001-02",
+        "T-PH001-03"
+      ],
+      "covers_ac": [
+        "AC-1",
+        "AC-2"
+      ]
+    },
+    {
+      "id": "T-PH002-01",
+      "phase_id": "PH-002",
+      "title": "IT01 GET 기본 요청·응답 통합 테스트 (3 모듈)",
+      "type": "code",
+      "req_ids": [
+        "FR-TEST-003"
+      ],
+      "files": [
+        {
+          "path": "servlet5/src/test/java/com/snoworca/adapter/it/IT01GetTest.java"
+        },
+        {
+          "path": "servlet6/src/test/java/com/snoworca/adapter/it/IT01GetTest.java"
+        },
+        {
+          "path": "servlet61/src/test/java/com/snoworca/adapter/it/IT01GetTest.java"
+        }
+      ],
+      "action": "각 모듈에 @Tag(\"integration\") IT01GetTest 작성 — TomcatRunner 로 jakarta Servlet 부팅 후 javax 어댑터 경유 GET 요청 → status 200 / body / Content-Type / Content-Length 검증.",
+      "acceptance_tests": [
+        {
+          "kind": "shell",
+          "cmd": "./gradlew :servlet5:integrationTest --tests *IT01GetTest :servlet6:integrationTest --tests *IT01GetTest :servlet61:integrationTest --tests *IT01GetTest",
+          "expected_exit": 0,
+          "stdout_regex": "BUILD SUCCESSFUL"
+        }
+      ],
+      "verification_cmd": {
+        "posix": "./gradlew :servlet5:integrationTest --tests *IT01GetTest :servlet6:integrationTest --tests *IT01GetTest :servlet61:integrationTest --tests *IT01GetTest",
+        "windows": "gradlew.bat :servlet5:integrationTest --tests *IT01GetTest :servlet6:integrationTest --tests *IT01GetTest :servlet61:integrationTest --tests *IT01GetTest"
+      },
+      "dod": [
+        "3 모듈 IT01 PASS",
+        "응답 body/status/Content-Type/Content-Length 모두 assert"
+      ],
+      "rollback": "3 파일 삭제",
+      "trace_links": [
+        {
+          "link_id": "TL-T-PH002-01-01",
+          "source": {
+            "type": "Task",
+            "id": "T-PH002-01"
+          },
+          "target": {
+            "type": "Requirement",
+            "reference": "FR-TEST-003"
+          },
+          "relation": "depends_on"
+        }
+      ],
+      "estimated_effort": "M",
+      "tdd": {
+        "applicable": true,
+        "exempt_reason": "",
+        "phase": "green",
+        "test_cases": [
+          {
+            "id": "TC-REQ-FR-TEST-003-AC2-01",
+            "req_id": "FR-TEST-003",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet5/src/test/java/com/snoworca/adapter/it/IT01GetTest.java",
+            "test_symbol": "shouldReturnBodyAndStatus",
+            "kind": "integration",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-003-AC2-02",
+            "req_id": "FR-TEST-003",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet6/src/test/java/com/snoworca/adapter/it/IT01GetTest.java",
+            "test_symbol": "shouldReturnBodyAndStatus",
+            "kind": "integration",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-003-AC2-03",
+            "req_id": "FR-TEST-003",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet61/src/test/java/com/snoworca/adapter/it/IT01GetTest.java",
+            "test_symbol": "shouldReturnBodyAndStatus",
+            "kind": "integration",
+            "expected_failure_signature": null
+          }
+        ],
+        "red_evidence": null,
+        "green_evidence": null
+      },
+      "depends_on_task": [
+        "T-PH001-04"
+      ],
+      "covers_ac": [
+        "AC-2"
+      ]
+    },
+    {
+      "id": "T-PH002-02",
+      "phase_id": "PH-002",
+      "title": "IT02 POST form-urlencoded + chunked body 통합 테스트 (F1 boundary)",
+      "type": "code",
+      "req_ids": [
+        "FR-TEST-003"
+      ],
+      "files": [
+        {
+          "path": "servlet5/src/test/java/com/snoworca/adapter/it/IT02PostTest.java"
+        },
+        {
+          "path": "servlet6/src/test/java/com/snoworca/adapter/it/IT02PostTest.java"
+        },
+        {
+          "path": "servlet61/src/test/java/com/snoworca/adapter/it/IT02PostTest.java"
+        }
+      ],
+      "action": "form-urlencoded POST + Transfer-Encoding chunked 두 케이스. F1 (request body stream) 경계 검증.",
+      "acceptance_tests": [
+        {
+          "kind": "shell",
+          "cmd": "./gradlew :servlet5:integrationTest --tests *IT02PostTest :servlet6:integrationTest --tests *IT02PostTest :servlet61:integrationTest --tests *IT02PostTest",
+          "expected_exit": 0,
+          "stdout_regex": "BUILD SUCCESSFUL"
+        }
+      ],
+      "verification_cmd": {
+        "posix": "./gradlew :servlet5:integrationTest --tests *IT02PostTest :servlet6:integrationTest --tests *IT02PostTest :servlet61:integrationTest --tests *IT02PostTest",
+        "windows": "gradlew.bat :servlet5:integrationTest --tests *IT02PostTest :servlet6:integrationTest --tests *IT02PostTest :servlet61:integrationTest --tests *IT02PostTest"
+      },
+      "dod": [
+        "form-urlencoded 케이스 parameter 정상 파싱",
+        "chunked body 케이스 InputStream 완전 read"
+      ],
+      "rollback": "3 파일 삭제",
+      "trace_links": [
+        {
+          "link_id": "TL-T-PH002-02-01",
+          "source": {
+            "type": "Task",
+            "id": "T-PH002-02"
+          },
+          "target": {
+            "type": "Requirement",
+            "reference": "FR-TEST-003"
+          },
+          "relation": "depends_on"
+        }
+      ],
+      "estimated_effort": "M",
+      "tdd": {
+        "applicable": true,
+        "exempt_reason": "",
+        "phase": "green",
+        "test_cases": [
+          {
+            "id": "TC-REQ-FR-TEST-003-AC2-04",
+            "req_id": "FR-TEST-003",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet5/src/test/java/com/snoworca/adapter/it/IT02PostTest.java",
+            "test_symbol": "shouldParseFormUrlencoded",
+            "kind": "integration",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-003-AC2-05",
+            "req_id": "FR-TEST-003",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet5/src/test/java/com/snoworca/adapter/it/IT02PostTest.java",
+            "test_symbol": "shouldReadChunkedBody",
+            "kind": "integration",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-003-AC2-06",
+            "req_id": "FR-TEST-003",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet6/src/test/java/com/snoworca/adapter/it/IT02PostTest.java",
+            "test_symbol": "shouldParseFormUrlencoded",
+            "kind": "integration",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-003-AC2-07",
+            "req_id": "FR-TEST-003",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet6/src/test/java/com/snoworca/adapter/it/IT02PostTest.java",
+            "test_symbol": "shouldReadChunkedBody",
+            "kind": "integration",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-003-AC2-08",
+            "req_id": "FR-TEST-003",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet61/src/test/java/com/snoworca/adapter/it/IT02PostTest.java",
+            "test_symbol": "shouldParseFormUrlencoded",
+            "kind": "integration",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-003-AC2-09",
+            "req_id": "FR-TEST-003",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet61/src/test/java/com/snoworca/adapter/it/IT02PostTest.java",
+            "test_symbol": "shouldReadChunkedBody",
+            "kind": "integration",
+            "expected_failure_signature": null
+          }
+        ],
+        "red_evidence": null,
+        "green_evidence": null
+      },
+      "depends_on_task": [
+        "T-PH001-04"
+      ],
+      "covers_ac": [
+        "AC-2"
+      ]
+    },
+    {
+      "id": "T-PH002-03",
+      "phase_id": "PH-002",
+      "title": "IT03 Cookie 라운드트립 통합 테스트",
+      "type": "code",
+      "req_ids": [
+        "FR-TEST-003"
+      ],
+      "files": [
+        {
+          "path": "servlet5/src/test/java/com/snoworca/adapter/it/IT03CookieTest.java"
+        },
+        {
+          "path": "servlet6/src/test/java/com/snoworca/adapter/it/IT03CookieTest.java"
+        },
+        {
+          "path": "servlet61/src/test/java/com/snoworca/adapter/it/IT03CookieTest.java"
+        }
+      ],
+      "action": "Set-Cookie 응답 + Cookie 요청 라운드트립. 6개 속성 검증.",
+      "acceptance_tests": [
+        {
+          "kind": "shell",
+          "cmd": "./gradlew :servlet5:integrationTest --tests *IT03CookieTest :servlet6:integrationTest --tests *IT03CookieTest :servlet61:integrationTest --tests *IT03CookieTest",
+          "expected_exit": 0,
+          "stdout_regex": "BUILD SUCCESSFUL"
+        }
+      ],
+      "verification_cmd": {
+        "posix": "./gradlew :servlet5:integrationTest --tests *IT03CookieTest :servlet6:integrationTest --tests *IT03CookieTest :servlet61:integrationTest --tests *IT03CookieTest",
+        "windows": "gradlew.bat :servlet5:integrationTest --tests *IT03CookieTest :servlet6:integrationTest --tests *IT03CookieTest :servlet61:integrationTest --tests *IT03CookieTest"
+      },
+      "dod": [
+        "6개 속성 모두 round-trip assert PASS"
+      ],
+      "rollback": "3 파일 삭제",
+      "trace_links": [
+        {
+          "link_id": "TL-T-PH002-03-01",
+          "source": {
+            "type": "Task",
+            "id": "T-PH002-03"
+          },
+          "target": {
+            "type": "Requirement",
+            "reference": "FR-TEST-003"
+          },
+          "relation": "depends_on"
+        }
+      ],
+      "estimated_effort": "M",
+      "tdd": {
+        "applicable": true,
+        "exempt_reason": "",
+        "phase": "green",
+        "test_cases": [
+          {
+            "id": "TC-REQ-FR-TEST-003-AC2-10",
+            "req_id": "FR-TEST-003",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet5/src/test/java/com/snoworca/adapter/it/IT03CookieTest.java",
+            "test_symbol": "shouldRoundTripCookieAttributes",
+            "kind": "integration",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-003-AC2-11",
+            "req_id": "FR-TEST-003",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet6/src/test/java/com/snoworca/adapter/it/IT03CookieTest.java",
+            "test_symbol": "shouldRoundTripCookieAttributes",
+            "kind": "integration",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-003-AC2-12",
+            "req_id": "FR-TEST-003",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet61/src/test/java/com/snoworca/adapter/it/IT03CookieTest.java",
+            "test_symbol": "shouldRoundTripCookieAttributes",
+            "kind": "integration",
+            "expected_failure_signature": null
+          }
+        ],
+        "red_evidence": null,
+        "green_evidence": null
+      },
+      "depends_on_task": [
+        "T-PH001-04"
+      ],
+      "covers_ac": [
+        "AC-2"
+      ]
+    },
+    {
+      "id": "T-PH002-04",
+      "phase_id": "PH-002",
+      "title": "IT04 Cookie SameSite/Partitioned 통합 테스트 (FR-CONV-013 AC-4)",
+      "type": "code",
+      "req_ids": [
+        "FR-CONV-013",
+        "FR-TEST-003"
+      ],
+      "files": [
+        {
+          "path": "servlet6/src/test/java/com/snoworca/adapter/it/IT04SameSiteTest.java"
+        },
+        {
+          "path": "servlet61/src/test/java/com/snoworca/adapter/it/IT04SameSiteTest.java"
+        }
+      ],
+      "action": "jakarta 6.0+ 에서 SameSite=Strict/Lax/None + Partitioned attribute. 어댑터가 Set-Cookie header 직접 합성하는지 검증. servlet5 미지원으로 skip.",
+      "acceptance_tests": [
+        {
+          "kind": "shell",
+          "cmd": "./gradlew :servlet6:integrationTest --tests *IT04SameSiteTest :servlet61:integrationTest --tests *IT04SameSiteTest",
+          "expected_exit": 0,
+          "stdout_regex": "BUILD SUCCESSFUL"
+        }
+      ],
+      "verification_cmd": {
+        "posix": "./gradlew :servlet6:integrationTest --tests *IT04SameSiteTest :servlet61:integrationTest --tests *IT04SameSiteTest",
+        "windows": "gradlew.bat :servlet6:integrationTest --tests *IT04SameSiteTest :servlet61:integrationTest --tests *IT04SameSiteTest"
+      },
+      "dod": [
+        "SameSite 3값 + Partitioned attribute 모두 response header 에 정확히 출력",
+        "FR-CONV-013 AC-4 충족"
+      ],
+      "rollback": "2 파일 삭제",
+      "trace_links": [
+        {
+          "link_id": "TL-T-PH002-04-01",
+          "source": {
+            "type": "Task",
+            "id": "T-PH002-04"
+          },
+          "target": {
+            "type": "Requirement",
+            "reference": "FR-CONV-013"
+          },
+          "relation": "depends_on"
+        },
+        {
+          "link_id": "TL-T-PH002-04-02",
+          "source": {
+            "type": "Task",
+            "id": "T-PH002-04"
+          },
+          "target": {
+            "type": "Requirement",
+            "reference": "FR-TEST-003"
+          },
+          "relation": "depends_on"
+        }
+      ],
+      "estimated_effort": "M",
+      "tdd": {
+        "applicable": true,
+        "exempt_reason": "",
+        "phase": "green",
+        "test_cases": [
+          {
+            "id": "TC-REQ-FR-CONV-013-AC4-01",
+            "req_id": "FR-CONV-013",
+            "ac_refs": [
+              "AC-4"
+            ],
+            "test_file": "servlet6/src/test/java/com/snoworca/adapter/it/IT04SameSiteTest.java",
+            "test_symbol": "shouldEmitSameSiteStrict",
+            "kind": "integration",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-CONV-013-AC4-02",
+            "req_id": "FR-CONV-013",
+            "ac_refs": [
+              "AC-4"
+            ],
+            "test_file": "servlet6/src/test/java/com/snoworca/adapter/it/IT04SameSiteTest.java",
+            "test_symbol": "shouldEmitSameSiteLax",
+            "kind": "integration",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-CONV-013-AC4-03",
+            "req_id": "FR-CONV-013",
+            "ac_refs": [
+              "AC-4"
+            ],
+            "test_file": "servlet6/src/test/java/com/snoworca/adapter/it/IT04SameSiteTest.java",
+            "test_symbol": "shouldEmitSameSiteNone",
+            "kind": "integration",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-CONV-013-AC4-04",
+            "req_id": "FR-CONV-013",
+            "ac_refs": [
+              "AC-4"
+            ],
+            "test_file": "servlet6/src/test/java/com/snoworca/adapter/it/IT04SameSiteTest.java",
+            "test_symbol": "shouldEmitPartitioned",
+            "kind": "integration",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-CONV-013-AC4-05",
+            "req_id": "FR-CONV-013",
+            "ac_refs": [
+              "AC-4"
+            ],
+            "test_file": "servlet61/src/test/java/com/snoworca/adapter/it/IT04SameSiteTest.java",
+            "test_symbol": "shouldEmitSameSiteStrict",
+            "kind": "integration",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-CONV-013-AC4-06",
+            "req_id": "FR-CONV-013",
+            "ac_refs": [
+              "AC-4"
+            ],
+            "test_file": "servlet61/src/test/java/com/snoworca/adapter/it/IT04SameSiteTest.java",
+            "test_symbol": "shouldEmitSameSiteLax",
+            "kind": "integration",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-CONV-013-AC4-07",
+            "req_id": "FR-CONV-013",
+            "ac_refs": [
+              "AC-4"
+            ],
+            "test_file": "servlet61/src/test/java/com/snoworca/adapter/it/IT04SameSiteTest.java",
+            "test_symbol": "shouldEmitSameSiteNone",
+            "kind": "integration",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-CONV-013-AC4-08",
+            "req_id": "FR-CONV-013",
+            "ac_refs": [
+              "AC-4"
+            ],
+            "test_file": "servlet61/src/test/java/com/snoworca/adapter/it/IT04SameSiteTest.java",
+            "test_symbol": "shouldEmitPartitioned",
+            "kind": "integration",
+            "expected_failure_signature": null
+          }
+        ],
+        "red_evidence": null,
+        "green_evidence": null
+      },
+      "depends_on_task": [
+        "T-PH001-04"
+      ],
+      "covers_ac": [
+        "AC-2",
+        "AC-4"
+      ]
+    },
+    {
+      "id": "T-PH002-05",
+      "phase_id": "PH-002",
+      "title": "IT05 Session create/getAttribute/invalidate 통합 테스트",
+      "type": "code",
+      "req_ids": [
+        "FR-TEST-003"
+      ],
+      "files": [
+        {
+          "path": "servlet5/src/test/java/com/snoworca/adapter/it/IT05SessionTest.java"
+        },
+        {
+          "path": "servlet6/src/test/java/com/snoworca/adapter/it/IT05SessionTest.java"
+        },
+        {
+          "path": "servlet61/src/test/java/com/snoworca/adapter/it/IT05SessionTest.java"
+        }
+      ],
+      "action": "JSESSIONID 쿠키 라운드트립으로 Session 생성/조회/invalidate.",
+      "acceptance_tests": [
+        {
+          "kind": "shell",
+          "cmd": "./gradlew :servlet5:integrationTest --tests *IT05SessionTest :servlet6:integrationTest --tests *IT05SessionTest :servlet61:integrationTest --tests *IT05SessionTest",
+          "expected_exit": 0,
+          "stdout_regex": "BUILD SUCCESSFUL"
+        }
+      ],
+      "verification_cmd": {
+        "posix": "./gradlew :servlet5:integrationTest --tests *IT05SessionTest :servlet6:integrationTest --tests *IT05SessionTest :servlet61:integrationTest --tests *IT05SessionTest",
+        "windows": "gradlew.bat :servlet5:integrationTest --tests *IT05SessionTest :servlet6:integrationTest --tests *IT05SessionTest :servlet61:integrationTest --tests *IT05SessionTest"
+      },
+      "dod": [
+        "create→attribute set→2차 요청 attribute get→invalidate 시나리오 PASS"
+      ],
+      "rollback": "3 파일 삭제",
+      "trace_links": [
+        {
+          "link_id": "TL-T-PH002-05-01",
+          "source": {
+            "type": "Task",
+            "id": "T-PH002-05"
+          },
+          "target": {
+            "type": "Requirement",
+            "reference": "FR-TEST-003"
+          },
+          "relation": "depends_on"
+        }
+      ],
+      "estimated_effort": "M",
+      "tdd": {
+        "applicable": true,
+        "exempt_reason": "",
+        "phase": "green",
+        "test_cases": [
+          {
+            "id": "TC-REQ-FR-TEST-003-AC2-13",
+            "req_id": "FR-TEST-003",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet5/src/test/java/com/snoworca/adapter/it/IT05SessionTest.java",
+            "test_symbol": "shouldRoundTripSession",
+            "kind": "integration",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-003-AC2-14",
+            "req_id": "FR-TEST-003",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet6/src/test/java/com/snoworca/adapter/it/IT05SessionTest.java",
+            "test_symbol": "shouldRoundTripSession",
+            "kind": "integration",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-003-AC2-15",
+            "req_id": "FR-TEST-003",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet61/src/test/java/com/snoworca/adapter/it/IT05SessionTest.java",
+            "test_symbol": "shouldRoundTripSession",
+            "kind": "integration",
+            "expected_failure_signature": null
+          }
+        ],
+        "red_evidence": null,
+        "green_evidence": null
+      },
+      "depends_on_task": [
+        "T-PH001-04"
+      ],
+      "covers_ac": [
+        "AC-2"
+      ]
+    },
+    {
+      "id": "T-PH002-06",
+      "phase_id": "PH-002",
+      "title": "IT06 Filter chain 통합 테스트",
+      "type": "code",
+      "req_ids": [
+        "FR-TEST-003"
+      ],
+      "files": [
+        {
+          "path": "servlet5/src/test/java/com/snoworca/adapter/it/IT06FilterChainTest.java"
+        },
+        {
+          "path": "servlet6/src/test/java/com/snoworca/adapter/it/IT06FilterChainTest.java"
+        },
+        {
+          "path": "servlet61/src/test/java/com/snoworca/adapter/it/IT06FilterChainTest.java"
+        }
+      ],
+      "action": "Filter 2개 + Servlet 1개 체인 — wrapping, 순서, chain.doFilter 전후 검증.",
+      "acceptance_tests": [
+        {
+          "kind": "shell",
+          "cmd": "./gradlew :servlet5:integrationTest --tests *IT06FilterChainTest :servlet6:integrationTest --tests *IT06FilterChainTest :servlet61:integrationTest --tests *IT06FilterChainTest",
+          "expected_exit": 0,
+          "stdout_regex": "BUILD SUCCESSFUL"
+        }
+      ],
+      "verification_cmd": {
+        "posix": "./gradlew :servlet5:integrationTest --tests *IT06FilterChainTest :servlet6:integrationTest --tests *IT06FilterChainTest :servlet61:integrationTest --tests *IT06FilterChainTest",
+        "windows": "gradlew.bat :servlet5:integrationTest --tests *IT06FilterChainTest :servlet6:integrationTest --tests *IT06FilterChainTest :servlet61:integrationTest --tests *IT06FilterChainTest"
+      },
+      "dod": [
+        "Filter A→B→Servlet→B→A 순서 assert PASS",
+        "request/response wrapper 자료 누출 없음"
+      ],
+      "rollback": "3 파일 삭제",
+      "trace_links": [
+        {
+          "link_id": "TL-T-PH002-06-01",
+          "source": {
+            "type": "Task",
+            "id": "T-PH002-06"
+          },
+          "target": {
+            "type": "Requirement",
+            "reference": "FR-TEST-003"
+          },
+          "relation": "depends_on"
+        }
+      ],
+      "estimated_effort": "M",
+      "tdd": {
+        "applicable": true,
+        "exempt_reason": "",
+        "phase": "green",
+        "test_cases": [
+          {
+            "id": "TC-REQ-FR-TEST-003-AC2-16",
+            "req_id": "FR-TEST-003",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet5/src/test/java/com/snoworca/adapter/it/IT06FilterChainTest.java",
+            "test_symbol": "shouldChainFiltersInOrder",
+            "kind": "integration",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-003-AC2-17",
+            "req_id": "FR-TEST-003",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet6/src/test/java/com/snoworca/adapter/it/IT06FilterChainTest.java",
+            "test_symbol": "shouldChainFiltersInOrder",
+            "kind": "integration",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-003-AC2-18",
+            "req_id": "FR-TEST-003",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet61/src/test/java/com/snoworca/adapter/it/IT06FilterChainTest.java",
+            "test_symbol": "shouldChainFiltersInOrder",
+            "kind": "integration",
+            "expected_failure_signature": null
+          }
+        ],
+        "red_evidence": null,
+        "green_evidence": null
+      },
+      "depends_on_task": [
+        "T-PH001-04"
+      ],
+      "covers_ac": [
+        "AC-2"
+      ]
+    },
+    {
+      "id": "T-PH002-07",
+      "phase_id": "PH-002",
+      "title": "IT07 AsyncContext 통합 테스트",
+      "type": "code",
+      "req_ids": [
+        "FR-TEST-003"
+      ],
+      "files": [
+        {
+          "path": "servlet5/src/test/java/com/snoworca/adapter/it/IT07AsyncContextTest.java"
+        },
+        {
+          "path": "servlet6/src/test/java/com/snoworca/adapter/it/IT07AsyncContextTest.java"
+        },
+        {
+          "path": "servlet61/src/test/java/com/snoworca/adapter/it/IT07AsyncContextTest.java"
+        }
+      ],
+      "action": "startAsync → 별도 스레드 응답 생성 → complete. awaitility timeout 5초.",
+      "acceptance_tests": [
+        {
+          "kind": "shell",
+          "cmd": "./gradlew :servlet5:integrationTest --tests *IT07AsyncContextTest :servlet6:integrationTest --tests *IT07AsyncContextTest :servlet61:integrationTest --tests *IT07AsyncContextTest",
+          "expected_exit": 0,
+          "stdout_regex": "BUILD SUCCESSFUL"
+        }
+      ],
+      "verification_cmd": {
+        "posix": "./gradlew :servlet5:integrationTest --tests *IT07AsyncContextTest :servlet6:integrationTest --tests *IT07AsyncContextTest :servlet61:integrationTest --tests *IT07AsyncContextTest",
+        "windows": "gradlew.bat :servlet5:integrationTest --tests *IT07AsyncContextTest :servlet6:integrationTest --tests *IT07AsyncContextTest :servlet61:integrationTest --tests *IT07AsyncContextTest"
+      },
+      "dod": [
+        "startAsync→complete 응답 도달 + timeout 미발생"
+      ],
+      "rollback": "3 파일 삭제",
+      "trace_links": [
+        {
+          "link_id": "TL-T-PH002-07-01",
+          "source": {
+            "type": "Task",
+            "id": "T-PH002-07"
+          },
+          "target": {
+            "type": "Requirement",
+            "reference": "FR-TEST-003"
+          },
+          "relation": "depends_on"
+        }
+      ],
+      "estimated_effort": "M",
+      "tdd": {
+        "applicable": true,
+        "exempt_reason": "",
+        "phase": "green",
+        "test_cases": [
+          {
+            "id": "TC-REQ-FR-TEST-003-AC2-19",
+            "req_id": "FR-TEST-003",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet5/src/test/java/com/snoworca/adapter/it/IT07AsyncContextTest.java",
+            "test_symbol": "shouldCompleteAsync",
+            "kind": "integration",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-003-AC2-20",
+            "req_id": "FR-TEST-003",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet6/src/test/java/com/snoworca/adapter/it/IT07AsyncContextTest.java",
+            "test_symbol": "shouldCompleteAsync",
+            "kind": "integration",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-003-AC2-21",
+            "req_id": "FR-TEST-003",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet61/src/test/java/com/snoworca/adapter/it/IT07AsyncContextTest.java",
+            "test_symbol": "shouldCompleteAsync",
+            "kind": "integration",
+            "expected_failure_signature": null
+          }
+        ],
+        "red_evidence": null,
+        "green_evidence": null
+      },
+      "depends_on_task": [
+        "T-PH001-04"
+      ],
+      "covers_ac": [
+        "AC-2"
+      ]
+    },
+    {
+      "id": "T-PH002-08",
+      "phase_id": "PH-002",
+      "title": "IT08 MultiPart 통합 테스트 (F2 boundary)",
+      "type": "code",
+      "req_ids": [
+        "FR-TEST-003"
+      ],
+      "files": [
+        {
+          "path": "servlet5/src/test/java/com/snoworca/adapter/it/IT08MultiPartTest.java"
+        },
+        {
+          "path": "servlet6/src/test/java/com/snoworca/adapter/it/IT08MultiPartTest.java"
+        },
+        {
+          "path": "servlet61/src/test/java/com/snoworca/adapter/it/IT08MultiPartTest.java"
+        }
+      ],
+      "action": "multipart/form-data 업로드 — text part + binary part. F2 경계 임시 파일 정리 확인.",
+      "acceptance_tests": [
+        {
+          "kind": "shell",
+          "cmd": "./gradlew :servlet5:integrationTest --tests *IT08MultiPartTest :servlet6:integrationTest --tests *IT08MultiPartTest :servlet61:integrationTest --tests *IT08MultiPartTest",
+          "expected_exit": 0,
+          "stdout_regex": "BUILD SUCCESSFUL"
+        }
+      ],
+      "verification_cmd": {
+        "posix": "./gradlew :servlet5:integrationTest --tests *IT08MultiPartTest :servlet6:integrationTest --tests *IT08MultiPartTest :servlet61:integrationTest --tests *IT08MultiPartTest",
+        "windows": "gradlew.bat :servlet5:integrationTest --tests *IT08MultiPartTest :servlet6:integrationTest --tests *IT08MultiPartTest :servlet61:integrationTest --tests *IT08MultiPartTest"
+      },
+      "dod": [
+        "text/binary part 모두 정확히 수신",
+        "임시 파일 cleanup 검증"
+      ],
+      "rollback": "3 파일 삭제",
+      "trace_links": [
+        {
+          "link_id": "TL-T-PH002-08-01",
+          "source": {
+            "type": "Task",
+            "id": "T-PH002-08"
+          },
+          "target": {
+            "type": "Requirement",
+            "reference": "FR-TEST-003"
+          },
+          "relation": "depends_on"
+        }
+      ],
+      "estimated_effort": "M",
+      "tdd": {
+        "applicable": true,
+        "exempt_reason": "",
+        "phase": "green",
+        "test_cases": [
+          {
+            "id": "TC-REQ-FR-TEST-003-AC2-22",
+            "req_id": "FR-TEST-003",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet5/src/test/java/com/snoworca/adapter/it/IT08MultiPartTest.java",
+            "test_symbol": "shouldHandleMultiPart",
+            "kind": "integration",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-003-AC2-23",
+            "req_id": "FR-TEST-003",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet6/src/test/java/com/snoworca/adapter/it/IT08MultiPartTest.java",
+            "test_symbol": "shouldHandleMultiPart",
+            "kind": "integration",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-003-AC2-24",
+            "req_id": "FR-TEST-003",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet61/src/test/java/com/snoworca/adapter/it/IT08MultiPartTest.java",
+            "test_symbol": "shouldHandleMultiPart",
+            "kind": "integration",
+            "expected_failure_signature": null
+          }
+        ],
+        "red_evidence": null,
+        "green_evidence": null
+      },
+      "depends_on_task": [
+        "T-PH001-04"
+      ],
+      "covers_ac": [
+        "AC-2"
+      ]
+    },
+    {
+      "id": "T-PH002-09",
+      "phase_id": "PH-002",
+      "title": "IT09 sendRedirect(308) 통합 테스트 (servlet61 only)",
+      "type": "code",
+      "req_ids": [
+        "FR-TEST-003"
+      ],
+      "files": [
+        {
+          "path": "servlet61/src/test/java/com/snoworca/adapter/it/IT09Redirect308Test.java"
+        }
+      ],
+      "action": "jakarta 6.1 sendRedirect(String, int sc, boolean clearBuffer) 308 시나리오.",
+      "acceptance_tests": [
+        {
+          "kind": "shell",
+          "cmd": "./gradlew :servlet61:integrationTest --tests *IT09Redirect308Test",
+          "expected_exit": 0,
+          "stdout_regex": "BUILD SUCCESSFUL"
+        }
+      ],
+      "verification_cmd": {
+        "posix": "./gradlew :servlet61:integrationTest --tests *IT09Redirect308Test",
+        "windows": "gradlew.bat :servlet61:integrationTest --tests *IT09Redirect308Test"
+      },
+      "dod": [
+        "응답 status 308 + Location header 정확"
+      ],
+      "rollback": "파일 삭제",
+      "trace_links": [
+        {
+          "link_id": "TL-T-PH002-09-01",
+          "source": {
+            "type": "Task",
+            "id": "T-PH002-09"
+          },
+          "target": {
+            "type": "Requirement",
+            "reference": "FR-TEST-003"
+          },
+          "relation": "depends_on"
+        }
+      ],
+      "estimated_effort": "S",
+      "tdd": {
+        "applicable": true,
+        "exempt_reason": "",
+        "phase": "green",
+        "test_cases": [
+          {
+            "id": "TC-REQ-FR-TEST-003-AC3-01",
+            "req_id": "FR-TEST-003",
+            "ac_refs": [
+              "AC-3"
+            ],
+            "test_file": "servlet61/src/test/java/com/snoworca/adapter/it/IT09Redirect308Test.java",
+            "test_symbol": "shouldRedirect308",
+            "kind": "integration",
+            "expected_failure_signature": null
+          }
+        ],
+        "red_evidence": null,
+        "green_evidence": null
+      },
+      "depends_on_task": [
+        "T-PH001-04"
+      ],
+      "covers_ac": [
+        "AC-2",
+        "AC-3"
+      ]
+    },
+    {
+      "id": "T-PH002-10",
+      "phase_id": "PH-002",
+      "title": "IT10 Charset UTF-8 통합 테스트 (F3 boundary)",
+      "type": "code",
+      "req_ids": [
+        "FR-TEST-003"
+      ],
+      "files": [
+        {
+          "path": "servlet5/src/test/java/com/snoworca/adapter/it/IT10CharsetTest.java"
+        },
+        {
+          "path": "servlet6/src/test/java/com/snoworca/adapter/it/IT10CharsetTest.java"
+        },
+        {
+          "path": "servlet61/src/test/java/com/snoworca/adapter/it/IT10CharsetTest.java"
+        }
+      ],
+      "action": "UTF-8 body + Content-Type charset 협상. F3 경계 폴백 정책 검증.",
+      "acceptance_tests": [
+        {
+          "kind": "shell",
+          "cmd": "./gradlew :servlet5:integrationTest --tests *IT10CharsetTest :servlet6:integrationTest --tests *IT10CharsetTest :servlet61:integrationTest --tests *IT10CharsetTest",
+          "expected_exit": 0,
+          "stdout_regex": "BUILD SUCCESSFUL"
+        }
+      ],
+      "verification_cmd": {
+        "posix": "./gradlew :servlet5:integrationTest --tests *IT10CharsetTest :servlet6:integrationTest --tests *IT10CharsetTest :servlet61:integrationTest --tests *IT10CharsetTest",
+        "windows": "gradlew.bat :servlet5:integrationTest --tests *IT10CharsetTest :servlet6:integrationTest --tests *IT10CharsetTest :servlet61:integrationTest --tests *IT10CharsetTest"
+      },
+      "dod": [
+        "UTF-8 한글 round-trip PASS",
+        "Content-Type 무 명시 폴백 정책 PASS"
+      ],
+      "rollback": "3 파일 삭제",
+      "trace_links": [
+        {
+          "link_id": "TL-T-PH002-10-01",
+          "source": {
+            "type": "Task",
+            "id": "T-PH002-10"
+          },
+          "target": {
+            "type": "Requirement",
+            "reference": "FR-TEST-003"
+          },
+          "relation": "depends_on"
+        }
+      ],
+      "estimated_effort": "M",
+      "tdd": {
+        "applicable": true,
+        "exempt_reason": "",
+        "phase": "green",
+        "test_cases": [
+          {
+            "id": "TC-REQ-FR-TEST-003-AC2-25",
+            "req_id": "FR-TEST-003",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet5/src/test/java/com/snoworca/adapter/it/IT10CharsetTest.java",
+            "test_symbol": "shouldRoundTripUtf8",
+            "kind": "integration",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-003-AC2-26",
+            "req_id": "FR-TEST-003",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet5/src/test/java/com/snoworca/adapter/it/IT10CharsetTest.java",
+            "test_symbol": "shouldFallbackCharset",
+            "kind": "integration",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-003-AC2-27",
+            "req_id": "FR-TEST-003",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet6/src/test/java/com/snoworca/adapter/it/IT10CharsetTest.java",
+            "test_symbol": "shouldRoundTripUtf8",
+            "kind": "integration",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-003-AC2-28",
+            "req_id": "FR-TEST-003",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet6/src/test/java/com/snoworca/adapter/it/IT10CharsetTest.java",
+            "test_symbol": "shouldFallbackCharset",
+            "kind": "integration",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-003-AC2-29",
+            "req_id": "FR-TEST-003",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet61/src/test/java/com/snoworca/adapter/it/IT10CharsetTest.java",
+            "test_symbol": "shouldRoundTripUtf8",
+            "kind": "integration",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-003-AC2-30",
+            "req_id": "FR-TEST-003",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet61/src/test/java/com/snoworca/adapter/it/IT10CharsetTest.java",
+            "test_symbol": "shouldFallbackCharset",
+            "kind": "integration",
+            "expected_failure_signature": null
+          }
+        ],
+        "red_evidence": null,
+        "green_evidence": null
+      },
+      "depends_on_task": [
+        "T-PH001-04"
+      ],
+      "covers_ac": [
+        "AC-2"
+      ]
+    },
+    {
+      "id": "T-PH003-01",
+      "phase_id": "PH-003",
+      "title": "IT11 setStatus 폴백 통합 테스트",
+      "type": "code",
+      "req_ids": [
+        "FR-TEST-003"
+      ],
+      "files": [
+        {
+          "path": "servlet5/src/test/java/com/snoworca/adapter/it/IT11SetStatusTest.java"
+        },
+        {
+          "path": "servlet6/src/test/java/com/snoworca/adapter/it/IT11SetStatusTest.java"
+        },
+        {
+          "path": "servlet61/src/test/java/com/snoworca/adapter/it/IT11SetStatusTest.java"
+        }
+      ],
+      "action": "javax setStatus(int, String) deprecated → reason phrase 무시 + setStatus(int) 정상.",
+      "acceptance_tests": [
+        {
+          "kind": "shell",
+          "cmd": "./gradlew :servlet5:integrationTest --tests *IT11SetStatusTest :servlet6:integrationTest --tests *IT11SetStatusTest :servlet61:integrationTest --tests *IT11SetStatusTest",
+          "expected_exit": 0,
+          "stdout_regex": "BUILD SUCCESSFUL"
+        }
+      ],
+      "verification_cmd": {
+        "posix": "./gradlew :servlet5:integrationTest --tests *IT11SetStatusTest :servlet6:integrationTest --tests *IT11SetStatusTest :servlet61:integrationTest --tests *IT11SetStatusTest",
+        "windows": "gradlew.bat :servlet5:integrationTest --tests *IT11SetStatusTest :servlet6:integrationTest --tests *IT11SetStatusTest :servlet61:integrationTest --tests *IT11SetStatusTest"
+      },
+      "dod": [
+        "deprecated 2-arg setStatus → reason phrase 무시 + status 코드 정확",
+        "1-arg setStatus 정상"
+      ],
+      "rollback": "3 파일 삭제",
+      "trace_links": [
+        {
+          "link_id": "TL-T-PH003-01-01",
+          "source": {
+            "type": "Task",
+            "id": "T-PH003-01"
+          },
+          "target": {
+            "type": "Requirement",
+            "reference": "FR-TEST-003"
+          },
+          "relation": "depends_on"
+        }
+      ],
+      "estimated_effort": "S",
+      "tdd": {
+        "applicable": true,
+        "exempt_reason": "",
+        "phase": "green",
+        "test_cases": [
+          {
+            "id": "TC-REQ-FR-TEST-003-AC3-02",
+            "req_id": "FR-TEST-003",
+            "ac_refs": [
+              "AC-3"
+            ],
+            "test_file": "servlet5/src/test/java/com/snoworca/adapter/it/IT11SetStatusTest.java",
+            "test_symbol": "shouldIgnoreReasonPhrase",
+            "kind": "integration",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-003-AC3-03",
+            "req_id": "FR-TEST-003",
+            "ac_refs": [
+              "AC-3"
+            ],
+            "test_file": "servlet5/src/test/java/com/snoworca/adapter/it/IT11SetStatusTest.java",
+            "test_symbol": "shouldSetStatusCode",
+            "kind": "integration",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-003-AC3-04",
+            "req_id": "FR-TEST-003",
+            "ac_refs": [
+              "AC-3"
+            ],
+            "test_file": "servlet6/src/test/java/com/snoworca/adapter/it/IT11SetStatusTest.java",
+            "test_symbol": "shouldIgnoreReasonPhrase",
+            "kind": "integration",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-003-AC3-05",
+            "req_id": "FR-TEST-003",
+            "ac_refs": [
+              "AC-3"
+            ],
+            "test_file": "servlet6/src/test/java/com/snoworca/adapter/it/IT11SetStatusTest.java",
+            "test_symbol": "shouldSetStatusCode",
+            "kind": "integration",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-003-AC3-06",
+            "req_id": "FR-TEST-003",
+            "ac_refs": [
+              "AC-3"
+            ],
+            "test_file": "servlet61/src/test/java/com/snoworca/adapter/it/IT11SetStatusTest.java",
+            "test_symbol": "shouldIgnoreReasonPhrase",
+            "kind": "integration",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-003-AC3-07",
+            "req_id": "FR-TEST-003",
+            "ac_refs": [
+              "AC-3"
+            ],
+            "test_file": "servlet61/src/test/java/com/snoworca/adapter/it/IT11SetStatusTest.java",
+            "test_symbol": "shouldSetStatusCode",
+            "kind": "integration",
+            "expected_failure_signature": null
+          }
+        ],
+        "red_evidence": null,
+        "green_evidence": null
+      },
+      "depends_on_task": [
+        "T-PH001-04"
+      ],
+      "covers_ac": [
+        "AC-2",
+        "AC-3"
+      ]
+    },
+    {
+      "id": "T-PH003-02",
+      "phase_id": "PH-003",
+      "title": "IT12 setContentLengthLong 통합 테스트 (F5/F6 boundary)",
+      "type": "code",
+      "req_ids": [
+        "FR-TEST-003"
+      ],
+      "files": [
+        {
+          "path": "servlet5/src/test/java/com/snoworca/adapter/it/IT12ContentLengthLongTest.java"
+        },
+        {
+          "path": "servlet6/src/test/java/com/snoworca/adapter/it/IT12ContentLengthLongTest.java"
+        },
+        {
+          "path": "servlet61/src/test/java/com/snoworca/adapter/it/IT12ContentLengthLongTest.java"
+        }
+      ],
+      "action": "setContentLengthLong(long) Integer.MAX_VALUE 초과 케이스. F5/F6 경계.",
+      "acceptance_tests": [
+        {
+          "kind": "shell",
+          "cmd": "./gradlew :servlet5:integrationTest --tests *IT12ContentLengthLongTest :servlet6:integrationTest --tests *IT12ContentLengthLongTest :servlet61:integrationTest --tests *IT12ContentLengthLongTest",
+          "expected_exit": 0,
+          "stdout_regex": "BUILD SUCCESSFUL"
+        }
+      ],
+      "verification_cmd": {
+        "posix": "./gradlew :servlet5:integrationTest --tests *IT12ContentLengthLongTest :servlet6:integrationTest --tests *IT12ContentLengthLongTest :servlet61:integrationTest --tests *IT12ContentLengthLongTest",
+        "windows": "gradlew.bat :servlet5:integrationTest --tests *IT12ContentLengthLongTest :servlet6:integrationTest --tests *IT12ContentLengthLongTest :servlet61:integrationTest --tests *IT12ContentLengthLongTest"
+      },
+      "dod": [
+        "Long 값 정확히 Content-Length header 로 전송",
+        "충돌 시 우선순위 일관"
+      ],
+      "rollback": "3 파일 삭제",
+      "trace_links": [
+        {
+          "link_id": "TL-T-PH003-02-01",
+          "source": {
+            "type": "Task",
+            "id": "T-PH003-02"
+          },
+          "target": {
+            "type": "Requirement",
+            "reference": "FR-TEST-003"
+          },
+          "relation": "depends_on"
+        }
+      ],
+      "estimated_effort": "M",
+      "tdd": {
+        "applicable": true,
+        "exempt_reason": "",
+        "phase": "green",
+        "test_cases": [
+          {
+            "id": "TC-REQ-FR-TEST-003-AC3-08",
+            "req_id": "FR-TEST-003",
+            "ac_refs": [
+              "AC-3"
+            ],
+            "test_file": "servlet5/src/test/java/com/snoworca/adapter/it/IT12ContentLengthLongTest.java",
+            "test_symbol": "shouldEmitLongContentLength",
+            "kind": "integration",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-003-AC3-09",
+            "req_id": "FR-TEST-003",
+            "ac_refs": [
+              "AC-3"
+            ],
+            "test_file": "servlet5/src/test/java/com/snoworca/adapter/it/IT12ContentLengthLongTest.java",
+            "test_symbol": "shouldResolveConflict",
+            "kind": "integration",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-003-AC3-10",
+            "req_id": "FR-TEST-003",
+            "ac_refs": [
+              "AC-3"
+            ],
+            "test_file": "servlet6/src/test/java/com/snoworca/adapter/it/IT12ContentLengthLongTest.java",
+            "test_symbol": "shouldEmitLongContentLength",
+            "kind": "integration",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-003-AC3-11",
+            "req_id": "FR-TEST-003",
+            "ac_refs": [
+              "AC-3"
+            ],
+            "test_file": "servlet6/src/test/java/com/snoworca/adapter/it/IT12ContentLengthLongTest.java",
+            "test_symbol": "shouldResolveConflict",
+            "kind": "integration",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-003-AC3-12",
+            "req_id": "FR-TEST-003",
+            "ac_refs": [
+              "AC-3"
+            ],
+            "test_file": "servlet61/src/test/java/com/snoworca/adapter/it/IT12ContentLengthLongTest.java",
+            "test_symbol": "shouldEmitLongContentLength",
+            "kind": "integration",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-003-AC3-13",
+            "req_id": "FR-TEST-003",
+            "ac_refs": [
+              "AC-3"
+            ],
+            "test_file": "servlet61/src/test/java/com/snoworca/adapter/it/IT12ContentLengthLongTest.java",
+            "test_symbol": "shouldResolveConflict",
+            "kind": "integration",
+            "expected_failure_signature": null
+          }
+        ],
+        "red_evidence": null,
+        "green_evidence": null
+      },
+      "depends_on_task": [
+        "T-PH001-04"
+      ],
+      "covers_ac": [
+        "AC-2",
+        "AC-3"
+      ]
+    },
+    {
+      "id": "T-PH003-03",
+      "phase_id": "PH-003",
+      "title": "IT13 ErrorPage 통합 테스트",
+      "type": "code",
+      "req_ids": [
+        "FR-TEST-003"
+      ],
+      "files": [
+        {
+          "path": "servlet5/src/test/java/com/snoworca/adapter/it/IT13ErrorPageTest.java"
+        },
+        {
+          "path": "servlet6/src/test/java/com/snoworca/adapter/it/IT13ErrorPageTest.java"
+        },
+        {
+          "path": "servlet61/src/test/java/com/snoworca/adapter/it/IT13ErrorPageTest.java"
+        }
+      ],
+      "action": "Servlet throw Exception → ErrorPage 매핑 → 에러 페이지 응답.",
+      "acceptance_tests": [
+        {
+          "kind": "shell",
+          "cmd": "./gradlew :servlet5:integrationTest --tests *IT13ErrorPageTest :servlet6:integrationTest --tests *IT13ErrorPageTest :servlet61:integrationTest --tests *IT13ErrorPageTest",
+          "expected_exit": 0,
+          "stdout_regex": "BUILD SUCCESSFUL"
+        }
+      ],
+      "verification_cmd": {
+        "posix": "./gradlew :servlet5:integrationTest --tests *IT13ErrorPageTest :servlet6:integrationTest --tests *IT13ErrorPageTest :servlet61:integrationTest --tests *IT13ErrorPageTest",
+        "windows": "gradlew.bat :servlet5:integrationTest --tests *IT13ErrorPageTest :servlet6:integrationTest --tests *IT13ErrorPageTest :servlet61:integrationTest --tests *IT13ErrorPageTest"
+      },
+      "dod": [
+        "예외 throw → ErrorPage 매핑 → 응답 status/body 검증 PASS"
+      ],
+      "rollback": "3 파일 삭제",
+      "trace_links": [
+        {
+          "link_id": "TL-T-PH003-03-01",
+          "source": {
+            "type": "Task",
+            "id": "T-PH003-03"
+          },
+          "target": {
+            "type": "Requirement",
+            "reference": "FR-TEST-003"
+          },
+          "relation": "depends_on"
+        }
+      ],
+      "estimated_effort": "M",
+      "tdd": {
+        "applicable": true,
+        "exempt_reason": "",
+        "phase": "green",
+        "test_cases": [
+          {
+            "id": "TC-REQ-FR-TEST-003-AC2-31",
+            "req_id": "FR-TEST-003",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet5/src/test/java/com/snoworca/adapter/it/IT13ErrorPageTest.java",
+            "test_symbol": "shouldMapErrorPage",
+            "kind": "integration",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-003-AC2-32",
+            "req_id": "FR-TEST-003",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet6/src/test/java/com/snoworca/adapter/it/IT13ErrorPageTest.java",
+            "test_symbol": "shouldMapErrorPage",
+            "kind": "integration",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-003-AC2-33",
+            "req_id": "FR-TEST-003",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet61/src/test/java/com/snoworca/adapter/it/IT13ErrorPageTest.java",
+            "test_symbol": "shouldMapErrorPage",
+            "kind": "integration",
+            "expected_failure_signature": null
+          }
+        ],
+        "red_evidence": null,
+        "green_evidence": null
+      },
+      "depends_on_task": [
+        "T-PH001-04"
+      ],
+      "covers_ac": [
+        "AC-2"
+      ]
+    },
+    {
+      "id": "T-PH003-04",
+      "phase_id": "PH-003",
+      "title": "IT14 getServletConnection 통합 테스트 (servlet6/61 only)",
+      "type": "code",
+      "req_ids": [
+        "FR-TEST-003"
+      ],
+      "files": [
+        {
+          "path": "servlet6/src/test/java/com/snoworca/adapter/it/IT14ServletConnectionTest.java"
+        },
+        {
+          "path": "servlet61/src/test/java/com/snoworca/adapter/it/IT14ServletConnectionTest.java"
+        }
+      ],
+      "action": "jakarta 6.0+ getServletConnection() 4 필드 검증. servlet5 미지원.",
+      "acceptance_tests": [
+        {
+          "kind": "shell",
+          "cmd": "./gradlew :servlet6:integrationTest --tests *IT14ServletConnectionTest :servlet61:integrationTest --tests *IT14ServletConnectionTest",
+          "expected_exit": 0,
+          "stdout_regex": "BUILD SUCCESSFUL"
+        }
+      ],
+      "verification_cmd": {
+        "posix": "./gradlew :servlet6:integrationTest --tests *IT14ServletConnectionTest :servlet61:integrationTest --tests *IT14ServletConnectionTest",
+        "windows": "gradlew.bat :servlet6:integrationTest --tests *IT14ServletConnectionTest :servlet61:integrationTest --tests *IT14ServletConnectionTest"
+      },
+      "dod": [
+        "4 필드 모두 non-null + protocol 형식 정확"
+      ],
+      "rollback": "2 파일 삭제",
+      "trace_links": [
+        {
+          "link_id": "TL-T-PH003-04-01",
+          "source": {
+            "type": "Task",
+            "id": "T-PH003-04"
+          },
+          "target": {
+            "type": "Requirement",
+            "reference": "FR-TEST-003"
+          },
+          "relation": "depends_on"
+        }
+      ],
+      "estimated_effort": "S",
+      "tdd": {
+        "applicable": true,
+        "exempt_reason": "",
+        "phase": "green",
+        "test_cases": [
+          {
+            "id": "TC-REQ-FR-TEST-003-AC3-14",
+            "req_id": "FR-TEST-003",
+            "ac_refs": [
+              "AC-3"
+            ],
+            "test_file": "servlet6/src/test/java/com/snoworca/adapter/it/IT14ServletConnectionTest.java",
+            "test_symbol": "shouldExposeServletConnection",
+            "kind": "integration",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-003-AC3-15",
+            "req_id": "FR-TEST-003",
+            "ac_refs": [
+              "AC-3"
+            ],
+            "test_file": "servlet61/src/test/java/com/snoworca/adapter/it/IT14ServletConnectionTest.java",
+            "test_symbol": "shouldExposeServletConnection",
+            "kind": "integration",
+            "expected_failure_signature": null
+          }
+        ],
+        "red_evidence": null,
+        "green_evidence": null
+      },
+      "depends_on_task": [
+        "T-PH001-04"
+      ],
+      "covers_ac": [
+        "AC-2",
+        "AC-3"
+      ]
+    },
+    {
+      "id": "T-PH003-05",
+      "phase_id": "PH-003",
+      "title": "IT15 WebSocket Upgrade 통합 테스트",
+      "type": "code",
+      "req_ids": [
+        "FR-TEST-003"
+      ],
+      "files": [
+        {
+          "path": "servlet5/src/test/java/com/snoworca/adapter/it/IT15WebSocketUpgradeTest.java"
+        },
+        {
+          "path": "servlet6/src/test/java/com/snoworca/adapter/it/IT15WebSocketUpgradeTest.java"
+        },
+        {
+          "path": "servlet61/src/test/java/com/snoworca/adapter/it/IT15WebSocketUpgradeTest.java"
+        }
+      ],
+      "action": "HttpServletRequest.upgrade(HttpUpgradeHandler) 핸드셰이크 — HTTP 101 + Connection: Upgrade header.",
+      "acceptance_tests": [
+        {
+          "kind": "shell",
+          "cmd": "./gradlew :servlet5:integrationTest --tests *IT15WebSocketUpgradeTest :servlet6:integrationTest --tests *IT15WebSocketUpgradeTest :servlet61:integrationTest --tests *IT15WebSocketUpgradeTest",
+          "expected_exit": 0,
+          "stdout_regex": "BUILD SUCCESSFUL"
+        }
+      ],
+      "verification_cmd": {
+        "posix": "./gradlew :servlet5:integrationTest --tests *IT15WebSocketUpgradeTest :servlet6:integrationTest --tests *IT15WebSocketUpgradeTest :servlet61:integrationTest --tests *IT15WebSocketUpgradeTest",
+        "windows": "gradlew.bat :servlet5:integrationTest --tests *IT15WebSocketUpgradeTest :servlet6:integrationTest --tests *IT15WebSocketUpgradeTest :servlet61:integrationTest --tests *IT15WebSocketUpgradeTest"
+      },
+      "dod": [
+        "HTTP 101 응답 + Connection: Upgrade + Upgrade: websocket header"
+      ],
+      "rollback": "3 파일 삭제",
+      "trace_links": [
+        {
+          "link_id": "TL-T-PH003-05-01",
+          "source": {
+            "type": "Task",
+            "id": "T-PH003-05"
+          },
+          "target": {
+            "type": "Requirement",
+            "reference": "FR-TEST-003"
+          },
+          "relation": "depends_on"
+        }
+      ],
+      "estimated_effort": "M",
+      "tdd": {
+        "applicable": true,
+        "exempt_reason": "",
+        "phase": "green",
+        "test_cases": [
+          {
+            "id": "TC-REQ-FR-TEST-003-AC2-34",
+            "req_id": "FR-TEST-003",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet5/src/test/java/com/snoworca/adapter/it/IT15WebSocketUpgradeTest.java",
+            "test_symbol": "shouldUpgradeHttp",
+            "kind": "integration",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-003-AC2-35",
+            "req_id": "FR-TEST-003",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet6/src/test/java/com/snoworca/adapter/it/IT15WebSocketUpgradeTest.java",
+            "test_symbol": "shouldUpgradeHttp",
+            "kind": "integration",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-003-AC2-36",
+            "req_id": "FR-TEST-003",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet61/src/test/java/com/snoworca/adapter/it/IT15WebSocketUpgradeTest.java",
+            "test_symbol": "shouldUpgradeHttp",
+            "kind": "integration",
+            "expected_failure_signature": null
+          }
+        ],
+        "red_evidence": null,
+        "green_evidence": null
+      },
+      "depends_on_task": [
+        "T-PH001-04"
+      ],
+      "covers_ac": [
+        "AC-2"
+      ]
+    },
+    {
+      "id": "T-PH004-01",
+      "phase_id": "PH-004",
+      "title": "servlet5 BugMuseum BM01~BM10 회귀 통과 확인",
+      "type": "review",
+      "req_ids": [
+        "FR-TEST-004"
+      ],
+      "files": [
+        {
+          "path": "servlet5/src/test/java/com/snoworca/adapter/bugmuseum"
+        }
+      ],
+      "action": "기존 servlet5 BugMuseum 디렉토리 회귀 실행, BM01~BM10 모두 PASS 확인.",
+      "acceptance_tests": [
+        {
+          "kind": "checklist",
+          "items": [
+            "실행 명령: ./gradlew :servlet5:test --tests *bugmuseum*",
+            "기대 exit code: 0",
+            "기대 stdout regex: BUILD SUCCESSFUL"
+          ]
+        }
+      ],
+      "verification_cmd": {
+        "posix": "./gradlew :servlet5:test --tests *bugmuseum*",
+        "windows": "gradlew.bat :servlet5:test --tests *bugmuseum*"
+      },
+      "dod": [
+        "BM01~BM10 모두 GREEN 또는 의도된 RED(회귀 보호) 상태로 PASS"
+      ],
+      "rollback": "변경 없음 (review 전용)",
+      "trace_links": [
+        {
+          "link_id": "TL-T-PH004-01-01",
+          "source": {
+            "type": "Task",
+            "id": "T-PH004-01"
+          },
+          "target": {
+            "type": "Requirement",
+            "reference": "FR-TEST-004"
+          },
+          "relation": "depends_on"
+        }
+      ],
+      "estimated_effort": "S",
+      "tdd": {
+        "applicable": false,
+        "exempt_reason": "review 타입 — 기존 테스트의 회귀 통과 확인만 수행하며 코드 변경 없음",
+        "phase": "n/a",
+        "test_cases": [],
+        "red_evidence": null,
+        "green_evidence": null
+      },
+      "depends_on_task": [],
+      "covers_ac": [
+        "AC-1"
+      ]
+    },
+    {
+      "id": "T-PH004-02",
+      "phase_id": "PH-004",
+      "title": "servlet6 BugMuseum BM01~BM10 미러 작성",
+      "type": "code",
+      "req_ids": [
+        "FR-TEST-004"
+      ],
+      "files": [
+        {
+          "path": "servlet6/src/test/java/com/snoworca/adapter/bugmuseum"
+        }
+      ],
+      "action": "servlet5 BM01~BM10 을 jakarta 6.0 API 차이 반영하여 미러.",
+      "acceptance_tests": [
+        {
+          "kind": "shell",
+          "cmd": "./gradlew :servlet6:test --tests *bugmuseum*",
+          "expected_exit": 0,
+          "stdout_regex": "BUILD SUCCESSFUL"
+        }
+      ],
+      "verification_cmd": {
+        "posix": "./gradlew :servlet6:test --tests *bugmuseum*",
+        "windows": "gradlew.bat :servlet6:test --tests *bugmuseum*"
+      },
+      "dod": [
+        "BM01~BM10 10건 servlet6 미러 작성 + 모두 PASS"
+      ],
+      "rollback": "servlet6/src/test/java/com/snoworca/adapter/bugmuseum 디렉토리 삭제",
+      "trace_links": [
+        {
+          "link_id": "TL-T-PH004-02-01",
+          "source": {
+            "type": "Task",
+            "id": "T-PH004-02"
+          },
+          "target": {
+            "type": "Requirement",
+            "reference": "FR-TEST-004"
+          },
+          "relation": "depends_on"
+        }
+      ],
+      "estimated_effort": "L",
+      "tdd": {
+        "applicable": true,
+        "exempt_reason": "",
+        "phase": "green",
+        "test_cases": [
+          {
+            "id": "TC-REQ-FR-TEST-004-AC1-01",
+            "req_id": "FR-TEST-004",
+            "ac_refs": [
+              "AC-1"
+            ],
+            "test_file": "servlet6/src/test/java/com/snoworca/adapter/bugmuseum/BM01Test.java",
+            "test_symbol": "shouldReproduceBug01",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-004-AC1-02",
+            "req_id": "FR-TEST-004",
+            "ac_refs": [
+              "AC-1"
+            ],
+            "test_file": "servlet6/src/test/java/com/snoworca/adapter/bugmuseum/BM02Test.java",
+            "test_symbol": "shouldReproduceBug02",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-004-AC1-03",
+            "req_id": "FR-TEST-004",
+            "ac_refs": [
+              "AC-1"
+            ],
+            "test_file": "servlet6/src/test/java/com/snoworca/adapter/bugmuseum/BM03Test.java",
+            "test_symbol": "shouldReproduceBug03",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-004-AC1-04",
+            "req_id": "FR-TEST-004",
+            "ac_refs": [
+              "AC-1"
+            ],
+            "test_file": "servlet6/src/test/java/com/snoworca/adapter/bugmuseum/BM04Test.java",
+            "test_symbol": "shouldReproduceBug04",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-004-AC2-01",
+            "req_id": "FR-TEST-004",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet6/src/test/java/com/snoworca/adapter/bugmuseum/BM05Test.java",
+            "test_symbol": "shouldReproduceBug05",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-004-AC2-02",
+            "req_id": "FR-TEST-004",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet6/src/test/java/com/snoworca/adapter/bugmuseum/BM06Test.java",
+            "test_symbol": "shouldReproduceBug06",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-004-AC2-03",
+            "req_id": "FR-TEST-004",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet6/src/test/java/com/snoworca/adapter/bugmuseum/BM07Test.java",
+            "test_symbol": "shouldReproduceBug07",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-004-AC2-04",
+            "req_id": "FR-TEST-004",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet6/src/test/java/com/snoworca/adapter/bugmuseum/BM08Test.java",
+            "test_symbol": "shouldReproduceBug08",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-004-AC2-05",
+            "req_id": "FR-TEST-004",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet6/src/test/java/com/snoworca/adapter/bugmuseum/BM09Test.java",
+            "test_symbol": "shouldReproduceBug09",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-004-AC2-06",
+            "req_id": "FR-TEST-004",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet6/src/test/java/com/snoworca/adapter/bugmuseum/BM10Test.java",
+            "test_symbol": "shouldReproduceBug10",
+            "kind": "unit",
+            "expected_failure_signature": null
+          }
+        ],
+        "red_evidence": null,
+        "green_evidence": null
+      },
+      "depends_on_task": [
+        "T-PH004-01"
+      ],
+      "covers_ac": [
+        "AC-1",
+        "AC-2"
+      ]
+    },
+    {
+      "id": "T-PH004-03",
+      "phase_id": "PH-004",
+      "title": "servlet61 BugMuseum BM01~BM10 미러 작성",
+      "type": "code",
+      "req_ids": [
+        "FR-TEST-004"
+      ],
+      "files": [
+        {
+          "path": "servlet61/src/test/java/com/snoworca/adapter/bugmuseum"
+        }
+      ],
+      "action": "servlet5 BM01~BM10 을 jakarta 6.1 API 차이 반영하여 미러.",
+      "acceptance_tests": [
+        {
+          "kind": "shell",
+          "cmd": "./gradlew :servlet61:test --tests *bugmuseum*",
+          "expected_exit": 0,
+          "stdout_regex": "BUILD SUCCESSFUL"
+        }
+      ],
+      "verification_cmd": {
+        "posix": "./gradlew :servlet61:test --tests *bugmuseum*",
+        "windows": "gradlew.bat :servlet61:test --tests *bugmuseum*"
+      },
+      "dod": [
+        "BM01~BM10 10건 servlet61 미러 작성 + 모두 PASS"
+      ],
+      "rollback": "servlet61/src/test/java/com/snoworca/adapter/bugmuseum 디렉토리 삭제",
+      "trace_links": [
+        {
+          "link_id": "TL-T-PH004-03-01",
+          "source": {
+            "type": "Task",
+            "id": "T-PH004-03"
+          },
+          "target": {
+            "type": "Requirement",
+            "reference": "FR-TEST-004"
+          },
+          "relation": "depends_on"
+        }
+      ],
+      "estimated_effort": "L",
+      "tdd": {
+        "applicable": true,
+        "exempt_reason": "",
+        "phase": "green",
+        "test_cases": [
+          {
+            "id": "TC-REQ-FR-TEST-004-AC1-05",
+            "req_id": "FR-TEST-004",
+            "ac_refs": [
+              "AC-1"
+            ],
+            "test_file": "servlet61/src/test/java/com/snoworca/adapter/bugmuseum/BM01Test.java",
+            "test_symbol": "shouldReproduceBug01",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-004-AC1-06",
+            "req_id": "FR-TEST-004",
+            "ac_refs": [
+              "AC-1"
+            ],
+            "test_file": "servlet61/src/test/java/com/snoworca/adapter/bugmuseum/BM02Test.java",
+            "test_symbol": "shouldReproduceBug02",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-004-AC1-07",
+            "req_id": "FR-TEST-004",
+            "ac_refs": [
+              "AC-1"
+            ],
+            "test_file": "servlet61/src/test/java/com/snoworca/adapter/bugmuseum/BM03Test.java",
+            "test_symbol": "shouldReproduceBug03",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-004-AC1-08",
+            "req_id": "FR-TEST-004",
+            "ac_refs": [
+              "AC-1"
+            ],
+            "test_file": "servlet61/src/test/java/com/snoworca/adapter/bugmuseum/BM04Test.java",
+            "test_symbol": "shouldReproduceBug04",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-004-AC2-07",
+            "req_id": "FR-TEST-004",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet61/src/test/java/com/snoworca/adapter/bugmuseum/BM05Test.java",
+            "test_symbol": "shouldReproduceBug05",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-004-AC2-08",
+            "req_id": "FR-TEST-004",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet61/src/test/java/com/snoworca/adapter/bugmuseum/BM06Test.java",
+            "test_symbol": "shouldReproduceBug06",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-004-AC2-09",
+            "req_id": "FR-TEST-004",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet61/src/test/java/com/snoworca/adapter/bugmuseum/BM07Test.java",
+            "test_symbol": "shouldReproduceBug07",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-004-AC2-10",
+            "req_id": "FR-TEST-004",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet61/src/test/java/com/snoworca/adapter/bugmuseum/BM08Test.java",
+            "test_symbol": "shouldReproduceBug08",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-004-AC2-11",
+            "req_id": "FR-TEST-004",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet61/src/test/java/com/snoworca/adapter/bugmuseum/BM09Test.java",
+            "test_symbol": "shouldReproduceBug09",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-004-AC2-12",
+            "req_id": "FR-TEST-004",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet61/src/test/java/com/snoworca/adapter/bugmuseum/BM10Test.java",
+            "test_symbol": "shouldReproduceBug10",
+            "kind": "unit",
+            "expected_failure_signature": null
+          }
+        ],
+        "red_evidence": null,
+        "green_evidence": null
+      },
+      "depends_on_task": [
+        "T-PH004-01"
+      ],
+      "covers_ac": [
+        "AC-1",
+        "AC-2"
+      ]
+    },
+    {
+      "id": "T-PH005-01",
+      "phase_id": "PH-005",
+      "title": "servlet6 jakarta-side 단위 테스트 backfill (~14건)",
+      "type": "code",
+      "req_ids": [
+        "FR-TEST-001"
+      ],
+      "files": [
+        {
+          "path": "servlet6/src/test/java/com/snoworca/adapter/jakarta"
+        }
+      ],
+      "action": "servlet6 jakarta→javax 어댑터 클래스 단위 테스트 14건 작성.",
+      "acceptance_tests": [
+        {
+          "kind": "shell",
+          "cmd": "./gradlew :servlet6:test --tests *jakarta*",
+          "expected_exit": 0,
+          "stdout_regex": "BUILD SUCCESSFUL"
+        }
+      ],
+      "verification_cmd": {
+        "posix": "./gradlew :servlet6:test --tests *jakarta*",
+        "windows": "gradlew.bat :servlet6:test --tests *jakarta*"
+      },
+      "dod": [
+        "jakarta-side 어댑터 단위 테스트 ~14건 신규 + PASS"
+      ],
+      "rollback": "신규 추가 테스트 파일 삭제",
+      "trace_links": [
+        {
+          "link_id": "TL-T-PH005-01-01",
+          "source": {
+            "type": "Task",
+            "id": "T-PH005-01"
+          },
+          "target": {
+            "type": "Requirement",
+            "reference": "FR-TEST-001"
+          },
+          "relation": "depends_on"
+        }
+      ],
+      "estimated_effort": "L",
+      "tdd": {
+        "applicable": true,
+        "exempt_reason": "",
+        "phase": "green",
+        "test_cases": [
+          {
+            "id": "TC-REQ-FR-TEST-001-AC1-01",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-1"
+            ],
+            "test_file": "servlet6/src/test/java/com/snoworca/adapter/jakarta/JakartaHttpServletRequestAdapterTest.java",
+            "test_symbol": "shouldAdaptRequestMethods",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-01",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet6/src/test/java/com/snoworca/adapter/jakarta/JakartaHttpServletResponseAdapterTest.java",
+            "test_symbol": "shouldAdaptResponseHeaders",
+            "kind": "unit",
+            "expected_failure_signature": null
+          }
+        ],
+        "red_evidence": null,
+        "green_evidence": null
+      },
+      "depends_on_task": [],
+      "covers_ac": [
+        "AC-1",
+        "AC-2"
+      ]
+    },
+    {
+      "id": "T-PH005-02",
+      "phase_id": "PH-005",
+      "title": "servlet6 javax-side 단위 테스트 backfill (~14건)",
+      "type": "code",
+      "req_ids": [
+        "FR-TEST-001"
+      ],
+      "files": [
+        {
+          "path": "servlet6/src/test/java/com/snoworca/adapter/javaxside"
+        }
+      ],
+      "action": "servlet6 javax→jakarta 어댑터 단위 테스트 14건.",
+      "acceptance_tests": [
+        {
+          "kind": "shell",
+          "cmd": "./gradlew :servlet6:test --tests *javaxside*",
+          "expected_exit": 0,
+          "stdout_regex": "BUILD SUCCESSFUL"
+        }
+      ],
+      "verification_cmd": {
+        "posix": "./gradlew :servlet6:test --tests *javaxside*",
+        "windows": "gradlew.bat :servlet6:test --tests *javaxside*"
+      },
+      "dod": [
+        "javax-side 어댑터 단위 테스트 ~14건 신규 + PASS"
+      ],
+      "rollback": "신규 추가 테스트 파일 삭제",
+      "trace_links": [
+        {
+          "link_id": "TL-T-PH005-02-01",
+          "source": {
+            "type": "Task",
+            "id": "T-PH005-02"
+          },
+          "target": {
+            "type": "Requirement",
+            "reference": "FR-TEST-001"
+          },
+          "relation": "depends_on"
+        }
+      ],
+      "estimated_effort": "L",
+      "tdd": {
+        "applicable": true,
+        "exempt_reason": "",
+        "phase": "green",
+        "test_cases": [
+          {
+            "id": "TC-REQ-FR-TEST-001-AC1-02",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-1"
+            ],
+            "test_file": "servlet6/src/test/java/com/snoworca/adapter/javaxside/JavaxHttpServletRequestAdapterTest.java",
+            "test_symbol": "shouldAdaptRequestMethods",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-02",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet6/src/test/java/com/snoworca/adapter/javaxside/JavaxHttpServletResponseAdapterTest.java",
+            "test_symbol": "shouldAdaptResponseHeaders",
+            "kind": "unit",
+            "expected_failure_signature": null
+          }
+        ],
+        "red_evidence": null,
+        "green_evidence": null
+      },
+      "depends_on_task": [],
+      "covers_ac": [
+        "AC-1",
+        "AC-2"
+      ]
+    },
+    {
+      "id": "T-PH005-03",
+      "phase_id": "PH-005",
+      "title": "servlet6 converter 단위 테스트 backfill (~7건)",
+      "type": "code",
+      "req_ids": [
+        "FR-TEST-001"
+      ],
+      "files": [
+        {
+          "path": "servlet6/src/test/java/com/snoworca/adapter/converter"
+        }
+      ],
+      "action": "servlet6 변환 유틸 단위 테스트 7건.",
+      "acceptance_tests": [
+        {
+          "kind": "shell",
+          "cmd": "./gradlew :servlet6:test --tests *converter*",
+          "expected_exit": 0,
+          "stdout_regex": "BUILD SUCCESSFUL"
+        }
+      ],
+      "verification_cmd": {
+        "posix": "./gradlew :servlet6:test --tests *converter*",
+        "windows": "gradlew.bat :servlet6:test --tests *converter*"
+      },
+      "dod": [
+        "converter 단위 테스트 ~7건 신규 + PASS",
+        "servlet6 전체 단위 테스트 43건 도달"
+      ],
+      "rollback": "신규 추가 테스트 파일 삭제",
+      "trace_links": [
+        {
+          "link_id": "TL-T-PH005-03-01",
+          "source": {
+            "type": "Task",
+            "id": "T-PH005-03"
+          },
+          "target": {
+            "type": "Requirement",
+            "reference": "FR-TEST-001"
+          },
+          "relation": "depends_on"
+        }
+      ],
+      "estimated_effort": "M",
+      "tdd": {
+        "applicable": true,
+        "exempt_reason": "",
+        "phase": "green",
+        "test_cases": [
+          {
+            "id": "TC-REQ-FR-TEST-001-AC1-03",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-1"
+            ],
+            "test_file": "servlet6/src/test/java/com/snoworca/adapter/converter/CookieConverterTest.java",
+            "test_symbol": "shouldConvertCookie",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC3-01",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-3"
+            ],
+            "test_file": "servlet6/src/test/java/com/snoworca/adapter/converter/EnumerationConverterTest.java",
+            "test_symbol": "shouldConvertEnumeration",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC4-01",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-4"
+            ],
+            "test_file": "servlet6/src/test/java/adapter/servletElementConverter6/FallbackPolicyTest.java",
+            "test_symbol": "shouldVerifyAllFallbackPolicyBranches",
+            "kind": "unit",
+            "expected_failure_signature": null
+          }
+        ],
+        "red_evidence": null,
+        "green_evidence": null
+      },
+      "depends_on_task": [],
+      "covers_ac": [
+        "AC-1",
+        "AC-3",
+        "AC-4"
+      ]
+    },
+    {
+      "id": "T-PH005-04",
+      "phase_id": "PH-005",
+      "title": "servlet61 jakarta-side 단위 테스트 backfill (~14건)",
+      "type": "code",
+      "req_ids": [
+        "FR-TEST-001"
+      ],
+      "files": [
+        {
+          "path": "servlet61/src/test/java/com/snoworca/adapter/jakarta"
+        }
+      ],
+      "action": "servlet61 jakarta 6.1→javax 어댑터 단위 테스트 14건.",
+      "acceptance_tests": [
+        {
+          "kind": "shell",
+          "cmd": "./gradlew :servlet61:test --tests *jakarta*",
+          "expected_exit": 0,
+          "stdout_regex": "BUILD SUCCESSFUL"
+        }
+      ],
+      "verification_cmd": {
+        "posix": "./gradlew :servlet61:test --tests *jakarta*",
+        "windows": "gradlew.bat :servlet61:test --tests *jakarta*"
+      },
+      "dod": [
+        "jakarta-side 단위 테스트 ~14건 신규 + PASS"
+      ],
+      "rollback": "신규 추가 테스트 파일 삭제",
+      "trace_links": [
+        {
+          "link_id": "TL-T-PH005-04-01",
+          "source": {
+            "type": "Task",
+            "id": "T-PH005-04"
+          },
+          "target": {
+            "type": "Requirement",
+            "reference": "FR-TEST-001"
+          },
+          "relation": "depends_on"
+        }
+      ],
+      "estimated_effort": "L",
+      "tdd": {
+        "applicable": true,
+        "exempt_reason": "",
+        "phase": "green",
+        "test_cases": [
+          {
+            "id": "TC-REQ-FR-TEST-001-AC1-04",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-1"
+            ],
+            "test_file": "servlet61/src/test/java/com/snoworca/adapter/jakarta/JakartaHttpServletRequestAdapter61Test.java",
+            "test_symbol": "shouldAdaptRequestMethods",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-03",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet61/src/test/java/com/snoworca/adapter/jakarta/JakartaHttpServletResponseAdapter61Test.java",
+            "test_symbol": "shouldAdaptResponseHeaders",
+            "kind": "unit",
+            "expected_failure_signature": null
+          }
+        ],
+        "red_evidence": null,
+        "green_evidence": null
+      },
+      "depends_on_task": [],
+      "covers_ac": [
+        "AC-1",
+        "AC-2"
+      ]
+    },
+    {
+      "id": "T-PH005-05",
+      "phase_id": "PH-005",
+      "title": "servlet61 javax-side 단위 테스트 backfill (~14건)",
+      "type": "code",
+      "req_ids": [
+        "FR-TEST-001"
+      ],
+      "files": [
+        {
+          "path": "servlet61/src/test/java/com/snoworca/adapter/javaxside"
+        }
+      ],
+      "action": "servlet61 javax→jakarta 6.1 어댑터 단위 테스트 14건.",
+      "acceptance_tests": [
+        {
+          "kind": "shell",
+          "cmd": "./gradlew :servlet61:test --tests *javaxside*",
+          "expected_exit": 0,
+          "stdout_regex": "BUILD SUCCESSFUL"
+        }
+      ],
+      "verification_cmd": {
+        "posix": "./gradlew :servlet61:test --tests *javaxside*",
+        "windows": "gradlew.bat :servlet61:test --tests *javaxside*"
+      },
+      "dod": [
+        "javax-side 단위 테스트 ~14건 신규 + PASS"
+      ],
+      "rollback": "신규 추가 테스트 파일 삭제",
+      "trace_links": [
+        {
+          "link_id": "TL-T-PH005-05-01",
+          "source": {
+            "type": "Task",
+            "id": "T-PH005-05"
+          },
+          "target": {
+            "type": "Requirement",
+            "reference": "FR-TEST-001"
+          },
+          "relation": "depends_on"
+        }
+      ],
+      "estimated_effort": "L",
+      "tdd": {
+        "applicable": true,
+        "exempt_reason": "",
+        "phase": "green",
+        "test_cases": [
+          {
+            "id": "TC-REQ-FR-TEST-001-AC1-05",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-1"
+            ],
+            "test_file": "servlet61/src/test/java/com/snoworca/adapter/javaxside/JavaxHttpServletRequestAdapter61Test.java",
+            "test_symbol": "shouldAdaptRequestMethods",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-04",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet61/src/test/java/com/snoworca/adapter/javaxside/JavaxHttpServletResponseAdapter61Test.java",
+            "test_symbol": "shouldAdaptResponseHeaders",
+            "kind": "unit",
+            "expected_failure_signature": null
+          }
+        ],
+        "red_evidence": null,
+        "green_evidence": null
+      },
+      "depends_on_task": [],
+      "covers_ac": [
+        "AC-1",
+        "AC-2"
+      ]
+    },
+    {
+      "id": "T-PH005-06",
+      "phase_id": "PH-005",
+      "title": "servlet61 converter 단위 테스트 backfill (~7건)",
+      "type": "code",
+      "req_ids": [
+        "FR-TEST-001"
+      ],
+      "files": [
+        {
+          "path": "servlet61/src/test/java/com/snoworca/adapter/converter"
+        }
+      ],
+      "action": "servlet61 변환 유틸 단위 테스트 7건.",
+      "acceptance_tests": [
+        {
+          "kind": "shell",
+          "cmd": "./gradlew :servlet61:test --tests *converter*",
+          "expected_exit": 0,
+          "stdout_regex": "BUILD SUCCESSFUL"
+        }
+      ],
+      "verification_cmd": {
+        "posix": "./gradlew :servlet61:test --tests *converter*",
+        "windows": "gradlew.bat :servlet61:test --tests *converter*"
+      },
+      "dod": [
+        "converter 단위 테스트 ~7건 신규 + PASS",
+        "servlet61 전체 단위 테스트 43건 도달"
+      ],
+      "rollback": "신규 추가 테스트 파일 삭제",
+      "trace_links": [
+        {
+          "link_id": "TL-T-PH005-06-01",
+          "source": {
+            "type": "Task",
+            "id": "T-PH005-06"
+          },
+          "target": {
+            "type": "Requirement",
+            "reference": "FR-TEST-001"
+          },
+          "relation": "depends_on"
+        }
+      ],
+      "estimated_effort": "M",
+      "tdd": {
+        "applicable": true,
+        "exempt_reason": "",
+        "phase": "green",
+        "test_cases": [
+          {
+            "id": "TC-REQ-FR-TEST-001-AC1-06",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-1"
+            ],
+            "test_file": "servlet61/src/test/java/com/snoworca/adapter/converter/CookieConverter61Test.java",
+            "test_symbol": "shouldConvertCookie",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC3-02",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-3"
+            ],
+            "test_file": "servlet61/src/test/java/com/snoworca/adapter/converter/EnumerationConverter61Test.java",
+            "test_symbol": "shouldConvertEnumeration",
+            "kind": "unit",
+            "expected_failure_signature": null
+          }
+        ],
+        "red_evidence": null,
+        "green_evidence": null
+      },
+      "depends_on_task": [],
+      "covers_ac": [
+        "AC-1",
+        "AC-3"
+      ]
+    },
+    {
+      "id": "T-PH005-07",
+      "phase_id": "PH-005",
+      "title": "servlet5 잔여 단위 테스트 33→42 보강 (~9건)",
+      "type": "code",
+      "req_ids": [
+        "FR-TEST-001"
+      ],
+      "files": [
+        {
+          "path": "servlet5/src/test/java/com/snoworca/adapter"
+        }
+      ],
+      "action": "servlet5 단위 테스트 33/42 → 미보강 9건 backfill.",
+      "acceptance_tests": [
+        {
+          "kind": "shell",
+          "cmd": "./gradlew :servlet5:test",
+          "expected_exit": 0,
+          "stdout_regex": "BUILD SUCCESSFUL"
+        }
+      ],
+      "verification_cmd": {
+        "posix": "./gradlew :servlet5:test",
+        "windows": "gradlew.bat :servlet5:test"
+      },
+      "dod": [
+        "servlet5 어댑터/converter 단위 테스트 42/42 달성"
+      ],
+      "rollback": "신규 추가 테스트 파일 삭제",
+      "trace_links": [
+        {
+          "link_id": "TL-T-PH005-07-01",
+          "source": {
+            "type": "Task",
+            "id": "T-PH005-07"
+          },
+          "target": {
+            "type": "Requirement",
+            "reference": "FR-TEST-001"
+          },
+          "relation": "depends_on"
+        }
+      ],
+      "estimated_effort": "M",
+      "tdd": {
+        "applicable": true,
+        "exempt_reason": "",
+        "phase": "green",
+        "test_cases": [
+          {
+            "id": "TC-REQ-FR-TEST-001-AC1-07",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-1"
+            ],
+            "test_file": "servlet5/src/test/java/com/snoworca/adapter/Backfill5Test.java",
+            "test_symbol": "shouldCoverRemainingPaths",
+            "kind": "unit",
+            "expected_failure_signature": null
+          }
+        ],
+        "red_evidence": null,
+        "green_evidence": null
+      },
+      "depends_on_task": [],
+      "covers_ac": [
+        "AC-1"
+      ]
+    },
+    {
+      "id": "T-PH005-08",
+      "phase_id": "PH-005",
+      "title": "3 모듈 전체 단위 테스트 통합 회귀 검증",
+      "type": "review",
+      "req_ids": [
+        "FR-TEST-001"
+      ],
+      "files": [
+        {
+          "path": "servlet5/build.gradle"
+        },
+        {
+          "path": "servlet6/build.gradle"
+        },
+        {
+          "path": "servlet61/build.gradle"
+        }
+      ],
+      "action": "./gradlew test 전체 실행하여 회귀 0건 확인.",
+      "acceptance_tests": [
+        {
+          "kind": "checklist",
+          "items": [
+            "실행 명령: ./gradlew test",
+            "기대 exit code: 0",
+            "기대 stdout regex: BUILD SUCCESSFUL"
+          ]
+        }
+      ],
+      "verification_cmd": {
+        "posix": "./gradlew test",
+        "windows": "gradlew.bat test"
+      },
+      "dod": [
+        "servlet5≥115 + servlet6≥71 + servlet61≥76 + Contract 41 모두 PASS, 회귀 0건"
+      ],
+      "rollback": "변경 없음",
+      "trace_links": [
+        {
+          "link_id": "TL-T-PH005-08-01",
+          "source": {
+            "type": "Task",
+            "id": "T-PH005-08"
+          },
+          "target": {
+            "type": "Requirement",
+            "reference": "FR-TEST-001"
+          },
+          "relation": "depends_on"
+        }
+      ],
+      "estimated_effort": "S",
+      "tdd": {
+        "applicable": false,
+        "exempt_reason": "review 타입 — 기존 + 신규 테스트 통합 회귀 확인만 수행하며 코드 변경 없음",
+        "phase": "n/a",
+        "test_cases": [],
+        "red_evidence": null,
+        "green_evidence": null
+      },
+      "depends_on_task": [
+        "T-PH005-01",
+        "T-PH005-02",
+        "T-PH005-03",
+        "T-PH005-04",
+        "T-PH005-05",
+        "T-PH005-06",
+        "T-PH005-07"
+      ],
+      "covers_ac": []
+    },
+    {
+      "id": "T-PH006-01",
+      "phase_id": "PH-006",
+      "title": ".github/workflows/ci.yml build-matrix job 작성",
+      "type": "infra",
+      "req_ids": [
+        "OPS-TEST-001"
+      ],
+      "files": [
+        {
+          "path": ".github/workflows/ci.yml"
+        }
+      ],
+      "action": "GitHub Actions workflow 작성 — build-matrix job (os × servlet-line). Gradle Toolchain JDK 8/11/17 setup-java@v4 + actions/cache@v4.",
+      "acceptance_tests": [
+        {
+          "kind": "file_state",
+          "path": ".github/workflows/ci.yml",
+          "must_contain": [
+            "matrix",
+            "setup-java@v4",
+            "actions/cache@v4"
+          ]
+        },
+        {
+          "kind": "shell",
+          "cmd": "actionlint .github/workflows/ci.yml",
+          "expected_exit": 0
+        }
+      ],
+      "verification_cmd": null,
+      "dod": [
+        ".github/workflows/ci.yml 존재",
+        "build-matrix job 정의 (3 OS × 3 servlet-line)",
+        "Gradle 캐시 설정"
+      ],
+      "rollback": ".github/workflows/ci.yml 삭제",
+      "trace_links": [
+        {
+          "link_id": "TL-T-PH006-01-01",
+          "source": {
+            "type": "Task",
+            "id": "T-PH006-01"
+          },
+          "target": {
+            "type": "Requirement",
+            "reference": "OPS-TEST-001"
+          },
+          "relation": "depends_on"
+        }
+      ],
+      "estimated_effort": "M",
+      "tdd": {
+        "applicable": false,
+        "exempt_reason": "infra 타입 — yaml 구성 파일로 production code 변경 없음. AC 검증은 file_state + push 후 GitHub Actions 실행 결과로 수행",
+        "phase": "n/a",
+        "test_cases": [],
+        "red_evidence": null,
+        "green_evidence": null
+      },
+      "depends_on_task": [
+        "T-PH001-04"
+      ],
+      "covers_ac": [
+        "AC-1",
+        "AC-2"
+      ]
+    },
+    {
+      "id": "T-PH006-02",
+      "phase_id": "PH-006",
+      "title": ".github/workflows/ci.yml integration-tests job 추가 (Linux only)",
+      "type": "infra",
+      "req_ids": [
+        "OPS-TEST-001"
+      ],
+      "files": [
+        {
+          "path": ".github/workflows/ci.yml"
+        }
+      ],
+      "action": "integration-tests job 추가 — runs-on: ubuntu-latest. ./gradlew integrationTest. needs: build-matrix.",
+      "acceptance_tests": [
+        {
+          "kind": "file_state",
+          "path": ".github/workflows/ci.yml",
+          "must_contain": [
+            "integration-tests",
+            "integrationTest"
+          ]
+        }
+      ],
+      "verification_cmd": null,
+      "dod": [
+        "integration-tests job 정의",
+        "needs: build-matrix 의존성",
+        "Linux only 명시"
+      ],
+      "rollback": "ci.yml 의 integration-tests job 블록 제거",
+      "trace_links": [
+        {
+          "link_id": "TL-T-PH006-02-01",
+          "source": {
+            "type": "Task",
+            "id": "T-PH006-02"
+          },
+          "target": {
+            "type": "Requirement",
+            "reference": "OPS-TEST-001"
+          },
+          "relation": "depends_on"
+        }
+      ],
+      "estimated_effort": "S",
+      "tdd": {
+        "applicable": false,
+        "exempt_reason": "infra 타입 — yaml job 추가로 production code 변경 없음. AC 검증은 file_state 로 수행",
+        "phase": "n/a",
+        "test_cases": [],
+        "red_evidence": null,
+        "green_evidence": null
+      },
+      "depends_on_task": [
+        "T-PH006-01"
+      ],
+      "covers_ac": [
+        "AC-3"
+      ]
+    },
+    {
+      "id": "T-PH006-03",
+      "phase_id": "PH-006",
+      "title": ".github/workflows/ci.yml coverage job (JaCoCo + Codecov) 추가",
+      "type": "infra",
+      "req_ids": [
+        "NFR-TEST-001",
+        "OPS-TEST-001"
+      ],
+      "files": [
+        {
+          "path": ".github/workflows/ci.yml"
+        },
+        {
+          "path": "build.gradle"
+        }
+      ],
+      "action": "coverage job 추가 — ./gradlew jacocoTestReport + codecov-action 업로드. 루트 build.gradle 에 jacoco plugin 적용.",
+      "acceptance_tests": [
+        {
+          "kind": "file_state",
+          "path": ".github/workflows/ci.yml",
+          "must_contain": [
+            "jacocoTestReport",
+            "codecov"
+          ]
+        }
+      ],
+      "verification_cmd": null,
+      "dod": [
+        "jacoco plugin 적용",
+        "coverage job 정의 + codecov 업로드 단계"
+      ],
+      "rollback": "ci.yml coverage job + build.gradle jacoco plugin 적용 제거",
+      "trace_links": [
+        {
+          "link_id": "TL-T-PH006-03-01",
+          "source": {
+            "type": "Task",
+            "id": "T-PH006-03"
+          },
+          "target": {
+            "type": "Requirement",
+            "reference": "NFR-TEST-001"
+          },
+          "relation": "depends_on"
+        },
+        {
+          "link_id": "TL-T-PH006-03-02",
+          "source": {
+            "type": "Task",
+            "id": "T-PH006-03"
+          },
+          "target": {
+            "type": "Requirement",
+            "reference": "OPS-TEST-001"
+          },
+          "relation": "depends_on"
+        }
+      ],
+      "estimated_effort": "M",
+      "tdd": {
+        "applicable": false,
+        "exempt_reason": "infra 타입 — yaml job + gradle plugin 적용으로 production code 변경 없음. AC 검증은 file_state + Codecov 대시보드로 수행",
+        "phase": "n/a",
+        "test_cases": [],
+        "red_evidence": null,
+        "green_evidence": null
+      },
+      "depends_on_task": [
+        "T-PH006-01"
+      ],
+      "covers_ac": [
+        "AC-3",
+        "AC-4"
+      ]
+    },
+    {
+      "id": "T-PH006-04",
+      "phase_id": "PH-006",
+      "title": "CI 최종 검증 (PR push 후 5분 내 통과)",
+      "type": "review",
+      "req_ids": [
+        "OPS-TEST-001"
+      ],
+      "files": [
+        {
+          "path": ".github/workflows/ci.yml"
+        }
+      ],
+      "action": "dummy PR 푸시 → GitHub Actions 실행 → 9 build-matrix + integration-tests + coverage 모두 GREEN + 5분 내.",
+      "acceptance_tests": [
+        {
+          "kind": "checklist",
+          "items": [
+            "9 matrix job GREEN",
+            "integration-tests GREEN",
+            "coverage upload 성공",
+            "total 5분 내"
+          ]
+        }
+      ],
+      "verification_cmd": null,
+      "dod": [
+        "GitHub Actions run URL 캡처 + 모든 job GREEN + 종료 시간 5분 내"
+      ],
+      "rollback": "변경 없음 (review)",
+      "trace_links": [
+        {
+          "link_id": "TL-T-PH006-04-01",
+          "source": {
+            "type": "Task",
+            "id": "T-PH006-04"
+          },
+          "target": {
+            "type": "Requirement",
+            "reference": "OPS-TEST-001"
+          },
+          "relation": "depends_on"
+        }
+      ],
+      "estimated_effort": "S",
+      "tdd": {
+        "applicable": false,
+        "exempt_reason": "review 타입 — CI 실행 결과 검증으로 코드 변경 없음",
+        "phase": "n/a",
+        "test_cases": [],
+        "red_evidence": null,
+        "green_evidence": null
+      },
+      "depends_on_task": [
+        "T-PH006-01",
+        "T-PH006-02",
+        "T-PH006-03"
+      ],
+      "covers_ac": [
+        "AC-4"
+      ]
+    },
+    {
+      "id": "T-PH007-01",
+      "phase_id": "PH-007",
+      "title": "NFR-TEST-001 SRS vs build.gradle 정합성 결정 + Change Notes 보완",
+      "type": "doc",
+      "req_ids": [
+        "NFR-TEST-001"
+      ],
+      "files": [
+        {
+          "path": "build.gradle"
+        },
+        {
+          "path": "docs/spec/40.testing.srs.md"
+        }
+      ],
+      "action": "SRS NFR-TEST-001 vs build.gradle relaxed 정합성 — OQ-NFR-001 결정 적용. SRS Change Notes 및 build.gradle 주석 반영.",
+      "acceptance_tests": [
+        {
+          "kind": "checklist",
+          "items": [
+            "OQ-NFR-001 결정 기록 in SRS Change Notes",
+            "build.gradle 주석에 결정 사유 명시",
+            "NFR-TEST-001 AC-1/2/3 모두 trace-link 보강"
+          ]
+        }
+      ],
+      "verification_cmd": null,
+      "dod": [
+        "SRS Change Notes 보완",
+        "build.gradle 주석 보완",
+        "speckiwi MCP add_trace_link 호출 완료"
+      ],
+      "rollback": "SRS/build.gradle 변경 revert",
+      "trace_links": [
+        {
+          "link_id": "TL-T-PH007-01-01",
+          "source": {
+            "type": "Task",
+            "id": "T-PH007-01"
+          },
+          "target": {
+            "type": "Requirement",
+            "reference": "NFR-TEST-001"
+          },
+          "relation": "depends_on"
+        }
+      ],
+      "estimated_effort": "M",
+      "tdd": {
+        "applicable": false,
+        "exempt_reason": "doc 타입 — SRS Change Notes + build.gradle 주석 문서화로 production code 동작 변경 없음",
+        "phase": "n/a",
+        "test_cases": [],
+        "red_evidence": null,
+        "green_evidence": null
+      },
+      "depends_on_task": [
+        "T-PH005-08",
+        "T-PH006-04"
+      ],
+      "covers_ac": [
+        "AC-1",
+        "AC-2",
+        "AC-3"
+      ]
+    },
+    {
+      "id": "T-PH007-02",
+      "phase_id": "PH-007",
+      "title": "FR-TEST-002 verification evidence + 통합 회귀 보고서 작성",
+      "type": "doc",
+      "req_ids": [
+        "FR-CONV-013",
+        "FR-TEST-002"
+      ],
+      "files": [
+        {
+          "path": "docs/reports/v100-test-track-final.md"
+        }
+      ],
+      "action": "통합 회귀 보고서 — FR-TEST-001/002/003/004 + FR-CONV-013 종합. speckiwi MCP add_verification_evidence 로 evidence 보강.",
+      "acceptance_tests": [
+        {
+          "kind": "file_state",
+          "path": "docs/reports/v100-test-track-final.md",
+          "must_contain": [
+            "FR-TEST-001",
+            "FR-TEST-002",
+            "FR-TEST-003",
+            "FR-TEST-004",
+            "FR-CONV-013"
+          ]
+        }
+      ],
+      "verification_cmd": null,
+      "dod": [
+        "통합 회귀 보고서 작성",
+        "5 REQ evidence MCP 등록 완료",
+        "PH-001~PH-007 모든 task GREEN + FR-TEST-002 verification evidence 4건 (TC-REQ-FR-TEST-002-AC1~AC4-01) MCP 등록 완료"
+      ],
+      "rollback": "docs/reports/v100-test-track-final.md 삭제",
+      "trace_links": [
+        {
+          "link_id": "TL-T-PH007-02-01",
+          "source": {
+            "type": "Task",
+            "id": "T-PH007-02"
+          },
+          "target": {
+            "type": "Requirement",
+            "reference": "FR-CONV-013"
+          },
+          "relation": "depends_on"
+        },
+        {
+          "link_id": "TL-T-PH007-02-02",
+          "source": {
+            "type": "Task",
+            "id": "T-PH007-02"
+          },
+          "target": {
+            "type": "Requirement",
+            "reference": "FR-TEST-002"
+          },
+          "relation": "depends_on"
+        }
+      ],
+      "estimated_effort": "M",
+      "tdd": {
+        "applicable": true,
+        "phase": "green",
+        "test_cases": [
+          {
+            "id": "TC-REQ-FR-TEST-002-AC1-01",
+            "req_id": "FR-TEST-002",
+            "ac_refs": [
+              "AC-1"
+            ],
+            "test_file": "common/src/testFixtures/java/com/snoworca/contract/DelegationContractTest.java",
+            "test_symbol": "(existing fixture)",
+            "kind": "contract",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-002-AC2-01",
+            "req_id": "FR-TEST-002",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet5/src/test/java/com/snoworca/contract/Servlet5ContractTest.java",
+            "test_symbol": "(existing fixture)",
+            "kind": "contract",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-002-AC3-01",
+            "req_id": "FR-TEST-002",
+            "ac_refs": [
+              "AC-3"
+            ],
+            "test_file": "common/src/testFixtures/java/com/snoworca/contract/DelegationContractTest.java",
+            "test_symbol": "verifyDelegation",
+            "kind": "contract",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-002-AC4-01",
+            "req_id": "FR-TEST-002",
+            "ac_refs": [
+              "AC-4"
+            ],
+            "test_file": "servlet5/src/test/java/com/snoworca/contract/Servlet5ContractTest.java",
+            "test_symbol": "blacklist",
+            "kind": "contract",
+            "expected_failure_signature": null
+          }
+        ],
+        "red_evidence": null,
+        "green_evidence": null
+      },
+      "depends_on_task": [
+        "T-PH002-04",
+        "T-PH005-08",
+        "T-PH006-04"
+      ],
+      "covers_ac": [
+        "AC-1",
+        "AC-2",
+        "AC-3",
+        "AC-4"
+      ]
+    }
+  ],
+  "coverage": [
+    {
+      "req_id": "FR-TEST-001",
+      "stability": "evolving",
+      "ac_total": 4,
+      "ac_covered": 4,
+      "missing_ac_ids": [],
+      "covered_tasks": [
+        "T-PH005-01",
+        "T-PH005-02",
+        "T-PH005-03",
+        "T-PH005-04",
+        "T-PH005-05",
+        "T-PH005-06",
+        "T-PH005-07",
+        "T-PH005-08"
+      ],
+      "ac_test_map": [
+        {
+          "ac_id": "AC-1",
+          "test_case_ids": [
+            "TC-REQ-FR-TEST-001-AC1-01",
+            "TC-REQ-FR-TEST-001-AC1-02",
+            "TC-REQ-FR-TEST-001-AC1-03",
+            "TC-REQ-FR-TEST-001-AC1-04",
+            "TC-REQ-FR-TEST-001-AC1-05",
+            "TC-REQ-FR-TEST-001-AC1-06",
+            "TC-REQ-FR-TEST-001-AC1-07"
+          ]
+        },
+        {
+          "ac_id": "AC-2",
+          "test_case_ids": [
+            "TC-REQ-FR-TEST-001-AC2-01",
+            "TC-REQ-FR-TEST-001-AC2-02",
+            "TC-REQ-FR-TEST-001-AC2-03",
+            "TC-REQ-FR-TEST-001-AC2-04"
+          ]
+        },
+        {
+          "ac_id": "AC-3",
+          "test_case_ids": [
+            "TC-REQ-FR-TEST-001-AC3-01",
+            "TC-REQ-FR-TEST-001-AC3-02"
+          ]
+        },
+        {
+          "ac_id": "AC-4",
+          "test_case_ids": [
+            "TC-REQ-FR-TEST-001-AC4-01"
+          ]
+        }
+      ]
+    },
+    {
+      "req_id": "FR-TEST-002",
+      "stability": "stable",
+      "ac_total": 4,
+      "ac_covered": 4,
+      "missing_ac_ids": [],
+      "covered_tasks": [
+        "T-PH007-02"
+      ],
+      "ac_test_map": [
+        {
+          "ac_id": "AC-1",
+          "test_case_ids": [
+            "TC-REQ-FR-TEST-002-AC1-01"
+          ]
+        },
+        {
+          "ac_id": "AC-2",
+          "test_case_ids": [
+            "TC-REQ-FR-TEST-002-AC2-01"
+          ]
+        },
+        {
+          "ac_id": "AC-3",
+          "test_case_ids": [
+            "TC-REQ-FR-TEST-002-AC3-01"
+          ]
+        },
+        {
+          "ac_id": "AC-4",
+          "test_case_ids": [
+            "TC-REQ-FR-TEST-002-AC4-01"
+          ]
+        }
+      ]
+    },
+    {
+      "req_id": "FR-TEST-003",
+      "stability": "evolving",
+      "ac_total": 5,
+      "ac_covered": 5,
+      "missing_ac_ids": [],
+      "covered_tasks": [
+        "T-PH001-01",
+        "T-PH001-02",
+        "T-PH001-03",
+        "T-PH001-04",
+        "T-PH002-01",
+        "T-PH002-02",
+        "T-PH002-03",
+        "T-PH002-04",
+        "T-PH002-05",
+        "T-PH002-06",
+        "T-PH002-07",
+        "T-PH002-08",
+        "T-PH002-09",
+        "T-PH002-10",
+        "T-PH003-01",
+        "T-PH003-02",
+        "T-PH003-03",
+        "T-PH003-04",
+        "T-PH003-05"
+      ],
+      "ac_test_map": [
+        {
+          "ac_id": "AC-1",
+          "test_case_ids": [
+            "TC-REQ-FR-TEST-003-AC1-01",
+            "TC-REQ-FR-TEST-003-AC1-02",
+            "TC-REQ-FR-TEST-003-AC1-03"
+          ]
+        },
+        {
+          "ac_id": "AC-2",
+          "test_case_ids": [
+            "TC-REQ-FR-TEST-003-AC2-01",
+            "TC-REQ-FR-TEST-003-AC2-02",
+            "TC-REQ-FR-TEST-003-AC2-03",
+            "TC-REQ-FR-TEST-003-AC2-04",
+            "TC-REQ-FR-TEST-003-AC2-05",
+            "TC-REQ-FR-TEST-003-AC2-06",
+            "TC-REQ-FR-TEST-003-AC2-07",
+            "TC-REQ-FR-TEST-003-AC2-08",
+            "TC-REQ-FR-TEST-003-AC2-09",
+            "TC-REQ-FR-TEST-003-AC2-10",
+            "TC-REQ-FR-TEST-003-AC2-11",
+            "TC-REQ-FR-TEST-003-AC2-12",
+            "TC-REQ-FR-TEST-003-AC2-13",
+            "TC-REQ-FR-TEST-003-AC2-14",
+            "TC-REQ-FR-TEST-003-AC2-15",
+            "TC-REQ-FR-TEST-003-AC2-16",
+            "TC-REQ-FR-TEST-003-AC2-17",
+            "TC-REQ-FR-TEST-003-AC2-18",
+            "TC-REQ-FR-TEST-003-AC2-19",
+            "TC-REQ-FR-TEST-003-AC2-20",
+            "TC-REQ-FR-TEST-003-AC2-21",
+            "TC-REQ-FR-TEST-003-AC2-22",
+            "TC-REQ-FR-TEST-003-AC2-23",
+            "TC-REQ-FR-TEST-003-AC2-24",
+            "TC-REQ-FR-TEST-003-AC2-25",
+            "TC-REQ-FR-TEST-003-AC2-26",
+            "TC-REQ-FR-TEST-003-AC2-27",
+            "TC-REQ-FR-TEST-003-AC2-28",
+            "TC-REQ-FR-TEST-003-AC2-29",
+            "TC-REQ-FR-TEST-003-AC2-30",
+            "TC-REQ-FR-TEST-003-AC2-31",
+            "TC-REQ-FR-TEST-003-AC2-32",
+            "TC-REQ-FR-TEST-003-AC2-33",
+            "TC-REQ-FR-TEST-003-AC2-34",
+            "TC-REQ-FR-TEST-003-AC2-35",
+            "TC-REQ-FR-TEST-003-AC2-36"
+          ]
+        },
+        {
+          "ac_id": "AC-3",
+          "test_case_ids": [
+            "TC-REQ-FR-TEST-003-AC3-01",
+            "TC-REQ-FR-TEST-003-AC3-02",
+            "TC-REQ-FR-TEST-003-AC3-03",
+            "TC-REQ-FR-TEST-003-AC3-04",
+            "TC-REQ-FR-TEST-003-AC3-05",
+            "TC-REQ-FR-TEST-003-AC3-06",
+            "TC-REQ-FR-TEST-003-AC3-07",
+            "TC-REQ-FR-TEST-003-AC3-08",
+            "TC-REQ-FR-TEST-003-AC3-09",
+            "TC-REQ-FR-TEST-003-AC3-10",
+            "TC-REQ-FR-TEST-003-AC3-11",
+            "TC-REQ-FR-TEST-003-AC3-12",
+            "TC-REQ-FR-TEST-003-AC3-13",
+            "TC-REQ-FR-TEST-003-AC3-14",
+            "TC-REQ-FR-TEST-003-AC3-15"
+          ]
+        },
+        {
+          "ac_id": "AC-4",
+          "test_case_ids": []
+        },
+        {
+          "ac_id": "AC-5",
+          "test_case_ids": []
+        }
+      ]
+    },
+    {
+      "req_id": "FR-TEST-004",
+      "stability": "evolving",
+      "ac_total": 5,
+      "ac_covered": 5,
+      "missing_ac_ids": [],
+      "covered_tasks": [
+        "T-PH004-01",
+        "T-PH004-02",
+        "T-PH004-03"
+      ],
+      "ac_test_map": [
+        {
+          "ac_id": "AC-1",
+          "test_case_ids": [
+            "TC-REQ-FR-TEST-004-AC1-01",
+            "TC-REQ-FR-TEST-004-AC1-02",
+            "TC-REQ-FR-TEST-004-AC1-03",
+            "TC-REQ-FR-TEST-004-AC1-04",
+            "TC-REQ-FR-TEST-004-AC1-05",
+            "TC-REQ-FR-TEST-004-AC1-06",
+            "TC-REQ-FR-TEST-004-AC1-07",
+            "TC-REQ-FR-TEST-004-AC1-08"
+          ]
+        },
+        {
+          "ac_id": "AC-2",
+          "test_case_ids": [
+            "TC-REQ-FR-TEST-004-AC2-01",
+            "TC-REQ-FR-TEST-004-AC2-02",
+            "TC-REQ-FR-TEST-004-AC2-03",
+            "TC-REQ-FR-TEST-004-AC2-04",
+            "TC-REQ-FR-TEST-004-AC2-05",
+            "TC-REQ-FR-TEST-004-AC2-06",
+            "TC-REQ-FR-TEST-004-AC2-07",
+            "TC-REQ-FR-TEST-004-AC2-08",
+            "TC-REQ-FR-TEST-004-AC2-09",
+            "TC-REQ-FR-TEST-004-AC2-10",
+            "TC-REQ-FR-TEST-004-AC2-11",
+            "TC-REQ-FR-TEST-004-AC2-12"
+          ]
+        },
+        {
+          "ac_id": "AC-3",
+          "test_case_ids": []
+        },
+        {
+          "ac_id": "AC-4",
+          "test_case_ids": []
+        },
+        {
+          "ac_id": "AC-5",
+          "test_case_ids": []
+        }
+      ]
+    },
+    {
+      "req_id": "NFR-TEST-001",
+      "stability": "evolving",
+      "ac_total": 3,
+      "ac_covered": 3,
+      "missing_ac_ids": [],
+      "covered_tasks": [
+        "T-PH006-03",
+        "T-PH007-01"
+      ],
+      "ac_test_map": [
+        {
+          "ac_id": "AC-1",
+          "test_case_ids": []
+        },
+        {
+          "ac_id": "AC-2",
+          "test_case_ids": []
+        },
+        {
+          "ac_id": "AC-3",
+          "test_case_ids": []
+        }
+      ]
+    },
+    {
+      "req_id": "OPS-TEST-001",
+      "stability": "evolving",
+      "ac_total": 4,
+      "ac_covered": 4,
+      "missing_ac_ids": [],
+      "covered_tasks": [
+        "T-PH006-01",
+        "T-PH006-02",
+        "T-PH006-03",
+        "T-PH006-04"
+      ],
+      "ac_test_map": [
+        {
+          "ac_id": "AC-1",
+          "test_case_ids": []
+        },
+        {
+          "ac_id": "AC-2",
+          "test_case_ids": []
+        },
+        {
+          "ac_id": "AC-3",
+          "test_case_ids": []
+        },
+        {
+          "ac_id": "AC-4",
+          "test_case_ids": []
+        }
+      ]
+    },
+    {
+      "req_id": "FR-CONV-013",
+      "stability": "evolving",
+      "ac_total": 4,
+      "ac_covered": 4,
+      "missing_ac_ids": [],
+      "covered_tasks": [
+        "T-PH002-04",
+        "T-PH007-02"
+      ],
+      "ac_test_map": [
+        {
+          "ac_id": "AC-1",
+          "test_case_ids": []
+        },
+        {
+          "ac_id": "AC-2",
+          "test_case_ids": []
+        },
+        {
+          "ac_id": "AC-3",
+          "test_case_ids": []
+        },
+        {
+          "ac_id": "AC-4",
+          "test_case_ids": [
+            "TC-REQ-FR-CONV-013-AC4-01",
+            "TC-REQ-FR-CONV-013-AC4-02",
+            "TC-REQ-FR-CONV-013-AC4-03",
+            "TC-REQ-FR-CONV-013-AC4-04",
+            "TC-REQ-FR-CONV-013-AC4-05",
+            "TC-REQ-FR-CONV-013-AC4-06",
+            "TC-REQ-FR-CONV-013-AC4-07",
+            "TC-REQ-FR-CONV-013-AC4-08"
+          ]
+        }
+      ]
+    }
+  ],
+  "orphans": [],
+  "unreferenced_reqs": [],
+  "excluded_reqs": [
+    {
+      "req_id": "FR-TEST-005",
+      "stability": "draft",
+      "reason": "draft-policy=exclude-draft (user decision). depends FR-TEST-003+OPS-TEST-001 완료 후 재평가"
+    },
+    {
+      "req_id": "OPS-REL-001",
+      "stability": "draft",
+      "reason": "draft-policy=exclude-draft. 외부 Sonatype 자격 의존 — 사용자 직접 처리 트랙"
+    }
+  ],
+  "deferred_ac": [],
+  "risks": [
+    {
+      "id": "R1",
+      "severity": "low",
+      "description": "Tomcat embed 임시 포트 충돌 가능성 — TomcatRunner OS 할당 랜덤 포트로 완화"
+    },
+    {
+      "id": "R2",
+      "severity": "medium",
+      "description": "Windows runner 에서 임시 디렉토리/파일 잠금 — integration-tests job Linux only 로 회피"
+    },
+    {
+      "id": "R3",
+      "severity": "low",
+      "description": "servlet5 (Tomcat 10.0/jakarta 5.0) Partitioned cookie 미지원 — IT04 에서 servlet5 skip"
+    },
+    {
+      "id": "R4",
+      "severity": "medium",
+      "description": "JDK 8 toolchain 환경 Tomcat embed 10.0.27 호환성 — build-matrix 검증 후 결정"
+    }
+  ],
+  "open_questions": [
+    {
+      "id": "OQ-NFR-001",
+      "question": "NFR-TEST-001 SRS (≥95%/100%) vs build.gradle v1.0.0 relaxed (60%/50%) 정합성 결정 — Change Notes로 v1.0.0 한정 relaxed 명시 / NFR 분리 / build.gradle을 SRS에 맞춤 3지선다",
+      "blocks_task_ids": [
+        "T-PH007-01"
+      ]
+    }
+  ],
+  "external_module_impact": [],
+  "tdd_decisions": [
+    {
+      "id": "TDD-001",
+      "decision": "type=code IT/BugMuseum/unit-backfill task 는 applicable=true + phase=green 단독 (red→green 사이클 분리 없음). 이유: production code 가 이미 구현 완료 상태에서 검증 테스트만 추가하는 컨텍스트로, 테스트 코드 자체가 산출물이며 red 단계가 의미를 갖지 않음. 본 plan SSOT 지침 (relaxed 정책 §0.17 + §0.G7) 에 부합.",
+      "applies_to_tasks": [
+        "T-PH001-04",
+        "T-PH002-01",
+        "T-PH002-02",
+        "T-PH002-03",
+        "T-PH002-04",
+        "T-PH002-05",
+        "T-PH002-06",
+        "T-PH002-07",
+        "T-PH002-08",
+        "T-PH002-09",
+        "T-PH002-10",
+        "T-PH003-01",
+        "T-PH003-02",
+        "T-PH003-03",
+        "T-PH003-04",
+        "T-PH003-05",
+        "T-PH004-02",
+        "T-PH004-03",
+        "T-PH005-01",
+        "T-PH005-02",
+        "T-PH005-03",
+        "T-PH005-04",
+        "T-PH005-05",
+        "T-PH005-06",
+        "T-PH005-07"
+      ]
+    }
+  ],
+  "coder_handoff_readiness": [
+    {
+      "phase_id": "PH-001",
+      "ready": true,
+      "blockers": []
+    },
+    {
+      "phase_id": "PH-002",
+      "ready": true,
+      "blockers": []
+    },
+    {
+      "phase_id": "PH-003",
+      "ready": true,
+      "blockers": []
+    },
+    {
+      "phase_id": "PH-004",
+      "ready": true,
+      "blockers": []
+    },
+    {
+      "phase_id": "PH-005",
+      "ready": true,
+      "blockers": []
+    },
+    {
+      "phase_id": "PH-006",
+      "ready": true,
+      "blockers": []
+    },
+    {
+      "phase_id": "PH-007",
+      "ready": false,
+      "blockers": [
+        "business-decision-pending:T-PH007-01"
+      ]
+    }
+  ],
+  "mcp_call_log": [
+    {
+      "seq": 1,
+      "call": "add_trace_link",
+      "args": {
+        "source": {
+          "type": "Task",
+          "id": "T-PH001-01"
+        },
+        "target": {
+          "type": "Requirement",
+          "reference": "FR-TEST-003"
+        },
+        "relation": "depends_on"
+      },
+      "args_hash": "a225197ab4a2513202fe0ded2250e89ef463fd6b",
+      "response_hash": "written-true",
+      "timestamp": "2026-05-20T04:19:46.361Z",
+      "ok": true,
+      "dry_run": false
+    },
+    {
+      "seq": 2,
+      "call": "add_trace_link",
+      "args": {
+        "source": {
+          "type": "Task",
+          "id": "T-PH001-02"
+        },
+        "target": {
+          "type": "Requirement",
+          "reference": "FR-TEST-003"
+        },
+        "relation": "depends_on"
+      },
+      "args_hash": "741b6bb62beb71fbba1edf673e1dc1549356d538",
+      "response_hash": "written-true",
+      "timestamp": "2026-05-20T04:19:46.361Z",
+      "ok": true,
+      "dry_run": false
+    },
+    {
+      "seq": 3,
+      "call": "add_trace_link",
+      "args": {
+        "source": {
+          "type": "Task",
+          "id": "T-PH001-03"
+        },
+        "target": {
+          "type": "Requirement",
+          "reference": "FR-TEST-003"
+        },
+        "relation": "depends_on"
+      },
+      "args_hash": "715917f3edb78fd917427ff727f3b41fe1f4f629",
+      "response_hash": "written-true",
+      "timestamp": "2026-05-20T04:19:46.361Z",
+      "ok": true,
+      "dry_run": false
+    },
+    {
+      "seq": 4,
+      "call": "add_trace_link",
+      "args": {
+        "source": {
+          "type": "Task",
+          "id": "T-PH001-04"
+        },
+        "target": {
+          "type": "Requirement",
+          "reference": "FR-TEST-003"
+        },
+        "relation": "depends_on"
+      },
+      "args_hash": "98a63f852946e484e490acf9568aa7498e29c5cd",
+      "response_hash": "written-true",
+      "timestamp": "2026-05-20T04:19:46.361Z",
+      "ok": true,
+      "dry_run": false
+    },
+    {
+      "seq": 5,
+      "call": "add_trace_link",
+      "args": {
+        "source": {
+          "type": "Task",
+          "id": "T-PH002-01"
+        },
+        "target": {
+          "type": "Requirement",
+          "reference": "FR-TEST-003"
+        },
+        "relation": "depends_on"
+      },
+      "args_hash": "9a9fe67dd45a9b6caf33d580199b25218db7775e",
+      "response_hash": "written-true",
+      "timestamp": "2026-05-20T04:19:46.361Z",
+      "ok": true,
+      "dry_run": false
+    },
+    {
+      "seq": 6,
+      "call": "add_trace_link",
+      "args": {
+        "source": {
+          "type": "Task",
+          "id": "T-PH002-02"
+        },
+        "target": {
+          "type": "Requirement",
+          "reference": "FR-TEST-003"
+        },
+        "relation": "depends_on"
+      },
+      "args_hash": "7e1e2c0d223a71aa83d43af73710aeb981225018",
+      "response_hash": "written-true",
+      "timestamp": "2026-05-20T04:19:46.361Z",
+      "ok": true,
+      "dry_run": false
+    },
+    {
+      "seq": 7,
+      "call": "add_trace_link",
+      "args": {
+        "source": {
+          "type": "Task",
+          "id": "T-PH002-03"
+        },
+        "target": {
+          "type": "Requirement",
+          "reference": "FR-TEST-003"
+        },
+        "relation": "depends_on"
+      },
+      "args_hash": "c7b27a7a5a5b3e8f4681aa541d8ed9190ef67e0d",
+      "response_hash": "written-true",
+      "timestamp": "2026-05-20T04:19:46.361Z",
+      "ok": true,
+      "dry_run": false
+    },
+    {
+      "seq": 8,
+      "call": "add_trace_link",
+      "args": {
+        "source": {
+          "type": "Task",
+          "id": "T-PH002-04"
+        },
+        "target": {
+          "type": "Requirement",
+          "reference": "FR-CONV-013"
+        },
+        "relation": "depends_on"
+      },
+      "args_hash": "cbe23ca98dd280b67c72a32d4ec21f5a536cd58c",
+      "response_hash": "written-true",
+      "timestamp": "2026-05-20T04:19:46.361Z",
+      "ok": true,
+      "dry_run": false
+    },
+    {
+      "seq": 9,
+      "call": "add_trace_link",
+      "args": {
+        "source": {
+          "type": "Task",
+          "id": "T-PH002-04"
+        },
+        "target": {
+          "type": "Requirement",
+          "reference": "FR-TEST-003"
+        },
+        "relation": "depends_on"
+      },
+      "args_hash": "721d8dba7cc0fd398b25184c9f28dc231d0d3e28",
+      "response_hash": "written-true",
+      "timestamp": "2026-05-20T04:19:46.361Z",
+      "ok": true,
+      "dry_run": false
+    },
+    {
+      "seq": 10,
+      "call": "add_trace_link",
+      "args": {
+        "source": {
+          "type": "Task",
+          "id": "T-PH002-05"
+        },
+        "target": {
+          "type": "Requirement",
+          "reference": "FR-TEST-003"
+        },
+        "relation": "depends_on"
+      },
+      "args_hash": "63115ad01be2582ed6a618ed77759397c772daa9",
+      "response_hash": "written-true",
+      "timestamp": "2026-05-20T04:19:46.361Z",
+      "ok": true,
+      "dry_run": false
+    },
+    {
+      "seq": 11,
+      "call": "add_trace_link",
+      "args": {
+        "source": {
+          "type": "Task",
+          "id": "T-PH002-06"
+        },
+        "target": {
+          "type": "Requirement",
+          "reference": "FR-TEST-003"
+        },
+        "relation": "depends_on"
+      },
+      "args_hash": "901cced35ae763a16d3f5cb156b8546e9cfb3d60",
+      "response_hash": "written-true",
+      "timestamp": "2026-05-20T04:19:46.361Z",
+      "ok": true,
+      "dry_run": false
+    },
+    {
+      "seq": 12,
+      "call": "add_trace_link",
+      "args": {
+        "source": {
+          "type": "Task",
+          "id": "T-PH002-07"
+        },
+        "target": {
+          "type": "Requirement",
+          "reference": "FR-TEST-003"
+        },
+        "relation": "depends_on"
+      },
+      "args_hash": "fcde4198317b79f196d5fa15f6a4d33d9147e359",
+      "response_hash": "written-true",
+      "timestamp": "2026-05-20T04:19:46.361Z",
+      "ok": true,
+      "dry_run": false
+    },
+    {
+      "seq": 13,
+      "call": "add_trace_link",
+      "args": {
+        "source": {
+          "type": "Task",
+          "id": "T-PH002-08"
+        },
+        "target": {
+          "type": "Requirement",
+          "reference": "FR-TEST-003"
+        },
+        "relation": "depends_on"
+      },
+      "args_hash": "652ce3a85a5c2efc18ed828ea559a3eddd34dc9e",
+      "response_hash": "written-true",
+      "timestamp": "2026-05-20T04:19:46.361Z",
+      "ok": true,
+      "dry_run": false
+    },
+    {
+      "seq": 14,
+      "call": "add_trace_link",
+      "args": {
+        "source": {
+          "type": "Task",
+          "id": "T-PH002-09"
+        },
+        "target": {
+          "type": "Requirement",
+          "reference": "FR-TEST-003"
+        },
+        "relation": "depends_on"
+      },
+      "args_hash": "f27340c07278f3b920bb5709bbbf4c107c399881",
+      "response_hash": "written-true",
+      "timestamp": "2026-05-20T04:19:46.361Z",
+      "ok": true,
+      "dry_run": false
+    },
+    {
+      "seq": 15,
+      "call": "add_trace_link",
+      "args": {
+        "source": {
+          "type": "Task",
+          "id": "T-PH002-10"
+        },
+        "target": {
+          "type": "Requirement",
+          "reference": "FR-TEST-003"
+        },
+        "relation": "depends_on"
+      },
+      "args_hash": "c2e06d58c814fa6efcedb1286689c54b67de2eaf",
+      "response_hash": "written-true",
+      "timestamp": "2026-05-20T04:19:46.361Z",
+      "ok": true,
+      "dry_run": false
+    },
+    {
+      "seq": 16,
+      "call": "add_trace_link",
+      "args": {
+        "source": {
+          "type": "Task",
+          "id": "T-PH003-01"
+        },
+        "target": {
+          "type": "Requirement",
+          "reference": "FR-TEST-003"
+        },
+        "relation": "depends_on"
+      },
+      "args_hash": "7043b058a2745c59e7cc0d22f0cfb0e5acfe27e3",
+      "response_hash": "written-true",
+      "timestamp": "2026-05-20T04:19:46.361Z",
+      "ok": true,
+      "dry_run": false
+    },
+    {
+      "seq": 17,
+      "call": "add_trace_link",
+      "args": {
+        "source": {
+          "type": "Task",
+          "id": "T-PH003-02"
+        },
+        "target": {
+          "type": "Requirement",
+          "reference": "FR-TEST-003"
+        },
+        "relation": "depends_on"
+      },
+      "args_hash": "3b51e22d1f374a45fca8d04b2e88e56bffd8dc13",
+      "response_hash": "written-true",
+      "timestamp": "2026-05-20T04:19:46.361Z",
+      "ok": true,
+      "dry_run": false
+    },
+    {
+      "seq": 18,
+      "call": "add_trace_link",
+      "args": {
+        "source": {
+          "type": "Task",
+          "id": "T-PH003-03"
+        },
+        "target": {
+          "type": "Requirement",
+          "reference": "FR-TEST-003"
+        },
+        "relation": "depends_on"
+      },
+      "args_hash": "47e6ffdd6df4333fecef2c3073be3f0143929d28",
+      "response_hash": "written-true",
+      "timestamp": "2026-05-20T04:19:46.361Z",
+      "ok": true,
+      "dry_run": false
+    },
+    {
+      "seq": 19,
+      "call": "add_trace_link",
+      "args": {
+        "source": {
+          "type": "Task",
+          "id": "T-PH003-04"
+        },
+        "target": {
+          "type": "Requirement",
+          "reference": "FR-TEST-003"
+        },
+        "relation": "depends_on"
+      },
+      "args_hash": "16a4af373db6b10e93315b1946576a3d4be42fd2",
+      "response_hash": "written-true",
+      "timestamp": "2026-05-20T04:19:46.361Z",
+      "ok": true,
+      "dry_run": false
+    },
+    {
+      "seq": 20,
+      "call": "add_trace_link",
+      "args": {
+        "source": {
+          "type": "Task",
+          "id": "T-PH003-05"
+        },
+        "target": {
+          "type": "Requirement",
+          "reference": "FR-TEST-003"
+        },
+        "relation": "depends_on"
+      },
+      "args_hash": "aade1c1e3c8a06b6af0bcf74ed867d7e7c1d9d0a",
+      "response_hash": "written-true",
+      "timestamp": "2026-05-20T04:19:46.361Z",
+      "ok": true,
+      "dry_run": false
+    },
+    {
+      "seq": 21,
+      "call": "add_trace_link",
+      "args": {
+        "source": {
+          "type": "Task",
+          "id": "T-PH004-01"
+        },
+        "target": {
+          "type": "Requirement",
+          "reference": "FR-TEST-004"
+        },
+        "relation": "depends_on"
+      },
+      "args_hash": "6dfc0909370820f5b598eb984b81845027622d8b",
+      "response_hash": "written-true",
+      "timestamp": "2026-05-20T04:19:46.361Z",
+      "ok": true,
+      "dry_run": false
+    },
+    {
+      "seq": 22,
+      "call": "add_trace_link",
+      "args": {
+        "source": {
+          "type": "Task",
+          "id": "T-PH004-02"
+        },
+        "target": {
+          "type": "Requirement",
+          "reference": "FR-TEST-004"
+        },
+        "relation": "depends_on"
+      },
+      "args_hash": "ffb75d6c9d2b1d454f6c2fc89ae1d8fec5a12867",
+      "response_hash": "written-true",
+      "timestamp": "2026-05-20T04:19:46.361Z",
+      "ok": true,
+      "dry_run": false
+    },
+    {
+      "seq": 23,
+      "call": "add_trace_link",
+      "args": {
+        "source": {
+          "type": "Task",
+          "id": "T-PH004-03"
+        },
+        "target": {
+          "type": "Requirement",
+          "reference": "FR-TEST-004"
+        },
+        "relation": "depends_on"
+      },
+      "args_hash": "dde7942605d23aad072f6df9a60c5c56695bcebd",
+      "response_hash": "written-true",
+      "timestamp": "2026-05-20T04:19:46.361Z",
+      "ok": true,
+      "dry_run": false
+    },
+    {
+      "seq": 24,
+      "call": "add_trace_link",
+      "args": {
+        "source": {
+          "type": "Task",
+          "id": "T-PH005-01"
+        },
+        "target": {
+          "type": "Requirement",
+          "reference": "FR-TEST-001"
+        },
+        "relation": "depends_on"
+      },
+      "args_hash": "b8506baab0f1eddb705865d70d523c680d4e658a",
+      "response_hash": "written-true",
+      "timestamp": "2026-05-20T04:19:46.361Z",
+      "ok": true,
+      "dry_run": false
+    },
+    {
+      "seq": 25,
+      "call": "add_trace_link",
+      "args": {
+        "source": {
+          "type": "Task",
+          "id": "T-PH005-02"
+        },
+        "target": {
+          "type": "Requirement",
+          "reference": "FR-TEST-001"
+        },
+        "relation": "depends_on"
+      },
+      "args_hash": "6bb79a57bfb44ad6ebc0eb98ac514279e494677e",
+      "response_hash": "written-true",
+      "timestamp": "2026-05-20T04:19:46.361Z",
+      "ok": true,
+      "dry_run": false
+    },
+    {
+      "seq": 26,
+      "call": "add_trace_link",
+      "args": {
+        "source": {
+          "type": "Task",
+          "id": "T-PH005-03"
+        },
+        "target": {
+          "type": "Requirement",
+          "reference": "FR-TEST-001"
+        },
+        "relation": "depends_on"
+      },
+      "args_hash": "0ae34a79ada087549d6669dbf0ec41bdb6d65e08",
+      "response_hash": "written-true",
+      "timestamp": "2026-05-20T04:19:46.361Z",
+      "ok": true,
+      "dry_run": false
+    },
+    {
+      "seq": 27,
+      "call": "add_trace_link",
+      "args": {
+        "source": {
+          "type": "Task",
+          "id": "T-PH005-04"
+        },
+        "target": {
+          "type": "Requirement",
+          "reference": "FR-TEST-001"
+        },
+        "relation": "depends_on"
+      },
+      "args_hash": "cd4f1e87329866063e90536e950bb0f5de11a0dc",
+      "response_hash": "written-true",
+      "timestamp": "2026-05-20T04:19:46.361Z",
+      "ok": true,
+      "dry_run": false
+    },
+    {
+      "seq": 28,
+      "call": "add_trace_link",
+      "args": {
+        "source": {
+          "type": "Task",
+          "id": "T-PH005-05"
+        },
+        "target": {
+          "type": "Requirement",
+          "reference": "FR-TEST-001"
+        },
+        "relation": "depends_on"
+      },
+      "args_hash": "b31af1cf9a712855b01ba2cbaac01444b3bf1cfe",
+      "response_hash": "written-true",
+      "timestamp": "2026-05-20T04:19:46.361Z",
+      "ok": true,
+      "dry_run": false
+    },
+    {
+      "seq": 29,
+      "call": "add_trace_link",
+      "args": {
+        "source": {
+          "type": "Task",
+          "id": "T-PH005-06"
+        },
+        "target": {
+          "type": "Requirement",
+          "reference": "FR-TEST-001"
+        },
+        "relation": "depends_on"
+      },
+      "args_hash": "ee9f34ee6202288cb2ea8888a9943ff5f24e7faa",
+      "response_hash": "written-true",
+      "timestamp": "2026-05-20T04:19:46.361Z",
+      "ok": true,
+      "dry_run": false
+    },
+    {
+      "seq": 30,
+      "call": "add_trace_link",
+      "args": {
+        "source": {
+          "type": "Task",
+          "id": "T-PH005-07"
+        },
+        "target": {
+          "type": "Requirement",
+          "reference": "FR-TEST-001"
+        },
+        "relation": "depends_on"
+      },
+      "args_hash": "0066fb379ff9fb69b65e995946bcca1e23cfb394",
+      "response_hash": "written-true",
+      "timestamp": "2026-05-20T04:19:46.361Z",
+      "ok": true,
+      "dry_run": false
+    },
+    {
+      "seq": 31,
+      "call": "add_trace_link",
+      "args": {
+        "source": {
+          "type": "Task",
+          "id": "T-PH005-08"
+        },
+        "target": {
+          "type": "Requirement",
+          "reference": "FR-TEST-001"
+        },
+        "relation": "depends_on"
+      },
+      "args_hash": "8ba72194c6f8a2b25dd00e7f499cd1f2d13e341e",
+      "response_hash": "written-true",
+      "timestamp": "2026-05-20T04:19:46.361Z",
+      "ok": true,
+      "dry_run": false
+    },
+    {
+      "seq": 32,
+      "call": "add_trace_link",
+      "args": {
+        "source": {
+          "type": "Task",
+          "id": "T-PH006-01"
+        },
+        "target": {
+          "type": "Requirement",
+          "reference": "OPS-TEST-001"
+        },
+        "relation": "depends_on"
+      },
+      "args_hash": "fce68d2b3c4a23f43f6349db59c1be6eb818d05b",
+      "response_hash": "written-true",
+      "timestamp": "2026-05-20T04:19:46.361Z",
+      "ok": true,
+      "dry_run": false
+    },
+    {
+      "seq": 33,
+      "call": "add_trace_link",
+      "args": {
+        "source": {
+          "type": "Task",
+          "id": "T-PH006-02"
+        },
+        "target": {
+          "type": "Requirement",
+          "reference": "OPS-TEST-001"
+        },
+        "relation": "depends_on"
+      },
+      "args_hash": "52952f21d4aa7cf26994fc7370f192c493893c8f",
+      "response_hash": "written-true",
+      "timestamp": "2026-05-20T04:19:46.361Z",
+      "ok": true,
+      "dry_run": false
+    },
+    {
+      "seq": 34,
+      "call": "add_trace_link",
+      "args": {
+        "source": {
+          "type": "Task",
+          "id": "T-PH006-03"
+        },
+        "target": {
+          "type": "Requirement",
+          "reference": "NFR-TEST-001"
+        },
+        "relation": "depends_on"
+      },
+      "args_hash": "df26d3b52831e096a267d7b9f9de350655d2dc0e",
+      "response_hash": "written-true",
+      "timestamp": "2026-05-20T04:19:46.361Z",
+      "ok": true,
+      "dry_run": false
+    },
+    {
+      "seq": 35,
+      "call": "add_trace_link",
+      "args": {
+        "source": {
+          "type": "Task",
+          "id": "T-PH006-03"
+        },
+        "target": {
+          "type": "Requirement",
+          "reference": "OPS-TEST-001"
+        },
+        "relation": "depends_on"
+      },
+      "args_hash": "7c2dca901c3f1e731d4ea955592f5e11d9682ce0",
+      "response_hash": "written-true",
+      "timestamp": "2026-05-20T04:19:46.361Z",
+      "ok": true,
+      "dry_run": false
+    },
+    {
+      "seq": 36,
+      "call": "add_trace_link",
+      "args": {
+        "source": {
+          "type": "Task",
+          "id": "T-PH006-04"
+        },
+        "target": {
+          "type": "Requirement",
+          "reference": "OPS-TEST-001"
+        },
+        "relation": "depends_on"
+      },
+      "args_hash": "ac2112201e6b5eb00af30c8f0fd1331022bb70fd",
+      "response_hash": "written-true",
+      "timestamp": "2026-05-20T04:19:46.361Z",
+      "ok": true,
+      "dry_run": false
+    },
+    {
+      "seq": 37,
+      "call": "add_trace_link",
+      "args": {
+        "source": {
+          "type": "Task",
+          "id": "T-PH007-01"
+        },
+        "target": {
+          "type": "Requirement",
+          "reference": "NFR-TEST-001"
+        },
+        "relation": "depends_on"
+      },
+      "args_hash": "9998d20aa4111b7c46f788761d5eaf3ca2f83cda",
+      "response_hash": "written-true",
+      "timestamp": "2026-05-20T04:19:46.361Z",
+      "ok": true,
+      "dry_run": false
+    },
+    {
+      "seq": 38,
+      "call": "add_trace_link",
+      "args": {
+        "source": {
+          "type": "Task",
+          "id": "T-PH007-02"
+        },
+        "target": {
+          "type": "Requirement",
+          "reference": "FR-CONV-013"
+        },
+        "relation": "depends_on"
+      },
+      "args_hash": "6e29c3f7e2fea15c200c42ebdee7420804bfcaa9",
+      "response_hash": "written-true",
+      "timestamp": "2026-05-20T04:19:46.361Z",
+      "ok": true,
+      "dry_run": false
+    },
+    {
+      "seq": 39,
+      "call": "add_trace_link",
+      "args": {
+        "source": {
+          "type": "Task",
+          "id": "T-PH007-02"
+        },
+        "target": {
+          "type": "Requirement",
+          "reference": "FR-TEST-002"
+        },
+        "relation": "depends_on"
+      },
+      "args_hash": "b96baf11b55dd1ce0198e0eeb7c2da56fcf06eec",
+      "response_hash": "written-true",
+      "timestamp": "2026-05-20T04:19:46.361Z",
+      "ok": true,
+      "dry_run": false
+    },
+    {
+      "seq": 40,
+      "call": "add_verification_evidence",
+      "args": {
+        "id": "FR-TEST-001",
+        "type": "plan",
+        "reference": "docs/plans/2026-05-20.jakarta-adapter-v100.e2e.plan.md"
+      },
+      "args_hash": "568c4bb665432b8caaa41bce0beb0e901cd75738",
+      "response_hash": "written-true",
+      "timestamp": "2026-05-20T04:19:46.361Z",
+      "ok": true,
+      "dry_run": false
+    },
+    {
+      "seq": 41,
+      "call": "add_verification_evidence",
+      "args": {
+        "id": "FR-TEST-002",
+        "type": "plan",
+        "reference": "docs/plans/2026-05-20.jakarta-adapter-v100.e2e.plan.md"
+      },
+      "args_hash": "0e97bf3f596371198e02f18a6f6c2e03886146b6",
+      "response_hash": "written-true",
+      "timestamp": "2026-05-20T04:19:46.361Z",
+      "ok": true,
+      "dry_run": false
+    },
+    {
+      "seq": 42,
+      "call": "add_verification_evidence",
+      "args": {
+        "id": "FR-TEST-003",
+        "type": "plan",
+        "reference": "docs/plans/2026-05-20.jakarta-adapter-v100.e2e.plan.md"
+      },
+      "args_hash": "9628bf8939980c0fe6d7e61c441c0846f043c5d9",
+      "response_hash": "written-true",
+      "timestamp": "2026-05-20T04:19:46.361Z",
+      "ok": true,
+      "dry_run": false
+    },
+    {
+      "seq": 43,
+      "call": "add_verification_evidence",
+      "args": {
+        "id": "FR-TEST-004",
+        "type": "plan",
+        "reference": "docs/plans/2026-05-20.jakarta-adapter-v100.e2e.plan.md"
+      },
+      "args_hash": "e5db5b4169c8042fbd941ee39e9ee5ec3e2d3bd9",
+      "response_hash": "MUTATION_DENIED:Verification Evidence table not found",
+      "timestamp": "2026-05-20T04:19:46.361Z",
+      "ok": false,
+      "dry_run": false
+    },
+    {
+      "seq": 44,
+      "call": "add_verification_evidence",
+      "args": {
+        "id": "NFR-TEST-001",
+        "type": "plan",
+        "reference": "docs/plans/2026-05-20.jakarta-adapter-v100.e2e.plan.md"
+      },
+      "args_hash": "c86948bffa0b5679cc628810b00a91134ccf46a4",
+      "response_hash": "MUTATION_DENIED:Verification Evidence table not found",
+      "timestamp": "2026-05-20T04:19:46.361Z",
+      "ok": false,
+      "dry_run": false
+    },
+    {
+      "seq": 45,
+      "call": "add_verification_evidence",
+      "args": {
+        "id": "OPS-TEST-001",
+        "type": "plan",
+        "reference": "docs/plans/2026-05-20.jakarta-adapter-v100.e2e.plan.md"
+      },
+      "args_hash": "28fc89853d7f9dd42c902301161aed4de32d516f",
+      "response_hash": "MUTATION_DENIED:Verification Evidence table not found",
+      "timestamp": "2026-05-20T04:19:46.361Z",
+      "ok": false,
+      "dry_run": false
+    },
+    {
+      "seq": 46,
+      "call": "add_verification_evidence",
+      "args": {
+        "id": "FR-CONV-013",
+        "type": "plan",
+        "reference": "docs/plans/2026-05-20.jakarta-adapter-v100.e2e.plan.md"
+      },
+      "args_hash": "cdbfbff9c943e3112bae10f138e4242694ec3694",
+      "response_hash": "MUTATION_DENIED:Verification Evidence table not found",
+      "timestamp": "2026-05-20T04:19:46.361Z",
+      "ok": false,
+      "dry_run": false
+    }
+  ],
+  "pending_mutations": [
+    {
+      "req_id": "FR-TEST-004",
+      "call": "add_verification_evidence",
+      "reason": "Verification Evidence table not found — SRS 본문에 VE 섹션 신설 필요 (별도 kiwi-srs 트랙)"
+    },
+    {
+      "req_id": "NFR-TEST-001",
+      "call": "add_verification_evidence",
+      "reason": "동일"
+    },
+    {
+      "req_id": "OPS-TEST-001",
+      "call": "add_verification_evidence",
+      "reason": "동일"
+    },
+    {
+      "req_id": "FR-CONV-013",
+      "call": "add_verification_evidence",
+      "reason": "동일"
+    }
+  ]
+}

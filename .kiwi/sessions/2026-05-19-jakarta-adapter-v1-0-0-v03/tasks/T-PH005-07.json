@@ -1,0 +1,64 @@
+{
+  "task_id": "T-PH005-07",
+  "phase_id": "PH-005",
+  "type": "review",
+  "status": "done",
+  "tdd_exempted": true,
+  "tdd_exempt_reason": "auto-exempt by type (review)",
+  "started_at": "2026-05-20T07:54:00Z",
+  "completed_at": "2026-05-20T08:31:30Z",
+  "coder_run_id": "2026-05-19-jakarta-adapter-v1-0-0-v03",
+  "trace_req_ids": ["FR-TEST-001", "FR-TEST-002", "NFR-TEST-001"],
+  "phase1": {
+    "skipped": true,
+    "reason": "type=review, files=[], tdd.applicable=false (auto-exempt by type per kiwi-coder §0.G1 row 3)"
+  },
+  "phase2": {
+    "resolution": "user_decision_B2",
+    "decision_summary": "Decouple jacocoTestCoverageVerification from check.dependsOn in 4 modules. Preserve the gate as an explicit opt-in task `jacocoCoverageGate`. Keep relaxed thresholds (decision A: line 0.70/branch 0.60 etc) so v1.0.1 will tighten them after adapter unit tests are added and re-wire check.dependsOn.",
+    "files_changed": [
+      "common/build.gradle",
+      "servlet5/build.gradle",
+      "servlet6/build.gradle",
+      "servlet61/build.gradle",
+      "README.md"
+    ],
+    "change_detail": {
+      "common/build.gradle": "Replaced `tasks.named('check') { dependsOn jacocoTestCoverageVerification }` with `tasks.register('jacocoCoverageGate') { dependsOn jacocoTestCoverageVerification }`. Comments document v1.0.0 deferral + v1.0.1 re-wire plan.",
+      "servlet5/build.gradle": "Same decoupling pattern as common.",
+      "servlet6/build.gradle": "Same decoupling pattern as common.",
+      "servlet61/build.gradle": "Same decoupling pattern as common.",
+      "README.md": "Added 'Coverage gate (v1.0.0 note)' section documenting opt-in `./gradlew jacocoCoverageGate` invocation and v1.0.1 re-wire plan."
+    },
+    "verification_runs": [
+      {
+        "cmd": "./gradlew.bat check --no-daemon",
+        "scope": "all modules (bom, common, servlet5, servlet6, servlet61)",
+        "exit_code": 0,
+        "summary": "BUILD SUCCESSFUL in 32s. 20 actionable tasks: 5 executed, 15 up-to-date. servlet6 + servlet61 test executed (JaCoCo report emitted). No coverage gate firing during check."
+      },
+      {
+        "cmd": "./gradlew.bat :common:tasks --group verification --no-daemon",
+        "scope": "verify gate task registration",
+        "exit_code": 0,
+        "summary": "Verification tasks list includes `jacocoCoverageGate - Explicit JaCoCo coverage gate (decoupled from check in v1.0.0).` confirming task is registered and discoverable."
+      }
+    ],
+    "dod_evaluation": {
+      "original_dod": "./gradlew check integrationTest 가 5개 모듈에서 모두 통과",
+      "v03_scope_adaptation": "integrationTest task does not exist in v03 scope (Tomcat embed IT tests T-PH005-03/04/05 dropped as draft per --draft-policy=exclude-draft). Per user decision B2, ./gradlew check is the sole release gate; integrationTest portion is N/A in v1.0.0.",
+      "check_pass": "PASS — all 5 modules complete with exit_code=0"
+    },
+    "carryover_to_v1_0_1": [
+      "Add adapter unit tests covering delegation classes (Cookie/HttpSession/HttpServletRequest/Response wrappers + ServletElementConverter5/6/61 methods).",
+      "Restore `tasks.named('check') { dependsOn tasks.named('jacocoTestCoverageVerification') }` in 4 modules.",
+      "Tighten violationRules thresholds (delegation line>=0.95/branch>=0.90; converter line>=0.95/branch>=1.00; common bundle line>=0.95/branch>=1.00) per planner's original NFR-TEST-001 intent."
+    ]
+  },
+  "phase3": {
+    "regression": "Implicit — `./gradlew check` covers test compile + test execution + jacocoTestReport for all 5 modules. PASS.",
+    "mcp_calls": []
+  },
+  "blocker": null,
+  "notes": "Completed via user decision B2 (decouple check ↔ jacocoTestCoverageVerification). v1.0.0 release gate (./gradlew check) PASSes. Coverage gate preserved as opt-in jacocoCoverageGate task. README documents the deferral + v1.0.1 re-wire plan. No MCP mutation in this subagent run (parent kiwi-pm batches once full PH-005 complete)."
+}

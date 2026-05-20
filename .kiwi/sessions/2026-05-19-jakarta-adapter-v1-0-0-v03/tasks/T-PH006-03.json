@@ -1,0 +1,84 @@
+{
+  "task_id": "T-PH006-03",
+  "phase_id": "PH-006",
+  "type": "infra",
+  "status": "needs_user",
+  "tdd_exempted": true,
+  "tdd_exempt_reason": "CI matrix configuration; correctness validated by GHA workflow successful run, not unit tests.",
+  "started_at": "2026-05-20T00:00:00Z",
+  "ended_at": "2026-05-20T00:00:00Z",
+  "coder_run_id": "2026-05-19-jakarta-adapter-v1-0-0-v03",
+  "trace_req_ids": ["NFR-TEST-001"],
+  "phase1": {
+    "skipped": true,
+    "reason": "type=infra, tdd.applicable=false with exempt_reason >=20 chars (kiwi-coder §0.G1 row 2)"
+  },
+  "phase2": {
+    "halted": true,
+    "halt_reason": "NEEDS_USER — prerequisite + scope + cross-task conflicts cannot be resolved without business decision",
+    "conflicts_detected": [
+      {
+        "id": "C1-prerequisite-discarded",
+        "severity": "CRITICAL",
+        "detail": "Action text references 'T-PH006-01 의 coverage job' (the ci.yml's coverage job), but T-PH006-01 was excluded by --draft-policy=exclude-draft (OPS-TEST-001 is draft, sidecar.discarded_tasks line 9132-9137). Therefore .github/workflows/ci.yml does NOT exist in the repo. Verified: ls C:/Work/.../.github → does not exist.",
+        "impact": "Cannot 'validate' a coverage job that has not been authored. Cannot edit a non-existent ci.yml without creating it (= scope creep into T-PH006-01's responsibility)."
+      },
+      {
+        "id": "C2-threshold-contradiction-with-T-PH005-07",
+        "severity": "CRITICAL",
+        "detail": "T-PH006-03.action + dod[2] require 'gate 95%/100% 미달 시 PR 빌드 실패'. But T-PH005-07 (B2 decision, user-approved) deliberately RELAXED thresholds to line=0.70/branch=0.60 (adapter), line=0.70/branch=1.00 (converter), line=0.70/branch=1.00 (common bundle) AND decoupled jacocoTestCoverageVerification from check.dependsOn via `jacocoCoverageGate` opt-in task. Current build.gradle wiring does not enforce 95%/100% — enforcing it now would reverse the explicit B2 decision and break ./gradlew check.",
+        "impact": "T-PH006-03's success criteria contradict an already-committed user decision recorded in T-PH005-07.phase2.resolution=user_decision_B2."
+      },
+      {
+        "id": "C3-branch-protection-rules-non-actionable",
+        "severity": "HIGH",
+        "detail": "dod[3] 'GitHub branch protection rules 에 coverage 게이트 등록' requires GitHub repository UI/API mutation by a repo admin. Outside the scope of code changes in .github/workflows/ci.yml. Cannot be performed by a coding agent.",
+        "impact": "DoD item is structurally unverifiable from the codebase alone."
+      },
+      {
+        "id": "C4-acceptance-test-misalignment",
+        "severity": "MEDIUM",
+        "detail": "acceptance_tests[0] checks build.gradle exists (passes trivially) and acceptance_tests[1] runs ./gradlew jacocoTestReport (passes regardless of gate state since jacocoTestReport is decoupled from violation rules). Neither acceptance test actually validates the dod claims about CI/PR/threshold-failure behavior — they validate the unrelated reporting plumbing.",
+        "impact": "Even if the agent ran the acceptance tests successfully, the dod would remain unverified."
+      },
+      {
+        "id": "C5-file-scope-cannot-satisfy-dod",
+        "severity": "CRITICAL",
+        "detail": "sidecar.tasks[T-PH006-03].files = [.github/workflows/ci.yml] only. Per §0.7 ZERO TOLERANCE plan-code match, the agent can only modify this single file. But (a) the file does not exist (would have to CREATE = T-PH006-01 territory), (b) dod requires changes to build.gradle (gate thresholds) and GitHub UI (branch protection) which are outside files[].",
+        "impact": "No in-scope edit can satisfy any of the 4 dod items."
+      }
+    ],
+    "options_for_user": [
+      {
+        "id": "opt-A-abandon-task",
+        "label": "ABANDON T-PH006-03 (mark skipped, document in plan)",
+        "rationale": "Cleanest path. T-PH006-01 (the actual CI workflow) was already discarded by --draft-policy=exclude-draft because OPS-TEST-001 is draft. Without the CI workflow, validating its coverage job is meaningless. T-PH005-07 already covers the JaCoCo wiring + B2 decision for NFR-TEST-001 locally. Mark T-PH006-03 as draft-policy-deferred (defer to v1.0.1 when OPS-TEST-001 is promoted to evolving).",
+        "consequence": "PH-006 ends with 0 executed tasks (1 of 3 was already discarded, 2 more after this). NFR-TEST-001 trace_links remain on T-PH005-06 + T-PH005-07 (2/3 instead of 3/3)."
+      },
+      {
+        "id": "opt-B-author-minimal-ci-yml",
+        "label": "AUTHOR a minimal .github/workflows/ci.yml that produces JaCoCo XML + uploads to Codecov (scope-bumped reinterpretation)",
+        "rationale": "Treat T-PH006-03 as a reduced T-PH006-01 (since T-PH006-01 was discarded). Author ci.yml with: matrix(JDK 8/11/17 × servlet5/6/61) + ./gradlew test + jacocoTestReport + codecov upload + jacocoCoverageGate (opt-in, non-failing for v1.0.0 per B2). Skip 95%/100% PR-fail enforcement (defer to v1.0.1 when adapter unit tests exist).",
+        "consequence": "Scope-creep into T-PH006-01 territory. dod[3] (branch protection) still unsatisfiable from code. Cross-OS Tomcat embed (T-PH006-01 originally included integration-tests Linux-only) requires more decisions. Need user confirmation that 95%/100% PR-fail enforcement is intentionally deferred."
+      },
+      {
+        "id": "opt-C-force-strict-gate",
+        "label": "REVERSE T-PH005-07 B2 decision — re-tighten thresholds to 95%/100% + re-wire check.dependsOn",
+        "rationale": "Make T-PH006-03's dod literally satisfiable by reverting the B2 relaxation.",
+        "consequence": "./gradlew check will FAIL immediately on current codebase (insufficient adapter unit tests). Violates user's explicit B2 decision. Likely blocks PH-007 (publishing) since check fails."
+      },
+      {
+        "id": "opt-D-partial-codecov-only",
+        "label": "PARTIAL — add only Codecov configuration (codecov.yml + minimal ci.yml with upload step) without enforcing thresholds",
+        "rationale": "Satisfy dod[0]+dod[1] (XML generation + Codecov display) only. Acknowledge dod[2]+dod[3] as deferred to v1.0.1.",
+        "consequence": "2/4 dod satisfied. Requires user acceptance of partial completion. Still scope-bumps into ci.yml creation."
+      }
+    ],
+    "recommendation": "opt-A-abandon-task. Reasoning: (1) T-PH006-01 prerequisite was discarded for same draft-policy reason; same rationale applies. (2) NFR-TEST-001 is evolving and stays 2/3-covered via T-PH005-06 + T-PH005-07 — sufficient for v1.0.0 local validation. (3) opt-B/D create new files not listed in sidecar.files = §0.7 violation absent user override. (4) opt-C reverses a user-approved decision = §0.G5 backward-transition risk."
+  },
+  "phase3": {
+    "skipped": true,
+    "reason": "Awaiting user decision (NEEDS_USER)"
+  },
+  "summary": "T-PH006-03 cannot proceed without user decision. Five compounding conflicts: (C1) prerequisite T-PH006-01 was discarded by draft-policy → ci.yml does not exist; (C2) dod 95%/100% thresholds contradict user-approved T-PH005-07 B2 relaxation; (C3) branch-protection-rules dod item is non-actionable from code; (C4) acceptance_tests do not validate the dod claims; (C5) sidecar.files = [ci.yml] only, insufficient to satisfy any dod item without scope creep. Four user options presented (A: abandon / B: author minimal ci.yml / C: reverse B2 / D: Codecov-only partial). Agent recommendation: opt-A (abandon, defer to v1.0.1)."
+}

@@ -1,0 +1,148 @@
+{
+  "validator_version": "0.6.0",
+  "run_id": "2026-05-19-jakarta-adapter-v1-0-0",
+  "target": "v1.0.0",
+  "plan_path": "C:\\Work\\git\\_Snoworca\\Jakarta_To_Javax_Servlet_Adapter\\docs\\plans\\2026-05-19-jakarta-adapter-v1-0-0.plan.md",
+  "sidecar_path": "C:\\Work\\git\\_Snoworca\\Jakarta_To_Javax_Servlet_Adapter\\docs\\plans\\2026-05-19-jakarta-adapter-v1-0-0.sidecar.json",
+  "mode": "live",
+  "summary": {
+    "errors": 0,
+    "warnings": 0,
+    "checks_total": 19
+  },
+  "results": [
+    {
+      "id": "C01",
+      "title": "sidecar JSON parse",
+      "status": "pass",
+      "severity": null,
+      "detail": null
+    },
+    {
+      "id": "C02",
+      "title": "plan.md frontmatter required fields + parse errors",
+      "status": "pass",
+      "severity": null,
+      "detail": null
+    },
+    {
+      "id": "R01",
+      "title": "id regex (run_id / phase.id / task.id) + max constraints",
+      "status": "pass",
+      "severity": null,
+      "detail": null
+    },
+    {
+      "id": "C03",
+      "title": "id uniqueness: phase + task + trace_link.link_id (link_id required)",
+      "status": "pass",
+      "severity": null,
+      "detail": null
+    },
+    {
+      "id": "C04",
+      "title": "task.phase_id FK + phase.task_ids bidirectional",
+      "status": "pass",
+      "severity": null,
+      "detail": null
+    },
+    {
+      "id": "C05",
+      "title": "task.req_ids ⊆ inventory (non-deprecated)",
+      "status": "pass",
+      "severity": null,
+      "detail": null
+    },
+    {
+      "id": "C06",
+      "title": "plan.md §2 phase rows == sidecar.phases.length",
+      "status": "pass",
+      "severity": null,
+      "detail": null
+    },
+    {
+      "id": "C07",
+      "title": "plan.md §3 task headings (h4) == sidecar.tasks.length",
+      "status": "pass",
+      "severity": null,
+      "detail": null
+    },
+    {
+      "id": "C08",
+      "title": "task md ↔ sidecar canonical signature match",
+      "status": "pass",
+      "severity": null,
+      "detail": null
+    },
+    {
+      "id": "C09",
+      "title": "coverage arithmetic + non-negative integers + req_id unique",
+      "status": "pass",
+      "severity": null,
+      "detail": null
+    },
+    {
+      "id": "C10",
+      "title": "orphans threshold (0=ok, 1-2=warn, ≥3=error)",
+      "status": "pass",
+      "severity": null,
+      "detail": null
+    },
+    {
+      "id": "C11",
+      "title": "unreferenced_reqs (non-deprecated) ≥1 = error",
+      "status": "pass",
+      "severity": null,
+      "detail": null
+    },
+    {
+      "id": "C12",
+      "title": "acceptance_tests.kind ↔ task.type compatibility",
+      "status": "pass",
+      "severity": null,
+      "detail": null
+    },
+    {
+      "id": "C13",
+      "title": "verification_cmd: null OR {posix, windows} both non-empty",
+      "status": "pass",
+      "severity": null,
+      "detail": null
+    },
+    {
+      "id": "C14",
+      "title": "trace_links.target.reference ⊆ task.req_ids (Requirement)",
+      "status": "pass",
+      "severity": null,
+      "detail": null
+    },
+    {
+      "id": "C15",
+      "title": "mcp_call_log multiset (uses args per §9.5 SSOT)",
+      "status": "pass",
+      "severity": null,
+      "detail": null
+    },
+    {
+      "id": "C16",
+      "title": "phase.depends_on DAG (no cycles)",
+      "status": "pass",
+      "severity": null,
+      "detail": null
+    },
+    {
+      "id": "C18",
+      "title": "plan_contract enum",
+      "status": "pass",
+      "severity": null,
+      "detail": null
+    },
+    {
+      "id": "C20",
+      "title": "plan.fm.sidecar_path == sidecar input path (canonical)",
+      "status": "pass",
+      "severity": null,
+      "detail": null
+    }
+  ]
+}

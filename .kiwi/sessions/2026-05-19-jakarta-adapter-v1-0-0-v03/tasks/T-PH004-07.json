@@ -1,0 +1,57 @@
+{
+  "task_id": "T-PH004-07",
+  "phase_id": "PH-004",
+  "title": "FR-CONV-006 + FR-CONV-007 + FR-CONV-008 + FR-CONV-009 eager snapshot + Stream SPEC-12 + setContentLengthLong SPEC-13 + 부수효과 보존 SPEC-16 — TDD red (failing test)",
+  "type": "code",
+  "req_ids": ["FR-CONV-006", "FR-CONV-007", "FR-CONV-008", "FR-CONV-009"],
+  "started_at": "2026-05-19T17:25:00Z",
+  "completed_at": "2026-05-19T17:30:00Z",
+  "phase1": {
+    "tdd_draft_iters": [
+      {
+        "iter": 1,
+        "file_paths": [
+          "servlet5/src/test/java/com/snoworca/EagerSnapshotTest.java"
+        ],
+        "test_cases_count": 21
+      }
+    ],
+    "red_evidence": {
+      "command": "./gradlew :servlet5:test --tests com.snoworca.EagerSnapshotTest --quiet",
+      "exit_code": 1,
+      "captured_failure": "21 tests completed, 21 failed — adapter.common.ConversionContract not present on classpath",
+      "timestamp": "2026-05-19T17:30:00Z"
+    },
+    "red_evidence_meta": {
+      "test_case_ids": [
+        "TC-REQ-FR-CONV-006-AC1-01",
+        "TC-REQ-FR-CONV-006-AC2-01",
+        "TC-REQ-FR-CONV-006-AC3-01",
+        "TC-REQ-FR-CONV-007-AC1-01",
+        "TC-REQ-FR-CONV-007-AC2-01",
+        "TC-REQ-FR-CONV-007-AC3-01",
+        "TC-REQ-FR-CONV-007-AC4-01",
+        "TC-REQ-FR-CONV-007-AC5-01",
+        "TC-REQ-FR-CONV-007-AC6-01",
+        "TC-REQ-FR-CONV-007-AC7-01",
+        "TC-REQ-FR-CONV-007-AC8-01",
+        "TC-REQ-FR-CONV-007-AC9-01",
+        "TC-REQ-FR-CONV-008-AC1-01",
+        "TC-REQ-FR-CONV-008-AC2-01",
+        "TC-REQ-FR-CONV-009-AC1-01",
+        "TC-REQ-FR-CONV-009-AC2-01",
+        "TC-REQ-FR-CONV-009-AC3-01",
+        "TC-REQ-FR-CONV-009-AC4-01",
+        "TC-REQ-FR-CONV-009-AC5-01",
+        "TC-REQ-FR-CONV-009-AC6-01",
+        "TC-REQ-FR-CONV-009-AC7-01"
+      ],
+      "expected_failure_signature": "expected: collection snapshot + stream delegation + long preservation + side-effect propagation, got: at least one defective path",
+      "signature_match": "all 21 tests fail with ClassNotFoundException for adapter.common.ConversionContract (matches expected_failure_signature)"
+    }
+  },
+  "dod_check": [
+    { "item": "red 단계: 21개 test case 작성됨 (각 REQ AC 별 1개씩)", "satisfied": true },
+    { "item": "red 단계: 작성된 test 가 모두 실패(red) 함을 확인", "satisfied": true }
+  ]
+}

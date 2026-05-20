@@ -1,0 +1,52 @@
+{
+  "scope_note": "v02 sidecar 의 task.files[] 가 이미 code anchor 를 권위적으로 보유. v03 은 동일 anchor 인계.",
+  "carry_over_from_v02": true,
+  "module_topology": {
+    "common": "common/src/main/java/adapter/common/* (EnumsConverter, HttpComponentConverter, ReadListenerConverter, WriteListenerConverter, ConverterSupport)",
+    "servlet5": "Servlet 5.0 + JDK 8 (jakarta 5.0.0 + javax 4.0.1 compileOnly)",
+    "servlet6": "Servlet 6.0 + JDK 11",
+    "servlet61": "Servlet 6.1 + JDK 17",
+    "bom": "java-platform + maven-publish"
+  },
+  "key_files_for_residual_phases": {
+    "PH-003 FR-FIX-004~009": [
+      "servlet5/src/main/java/adapter/jakarta/servlet5/ServletRequest.java",
+      "servlet5/src/main/java/adapter/jakarta/servlet5/ServletResponse.java",
+      "servlet5/src/main/java/adapter/javax/servlet5/ServletRequest.java",
+      "servlet5/src/main/java/adapter/javax/servlet5/ServletResponse.java",
+      "servlet6/... (mirror)",
+      "servlet61/... (mirror)",
+      "servlet5/src/test/java/com/snoworca/regression/BugMuseumTest.java (BM06/BM07/BM08/BM09 검증)"
+    ],
+    "PH-004 FR-CONV": [
+      "common/src/main/java/adapter/common/EnumsConverter.java",
+      "common/src/main/java/adapter/common/HttpComponentConverter.java",
+      "common/src/main/java/adapter/common/ReadListenerConverter.java",
+      "common/src/main/java/adapter/common/WriteListenerConverter.java",
+      "common/src/main/java/adapter/common/ConverterSupport.java",
+      "servlet5/src/main/java/adapter/servletElementConverter5/ServletReqResConverter.java",
+      "servlet6/src/main/java/adapter/servletElementConverter6/* (mirror)",
+      "servlet61/src/main/java/adapter/servletElementConverter61/* (mirror)"
+    ],
+    "PH-005 테스트 인프라": [
+      "src/test/java/adapter/servletElementConverter/* (2 legacy test 이동 — L-OPEN-3)",
+      "(신규) integration test 디렉토리"
+    ],
+    "PH-006 CI": [
+      ".github/workflows/build.yml (신규)",
+      "build.gradle (JaCoCo 통합)"
+    ],
+    "PH-007 publish": [
+      "README.md / CHANGELOG.md (신규)",
+      "build.gradle (publishing.publications + signing)",
+      "servlet5/build.gradle (deprecated alias 정형화 — D8)"
+    ]
+  },
+  "missing_anchors": [],
+  "external_paths_detected": [],
+  "addition_sites": [
+    {"path": "src/test/java/adapter/servletElementConverter/", "reason": "L-OPEN-3 legacy test 이동 대상 (PH-005)", "task_hint": "T-PH005-* 인프라"},
+    {"path": ".github/workflows/", "reason": "PH-006 CI matrix 신설", "task_hint": "T-PH006-*"},
+    {"path": "README.md", "reason": "PH-007 publish 문서", "task_hint": "T-PH007-02"}
+  ]
+}

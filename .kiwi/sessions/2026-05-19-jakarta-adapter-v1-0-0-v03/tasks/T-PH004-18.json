@@ -1,0 +1,140 @@
+{
+  "task_id": "T-PH004-18",
+  "phase_id": "PH-004",
+  "started_at": "2026-05-19T17:47:00Z",
+  "completed_at": "2026-05-19T17:51:00Z",
+  "type": "code",
+  "tdd_phase": "green",
+  "depends_on_task": ["T-PH004-17"],
+  "phase1": {
+    "skipped_reason": "Pair tdd-green task — RED tests authored by T-PH004-17."
+  },
+  "phase2": {
+    "impl_iters": [
+      {
+        "iter": 1,
+        "files_changed": [
+          "servlet6/src/main/java/adapter/jakarta/servlet6/ServletRequest.java",
+          "servlet6/src/main/java/adapter/jakarta/servlet6/DummyServletConnection.java",
+          "servlet61/src/main/java/adapter/jakarta/servlet61/ServletRequest.java",
+          "servlet61/src/main/java/adapter/jakarta/servlet61/DummyServletConnection.java"
+        ],
+        "loc_added": 88,
+        "loc_removed": 11,
+        "note": "(1) ServletRequest: replaced 3 placeholder methods — getRequestId (lazy UUID, wrapper-instance cache + request attribute com.snoworca.adapter.requestId hybrid), getProtocolRequestId (returns \"\"), getServletConnection (returns new DummyServletConnection()). (2) DummyServletConnection: new synthesized fallback implementing jakarta.servlet.ServletConnection + AdapterUnwrap<Void> (sibling EmptyHttpSessionContext convention — required by AdapterUnwrapAllClassesTest scan policy)."
+    }
+    ],
+    "green_evidence": {
+      "command": ".\\gradlew.bat :servlet6:test :servlet61:test --tests *shouldImplementJakarta6NewAbstractMethods* --quiet",
+      "exit_code": 0,
+      "timestamp": "2026-05-19T17:49:10Z"
+    },
+    "green_evidence_meta": {
+      "passed_test_case_ids": [
+        "TC-REQ-FR-CONV-001-AC1-02",
+        "TC-REQ-FR-CONV-001-AC2-02"
+      ],
+      "test_files_passed": [
+        "servlet6/src/test/java/com/snoworca/RequestIdTest.java (2/2)",
+        "servlet61/src/test/java/com/snoworca/RequestIdTest.java (2/2)"
+      ],
+      "stdout_excerpt": "RequestIdTest tests=2 failures=0 errors=0 (each module). 4/4 GREEN across pair."
+    },
+    "design_decisions": [
+      {
+        "topic": "lazy UUID caching",
+        "decision": "wrapper-instance volatile field + request attribute (com.snoworca.adapter.requestId) hybrid — attribute first miss falls back to instance cache → generate UUID + write both.",
+        "rationale": "Sidecar action specifies attribute-based caching for cross-wrapper sharing on the same underlying request. However TDD fake (java.lang.reflect.Proxy returning null for getAttribute) cannot persist attributes → AC-1 'first == second' would fail. Hybrid satisfies both (real container request: attribute-shared; bare/proxy: instance-scoped)."
+      },
+      {
+        "topic": "DummyServletConnection AdapterUnwrap impl",
+        "decision": "implements AdapterUnwrap<Void> with unwrap()=null (EmptyHttpSessionContext convention).",
+        "rationale": "AdapterUnwrapAllClassesTest scan policy requires every concrete class under adapter.jakarta.servlet6 to implement AdapterUnwrap. Initial impl without marker triggered regression in FR-CONV-003 AC-1. EmptyHttpSessionContext (FR-CONV-010 SPEC-D) already establishes the synthesized-fake-with-null-unwrap pattern."
+      },
+      {
+        "topic": "ServletConnection field defaults",
+        "decision": "getProtocol()=\"HTTP/1.1\", getProtocolConnectionId()=\"\", isSecure()=false, getConnectionId()=fresh UUID per instance.",
+        "rationale": "FR-CONV-001 AC-2 only constrains: non-null connection + non-null connectionId. Conservative defaults match Servlet 6.0 minimal compliance for fallback synthesis (strict-mode default preserved)."
+      }
+    ]
+  },
+  "phase3": {
+    "regression": {
+      "scope": "full",
+      "passed": "servlet5 + servlet6 + servlet61 all UP-TO-DATE (build successful)",
+      "failed": 0,
+      "command": ".\\gradlew.bat test",
+      "note": "0 regression. AdapterUnwrapAllClassesTest now passes (DummyServletConnection implements AdapterUnwrap<Void>)."
+    },
+    "mcp_calls": [
+      {
+        "tool": "add_verification_evidence",
+        "args": {
+          "id": "FR-CONV-001",
+          "type": "test",
+          "reference": "servlet6/src/test/java/com/snoworca/RequestIdTest.java#shouldImplementJakarta6NewAbstractMethods_FRCONV001_AC1",
+          "covers": "AC-1"
+        },
+        "ok": true,
+        "response": "VE-2"
+      },
+      {
+        "tool": "add_verification_evidence",
+        "args": {
+          "id": "FR-CONV-001",
+          "type": "test",
+          "reference": "servlet6/src/test/java/com/snoworca/RequestIdTest.java#shouldImplementJakarta6NewAbstractMethods_FRCONV001_AC2",
+          "covers": "AC-2"
+        },
+        "ok": true,
+        "response": "VE-3"
+      },
+      {
+        "tool": "add_verification_evidence",
+        "args": {
+          "id": "FR-CONV-001",
+          "type": "test",
+          "reference": "servlet61/src/test/java/com/snoworca/RequestIdTest.java#shouldImplementJakarta6NewAbstractMethods_FRCONV001_AC1",
+          "covers": "AC-1"
+        },
+        "ok": true,
+        "response": "VE-4"
+      },
+      {
+        "tool": "add_verification_evidence",
+        "args": {
+          "id": "FR-CONV-001",
+          "type": "test",
+          "reference": "servlet61/src/test/java/com/snoworca/RequestIdTest.java#shouldImplementJakarta6NewAbstractMethods_FRCONV001_AC2",
+          "covers": "AC-2"
+        },
+        "ok": true,
+        "response": "VE-5"
+      },
+      {
+        "tool": "add_completed_work",
+        "args": {
+          "date": "2026-05-19",
+          "summary": "[task] T-PH004-18 — FR-CONV-001 jakarta 6.0 new abstract methods GREEN ...",
+          "requirementIds": ["FR-CONV-001"],
+          "target": "v1.0.0"
+        },
+        "ok": false,
+        "error": "MUTATION_DENIED: Completed Work Log references failed prevalidation",
+        "note": "Deferred to bulk completion at plan-end (consistent with other PH-004 task pattern)."
+      }
+    ]
+  },
+  "dod_check": [
+    {
+      "item": "green 단계: 2개 test case 가 모두 통과(green)",
+      "satisfied": true,
+      "evidence": "TC-REQ-FR-CONV-001-AC1-02 + TC-REQ-FR-CONV-001-AC2-02 PASS in both servlet6 and servlet61 (4/4 across pair). gradle exit_code=0."
+    },
+    {
+      "item": "green 단계: 동일 test 가 모두 통과(green) 함을 확인",
+      "satisfied": true,
+      "evidence": "Full regression (./gradlew test) BUILD SUCCESSFUL — 0 regression; AdapterUnwrapAllClassesTest (FR-CONV-003 AC-1) also continues to pass with new DummyServletConnection (AdapterUnwrap<Void> marker)."
+    }
+  ]
+}

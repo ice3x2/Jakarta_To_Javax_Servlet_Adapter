@@ -1,0 +1,20 @@
+{
+  "run_id": "2026-05-19.jakarta-adapter.v100.v01",
+  "phase": "8.2",
+  "executed_at": "2026-05-19",
+  "ok": true,
+  "summary": {
+    "errors": 0,
+    "warnings": 5,
+    "byCode": {"SRS-W023": 5}
+  },
+  "errors": [],
+  "warnings": [
+    {"code": "SRS-W023", "severity": "warning", "message": "Draft requirement is not ready as an implementation contract: FR-TEST-003", "filePath": "docs/spec/40.testing.srs.md", "line": 154},
+    {"code": "SRS-W023", "severity": "warning", "message": "Draft requirement is not ready as an implementation contract: FR-TEST-005", "filePath": "docs/spec/40.testing.srs.md", "line": 292},
+    {"code": "SRS-W023", "severity": "warning", "message": "Draft requirement is not ready as an implementation contract: OPS-TEST-001", "filePath": "docs/spec/40.testing.srs.md", "line": 387},
+    {"code": "SRS-W023", "severity": "warning", "message": "Draft requirement is not ready as an implementation contract: MIG-REL-001", "filePath": "docs/spec/50.compatibility.srs.md", "line": 158},
+    {"code": "SRS-W023", "severity": "warning", "message": "Draft requirement is not ready as an implementation contract: OPS-REL-001", "filePath": "docs/spec/50.compatibility.srs.md", "line": 221}
+  ],
+  "verdict": "PASS (errors=0, warnings=5 expected — all SRS-W023 on intended draft REQs)"
+}

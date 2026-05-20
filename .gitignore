@@ -25,3 +25,11 @@ hs_err_pid*
 replay_pid*
 
 .idea
+
+# Gradle build outputs
+build/
+*/build/
+
+# Lock files
+*.lock
+.claude/scheduled_tasks.lock

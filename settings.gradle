@@ -1,2 +1,3 @@
-rootProject.name = 'JavaXServletToJakartaAdapter'
+rootProject.name = 'jakarta-to-javax-servlet-adapter'
 
+include 'common', 'servlet5', 'servlet6', 'servlet61', 'bom'

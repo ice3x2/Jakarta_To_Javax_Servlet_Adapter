@@ -1,0 +1,67 @@
+{
+  "task_id": "T-PH004-05",
+  "phase_id": "PH-004",
+  "started_at": "2026-05-19T18:34:00Z",
+  "completed_at": "2026-05-19T18:35:00Z",
+  "phase": "red",
+  "req_ids": ["FR-CONV-005"],
+  "phase1": {
+    "tdd_draft_iters": [
+      {
+        "iter": 1,
+        "file_paths": [
+          "servlet5/src/test/java/com/snoworca/ServletExceptionConversionTest.java"
+        ]
+      }
+    ],
+    "red_evidence": {
+      "command": "./gradlew :servlet5:test --tests *shouldConvertServletExceptionBidirectionalWithCauseChain* --quiet",
+      "exit_code": 1,
+      "captured_failure": "3 tests completed, 3 failed — all matched expected_failure_signature 'missing converter helper'",
+      "timestamp": "2026-05-19T18:35:00Z"
+    },
+    "red_evidence_meta": {
+      "matched_signatures": [
+        {
+          "test_case_id": "TC-REQ-FR-CONV-005-AC1-01",
+          "test_symbol": "shouldConvertServletExceptionBidirectionalWithCauseChain_FRCONV005_AC1",
+          "expected": "expected: bidirectional ServletException with initCause, got: missing converter helper",
+          "actual": "expected: bidirectional ServletException with initCause, got: missing converter helper — adapter.common.ConverterSupport#javaxToJakartaServletException not declared",
+          "match": true
+        },
+        {
+          "test_case_id": "TC-REQ-FR-CONV-005-AC2-01",
+          "test_symbol": "shouldConvertServletExceptionBidirectionalWithCauseChain_FRCONV005_AC2",
+          "expected": "expected: bidirectional ServletException with initCause, got: missing converter helper",
+          "actual": "expected: bidirectional ServletException with initCause, got: missing converter helper — adapter.common.ConverterSupport#jakartaToJavaxServletException not declared",
+          "match": true
+        },
+        {
+          "test_case_id": "TC-REQ-FR-CONV-005-AC3-01",
+          "test_symbol": "shouldConvertServletExceptionBidirectionalWithCauseChain_FRCONV005_AC3",
+          "expected": "expected: bidirectional ServletException with initCause, got: missing converter helper",
+          "actual": "expected: bidirectional ServletException with initCause, got: missing converter helper — adapter.common.ConverterSupport#rethrowOrConvert not declared",
+          "match": true
+        }
+      ],
+      "test_case_ids": [
+        "TC-REQ-FR-CONV-005-AC1-01",
+        "TC-REQ-FR-CONV-005-AC2-01",
+        "TC-REQ-FR-CONV-005-AC3-01"
+      ]
+    }
+  },
+  "dod_check": [
+    {
+      "item": "red 단계: 3개 test case 작성됨 (각 REQ AC 별 1개씩)",
+      "satisfied": true,
+      "evidence": "ServletExceptionConversionTest.java 의 3 @Test method (AC1/AC2/AC3) 작성 — sidecar test_symbol 과 1:1 매핑"
+    },
+    {
+      "item": "red 단계: 작성된 test 가 모두 실패(red) 함을 확인",
+      "satisfied": true,
+      "evidence": "./gradlew :servlet5:test exit_code=1, 3 tests / 3 failed, captured_failure 의 3개 메시지가 sidecar expected_failure_signature 와 일치"
+    }
+  ],
+  "notes": "T-PH004-06 (green/impl) 가 ConverterSupport.javaxToJakartaServletException / jakartaToJavaxServletException / rethrowOrConvert 3 helper 를 common 모듈에 추가하면 본 test 가 green 으로 전환됨."
+}

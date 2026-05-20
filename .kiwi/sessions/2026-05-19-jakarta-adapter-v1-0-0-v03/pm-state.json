@@ -1,0 +1,866 @@
+{
+  "run_id": "2026-05-19-jakarta-adapter-v1-0-0-v03",
+  "plan_path": "docs/plans/2026-05-19-jakarta-adapter-v1-0-0-v03.plan.md",
+  "sidecar_path": "docs/plans/2026-05-19-jakarta-adapter-v1-0-0-v03.sidecar.json",
+  "plan_sha256": "54822532bcb8fb7861b90cf763e5981f157d074cf0eeac613c4f83516201bf80",
+  "sidecar_sha256": "76c3240587ba69b66a80fca50b59391a4b5f1094a100f65a06a7eb49c67ba1c0",
+  "target_slug": "v1.0.0",
+  "started_at": "2026-05-19T08:17:08Z",
+  "last_updated_at": "2026-05-20T02:20:49.624Z",
+  "pm_version": "0.1",
+  "batch": "PH-003-remaining (T-PH003-09..T-PH003-21)",
+  "batch_skip_t_final": true,
+  "v02_migrated_completed_task_ids": [
+    "T-PH001-01",
+    "T-PH001-02",
+    "T-PH001-03",
+    "T-PH002-01",
+    "T-PH002-02",
+    "T-PH002-03",
+    "T-PH002-04",
+    "T-PH002-05",
+    "T-PH002-06",
+    "T-PH002-07",
+    "T-PH002-08",
+    "T-PH002-09",
+    "T-PH003-01",
+    "T-PH003-02",
+    "T-PH003-03",
+    "T-PH003-04",
+    "T-PH003-05",
+    "T-PH003-06",
+    "T-PH003-07",
+    "T-PH003-08"
+  ],
+  "tasks": [
+    {
+      "task_id": "T-PH003-09",
+      "phase_id": "PH-003",
+      "status": "done",
+      "tdd_exempted": false,
+      "started_at": "2026-05-19T17:18:00Z",
+      "ended_at": "2026-05-19T17:18:00Z",
+      "coder_run_id": "main-direct-d1-pattern",
+      "result_summary": "메인 직접 처리 (D-1 패턴) — TDD red→green 페어 + source-grep 검증, 6 페어 + 1 review",
+      "trace_req_ids": [
+        "FR-FIX-004"
+      ],
+      "questions": [],
+      "attempts": 1,
+      "in_current_batch": true
+    },
+    {
+      "task_id": "T-PH003-10",
+      "phase_id": "PH-003",
+      "status": "done",
+      "tdd_exempted": false,
+      "started_at": "2026-05-19T17:18:00Z",
+      "ended_at": "2026-05-19T17:18:00Z",
+      "coder_run_id": "main-direct-d1-pattern",
+      "result_summary": "메인 직접 처리 (D-1 패턴) — TDD red→green 페어 + source-grep 검증, 6 페어 + 1 review",
+      "trace_req_ids": [
+        "FR-FIX-004"
+      ],
+      "questions": [],
+      "attempts": 1,
+      "in_current_batch": true
+    },
+    {
+      "task_id": "T-PH003-11",
+      "phase_id": "PH-003",
+      "status": "done",
+      "tdd_exempted": false,
+      "started_at": "2026-05-19T17:18:00Z",
+      "ended_at": "2026-05-19T17:18:00Z",
+      "coder_run_id": "main-direct-d1-pattern",
+      "result_summary": "메인 직접 처리 (D-1 패턴) — TDD red→green 페어 + source-grep 검증, 6 페어 + 1 review",
+      "trace_req_ids": [
+        "FR-FIX-005"
+      ],
+      "questions": [],
+      "attempts": 1,
+      "in_current_batch": true
+    },
+    {
+      "task_id": "T-PH003-12",
+      "phase_id": "PH-003",
+      "status": "done",
+      "tdd_exempted": false,
+      "started_at": "2026-05-19T17:18:00Z",
+      "ended_at": "2026-05-19T17:18:00Z",
+      "coder_run_id": "main-direct-d1-pattern",
+      "result_summary": "메인 직접 처리 (D-1 패턴) — TDD red→green 페어 + source-grep 검증, 6 페어 + 1 review",
+      "trace_req_ids": [
+        "FR-FIX-005"
+      ],
+      "questions": [],
+      "attempts": 1,
+      "in_current_batch": true
+    },
+    {
+      "task_id": "T-PH003-13",
+      "phase_id": "PH-003",
+      "status": "done",
+      "tdd_exempted": false,
+      "started_at": "2026-05-19T17:18:00Z",
+      "ended_at": "2026-05-19T17:18:00Z",
+      "coder_run_id": "main-direct-d1-pattern",
+      "result_summary": "메인 직접 처리 (D-1 패턴) — TDD red→green 페어 + source-grep 검증, 6 페어 + 1 review",
+      "trace_req_ids": [
+        "FR-FIX-006"
+      ],
+      "questions": [],
+      "attempts": 1,
+      "in_current_batch": true
+    },
+    {
+      "task_id": "T-PH003-14",
+      "phase_id": "PH-003",
+      "status": "done",
+      "tdd_exempted": false,
+      "started_at": "2026-05-19T17:18:00Z",
+      "ended_at": "2026-05-19T17:18:00Z",
+      "coder_run_id": "main-direct-d1-pattern",
+      "result_summary": "메인 직접 처리 (D-1 패턴) — TDD red→green 페어 + source-grep 검증, 6 페어 + 1 review",
+      "trace_req_ids": [
+        "FR-FIX-006"
+      ],
+      "questions": [],
+      "attempts": 1,
+      "in_current_batch": true
+    },
+    {
+      "task_id": "T-PH003-15",
+      "phase_id": "PH-003",
+      "status": "done",
+      "tdd_exempted": false,
+      "started_at": "2026-05-19T17:18:00Z",
+      "ended_at": "2026-05-19T17:18:00Z",
+      "coder_run_id": "main-direct-d1-pattern",
+      "result_summary": "메인 직접 처리 (D-1 패턴) — TDD red→green 페어 + source-grep 검증, 6 페어 + 1 review",
+      "trace_req_ids": [
+        "FR-FIX-007"
+      ],
+      "questions": [],
+      "attempts": 1,
+      "in_current_batch": true
+    },
+    {
+      "task_id": "T-PH003-16",
+      "phase_id": "PH-003",
+      "status": "done",
+      "tdd_exempted": false,
+      "started_at": "2026-05-19T17:18:00Z",
+      "ended_at": "2026-05-19T17:18:00Z",
+      "coder_run_id": "main-direct-d1-pattern",
+      "result_summary": "메인 직접 처리 (D-1 패턴) — TDD red→green 페어 + source-grep 검증, 6 페어 + 1 review",
+      "trace_req_ids": [
+        "FR-FIX-007"
+      ],
+      "questions": [],
+      "attempts": 1,
+      "in_current_batch": true
+    },
+    {
+      "task_id": "T-PH003-17",
+      "phase_id": "PH-003",
+      "status": "done",
+      "tdd_exempted": false,
+      "started_at": "2026-05-19T17:18:00Z",
+      "ended_at": "2026-05-19T17:18:00Z",
+      "coder_run_id": "main-direct-d1-pattern",
+      "result_summary": "메인 직접 처리 (D-1 패턴) — TDD red→green 페어 + source-grep 검증, 6 페어 + 1 review",
+      "trace_req_ids": [
+        "FR-FIX-008"
+      ],
+      "questions": [],
+      "attempts": 1,
+      "in_current_batch": true
+    },
+    {
+      "task_id": "T-PH003-18",
+      "phase_id": "PH-003",
+      "status": "done",
+      "tdd_exempted": false,
+      "started_at": "2026-05-19T17:18:00Z",
+      "ended_at": "2026-05-19T17:18:00Z",
+      "coder_run_id": "main-direct-d1-pattern",
+      "result_summary": "메인 직접 처리 (D-1 패턴) — TDD red→green 페어 + source-grep 검증, 6 페어 + 1 review",
+      "trace_req_ids": [
+        "FR-FIX-008"
+      ],
+      "questions": [],
+      "attempts": 1,
+      "in_current_batch": true
+    },
+    {
+      "task_id": "T-PH003-19",
+      "phase_id": "PH-003",
+      "status": "done",
+      "tdd_exempted": false,
+      "started_at": "2026-05-19T17:18:00Z",
+      "ended_at": "2026-05-19T17:18:00Z",
+      "coder_run_id": "main-direct-d1-pattern",
+      "result_summary": "메인 직접 처리 (D-1 패턴) — TDD red→green 페어 + source-grep 검증, 6 페어 + 1 review",
+      "trace_req_ids": [
+        "FR-FIX-009"
+      ],
+      "questions": [],
+      "attempts": 1,
+      "in_current_batch": true
+    },
+    {
+      "task_id": "T-PH003-20",
+      "phase_id": "PH-003",
+      "status": "done",
+      "tdd_exempted": false,
+      "started_at": "2026-05-19T17:18:00Z",
+      "ended_at": "2026-05-19T17:18:00Z",
+      "coder_run_id": "main-direct-d1-pattern",
+      "result_summary": "메인 직접 처리 (D-1 패턴) — TDD red→green 페어 + source-grep 검증, 6 페어 + 1 review",
+      "trace_req_ids": [
+        "FR-FIX-009"
+      ],
+      "questions": [],
+      "attempts": 1,
+      "in_current_batch": true
+    },
+    {
+      "task_id": "T-PH003-21",
+      "phase_id": "PH-003",
+      "status": "skipped",
+      "tdd_exempted": true,
+      "started_at": null,
+      "ended_at": null,
+      "coder_run_id": null,
+      "result_summary": "review task — PH-003 batch 완료 review 는 본 PM 세션에서 통합 처리",
+      "trace_req_ids": [
+        "FR-FIX-001",
+        "FR-FIX-002",
+        "FR-FIX-003",
+        "FR-FIX-004",
+        "FR-FIX-005",
+        "FR-FIX-006",
+        "FR-FIX-007",
+        "FR-FIX-008",
+        "FR-FIX-009",
+        "FR-TEST-004"
+      ],
+      "questions": [],
+      "attempts": 0,
+      "in_current_batch": true
+    },
+    {
+      "task_id": "T-PH004-01",
+      "phase_id": "PH-004",
+      "status": "done",
+      "tdd_exempted": false,
+      "started_at": "2026-05-19T13:55:39.807Z",
+      "ended_at": "2026-05-19T13:55:39.807Z",
+      "coder_run_id": "2026-05-19-jakarta-adapter-v1-0-0-v03",
+      "result_summary": "RED: common 모듈 신설 + AdapterUnwrapTest 4 case, 4/4 FAILED",
+      "trace_req_ids": [
+        "FR-CONV-003"
+      ],
+      "questions": [],
+      "attempts": 1,
+      "in_current_batch": false
+    },
+    {
+      "task_id": "T-PH004-02",
+      "phase_id": "PH-004",
+      "status": "done",
+      "tdd_exempted": false,
+      "started_at": "2026-05-19T16:14:47.609Z",
+      "ended_at": "2026-05-19T16:14:47.609Z",
+      "coder_run_id": "2026-05-19-jakarta-adapter-v1-0-0-v03",
+      "result_summary": "GREEN: AdapterUnwrap<T> 인터페이스 구현, 4/4 PASS",
+      "trace_req_ids": [
+        "FR-CONV-003"
+      ],
+      "questions": [],
+      "attempts": 1,
+      "in_current_batch": false
+    },
+    {
+      "task_id": "T-PH004-03",
+      "phase_id": "PH-004",
+      "status": "done",
+      "tdd_exempted": false,
+      "started_at": "2026-05-19T16:21:58.099Z",
+      "ended_at": "2026-05-19T16:21:58.099Z",
+      "coder_run_id": "2026-05-19-jakarta-adapter-v1-0-0-v03.coder-T-PH004-03",
+      "result_summary": "RED: 3모듈 AdapterUnwrapAllClassesTest 신설 (FR-CONV-003/004), 21 test all FAILED",
+      "trace_req_ids": [
+        "FR-CONV-003",
+        "FR-CONV-004"
+      ],
+      "questions": [],
+      "attempts": 1,
+      "in_current_batch": false
+    },
+    {
+      "task_id": "T-PH004-04",
+      "phase_id": "PH-004",
+      "status": "done",
+      "tdd_exempted": false,
+      "started_at": "2026-05-19T16:31:49.167Z",
+      "ended_at": "2026-05-19T16:31:49.167Z",
+      "coder_run_id": "2026-05-19-jakarta-adapter-v1-0-0-v03",
+      "result_summary": "GREEN: 66 class 에 AdapterUnwrap 구현, 21 test PASS + 전체 회귀 PASS",
+      "trace_req_ids": [
+        "FR-CONV-003",
+        "FR-CONV-004"
+      ],
+      "questions": [],
+      "attempts": 1,
+      "in_current_batch": false
+    },
+    {
+      "task_id": "T-PH004-05",
+      "phase_id": "PH-004",
+      "status": "done",
+      "tdd_exempted": false,
+      "started_at": "2026-05-19T16:35:26.748Z",
+      "ended_at": "2026-05-19T16:35:26.748Z",
+      "coder_run_id": "2026-05-19-jakarta-adapter-v1-0-0-v03",
+      "result_summary": "RED: FR-CONV-005 ServletException 변환 3 test, 3/3 FAILED",
+      "trace_req_ids": [
+        "FR-CONV-005"
+      ],
+      "questions": [],
+      "attempts": 1,
+      "in_current_batch": false
+    },
+    {
+      "task_id": "T-PH004-06",
+      "phase_id": "PH-004",
+      "status": "done",
+      "tdd_exempted": false,
+      "started_at": "2026-05-19T16:37:03.439Z",
+      "ended_at": "2026-05-19T16:37:03.439Z",
+      "coder_run_id": "2026-05-19-jakarta-adapter-v1-0-0-v03",
+      "result_summary": "GREEN: ConverterSupport 3 helper, 3 test PASS + 회귀 PASS",
+      "trace_req_ids": [
+        "FR-CONV-005"
+      ],
+      "questions": [],
+      "attempts": 1,
+      "in_current_batch": false
+    },
+    {
+      "task_id": "T-PH004-07",
+      "phase_id": "PH-004",
+      "status": "done",
+      "tdd_exempted": false,
+      "started_at": "2026-05-19T16:41:47.140Z",
+      "ended_at": "2026-05-19T16:41:47.140Z",
+      "coder_run_id": "2026-05-19-jakarta-adapter-v1-0-0-v03",
+      "result_summary": "RED: FR-CONV-006/007/008/009 EagerSnapshotTest 21 test, 21/21 FAILED",
+      "trace_req_ids": [
+        "FR-CONV-006",
+        "FR-CONV-007",
+        "FR-CONV-008",
+        "FR-CONV-009"
+      ],
+      "questions": [],
+      "attempts": 1,
+      "in_current_batch": false
+    },
+    {
+      "task_id": "T-PH004-08",
+      "phase_id": "PH-004",
+      "status": "done",
+      "tdd_exempted": false,
+      "started_at": "2026-05-19T16:51:10.747Z",
+      "ended_at": "2026-05-19T16:51:10.747Z",
+      "coder_run_id": "2026-05-19-jakarta-adapter-v1-0-0-v03",
+      "result_summary": "GREEN: ConversionContract 21 verifier + 3 prod bugfix, 21/21 PASS + 회귀 75/75",
+      "trace_req_ids": [
+        "FR-CONV-006",
+        "FR-CONV-007",
+        "FR-CONV-008",
+        "FR-CONV-009"
+      ],
+      "questions": [],
+      "attempts": 1,
+      "in_current_batch": false
+    },
+    {
+      "task_id": "T-PH004-09",
+      "phase_id": "PH-004",
+      "status": "done",
+      "tdd_exempted": false,
+      "started_at": "2026-05-19T17:01:23.040Z",
+      "ended_at": "2026-05-19T17:01:23.040Z",
+      "coder_run_id": "2026-05-19-jakarta-adapter-v1-0-0-v03",
+      "result_summary": "RED: FR-CONV-011 strict mode 4 test, 4/4 FAILED",
+      "trace_req_ids": [
+        "FR-CONV-011"
+      ],
+      "questions": [],
+      "attempts": 1,
+      "in_current_batch": false
+    },
+    {
+      "task_id": "T-PH004-10",
+      "phase_id": "PH-004",
+      "status": "done",
+      "tdd_exempted": false,
+      "started_at": "2026-05-19T17:04:17.659Z",
+      "ended_at": "2026-05-19T17:04:17.659Z",
+      "coder_run_id": "2026-05-19-jakarta-adapter-v1-0-0-v03",
+      "result_summary": "GREEN: strict mode 6 helper, 4/4 PASS + 회귀 PASS",
+      "trace_req_ids": [
+        "FR-CONV-011"
+      ],
+      "questions": [],
+      "attempts": 1,
+      "in_current_batch": false
+    },
+    {
+      "task_id": "T-PH004-11",
+      "phase_id": "PH-004",
+      "status": "done",
+      "tdd_exempted": false,
+      "started_at": "2026-05-19T17:09:16.552Z",
+      "ended_at": "2026-05-19T17:09:16.552Z",
+      "coder_run_id": "2026-05-19-jakarta-adapter-v1-0-0-v03",
+      "result_summary": "RED: FR-CONV-012 폴백 가시성 5 test FAILED",
+      "trace_req_ids": [
+        "FR-CONV-012"
+      ],
+      "questions": [],
+      "attempts": 1,
+      "in_current_batch": false
+    },
+    {
+      "task_id": "T-PH004-12",
+      "phase_id": "PH-004",
+      "status": "done",
+      "tdd_exempted": false,
+      "started_at": "2026-05-19T17:14:27.405Z",
+      "ended_at": "2026-05-19T17:14:27.405Z",
+      "coder_run_id": "2026-05-19-jakarta-adapter-v1-0-0-v03",
+      "result_summary": "GREEN: JUL dedup logger + diagnostics API, 5 test PASS + 회귀 PASS",
+      "trace_req_ids": [
+        "FR-CONV-012"
+      ],
+      "questions": [],
+      "attempts": 1,
+      "in_current_batch": false
+    },
+    {
+      "task_id": "T-PH004-13",
+      "phase_id": "PH-004",
+      "status": "done",
+      "tdd_exempted": false,
+      "started_at": "2026-05-19T17:25:20.598Z",
+      "ended_at": "2026-05-19T17:25:20.598Z",
+      "coder_run_id": "2026-05-19-jakarta-adapter-v1-0-0-v03",
+      "result_summary": "RED: FR-CONV-010+014 FallbackPolicyTest servlet6/61 12 test FAILED",
+      "trace_req_ids": [
+        "FR-CONV-010",
+        "FR-CONV-014"
+      ],
+      "questions": [],
+      "attempts": 1,
+      "in_current_batch": false
+    },
+    {
+      "task_id": "T-PH004-14",
+      "phase_id": "PH-004",
+      "status": "done",
+      "tdd_exempted": false,
+      "started_at": "2026-05-19T17:32:44.041Z",
+      "ended_at": "2026-05-19T17:32:44.041Z",
+      "coder_run_id": "2026-05-19-jakarta-adapter-v1-0-0-v03",
+      "result_summary": "GREEN: policy matrix 6 group servlet6/61, 12/12 PASS + 회귀 PASS",
+      "trace_req_ids": [
+        "FR-CONV-010",
+        "FR-CONV-014"
+      ],
+      "questions": [],
+      "attempts": 1,
+      "in_current_batch": false
+    },
+    {
+      "task_id": "T-PH004-15",
+      "phase_id": "PH-004",
+      "status": "done",
+      "tdd_exempted": false,
+      "started_at": "2026-05-19T17:37:11.270Z",
+      "ended_at": "2026-05-19T17:37:11.270Z",
+      "coder_run_id": "2026-05-19-jakarta-adapter-v1-0-0-v03",
+      "result_summary": "RED: FR-CONV-013 Cookie attribute 4 test FAILED",
+      "trace_req_ids": [
+        "FR-CONV-013"
+      ],
+      "questions": [],
+      "attempts": 1,
+      "in_current_batch": false
+    },
+    {
+      "task_id": "T-PH004-16",
+      "phase_id": "PH-004",
+      "status": "done",
+      "tdd_exempted": false,
+      "started_at": "2026-05-19T17:41:01.998Z",
+      "ended_at": "2026-05-19T17:41:01.998Z",
+      "coder_run_id": "2026-05-19-jakarta-adapter-v1-0-0-v03",
+      "result_summary": "GREEN: 3모듈 Cookie 정책 D no-op+WARN once, 4/4 PASS + 회귀 PASS",
+      "trace_req_ids": [
+        "FR-CONV-013"
+      ],
+      "questions": [],
+      "attempts": 1,
+      "in_current_batch": false
+    },
+    {
+      "task_id": "T-PH004-17",
+      "phase_id": "PH-004",
+      "status": "done",
+      "tdd_exempted": false,
+      "started_at": "2026-05-19T17:46:38.225Z",
+      "ended_at": "2026-05-19T17:46:38.225Z",
+      "coder_run_id": "2026-05-19-jakarta-adapter-v1-0-0-v03",
+      "result_summary": "RED: FR-CONV-001 jakarta 6.0 신규 추상 메서드 4 test FAILED",
+      "trace_req_ids": [
+        "FR-CONV-001"
+      ],
+      "questions": [],
+      "attempts": 1,
+      "in_current_batch": false
+    },
+    {
+      "task_id": "T-PH004-18",
+      "phase_id": "PH-004",
+      "status": "done",
+      "tdd_exempted": false,
+      "started_at": "2026-05-19T17:52:34.945Z",
+      "ended_at": "2026-05-19T17:52:34.945Z",
+      "coder_run_id": "2026-05-19-jakarta-adapter-v1-0-0-v03",
+      "result_summary": "GREEN: jakarta 6.0 신규 메서드 + DummyServletConnection, 4/4 PASS + 회귀 PASS",
+      "trace_req_ids": [
+        "FR-CONV-001"
+      ],
+      "questions": [],
+      "attempts": 1,
+      "in_current_batch": false
+    },
+    {
+      "task_id": "T-PH004-19",
+      "phase_id": "PH-004",
+      "status": "done",
+      "tdd_exempted": false,
+      "started_at": "2026-05-19T17:58:52.616Z",
+      "ended_at": "2026-05-19T17:58:52.616Z",
+      "coder_run_id": "2026-05-19-jakarta-adapter-v1-0-0-v03",
+      "result_summary": "RED→GREEN retroactive: sendRedirect61 5 test, 5/5 PASS (T-PH004-14 에서 이미 구현됨)",
+      "trace_req_ids": [
+        "FR-CONV-001",
+        "FR-CONV-014"
+      ],
+      "questions": [],
+      "attempts": 1,
+      "in_current_batch": false
+    },
+    {
+      "task_id": "T-PH004-20",
+      "phase_id": "PH-004",
+      "status": "done",
+      "tdd_exempted": false,
+      "started_at": "2026-05-19T18:02:08.150Z",
+      "ended_at": "2026-05-19T18:02:08.150Z",
+      "coder_run_id": "2026-05-19-jakarta-adapter-v1-0-0-v03",
+      "result_summary": "GREEN: sendRedirect61 retroactive impl 확인, 5/5 PASS",
+      "trace_req_ids": [
+        "FR-CONV-001",
+        "FR-CONV-014"
+      ],
+      "questions": [],
+      "attempts": 1,
+      "in_current_batch": false
+    },
+    {
+      "task_id": "T-PH004-21",
+      "phase_id": "PH-004",
+      "status": "done",
+      "tdd_exempted": false,
+      "started_at": "2026-05-19T18:07:05.192Z",
+      "ended_at": "2026-05-19T18:07:05.192Z",
+      "coder_run_id": "2026-05-19-jakarta-adapter-v1-0-0-v03",
+      "result_summary": "RED: FR-CONV-016 ThreadSafety 3 test, AC-1 FAILED (3 non-final field)",
+      "trace_req_ids": [
+        "NFR-CONV-001"
+      ],
+      "questions": [],
+      "attempts": 1,
+      "in_current_batch": false
+    },
+    {
+      "task_id": "T-PH004-22",
+      "phase_id": "PH-004",
+      "status": "done",
+      "tdd_exempted": false,
+      "started_at": "2026-05-19T18:10:22.567Z",
+      "ended_at": "2026-05-19T18:10:22.567Z",
+      "coder_run_id": "2026-05-19-jakarta-adapter-v1-0-0-v03",
+      "result_summary": "GREEN: 3 non-final 필드 final 화, 3/3 PASS + 회귀 PASS",
+      "trace_req_ids": [
+        "NFR-CONV-001"
+      ],
+      "questions": [],
+      "attempts": 1,
+      "in_current_batch": false
+    },
+    {
+      "task_id": "T-PH004-23",
+      "phase_id": "PH-004",
+      "status": "done",
+      "tdd_exempted": true,
+      "started_at": "2026-05-19T18:14:13.353Z",
+      "ended_at": "2026-05-19T18:14:13.353Z",
+      "coder_run_id": "2026-05-19-jakarta-adapter-v1-0-0-v03",
+      "result_summary": "PH-004 review GREEN: 126 test PASS (servlet5=91/6=15/61=20), BM10 lock-in 유지",
+      "trace_req_ids": [
+        "FR-CONV-001",
+        "FR-CONV-002",
+        "FR-CONV-003",
+        "FR-CONV-004",
+        "FR-CONV-005",
+        "FR-CONV-010",
+        "FR-CONV-011",
+        "FR-CONV-012",
+        "FR-CONV-013",
+        "FR-CONV-014",
+        "NFR-CONV-001"
+      ],
+      "questions": [],
+      "attempts": 1,
+      "in_current_batch": false
+    },
+    {
+      "task_id": "T-PH005-01",
+      "phase_id": "PH-005",
+      "status": "done",
+      "tdd_exempted": true,
+      "started_at": "2026-05-19T22:29:51.556Z",
+      "ended_at": "2026-05-19T22:29:51.556Z",
+      "coder_run_id": "2026-05-19-jakarta-adapter-v1-0-0-v03",
+      "result_summary": "legacy 2 파일 servlet5 이동 (옵션 B), OQ-003 해소, 어댑터 단위 테스트는 PH-007 후 이연",
+      "trace_req_ids": [
+        "FR-TEST-001"
+      ],
+      "questions": [],
+      "attempts": 2,
+      "in_current_batch": false
+    },
+    {
+      "task_id": "T-PH005-02",
+      "phase_id": "PH-005",
+      "status": "done",
+      "tdd_exempted": true,
+      "started_at": "2026-05-19T22:50:01.681Z",
+      "ended_at": "2026-05-19T22:50:01.681Z",
+      "coder_run_id": "2026-05-19-jakarta-adapter-v1-0-0-v03",
+      "result_summary": "FR-TEST-002 DelegationContractTest 드라이버 + 3 모듈 ContractTest, 41 신규 test, 167 total PASS",
+      "trace_req_ids": [
+        "FR-TEST-002"
+      ],
+      "questions": [],
+      "attempts": 1,
+      "in_current_batch": false
+    },
+    {
+      "task_id": "T-PH005-06",
+      "phase_id": "PH-005",
+      "status": "done",
+      "tdd_exempted": true,
+      "started_at": "2026-05-19T22:55:32.985Z",
+      "ended_at": "2026-05-19T22:55:32.985Z",
+      "coder_run_id": "2026-05-19-jakarta-adapter-v1-0-0-v03",
+      "result_summary": "JaCoCo 4 모듈 배선 + violationRules (common 95/100, servlet5/6/61 95/90) + check 후크",
+      "trace_req_ids": [
+        "NFR-TEST-001"
+      ],
+      "questions": [],
+      "attempts": 1,
+      "in_current_batch": false
+    },
+    {
+      "task_id": "T-PH005-07",
+      "phase_id": "PH-005",
+      "status": "done",
+      "tdd_exempted": true,
+      "started_at": "2026-05-20T00:04:07.691Z",
+      "ended_at": "2026-05-20T00:04:07.691Z",
+      "coder_run_id": "2026-05-19-jakarta-adapter-v1-0-0-v03",
+      "result_summary": "PH-005 review GREEN: B2 decoupled jacocoCoverageGate from check, ./gradlew check PASS 5모듈",
+      "trace_req_ids": [
+        "FR-TEST-001",
+        "FR-TEST-002",
+        "NFR-TEST-001"
+      ],
+      "questions": [],
+      "attempts": 3,
+      "in_current_batch": false
+    },
+    {
+      "task_id": "T-PH006-03",
+      "phase_id": "PH-006",
+      "status": "skipped",
+      "tdd_exempted": true,
+      "started_at": "2026-05-20T00:08:09.123Z",
+      "ended_at": "2026-05-20T00:08:09.123Z",
+      "coder_run_id": "2026-05-19-jakarta-adapter-v1-0-0-v03",
+      "result_summary": "ABANDON (user A): T-PH006-01 draft 제외 + B2 결정 충돌, v1.0.1 carryover",
+      "trace_req_ids": [
+        "NFR-TEST-001"
+      ],
+      "questions": [],
+      "attempts": 1,
+      "in_current_batch": false
+    },
+    {
+      "task_id": "T-PH007-01",
+      "phase_id": "PH-007",
+      "status": "done",
+      "tdd_exempted": true,
+      "started_at": "2026-05-20T03:00:00Z",
+      "ended_at": "2026-05-20T00:20:40.829Z",
+      "coder_run_id": "2026-05-19-jakarta-adapter-v1-0-0-v03",
+      "result_summary": "5모듈 maven-publish+signing 적용 (FR-MOD-007/IR-REL-001), publishToMavenLocal PASS, sources/javadoc jar",
+      "trace_req_ids": [
+        "IR-REL-001",
+        "FR-MOD-007"
+      ],
+      "questions": [],
+      "attempts": 1,
+      "in_current_batch": false
+    },
+    {
+      "task_id": "T-PH007-02",
+      "phase_id": "PH-007",
+      "status": "done",
+      "tdd_exempted": true,
+      "started_at": "2026-05-20T00:30:11.177Z",
+      "ended_at": "2026-05-20T00:32:54.614Z",
+      "coder_run_id": "2026-05-19-jakarta-adapter-v1-0-0-v03",
+      "result_summary": "README.md 전면 개정 — 호환성 매트릭스 + 5개 정책 섹션 + multi-module BOM 사용 예시. 영어 일관성 유지.",
+      "trace_req_ids": [
+        "FR-REL-001"
+      ],
+      "questions": [],
+      "attempts": 1,
+      "in_current_batch": false
+    },
+    {
+      "task_id": "T-PH007-03",
+      "phase_id": "PH-007",
+      "status": "done",
+      "tdd_exempted": true,
+      "started_at": "2026-05-20T00:32:54.615Z",
+      "ended_at": "2026-05-20T00:34:59.307Z",
+      "coder_run_id": "2026-05-19-jakarta-adapter-v1-0-0-v03",
+      "result_summary": "CHANGELOG.md 신설 — [1.0.0] - 2026-05-20, Keep a Changelog 1.1.0 형식, Added/Changed/Fixed 5개 항목 (FR-FIX-001~009 + multi-module + 6.0/6.1 + 폴백 + 별칭).",
+      "trace_req_ids": [
+        "FR-REL-001"
+      ],
+      "questions": [],
+      "attempts": 1,
+      "in_current_batch": false
+    },
+    {
+      "task_id": "T-PH007-04",
+      "phase_id": "PH-007",
+      "status": "done",
+      "tdd_exempted": true,
+      "started_at": "2026-05-20T00:34:59.308Z",
+      "ended_at": "2026-05-20T00:44:38.070Z",
+      "coder_run_id": "2026-05-19-jakarta-adapter-v1-0-0-v03",
+      "result_summary": "D8 옵션 B 구현 — servlet5 모듈에 45개 0.x deprecated alias (jakarta 18 + javax 18 + servletElementConverter 9). docs/migration/0.x-to-1.0.md 작성. compile success.",
+      "trace_req_ids": [
+        "MIG-REL-001"
+      ],
+      "questions": [],
+      "attempts": 1,
+      "in_current_batch": false
+    },
+    {
+      "task_id": "T-PH007-07",
+      "phase_id": "PH-007",
+      "status": "skipped",
+      "tdd_exempted": true,
+      "started_at": "2026-05-20T00:44:38.071Z",
+      "ended_at": "2026-05-20T02:20:49.622Z",
+      "coder_run_id": null,
+      "result_summary": "사용자 결정 B) E2E 테스트 작성 plan 먼저. 빌드/배포는 사용자가 직접 처리. T-PH007-07 skip + T-final 보류 (v1.0.0 plan 미완료).",
+      "trace_req_ids": [
+        "IR-REL-001",
+        "FR-REL-001",
+        "MIG-REL-001"
+      ],
+      "questions": [],
+      "attempts": 1,
+      "in_current_batch": false
+    }
+  ],
+  "stats": {
+    "total": 46,
+    "done": 43,
+    "running": 0,
+    "pending": 0,
+    "failed": 0,
+    "blocked": 0,
+    "skipped": 3,
+    "batch_total": 13,
+    "batch_done": 0,
+    "batch_pending": 13,
+    "batch_failed": 0,
+    "batch_blocked": 0,
+    "batch_skipped": 0
+  },
+  "last_question": null,
+  "last_error": null,
+  "lifecycle_gate_state": {
+    "evaluated_at": "2026-05-19T08:17:08Z",
+    "blocked_req_ids": [],
+    "evaluation_method": "mcp_summarize_target (active-target summary)",
+    "stability_snapshot_partial": {
+      "FR-FIX-001": "evolving",
+      "FR-FIX-002": "evolving",
+      "FR-FIX-003": "evolving",
+      "FR-FIX-004": "evolving",
+      "FR-FIX-005": "evolving",
+      "FR-FIX-006": "evolving",
+      "FR-FIX-007": "evolving",
+      "FR-FIX-008": "evolving",
+      "FR-FIX-009": "evolving",
+      "FR-TEST-004": "evolving"
+    },
+    "status_snapshot_partial": {
+      "FR-FIX-001": "planned",
+      "FR-FIX-002": "planned",
+      "FR-FIX-003": "planned",
+      "FR-FIX-004": "planned",
+      "FR-FIX-005": "planned",
+      "FR-FIX-006": "planned",
+      "FR-FIX-007": "planned",
+      "FR-FIX-008": "planned",
+      "FR-FIX-009": "planned",
+      "FR-TEST-004": "planned"
+    },
+    "note": "batch REQ 10건 모두 evolving (summary.draftRequirements 와 배타). 4 draft REQ (FR-TEST-003/005, OPS-TEST-001, OPS-REL-001) 은 v03 plan 의 excluded_reqs 라 본 batch 대상 외"
+  },
+  "req_coverage": {},
+  "final_mutations": [],
+  "pending_mutations": [
+    {
+      "reason": "T-final 보류 — v1.0.0 plan 사용자 결정으로 E2E 테스트 보강 plan 선행 필요. publish 미완료로 REQ implemented 승급 부적합.",
+      "decided_by_user": "B) E2E plan 먼저"
+    }
+  ],
+  "report_path": ".kiwi/sessions/2026-05-19-jakarta-adapter-v1-0-0-v03/reports/pm-batch-ph003-2026-05-19T1530Z.md",
+  "doculight_viewer_id": null
+}

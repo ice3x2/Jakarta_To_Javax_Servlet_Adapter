@@ -1,0 +1,63 @@
+{
+  "task_id": "T-PH004-08",
+  "phase_id": "PH-004",
+  "started_at": "2026-05-19T16:45:00Z",
+  "completed_at": "2026-05-19T16:50:00Z",
+  "tdd_phase": "green",
+  "phase2": {
+    "impl_iters": [
+      {
+        "iter": 1,
+        "files_changed": [
+          "servlet5/src/main/java/adapter/common/ConversionContract.java",
+          "servlet5/src/main/java/adapter/common/testfakes/AbstractFakeHttpServletRequest.java",
+          "servlet5/src/main/java/adapter/common/testfakes/AbstractFakeHttpServletResponse.java",
+          "servlet5/src/main/java/adapter/common/testfakes/AbstractFakeServletContext.java",
+          "servlet5/src/main/java/adapter/common/testfakes/AbstractFakeHttpSession.java",
+          "servlet5/src/main/java/adapter/jakarta/servlet5/http/HttpServletResponse.java",
+          "servlet5/src/main/java/adapter/jakarta/servlet5/http/HttpServletRequest.java",
+          "servlet5/src/main/java/adapter/jakarta/servlet5/ServletContext.java"
+        ]
+      }
+    ],
+    "green_evidence": {
+      "command": "./gradlew :servlet5:test --tests *shouldVerifyEagerSnapshotStreamSpecAndSideEffectsAllPaths*",
+      "exit_code": 0,
+      "timestamp": "2026-05-19T16:49:49Z"
+    },
+    "green_evidence_meta": {
+      "passed_test_case_ids": [
+        "TC-REQ-FR-CONV-006-AC1-02",
+        "TC-REQ-FR-CONV-006-AC2-02",
+        "TC-REQ-FR-CONV-006-AC3-02",
+        "TC-REQ-FR-CONV-007-AC1-02",
+        "TC-REQ-FR-CONV-007-AC2-02",
+        "TC-REQ-FR-CONV-007-AC3-02",
+        "TC-REQ-FR-CONV-007-AC4-02",
+        "TC-REQ-FR-CONV-007-AC5-02",
+        "TC-REQ-FR-CONV-007-AC6-02",
+        "TC-REQ-FR-CONV-007-AC7-02",
+        "TC-REQ-FR-CONV-007-AC8-02",
+        "TC-REQ-FR-CONV-007-AC9-02",
+        "TC-REQ-FR-CONV-008-AC1-02",
+        "TC-REQ-FR-CONV-008-AC2-02",
+        "TC-REQ-FR-CONV-009-AC1-02",
+        "TC-REQ-FR-CONV-009-AC2-02",
+        "TC-REQ-FR-CONV-009-AC3-02",
+        "TC-REQ-FR-CONV-009-AC4-02",
+        "TC-REQ-FR-CONV-009-AC5-02",
+        "TC-REQ-FR-CONV-009-AC6-02",
+        "TC-REQ-FR-CONV-009-AC7-02"
+      ],
+      "total_passed": 21,
+      "total_failed": 0
+    },
+    "dod_check": [
+      {"item": "green 단계: 21개 test case 가 모두 통과(green)", "satisfied": true},
+      {"item": "green 단계: 동일 test 가 모두 통과(green) 함을 확인", "satisfied": true}
+    ]
+  },
+  "phase3": {
+    "regression": {"scope": "impacted-module(servlet5)", "passed": 75, "failed": 0}
+  }
+}

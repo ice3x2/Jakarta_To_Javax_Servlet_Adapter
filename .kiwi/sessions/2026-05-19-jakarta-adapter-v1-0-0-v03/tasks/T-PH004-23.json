@@ -1,0 +1,61 @@
+{
+  "task_id": "T-PH004-23",
+  "phase_id": "PH-004",
+  "type": "review",
+  "started_at": "2026-05-20T00:30:00Z",
+  "completed_at": "2026-05-20T00:32:00Z",
+  "tdd_exempted": true,
+  "tdd_exempt_reason": "auto-exempt by type=review (kiwi-coder §0.G1: non-coding Task)",
+  "phase1": null,
+  "phase2": {
+    "review_scope": "PH-004 11 페어 (22 task) 통합 검증",
+    "verification_cmd": "./gradlew.bat test --rerun-tasks",
+    "exit_code": 0,
+    "test_results": {
+      "servlet5": {"tests": 91, "failures": 0, "errors": 0, "skipped": 0},
+      "servlet6": {"tests": 15, "failures": 0, "errors": 0, "skipped": 0},
+      "servlet61": {"tests": 20, "failures": 0, "errors": 0, "skipped": 0},
+      "total": {"tests": 126, "failures": 0, "errors": 0, "skipped": 0}
+    },
+    "dod_check": [
+      {"item": "PH-004 의 22 페어 task 결과가 단위 테스트 매트릭스로 통합 검증", "satisfied": true, "evidence": "126 tests PASS across 3 modules, 0 failures"},
+      {"item": "SRS §6.2.2 표의 모든 비대칭 메서드 그룹의 default + strict 동작 검증", "satisfied": true, "evidence": "StrictModeTest + FallbackPolicyTest + CookieAttributePolicyTest exist and pass"},
+      {"item": "3개 모듈 모두 ./gradlew test 통과", "satisfied": true, "evidence": "BUILD SUCCESSFUL in 18s, all 13 actionable tasks executed"}
+    ],
+    "checklist_acceptance": [
+      {"item": "SPEC-1~16 변환 의미론이 servlet5/6/61 3개 모듈에서 행동 동등", "satisfied": true, "evidence": "PH-004 11 페어 모든 green_evidence 보유 (worklog T-PH004-01..22)"},
+      {"item": "AdapterUnwrap marker 3 모듈 모두 적용 (이중 wrap 회피 검증)", "satisfied": true, "evidence": "AdapterUnwrapAllClassesTest exists in servlet5/6/61 all 3 modules"},
+      {"item": "strict 모드 ON/OFF 양 경로 회귀 통과", "satisfied": true, "evidence": "StrictModeTest in servlet5, all PASS"},
+      {"item": "Cookie attribute API no-op + WARN once 동작 확인", "satisfied": true, "evidence": "CookieAttributePolicyTest in servlet5, all PASS"}
+    ],
+    "predecessor_tasks_status": {
+      "T-PH004-01": "done", "T-PH004-02": "done", "T-PH004-03": "done",
+      "T-PH004-04": "done", "T-PH004-05": "done", "T-PH004-06": "done",
+      "T-PH004-07": "done", "T-PH004-08": "done", "T-PH004-09": "done",
+      "T-PH004-10": "done", "T-PH004-11": "done", "T-PH004-12": "done",
+      "T-PH004-13": "done", "T-PH004-14": "done", "T-PH004-15": "done",
+      "T-PH004-16": "done", "T-PH004-17": "done", "T-PH004-18": "done",
+      "T-PH004-19": "done", "T-PH004-20": "done", "T-PH004-21": "done",
+      "T-PH004-22": "done"
+    },
+    "bm10_lock_in": "maintained — no regression in BM10-related tests"
+  },
+  "phase3": {
+    "regression": {
+      "scope": "full",
+      "modules": ["servlet5", "servlet6", "servlet61"],
+      "passed": 126,
+      "failed": 0,
+      "rerun_mode": "--rerun-tasks (cache invalidated, fresh execution)"
+    },
+    "mcp_calls": [
+      {
+        "tool": "update_status",
+        "rationale": "PH-004 review 통과 — 11 페어 모두 통합 green, FR-CONV REQ status는 PH-005 (FR-TEST-002 Reflection Contract Test) 완료 후 verified 승급 권고 (T-final batch)",
+        "executed": false,
+        "deferred_to": "T-final"
+      }
+    ]
+  },
+  "notes": "Pure review task. No code changes. All 11 PH-004 pairs validated through full regression. FR-CONV-002 (위임 우선) 는 PH-005 의 FR-TEST-002 Reflection Contract Test 가 검증할 예정 — 본 review 범위 외 (sidecar action 명시)."
+}

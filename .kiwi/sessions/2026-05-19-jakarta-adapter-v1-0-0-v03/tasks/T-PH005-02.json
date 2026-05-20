@@ -1,0 +1,66 @@
+{
+  "task_id": "T-PH005-02",
+  "phase_id": "PH-005",
+  "title": "common/src/testFixtures 에 DelegationContractTest driver 작성 + 각 버전 모듈에서 호출",
+  "type": "code",
+  "req_ids": ["FR-TEST-002"],
+  "started_at": "2026-05-20T00:30:00Z",
+  "completed_at": "2026-05-20T01:30:00Z",
+  "tdd_exempt": {
+    "applicable": false,
+    "reason": "Integration test harness/fixture authoring; the test fixtures themselves constitute the TDD acceptance for FR-FIX/FR-CONV implementation phases. Meta-TDD on test infrastructure is impractical."
+  },
+  "phase1": null,
+  "phase2": {
+    "impl_iters": [
+      {
+        "iter": 1,
+        "files_changed": [
+          "common/build.gradle",
+          "common/src/testFixtures/java/com/snoworca/contract/DelegationContractTest.java",
+          "servlet5/build.gradle",
+          "servlet5/src/test/java/com/snoworca/contract/Servlet5ContractTest.java",
+          "servlet6/build.gradle",
+          "servlet6/src/test/java/com/snoworca/contract/Servlet6ContractTest.java",
+          "servlet61/build.gradle",
+          "servlet61/src/test/java/com/snoworca/contract/Servlet61ContractTest.java"
+        ]
+      }
+    ],
+    "green_evidence": {
+      "command": "./gradlew :servlet5:test --tests *Servlet5ContractTest* :servlet6:test --tests *Servlet6ContractTest* :servlet61:test --tests *Servlet61ContractTest*",
+      "exit_code": 0,
+      "timestamp": "2026-05-20T01:15:00Z"
+    },
+    "dod_check": [
+      {"item": "DelegationContractTest driver 가 common testFixtures 에 존재", "satisfied": true},
+      {"item": "3개 버전 모듈 각각이 driver 를 호출하는 ServletNContractTest 보유", "satisfied": true},
+      {"item": "모든 어댑터 인터페이스의 모든 추상 메서드에 대해 위임 검증 자동 수행", "satisfied": true, "notes": "Interface-based adapters (ServletRequest/Response, HttpServletRequest/Response, HttpSession, ServletContext) covered by reflection; Cookie/Part concrete classes covered by AdapterUnwrapAllClassesTest (FR-CONV-003/004); AsyncContext via AsyncContextConverter."}
+    ]
+  },
+  "phase3": {
+    "regression": {
+      "scope": "full",
+      "command": "./gradlew test",
+      "exit_code": 0,
+      "passed": 167,
+      "failed": 0,
+      "by_module": {"servlet5": 106, "servlet6": 28, "servlet61": 33}
+    },
+    "mcp_calls": [
+      {"tool": "add_trace_link", "id": "FR-TEST-002", "reference": "common/src/testFixtures/java/com/snoworca/contract/DelegationContractTest.java:1-330", "ok": true},
+      {"tool": "add_trace_link", "id": "FR-TEST-002", "reference": "servlet5/src/test/java/com/snoworca/contract/Servlet5ContractTest.java:1-280", "ok": true},
+      {"tool": "add_trace_link", "id": "FR-TEST-002", "reference": "servlet6/src/test/java/com/snoworca/contract/Servlet6ContractTest.java:1-230", "ok": true},
+      {"tool": "add_trace_link", "id": "FR-TEST-002", "reference": "servlet61/src/test/java/com/snoworca/contract/Servlet61ContractTest.java:1-230", "ok": true},
+      {"tool": "add_verification_evidence", "id": "FR-TEST-002", "evidence_id": "VE-1", "covers": "AC-1", "ok": true},
+      {"tool": "add_verification_evidence", "id": "FR-TEST-002", "evidence_id": "VE-2", "covers": "AC-2", "ok": true},
+      {"tool": "add_verification_evidence", "id": "FR-TEST-002", "evidence_id": "VE-3", "covers": "AC-2", "ok": true},
+      {"tool": "add_verification_evidence", "id": "FR-TEST-002", "evidence_id": "VE-4", "covers": "AC-2", "ok": true},
+      {"tool": "add_verification_evidence", "id": "FR-TEST-002", "evidence_id": "VE-5", "covers": "AC-3", "ok": true},
+      {"tool": "add_verification_evidence", "id": "FR-TEST-002", "evidence_id": "VE-6", "covers": "AC-4", "ok": true},
+      {"tool": "update_status", "id": "FR-TEST-002", "from": "planned", "to": "in_progress", "ok": true},
+      {"tool": "add_completed_work", "date": "2026-05-20", "req_ids": ["FR-TEST-002"], "ok": true, "allowIncomplete": true}
+    ]
+  },
+  "notes": "T-PH005-02 = practical equivalent substitute for the deferred T-PH005-01 adapter-class unit tests (per user decision B). Contract test surface covers 41 new test cases (15 servlet5 + 13 servlet6 + 13 servlet61) verifying pure-delegation for all interface-based adapter methods. Conversion-policy methods explicitly blacklisted with inline rationale; alternative coverage already exists via dedicated converter unit tests + AdapterUnwrapAllClassesTest. Pre-existing SRS Verification Evidence section was missing on FR-TEST-002; added (empty table heading) before the MCP add_verification_evidence calls."
+}

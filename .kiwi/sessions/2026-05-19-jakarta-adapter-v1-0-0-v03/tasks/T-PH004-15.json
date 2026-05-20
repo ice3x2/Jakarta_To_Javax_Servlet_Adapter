@@ -1,0 +1,85 @@
+{
+  "task_id": "T-PH004-15",
+  "phase_id": "PH-004",
+  "title": "FR-CONV-013 Cookie attribute API 정책 D (no-op + WARN once) — TDD red (failing test)",
+  "type": "code",
+  "req_ids": ["FR-CONV-013"],
+  "started_at": "2026-05-20T01:10:00Z",
+  "completed_at": "2026-05-20T01:18:00Z",
+  "tdd_phase": "red",
+  "phase1": {
+    "tdd_draft_iters": [
+      {
+        "iter": 1,
+        "file_paths": [
+          "servlet5/src/test/java/com/snoworca/CookieAttributePolicyTest.java"
+        ],
+        "test_cases_count": 4,
+        "test_case_ids": [
+          "TC-REQ-FR-CONV-013-AC1-01",
+          "TC-REQ-FR-CONV-013-AC2-01",
+          "TC-REQ-FR-CONV-013-AC3-01",
+          "TC-REQ-FR-CONV-013-AC4-01"
+        ]
+      }
+    ],
+    "red_evidence": {
+      "command": ".\\gradlew.bat :servlet5:test --tests *shouldApplyNoOpWithWarnOnceForCookieAttributeApi*",
+      "exit_code": 1,
+      "captured_failure": "4 tests completed, 4 failed. CookieAttributePolicyTest > FR-CONV-013 AC-1/AC-2/AC-3/AC-4 FAILED",
+      "timestamp": "2026-05-20T01:15:00Z"
+    },
+    "red_evidence_meta": {
+      "matched_signatures": [
+        "adapter.javax.servlet5.http.Cookie#setAttribute(String,String) not declared on adapter class",
+        "adapter.javax.servlet5.http.Cookie#getAttribute(String) not declared on adapter class",
+        "adapter.javax.servlet5.http.Cookie#getAttributes() not declared on adapter class"
+      ],
+      "test_case_ids": [
+        "TC-REQ-FR-CONV-013-AC1-01",
+        "TC-REQ-FR-CONV-013-AC2-01",
+        "TC-REQ-FR-CONV-013-AC3-01",
+        "TC-REQ-FR-CONV-013-AC4-01"
+      ],
+      "expected_signature_match": true,
+      "regression_impact": "0 — 84 pre-existing servlet5 tests still pass (88 total, only the 4 new RED tests fail)"
+    }
+  },
+  "phase2": {
+    "skipped_reason": "Pair tdd-red task — green/impl handled by T-PH004-16."
+  },
+  "phase3": {
+    "regression": {
+      "scope": "impacted",
+      "module": "servlet5",
+      "passed": 84,
+      "failed": 4,
+      "failed_breakdown": "4 failures are the new RED tests (intended). 84 pre-existing tests pass.",
+      "regressed_files": []
+    },
+    "mcp_calls": [
+      {
+        "tool": "add_completed_work",
+        "skipped_reason": "deferred to pair task T-PH004-16 (green) — kiwi-coder §6.2 single Task summary; red-only task tracked via worklog only"
+      }
+    ]
+  },
+  "dod_check": [
+    {
+      "item": "red 단계: 4개 test case 작성됨 (각 REQ AC 별 1개씩)",
+      "satisfied": true,
+      "evidence": "CookieAttributePolicyTest.java 신설, AC-1~AC-4 각각 1개 test_symbol (총 4)"
+    },
+    {
+      "item": "red 단계: 작성된 test 가 모두 실패(red) 함을 확인",
+      "satisfied": true,
+      "evidence": "gradlew :servlet5:test → 4 tests completed, 4 failed. exit_code=1"
+    }
+  ],
+  "files_changed": [
+    "servlet5/src/test/java/com/snoworca/CookieAttributePolicyTest.java",
+    "docs/plans/2026-05-19-jakarta-adapter-v1-0-0-v03.sidecar.json (tdd.red_evidence slot)"
+  ],
+  "spawn_mode": "agent",
+  "next_task_hint": "T-PH004-16 (green/impl) — servlet5/servlet6/servlet61 3 모듈에 setAttribute/getAttribute/getAttributes 구현"
+}

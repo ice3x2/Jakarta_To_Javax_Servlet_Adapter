@@ -1,0 +1,395 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "2026-05-19-jakarta-adapter-v1-0-0-v02.coder-0519",
+  "plan_run_id": "2026-05-19-jakarta-adapter-v1-0-0-v02",
+  "plan_path": "docs/plans/2026-05-19-jakarta-adapter-v1-0-0-v02.plan.md",
+  "sidecar_path": "docs/plans/2026-05-19-jakarta-adapter-v1-0-0-v02.sidecar.json",
+  "target": "v1.0.0",
+  "mode": "normal",
+  "flags": [
+    "--resume"
+  ],
+  "session_scope": "PH-001 + PH-002 (full) + PH-003 (T-PH003-01~04 = 4/21)",
+  "started_at": "2026-05-19T10:30:00Z",
+  "updated_at": "2026-05-19T06:10:02Z",
+  "frozen_at": null,
+  "current_phase_id": "PH-003",
+  "current_task_id": null,
+  "next_resume_hint": "phase-0 (queue T-PH003-09 진입 — FR-FIX-004 jakarta setResponseCharacterEncoding 교차 TDD red)",
+  "task_queue": [
+    "T-PH003-09",
+    "T-PH003-10",
+    "T-PH003-11",
+    "T-PH003-12",
+    "T-PH003-13",
+    "T-PH003-14",
+    "T-PH003-15",
+    "T-PH003-16",
+    "T-PH003-17",
+    "T-PH003-18",
+    "T-PH003-19",
+    "T-PH003-20",
+    "T-PH003-21",
+    "T-PH004-01",
+    "T-PH004-02",
+    "T-PH004-03",
+    "T-PH004-04",
+    "T-PH004-05",
+    "T-PH004-06",
+    "T-PH004-07",
+    "T-PH004-08",
+    "T-PH004-09",
+    "T-PH004-10",
+    "T-PH004-11",
+    "T-PH004-12",
+    "T-PH004-13",
+    "T-PH004-14",
+    "T-PH004-15",
+    "T-PH004-16",
+    "T-PH004-17",
+    "T-PH004-18",
+    "T-PH004-19",
+    "T-PH004-20",
+    "T-PH004-21",
+    "T-PH004-22",
+    "T-PH004-23",
+    "T-PH005-01",
+    "T-PH005-02",
+    "T-PH005-03",
+    "T-PH005-04",
+    "T-PH005-05",
+    "T-PH005-06",
+    "T-PH005-07",
+    "T-PH006-01",
+    "T-PH006-02",
+    "T-PH006-03",
+    "T-PH007-01",
+    "T-PH007-02",
+    "T-PH007-03",
+    "T-PH007-04",
+    "T-PH007-05",
+    "T-PH007-06",
+    "T-PH007-07"
+  ],
+  "completed_task_ids": [
+    "T-PH001-01",
+    "T-PH001-02",
+    "T-PH001-03",
+    "T-PH002-01",
+    "T-PH002-02",
+    "T-PH002-03",
+    "T-PH002-04",
+    "T-PH002-05",
+    "T-PH002-06",
+    "T-PH002-07",
+    "T-PH002-08",
+    "T-PH002-09",
+    "T-PH003-01",
+    "T-PH003-02",
+    "T-PH003-03",
+    "T-PH003-04",
+    "T-PH003-05",
+    "T-PH003-06",
+    "T-PH003-07",
+    "T-PH003-08"
+  ],
+  "skipped_task_ids": [],
+  "failed_task_ids": [],
+  "tdd_exempted_task_ids": [
+    "T-PH001-01",
+    "T-PH001-02",
+    "T-PH001-03",
+    "T-PH002-01",
+    "T-PH002-02",
+    "T-PH002-03",
+    "T-PH002-04",
+    "T-PH002-05",
+    "T-PH002-06",
+    "T-PH002-07",
+    "T-PH002-08",
+    "T-PH002-09"
+  ],
+  "tdd_pending_task_ids": [],
+  "severity_counters": {
+    "T-PH001_PH002_summary": "see earlier revision — all 12 task self_validated (file_op/exempt_reason rationale)",
+    "T-PH003-01": {
+      "phase1": {
+        "tdd_phase": "red",
+        "round": 1,
+        "S1": "HIGH 3 L-OPEN-8",
+        "S2": "HIGH 1 L-OPEN-9",
+        "S3": "PASS",
+        "S4": "PASS LOW 1",
+        "user_override": "옵션 A"
+      },
+      "phase2": {
+        "skipped_reason": "TDD red 작성 자체가 산출물 + Sonnet×4 다축"
+      }
+    },
+    "T-PH003-02": {
+      "phase1": {
+        "tdd_phase": "green",
+        "skipped": "T-PH003-01 산출 자동 충족"
+      },
+      "phase2": {
+        "skipped": "코드 변경 0건, BM10 PASS 직접 검증"
+      }
+    },
+    "T-PH003-03": {
+      "phase1": {
+        "tdd_phase": "red",
+        "round": 2,
+        "round1_S3": "CRITICAL 1 + HIGH 1",
+        "round1_S4": "HIGH 1",
+        "round2_S3": "PASS (CRITICAL/HIGH RESOLVED)",
+        "round2_direct": "4 fail Mockito WantedButNotInvoked, BUILD FAILED"
+      },
+      "phase2": {
+        "skipped": "TDD red, §5.1 spawn 생략 (§9 확장)"
+      }
+    },
+    "T-PH003-04": {
+      "phase1": {
+        "tdd_phase": "green",
+        "depends_on": "T-PH003-03 완료",
+        "skipped": "test 는 T-PH003-03 에서 작성"
+      },
+      "phase2": {
+        "senior_round": 1,
+        "formal_review_sonnet": {
+          "CRITICAL": 0,
+          "HIGH": 0,
+          "MEDIUM": 0,
+          "LOW": 0,
+          "pass": true,
+          "summary": "3 모듈 byte-for-byte 일치, ZERO TOLERANCE 부합, 양방향 대칭, CON-MOD-001 격리"
+        },
+        "prickly_review_opus": {
+          "CRITICAL": 0,
+          "HIGH": 0,
+          "MEDIUM": 0,
+          "LOW": 2,
+          "pass": true,
+          "summary": "7축 모두 PASS. LOW 2 = pre-existing 스타일 (read(byte[]) 의 inputstream.read(b,0,b.length) vs inputstream.read(b) + readLine override 의 @Override annotation 누락) — 본 task 범위 외"
+        },
+        "direct_verification": "StreamConverterDefectTest 4 PASS + BugMuseumTest BM01 pass 전환 + 3 모듈 compileJava PASS",
+        "aggregate": {
+          "CRITICAL": 0,
+          "HIGH": 0,
+          "MEDIUM": 0,
+          "LOW": 2,
+          "gate_pass": true
+        }
+      }
+    },
+    "T-PH003-05": {
+      "phase1": {
+        "tdd_phase": "red",
+        "round": 1,
+        "S1": "PASS LOW 2",
+        "S2": "HIGH 2 (L-OPEN-14/15)",
+        "S3": "PASS",
+        "S4": "PASS (4/4 FAILED, SOE @ Part.java:52)",
+        "user_override": "옵션 A"
+      },
+      "phase2": {
+        "skipped_reason": "TDD red 작성 자체가 산출물 + Sonnet×4 다축"
+      }
+    },
+    "T-PH003-06": {
+      "phase1": {
+        "tdd_phase": "green",
+        "skipped": "test 는 T-PH003-05 에서 작성"
+      },
+      "phase2": {
+        "senior_round": 1,
+        "formal_review_sonnet": {
+          "CRITICAL": 0,
+          "HIGH": 0,
+          "MEDIUM": 0,
+          "LOW": 0,
+          "pass": true,
+          "summary": "3 jakarta fix byte-for-byte, javax 무변경 (이미 정상), compile PASS, PartDefectTest 4/4 + BM02 PASS"
+        },
+        "prickly_review_opus": {
+          "CRITICAL": 0,
+          "HIGH": 0,
+          "MEDIUM": 0,
+          "LOW": 2,
+          "pass": true,
+          "summary": "7축 모두 PASS. LOW 2 = catch fallback 정보성 + servlet6/61 PartDefectTest 미러링 개선 제안 (L-OPEN-16)"
+        },
+        "direct_verification": "PartDefectTest 4/4 PASS + BM02 PASS + compile PASS",
+        "aggregate": {
+          "CRITICAL": 0,
+          "HIGH": 0,
+          "MEDIUM": 0,
+          "LOW": 2,
+          "gate_pass": true
+        }
+      }
+    },
+    "T-PH003-07": {
+      "phase1": {
+        "tdd_phase": "red",
+        "round": 1,
+        "S1": "PASS (MINOR_GAP 1, L-OPEN-17)",
+        "S2": "PASS MEDIUM 2 LOW 2 (stylistic)",
+        "S3": "PASS",
+        "S4": "PASS (3/3 FAILED, exit 1)"
+      },
+      "phase2": {
+        "skipped_reason": "TDD red 작성+Sonnet×4"
+      }
+    },
+    "T-PH003-08": {
+      "phase1": {
+        "tdd_phase": "green",
+        "skipped": "test 는 T-PH003-07 에서 작성"
+      },
+      "phase2": {
+        "senior_round": 1,
+        "formal_review_sonnet": {
+          "CRITICAL": 0,
+          "HIGH": 0,
+          "MEDIUM": 0,
+          "LOW": 1,
+          "pass": true,
+          "summary": "3 jakarta L82 byte-for-byte fix, compile PASS, 3/3 PASS, BM05 PASS. LOW 1 git untracked 감사 추적 사항"
+        },
+        "prickly_review_opus": {
+          "CRITICAL": 0,
+          "HIGH": 0,
+          "MEDIUM": 0,
+          "LOW": 1,
+          "pass": true,
+          "summary": "7축 PASS. LOW 1 servlet6/61 ServletResponseDefectTest mirror 부재 (L-OPEN-16 동질, L-OPEN-18 등재)"
+        },
+        "direct_verification": "ServletResponseDefectTest 3/3 PASS + BM05 PASS + 3 compile PASS",
+        "aggregate": {
+          "CRITICAL": 0,
+          "HIGH": 0,
+          "MEDIUM": 0,
+          "LOW": 2,
+          "gate_pass": true
+        }
+      }
+    }
+  },
+  "regression_summary": {
+    "last_run_at": "2026-05-19T13:55:00Z",
+    "scope": "impacted-only + cross-module compileJava",
+    "passed": 7,
+    "failed_intentional": 8,
+    "regressed_files": [],
+    "skip_reason": "T-PH003-04 후: ./gradlew :servlet5:test --tests StreamConverterDefectTest = 4 PASS (FR-FIX-001 green 전환). BugMuseumTest = 15 test (BM01 + BM10 + 5 META = 7 pass / BM02~BM09 = 8 fail = 후속 task 책임). 3 모듈 compileJava PASS. PH-005 시점에 src/test/java 의 2 test 이동 + 전체 회귀 정상화."
+  },
+  "mcp_call_log_summary": "16 entries total (T-PH001~003 모두 add_completed_work ok=true). T-PH003-04 entry 추가 (2026-05-19T13:55Z): 'FR-FIX-001 green impl 3 모듈 + StreamConverterDefectTest 4 PASS + BM01 pass'.",
+  "pending_mutations": [],
+  "tool_versions": {
+    "kiwi_planner": "0.6.0",
+    "kiwi_coder": "0.1.9",
+    "speckiwi": "2.2.2",
+    "gradle_wrapper": "8.10.2"
+  },
+  "phase0_validator_warning": {
+    "errors": 1,
+    "warnings": 0,
+    "remaining": "C15 only",
+    "user_acked": true,
+    "acked_at": "2026-05-19T10:28:00Z"
+  },
+  "l_open": [
+    {
+      "id": "L-OPEN-1",
+      "title": "planner Phase 5 mutation 169건 미실행",
+      "priority": "low"
+    },
+    {
+      "id": "L-OPEN-2",
+      "title": "36 REQ block Verification Evidence 표 부재",
+      "priority": "low (자동 해소)"
+    },
+    {
+      "id": "L-OPEN-3",
+      "title": "src/test/java 2 test 파일 미이동 (PH-005)",
+      "priority": "PH-005"
+    },
+    {
+      "id": "L-OPEN-4",
+      "title": "ConverterSupport.java 미사용",
+      "priority": "low"
+    },
+    {
+      "id": "L-OPEN-5",
+      "title": "gradle-wrapper.jar 신규 + distributionUrl 변경",
+      "priority": "커밋 시점"
+    },
+    {
+      "id": "L-OPEN-6",
+      "title": "gradle.properties toolchain paths",
+      "priority": "PH-006"
+    },
+    {
+      "id": "L-OPEN-7",
+      "title": "T-PH002-07 artifactId prefix mismatch",
+      "priority": "PH-007"
+    },
+    {
+      "id": "L-OPEN-8",
+      "title": "T-PH003-01 sidecar.tdd ac_refs ↔ SRS FR-TEST-004 AC 매핑 모순",
+      "priority": "low (planner 책임, PH-007)"
+    },
+    {
+      "id": "L-OPEN-9",
+      "title": "BugMuseumTest BM10/META AC-3 parallel test latent ThreadLocal race",
+      "priority": "PH-005"
+    },
+    {
+      "id": "L-OPEN-10",
+      "title": "T-PH003-03 sidecar test_symbol ↔ round 2 body 의미 미스매치 (INFO)",
+      "priority": "PH-007"
+    },
+    {
+      "id": "L-OPEN-11",
+      "title": "T-PH003-04 까칠 리뷰 LOW 2: read(byte[]) overload pre-existing 비대칭 + readLine override @Override 누락",
+      "priority": "low (pre-existing 또는 stylistic, FR-FIX-001 범위 외, 후속 refactor task 또는 자체 cleanup 시점)"
+    },
+    {
+      "id": "L-OPEN-12",
+      "title": "T-PH003-05 sidecar action AC-3 label \"jakarta_javax_symmetry\" ↔ SRS AC-3 \"BM02 회귀 통과\" 의미 미스매치 (LOW S1)",
+      "priority": "PH-007 (planner 책임)"
+    },
+    {
+      "id": "L-OPEN-13",
+      "title": "T-PH003-05 AC-4 IT08 통합테스트 proxy 와 실제 Tomcat embed HTTP 멀티파트 의미 간극 (LOW S1)",
+      "priority": "PH-005 (IT08 통합테스트 작성 시점)"
+    },
+    {
+      "id": "L-OPEN-14",
+      "title": "T-PH003-05 AC-4 direction A 의 SOE 가 direction B 진입 차단 → red 에서 verify-first 패턴 무효 (HIGH S2, green 후 자동 해소)",
+      "priority": "auto-resolved (T-PH003-06 green 후)"
+    },
+    {
+      "id": "L-OPEN-15",
+      "title": "T-PH003-05 AC-1 assertion 메시지 (\"adapter must not throw...\") ↔ 클래스 javadoc 약속 시그니처 (\"expected: ... got: StackOverflowError\") 불일치 (HIGH S2, stylistic)",
+      "priority": "PH-007 (refactor 시점)"
+    },
+    {
+      "id": "L-OPEN-16",
+      "title": "T-PH003-06 까칠 LOW 2: catch(Exception) fallback 제거 정보성 + servlet6/61 PartDefectTest 미러링 부재 (개선 제안)",
+      "priority": "low (3 모듈 byte-for-byte 일치로 회귀 검출 가능)"
+    },
+    {
+      "id": "L-OPEN-17",
+      "title": "T-PH003-07 sidecar AC-3 label \"origin_method_invoked\" ↔ SRS AC-3 \"BM05 회귀 통과\" 부분 표현 (S1 MINOR_GAP, 테스트 코드 자체는 정확)",
+      "priority": "PH-007 (planner 책임)"
+    },
+    {
+      "id": "L-OPEN-18",
+      "title": "T-PH003-08 까칠 LOW 1: servlet6/61 측 ServletResponseDefectTest mirror 부재 (L-OPEN-16 과 동질, 회귀는 servlet5 만 커버)",
+      "priority": "low (3 모듈 byte-for-byte 일치로 검출 가능)"
+    }
+  ],
+  "session_decisions_log_summary": "12 entries — PH-001 PH-002 PH-003 의 모든 결정 요약. PH-003-04 신규: §13 formal/prickly review spawn 정상 의무 발동 (production 코드 변경, §9 정책 — green/refactor task 부터). §14 까칠 리뷰 LOW 2 = pre-existing 스타일 (FR-FIX-001 범위 외, L-OPEN-11 등재 + 진행). PH-003 의 후속 8 페어 (T-PH003-05~20) 도 동일 패턴 (red TDD → green impl) 반복 예상."
+}

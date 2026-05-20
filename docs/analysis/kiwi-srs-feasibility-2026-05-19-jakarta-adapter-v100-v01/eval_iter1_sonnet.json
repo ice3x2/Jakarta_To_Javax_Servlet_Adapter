@@ -1,0 +1,137 @@
+{
+  "evaluator": "sonnet",
+  "run_id": "2026-05-19.jakarta-adapter.v100.v01",
+  "eval_iter": 1,
+  "evaluated_at": "2026-05-19",
+  "axes_evaluated": ["A1","A2","A3","A4","A5","A6","A7","A8","A9","A10"],
+  "total_findings": 6,
+  "findings_by_severity": {"CRIT": 0, "HIGH": 2, "MED": 3, "LOW": 1},
+  "clean_axes": ["A1_per_label","A2","A4","A7","A8"],
+  "findings": [
+    {
+      "finding_id": 1,
+      "axis": "A9",
+      "req_id": "MIG-REL-001",
+      "severity": "HIGH",
+      "finding_hash": "a8825012c4384197d16ffc0ed8bf3cc674cda031",
+      "title": "MIG-REL-001: stated score(50) != axes_sum(56), diff=-6",
+      "detail": "Axes: implementability=14, evidence_strength=10, dependency_health=10, ac_verifiability=7, scope_fit=10, product_fit=5. Sum=56. Stated score=50. Delta of -6. Score is understated. The label 'low' is consistent with stated score(50) in range [40-59], but is inconsistent with the actual arithmetic sum(56) which is also in [40-59], so label remains valid. However the score field itself is arithmetically wrong, which undermines A9 integrity for downstream consumers.",
+      "evidence_path": "_",
+      "recommendation": "Correct MIG-REL-001 score field to 56 in per-req-judgement.json."
+    },
+    {
+      "finding_id": 2,
+      "axis": "A9",
+      "req_id": "OPS-REL-001",
+      "severity": "HIGH",
+      "finding_hash": "109ecc2cc13614fcde5352de832cd7dbd7ced4b2",
+      "title": "OPS-REL-001: stated score(55) != axes_sum(62), diff=-7",
+      "detail": "Axes: implementability=16, evidence_strength=11, dependency_health=12, ac_verifiability=8, scope_fit=10, product_fit=5. Sum=62. Stated score=55. Delta of -7. Score is understated. Axes_sum=62 falls in medium range [60-79], but stated score 55 maps to 'low' [40-59]. The label 'low' is consistent with stated score but would be 'medium' if the correct axes_sum(62) were used. This is a A1+A9 combined issue: the arithmetic error also causes the feasibility label to be inconsistent with the real axes sum.",
+      "evidence_path": "_",
+      "recommendation": "Correct OPS-REL-001 score to 62 and reconsider label (should be 'medium' by rubric if axes_sum is authoritative). Then re-evaluate mutation-plan for this REQ: medium -> draft is still likely given blockers."
+    },
+    {
+      "finding_id": 3,
+      "axis": "A1",
+      "req_id": "_",
+      "severity": "MED",
+      "finding_hash": "9ea501dd57a69d411091a3bb5562ab41c5ca1772",
+      "title": "per-req-judgement.json feasibility_label_counts summary field is wrong",
+      "detail": "The summary field 'feasibility_label_counts' states {high:38, medium:4, low:2, blocked:0}. Actual count from individual judgements: {high:39, medium:3, low:2}. The 'score_distribution' field has the same error: {high_80plus:38, medium_60_79:4}. The per-REQ labels are all individually consistent with their stated scores (A1 per-label PASS), but the aggregate summary is wrong. One REQ (FR-TEST-002, score=80, label=high) appears miscounted in the summary — likely counted as medium due to an off-by-one boundary error during summary aggregation.",
+      "evidence_path": "_",
+      "recommendation": "Recount and correct feasibility_label_counts and score_distribution summary fields. Actual: high=39, medium=3, low=2."
+    },
+    {
+      "finding_id": 4,
+      "axis": "A6",
+      "req_id": "FR-TEST-003",
+      "severity": "MED",
+      "finding_hash": "b065349cfd0b6eb202a550033d43c1bc7625a9c4",
+      "title": "FR-TEST-003: mutation uses non-policy rule (medium+has_verification -> evolving via rule_index=1)",
+      "detail": "policy_context.json defines §0.G6 rules as: index 0=high+has_verification->stable (blocked by planned_status_override->evolving), index 1=high+default->evolving, index 2=medium+default->keep(draft). FR-TEST-003 has feasibility=medium and is assigned matched_rule_index=1 (the 'high' rule) in mutation-plan, resulting in evolving instead of draft. The reason field acknowledges this is non-standard ('medium -> keep == draft 이나 has_verification=true 로 한 단계 upgrade'). No explicit policy rule supports medium+has_verification->evolving. This deviates from §0.G6 without a formal policy extension.",
+      "evidence_path": "_",
+      "recommendation": "Either add an explicit policy rule for medium+has_verification->evolving in policy_context.json (or a project stability.json policy file), or revert FR-TEST-003 to draft and document the exception. The current approach requires user-explicit confirmation per §0.G6 spirit."
+    },
+    {
+      "finding_id": 5,
+      "axis": "A6",
+      "req_id": "_",
+      "severity": "MED",
+      "finding_hash": "eb7142ecfebb1968f4382b79db644a092e3000eb",
+      "title": "A6 mutation-plan distribution diverges from policy-derived expectation",
+      "detail": "Per actual judgement counts: high=39, medium=3 (FR-TEST-003+FR-TEST-005+OPS-TEST-001), low=2. Strict §0.G6 mapping yields: evolving=39 (all high), draft=5 (3 medium + 2 low). mutation-plan reports evolving=40, draft=4. The difference is exactly the FR-TEST-003 non-standard upgrade (finding_id=4). Additionally the task prompt's expectation ('high 38 -> evolving 38, medium 4 -> draft 4, low 2 -> draft 2') used wrong counts from the flawed summary field. Corrected expectation: high 39 -> evolving 39, medium 3 -> draft 3 (or evolving 1 + draft 2 with policy extension), low 2 -> draft 2.",
+      "evidence_path": "_",
+      "recommendation": "After fixing finding_id 1-4, recompute distribution. Expected result with no policy extension: evolving=39, draft=5."
+    },
+    {
+      "finding_id": 6,
+      "axis": "A10",
+      "req_id": "_",
+      "severity": "LOW",
+      "finding_hash": "209be4fd498662467cb04264c3a3536874c75610",
+      "title": "mcp_call_log key absent from both mutation-plan.json and synthesis.json",
+      "detail": "A10 requires mutation-plan to confirm no MCP calls were executed (mcp_call_log=[]). The key 'mcp_call_log' is absent from mutation-plan.json and synthesis.json. While this does not prove mutations were applied (mode='proposal' is stated, and guard_blocked=0 + dryrun_guard_verdict=pending for all entries are correct signals), the missing key leaves A10 formally unverifiable from structure alone.",
+      "evidence_path": "_",
+      "recommendation": "Add 'mcp_call_log': [] field to mutation-plan.json and synthesis.json to satisfy A10 structural completeness."
+    }
+  ],
+  "axis_summary": {
+    "A1_per_label": {
+      "result": "PASS",
+      "note": "All 44 per-REQ (req_id, feasibility, score) triples are self-consistent. high>=80, medium=60-79, low=40-59 holds for all. The summary aggregate field is wrong (see finding_id=3) but individual labels are correct."
+    },
+    "A2": {
+      "result": "PASS",
+      "sample_verified": 5,
+      "verified_paths": [
+        "src/main/java/adapter/servletElementConverter/StreamConverter.java (EXISTS, L41 readLine confirmed)",
+        "src/main/java/adapter/jakarta/servlet/http/Part.java (EXISTS, L52 self-recursion confirmed)",
+        "src/main/java/adapter/servletElementConverter/ServletReqResConverter.java (EXISTS, L14/L18 instanceof namespace confirmed)",
+        "src/main/java/adapter/jakarta/servlet/ServletResponse.java (EXISTS, L82 narrow cast confirmed)",
+        "src/main/java/adapter/jakarta/servlet/http/HttpServletRequest.java (EXISTS)",
+        "settings.gradle, build.gradle, README.md (all EXISTS)"
+      ],
+      "note": "Addition_site paths (common/, servlet6/, servlet61/, bom/) are legitimately absent as new modules. All sampled existing-code traces confirmed valid."
+    },
+    "A3": {
+      "result": "PASS",
+      "note": "Sample of AC statements reviewed via per-req-judgement.json ac_verifiability fields. ACs are measurable propositions (grep outputs, gradle task results, Mockito verify, JUnit assertions). No abstract/unmeasurable ACs detected in sample."
+    },
+    "A4": {
+      "result": "PASS",
+      "note": "DFS on 39 depends_on edges across 44 nodes. Zero cycles detected. The bidirectional relates_to between FR-CONV-006 and FR-FIX-009 is a relates_to relation (not depends_on) and does not form a dependency cycle."
+    },
+    "A5": {
+      "result": "WARN",
+      "note": "Two blockers exist (MIG-REL-001 and OPS-REL-001). Neither is in path:line format — both are descriptive text referencing open questions (OQ-001, OQ-003). This is acceptable for open-question type blockers which have no code path, but formally fails the path:line requirement. Severity LOW-MED; no path:line is possible for external/decision blockers."
+    },
+    "A6": {
+      "result": "FAIL",
+      "findings": [3, 4, 5],
+      "note": "Distribution mismatch: stated summary counts wrong; FR-TEST-003 uses non-policy rule. See findings 3, 4, 5."
+    },
+    "A7": {
+      "result": "PASS",
+      "note": "All 44 entries in mutation-plan.plan have dryrun_guard_verdict='pending'. No premature dryRun execution."
+    },
+    "A8": {
+      "result": "PASS",
+      "note": "No REQ has feasibility=blocked. All statuses are 'planned'. No A8 conflicts possible in this run."
+    },
+    "A9": {
+      "result": "FAIL",
+      "findings": [1, 2],
+      "note": "2 of 44 REQs have stated score != axes_sum. MIG-REL-001: diff=-6 (50 vs 56). OPS-REL-001: diff=-7 (55 vs 62). 42 REQs pass arithmetic check."
+    },
+    "A10": {
+      "result": "WARN",
+      "findings": [6],
+      "note": "mcp_call_log key absent. Mutations not applied is inferred from mode='proposal' and all dryrun_guard_verdict='pending', but structural key is missing."
+    }
+  },
+  "gate_recommendation": {
+    "severity_gate": "HIGH=2, CRIT=0",
+    "gate_pass": false,
+    "reason": "2 HIGH findings (A9 arithmetic errors for MIG-REL-001 and OPS-REL-001) must be corrected before Phase 7 apply. The errors are in score fields only; labels remain plausible after correction. Fix is mechanical (correct 2 score values, recount summary). No blocker to overall conditional-ready verdict."
+  }
+}

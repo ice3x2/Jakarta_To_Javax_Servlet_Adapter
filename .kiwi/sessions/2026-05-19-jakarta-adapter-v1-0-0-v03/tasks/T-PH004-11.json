@@ -1,0 +1,56 @@
+{
+  "task_id": "T-PH004-11",
+  "started_at": "2026-05-20T00:00:00.000Z",
+  "completed_at": "2026-05-20T00:00:00.000Z",
+  "phase1": {
+    "tdd_draft_iters": [
+      {
+        "iter": 1,
+        "file_paths": [
+          "servlet5/src/test/java/com/snoworca/DiagnosticsTest.java",
+          "servlet5/src/test/java/com/snoworca/LoggingDedupTest.java"
+        ],
+        "loc_added": 545,
+        "loc_removed": 0,
+        "note": "RED phase only — reflection-based missing-helper detection (T-PH004-09 StrictModeTest pattern). DiagnosticsTest hosts 3 canonical sidecar test_cases (FRCONV012_AC1/AC2/AC3). LoggingDedupTest hosts 2 supplementary AC-1 tests (WARN/INFO level split + reset re-emit) to honor sidecar.files[] declaration."
+      }
+    ],
+    "sonnet4_reviews": [],
+    "red_evidence": {
+      "command": "./gradlew :servlet5:test --tests *shouldProvideFallbackVisibilityWithLoggingAndDiagnostics*",
+      "exit_code": 1,
+      "captured_failure": "expected: once-per-method dedup logger + opt-in diagnostics map, got: missing helpers — ConverterSupport.LOGGER_NAME field not declared / com.snoworca.ServletAdapter#diagnostics not declared / adapter.common.ConverterSupport#initDiagnosticsFromSystemProperty not declared",
+      "timestamp": "2026-05-20T00:00:00.000Z"
+    },
+    "red_evidence_meta": {
+      "tests_run": 3,
+      "tests_failed": 3,
+      "failed_test_case_ids": [
+        "TC-REQ-FR-CONV-012-AC1-01",
+        "TC-REQ-FR-CONV-012-AC2-01",
+        "TC-REQ-FR-CONV-012-AC3-01"
+      ],
+      "test_report": "servlet5/build/test-results/test/TEST-com.snoworca.DiagnosticsTest.xml",
+      "supplementary_tests_in_LoggingDedupTest": 2,
+      "supplementary_tests_failed": 2,
+      "signature_match": "all 3 failures begin with expected_failure_signature prefix 'expected: once-per-method dedup logger + opt-in diagnostics map, got: missing helpers'"
+    }
+  },
+  "phase2": {
+    "note": "RED-only task. GREEN is T-PH004-12 (separate task)."
+  },
+  "phase3": {
+    "regression": {
+      "scope": "impacted-only",
+      "passed": true,
+      "command": "./gradlew :servlet5:test --tests *shouldProvideFallbackVisibilityWithLoggingAndDiagnostics*",
+      "exit_code": 1,
+      "note": "RED phase expects exit_code=1 (sidecar.acceptance_tests[0].expected_exit=1). PASS by intentional-fail definition."
+    },
+    "mcp_calls": []
+  },
+  "dod_check": [
+    {"item": "red 단계: 3개 test case 작성됨 (각 REQ AC 별 1개씩)", "satisfied": true, "evidence": "DiagnosticsTest.java contains _FRCONV012_AC1/AC2/AC3 (TC-REQ-FR-CONV-012-AC1-01/AC2-01/AC3-01)"},
+    {"item": "red 단계: 작성된 test 가 모두 실패(red) 함을 확인", "satisfied": true, "evidence": "3/3 FAILED with expected_failure_signature prefix match"}
+  ]
+}

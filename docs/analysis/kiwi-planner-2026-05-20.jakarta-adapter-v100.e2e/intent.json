@@ -1,0 +1,19 @@
+{
+  "target_intent": "v1.0.0 출시 전 검증 테스트 인프라(IT/CI/단위 backfill) 보강으로 상용 검증 부족 해소",
+  "user_priorities": [
+    "Tomcat embed IT01~IT15 작성 (FR-TEST-003)",
+    "CI matrix workflow 작성 (OPS-TEST-001)",
+    "servlet6/61 어댑터 단위 테스트 backfill (FR-TEST-001, 0/43→full)",
+    "BugMuseum BM01~BM10 servlet5 완성 + servlet6/61 미러 (FR-TEST-004)",
+    "JaCoCo 게이트 정합성 결정 (NFR-TEST-001)"
+  ],
+  "ambiguities": [
+    "NFR-TEST-001 SRS-build.gradle 정합성 갭 (95%/100% vs 60%/50%) 해결 방향 — Change Notes / NFR 분리 / build 맞춤 3지선다"
+  ],
+  "non_coding_signals": [
+    "GitHub Actions ci.yml 작성 (infra)",
+    "README/CHANGELOG 보완 (doc)",
+    "NFR-TEST-001 SRS sync 결정 (doc, business-decision)"
+  ],
+  "source_ssot": "docs/analysis/kiwi-srs-feasibility-2026-05-20.jakarta-adapter.v100.v02/report.md §8"
+}
