@@ -1,0 +1,52 @@
+{
+  "task_id": "T-PH001-03",
+  "phase_id": "PH-001",
+  "started_at": "2026-05-20T14:05:00Z",
+  "completed_at": "2026-05-20T14:08:00Z",
+  "status": "done",
+  "tdd_exempted": true,
+  "exempt_reason": "build.gradle 의존성 추가는 빌드 구성 변경으로 단위 테스트 대상이 아니며, AC 검증은 dependencies 명령 출력으로 수행",
+  "phase1": {
+    "skipped": true,
+    "reason": "tdd.applicable=false with exempt_reason — auto-skip per §0.G1"
+  },
+  "phase2": {
+    "impl_iters": [
+      {
+        "iter": 1,
+        "files_changed": ["servlet61/build.gradle"],
+        "loc_added": 5,
+        "loc_removed": 0,
+        "notes": "dependencies 블록에 testImplementation tomcat-embed-core:11.0.0 + awaitility:4.2.1 추가, @req FR-TEST-003 주석 부착 (T-PH001-02 패턴 일치)"
+      }
+    ],
+    "acceptance_test_result": {
+      "command": "gradlew.bat :servlet61:dependencies --configuration testRuntimeClasspath",
+      "exit_code": 0,
+      "stdout_match": ["tomcat-embed-core:11.0.0", "awaitility:4.2.1"],
+      "build_status": "BUILD SUCCESSFUL"
+    },
+    "dod_check": [
+      {
+        "item": "dependencies 명령 출력에 tomcat-embed-core:11.0.0 및 awaitility:4.2.1 포함",
+        "satisfied": true,
+        "evidence": "gradle dependencies testRuntimeClasspath output line: org.apache.tomcat.embed:tomcat-embed-core:11.0.0 + org.awaitility:awaitility:4.2.1"
+      },
+      {
+        "item": "servlet61 단위 테스트 33건 회귀 PASS",
+        "satisfied": true,
+        "evidence": "gradlew :servlet61:test BUILD SUCCESSFUL. test-results: AdapterUnwrapAllClassesTest(7)+FallbackPolicyTest(6)+RequestIdTest(2)+SendRedirect61Test(5)+Servlet61ContractTest(13)=33, failures=0, errors=0"
+      }
+    ]
+  },
+  "phase3": {
+    "regression": {
+      "scope": "impacted-only",
+      "command": "gradlew :servlet61:test",
+      "passed": 33,
+      "failed": 0,
+      "build_status": "BUILD SUCCESSFUL"
+    },
+    "mcp_calls": []
+  }
+}

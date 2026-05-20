@@ -391,7 +391,11 @@
           }
         ],
         "red_evidence": null,
-        "green_evidence": null
+        "green_evidence": {
+          "command": "gradlew.bat :servlet5:integrationTest :servlet6:integrationTest :servlet61:integrationTest --tests com.snoworca.adapter.it.TomcatRunnerSmokeTest",
+          "exit_code": 0,
+          "timestamp": "2026-05-20T00:00:00Z"
+        }
       },
       "depends_on_task": [
         "T-PH001-01",

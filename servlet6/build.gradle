@@ -63,6 +63,11 @@ dependencies {
 
     // FR-TEST-002 — shared DelegationContractTest driver from common testFixtures.
     testImplementation testFixtures(project(':common'))
+
+    // @req FR-TEST-003 — Tomcat embed 10.1.x (Servlet 6.0 / Jakarta) for E2E integration tests (T-PH001-02).
+    testImplementation 'org.apache.tomcat.embed:tomcat-embed-core:10.1.30'
+    // @req FR-TEST-003 — Awaitility for async assertion polling in integration tests (T-PH001-02).
+    testImplementation 'org.awaitility:awaitility:4.2.1'
 }
 
 // @req NFR-TEST-001 — servlet6 module coverage gate (T-PH005-06).

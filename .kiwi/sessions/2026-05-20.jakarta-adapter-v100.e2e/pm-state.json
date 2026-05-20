@@ -1,0 +1,32 @@
+{
+  "run_id": "2026-05-20.jakarta-adapter-v100.e2e",
+  "plan_path": "docs/plans/2026-05-20.jakarta-adapter-v100.e2e.plan.md",
+  "sidecar_path": "docs/plans/2026-05-20.jakarta-adapter-v100.e2e.sidecar.json",
+  "plan_sha256": "3f2c766d80693564",
+  "sidecar_sha256": "c4a7f3af8a138793",
+  "target_slug": "v1.0.0",
+  "started_at": "2026-05-20T14:00:00Z",
+  "last_updated_at": "2026-05-20T14:08:00Z",
+  "pm_version": "0.1",
+  "scope_note": "PH-001 only — user requested partial execution",
+  "tasks": [
+    {"task_id": "T-PH001-01", "phase_id": "PH-001", "status": "done", "tdd_exempted": true, "trace_req_ids": ["FR-TEST-003"], "attempts": 1, "completed_at": "2026-05-20T14:02:00Z"},
+    {"task_id": "T-PH001-02", "phase_id": "PH-001", "status": "done", "tdd_exempted": true, "trace_req_ids": ["FR-TEST-003"], "attempts": 1, "completed_at": "2026-05-20T14:05:00Z"},
+    {"task_id": "T-PH001-03", "phase_id": "PH-001", "status": "done", "tdd_exempted": true, "trace_req_ids": ["FR-TEST-003"], "attempts": 1, "completed_at": "2026-05-20T14:08:00Z"},
+    {"task_id": "T-PH001-04", "phase_id": "PH-001", "status": "done", "tdd_exempted": false, "trace_req_ids": ["FR-TEST-003"], "attempts": 1, "completed_at": "2026-05-20T14:15:00Z"}
+  ],
+  "stats": {"total": 4, "done": 4, "running": 0, "pending": 0, "failed": 0, "blocked": 0, "skipped": 0},
+  "halted_at_boundary": "PH-002 (user requested PH-001-only partial execution)",
+  "last_question": null,
+  "last_error": null,
+  "lifecycle_gate_state": {
+    "evaluated_at": "2026-05-20T14:00:00Z",
+    "blocked_req_ids": [],
+    "note": "7 plan REQs all evolving/stable per prior kiwi-srs-feasibility report; FR-TEST-005/OPS-REL-001 draft already excluded by planner"
+  },
+  "req_coverage": {},
+  "final_mutations": [],
+  "pending_mutations": [],
+  "report_path": null,
+  "doculight_viewer_id": null
+}
