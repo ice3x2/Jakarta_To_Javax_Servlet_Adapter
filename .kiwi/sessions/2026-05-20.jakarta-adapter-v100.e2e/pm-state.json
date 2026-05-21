@@ -3,20 +3,456 @@
   "plan_path": "docs/plans/2026-05-20.jakarta-adapter-v100.e2e.plan.md",
   "sidecar_path": "docs/plans/2026-05-20.jakarta-adapter-v100.e2e.sidecar.json",
   "plan_sha256": "3f2c766d80693564",
-  "sidecar_sha256": "c4a7f3af8a138793",
+  "sidecar_sha256": "5e1675e08828d825",
   "target_slug": "v1.0.0",
   "started_at": "2026-05-20T14:00:00Z",
-  "last_updated_at": "2026-05-20T14:08:00Z",
+  "last_updated_at": "2026-05-20T17:19:20.041Z",
   "pm_version": "0.1",
-  "scope_note": "PH-001 only — user requested partial execution",
+  "scope_note": "PH-004 BM01~BM10 회귀+미러 재개 (T-PH004-01부터)",
   "tasks": [
-    {"task_id": "T-PH001-01", "phase_id": "PH-001", "status": "done", "tdd_exempted": true, "trace_req_ids": ["FR-TEST-003"], "attempts": 1, "completed_at": "2026-05-20T14:02:00Z"},
-    {"task_id": "T-PH001-02", "phase_id": "PH-001", "status": "done", "tdd_exempted": true, "trace_req_ids": ["FR-TEST-003"], "attempts": 1, "completed_at": "2026-05-20T14:05:00Z"},
-    {"task_id": "T-PH001-03", "phase_id": "PH-001", "status": "done", "tdd_exempted": true, "trace_req_ids": ["FR-TEST-003"], "attempts": 1, "completed_at": "2026-05-20T14:08:00Z"},
-    {"task_id": "T-PH001-04", "phase_id": "PH-001", "status": "done", "tdd_exempted": false, "trace_req_ids": ["FR-TEST-003"], "attempts": 1, "completed_at": "2026-05-20T14:15:00Z"}
+    {
+      "task_id": "T-PH001-01",
+      "phase_id": "PH-001",
+      "status": "done",
+      "tdd_exempted": true,
+      "trace_req_ids": [
+        "FR-TEST-003"
+      ],
+      "attempts": 1,
+      "completed_at": "2026-05-20T14:02:00Z"
+    },
+    {
+      "task_id": "T-PH001-02",
+      "phase_id": "PH-001",
+      "status": "done",
+      "tdd_exempted": true,
+      "trace_req_ids": [
+        "FR-TEST-003"
+      ],
+      "attempts": 1,
+      "completed_at": "2026-05-20T14:05:00Z"
+    },
+    {
+      "task_id": "T-PH001-03",
+      "phase_id": "PH-001",
+      "status": "done",
+      "tdd_exempted": true,
+      "trace_req_ids": [
+        "FR-TEST-003"
+      ],
+      "attempts": 1,
+      "completed_at": "2026-05-20T14:08:00Z"
+    },
+    {
+      "task_id": "T-PH001-04",
+      "phase_id": "PH-001",
+      "status": "done",
+      "tdd_exempted": false,
+      "trace_req_ids": [
+        "FR-TEST-003"
+      ],
+      "attempts": 1,
+      "completed_at": "2026-05-20T14:15:00Z"
+    },
+    {
+      "task_id": "T-PH002-01",
+      "phase_id": "PH-002",
+      "status": "done",
+      "tdd_exempted": false,
+      "trace_req_ids": [],
+      "attempts": 1,
+      "started_at": "2026-05-20T14:30:00Z",
+      "ended_at": "2026-05-20T07:41:15Z",
+      "coder_run_id": "2026-05-20.jakarta-adapter-v100.e2e.coder-0520",
+      "result_summary": "IT01 GET 3 모듈 PASS, sidecar.tdd.green_evidence 채움"
+    },
+    {
+      "task_id": "T-PH002-02",
+      "phase_id": "PH-002",
+      "status": "done",
+      "tdd_exempted": false,
+      "trace_req_ids": [],
+      "attempts": 1,
+      "started_at": "2026-05-20T07:41:15Z",
+      "ended_at": "2026-05-20T07:45:38Z",
+      "coder_run_id": "2026-05-20.jakarta-adapter-v100.e2e.coder-0520",
+      "result_summary": "IT02 POST 6 TC PASS (form-urlencoded + chunked body 3 모듈)"
+    },
+    {
+      "task_id": "T-PH002-03",
+      "phase_id": "PH-002",
+      "status": "done",
+      "tdd_exempted": false,
+      "trace_req_ids": [],
+      "attempts": 1,
+      "started_at": "2026-05-20T07:45:38Z",
+      "ended_at": "2026-05-20T07:50:18Z",
+      "coder_run_id": "2026-05-20.jakarta-adapter-v100.e2e.coder-0520",
+      "result_summary": "IT03 Cookie 6 속성 round-trip PASS 3 모듈"
+    },
+    {
+      "task_id": "T-PH002-04",
+      "phase_id": "PH-002",
+      "status": "done",
+      "tdd_exempted": false,
+      "trace_req_ids": [],
+      "attempts": 1,
+      "started_at": "2026-05-20T07:50:18Z",
+      "ended_at": "2026-05-20T07:55:28Z",
+      "coder_run_id": "2026-05-20.jakarta-adapter-v100.e2e.coder-0520",
+      "result_summary": "IT04 SameSite/Partitioned lossy 회귀 8 TC PASS (servlet6+61). plan DoD/SRS AC-4 충돌 — SRS SSOT 채택"
+    },
+    {
+      "task_id": "T-PH002-05",
+      "phase_id": "PH-002",
+      "status": "done",
+      "tdd_exempted": false,
+      "trace_req_ids": [],
+      "attempts": 1,
+      "started_at": "2026-05-20T07:55:28Z",
+      "ended_at": "2026-05-20T08:00:18Z",
+      "coder_run_id": "2026-05-20.jakarta-adapter-v100.e2e.coder-0520",
+      "result_summary": "IT05 Session JSESSIONID round-trip 3 모듈 PASS"
+    },
+    {
+      "task_id": "T-PH002-06",
+      "phase_id": "PH-002",
+      "status": "done",
+      "tdd_exempted": false,
+      "trace_req_ids": [],
+      "attempts": 1,
+      "started_at": "2026-05-20T08:00:18Z",
+      "ended_at": "2026-05-20T08:06:48Z",
+      "coder_run_id": "2026-05-20.jakarta-adapter-v100.e2e.coder-0520",
+      "result_summary": "IT06 Filter chain 5축 assert 3 모듈 PASS (response wrapper swallow 포함)"
+    },
+    {
+      "task_id": "T-PH002-07",
+      "phase_id": "PH-002",
+      "status": "done",
+      "tdd_exempted": false,
+      "trace_req_ids": [],
+      "attempts": 2,
+      "started_at": "2026-05-20T08:06:48Z",
+      "ended_at": "2026-05-20T08:14:04Z",
+      "coder_run_id": "2026-05-20.jakarta-adapter-v100.e2e.coder-0520",
+      "result_summary": "IT07 AsyncContext 3 모듈 PASS + TomcatRunner setAsyncSupported(true) 1줄 추가 (user 승인)",
+      "questions": [
+        {
+          "id": "Q-1",
+          "severity": "clarification",
+          "resolved_with": "option-1 (TomcatRunner.addServlet always setAsyncSupported(true))"
+        }
+      ]
+    },
+    {
+      "task_id": "T-PH002-08",
+      "phase_id": "PH-002",
+      "status": "done",
+      "tdd_exempted": false,
+      "trace_req_ids": [],
+      "attempts": 1,
+      "started_at": "2026-05-20T08:14:04Z",
+      "ended_at": "2026-05-20T08:22:40Z",
+      "coder_run_id": "2026-05-20.jakarta-adapter-v100.e2e.coder-0520",
+      "result_summary": "IT08 MultiPart 3 모듈 PASS + TomcatRunner addServlet multipart 오버로드"
+    },
+    {
+      "task_id": "T-PH002-09",
+      "phase_id": "PH-002",
+      "status": "done",
+      "tdd_exempted": false,
+      "trace_req_ids": [],
+      "attempts": 1,
+      "started_at": "2026-05-20T08:22:40Z",
+      "ended_at": "2026-05-20T08:25:30Z",
+      "coder_run_id": "2026-05-20.jakarta-adapter-v100.e2e.coder-0520",
+      "result_summary": "IT09 sendRedirect 308 servlet61 PASS"
+    },
+    {
+      "task_id": "T-PH002-10",
+      "phase_id": "PH-002",
+      "status": "done",
+      "tdd_exempted": false,
+      "trace_req_ids": [],
+      "attempts": 1,
+      "started_at": "2026-05-20T08:25:30Z",
+      "ended_at": "2026-05-20T08:30:17Z",
+      "coder_run_id": "2026-05-20.jakarta-adapter-v100.e2e.coder-0520",
+      "result_summary": "IT10 Charset UTF-8 3 모듈 (round-trip + 무명시 폴백) PASS"
+    },
+    {
+      "task_id": "T-PH003-01",
+      "phase_id": "PH-003",
+      "status": "done",
+      "tdd_exempted": false,
+      "trace_req_ids": [
+        "FR-TEST-003"
+      ],
+      "attempts": 1,
+      "started_at": "2026-05-20T14:47:26.557Z",
+      "ended_at": "2026-05-20T16:17:59.873Z",
+      "coder_run_id": "2026-05-20.jakarta-adapter-v100.e2e.T-PH003-01",
+      "result_summary": "IT11 setStatus 3 모듈 PASS (deprecated 2-arg reason phrase 무시 + 1-arg 정상). Tomcat HTTP/1.1 응답에서 reason phrase 자체 미반환 확인"
+    },
+    {
+      "task_id": "T-PH003-02",
+      "phase_id": "PH-003",
+      "status": "done",
+      "tdd_exempted": false,
+      "trace_req_ids": [
+        "FR-TEST-003"
+      ],
+      "attempts": 1,
+      "started_at": "2026-05-20T16:17:59.874Z",
+      "ended_at": "2026-05-20T16:33:17.639Z",
+      "coder_run_id": "2026-05-20.jakarta-adapter-v100.e2e.T-PH003-02",
+      "result_summary": "IT12 setContentLengthLong 3 모듈 PASS (6 TC). 부수 발견: servlet61 setContentLengthLong long→int narrowing (별도 triage)"
+    },
+    {
+      "task_id": "T-PH003-03",
+      "phase_id": "PH-003",
+      "status": "done",
+      "tdd_exempted": false,
+      "trace_req_ids": [
+        "FR-TEST-003"
+      ],
+      "attempts": 1,
+      "started_at": "2026-05-20T16:33:17.640Z",
+      "ended_at": "2026-05-20T16:39:10.625Z",
+      "coder_run_id": "2026-05-20.jakarta-adapter-v100.e2e.T-PH003-03",
+      "result_summary": "IT13 ErrorPage 3 모듈 PASS. TomcatRunner addErrorPage 헬퍼 2종 추가 (PH-002 helper 확장 전례 준용)"
+    },
+    {
+      "task_id": "T-PH003-04",
+      "phase_id": "PH-003",
+      "status": "done",
+      "tdd_exempted": false,
+      "trace_req_ids": [
+        "FR-TEST-003"
+      ],
+      "attempts": 1,
+      "started_at": "2026-05-20T16:39:10.626Z",
+      "ended_at": "2026-05-20T16:44:50.216Z",
+      "coder_run_id": "2026-05-20.jakarta-adapter-v100.e2e.T-PH003-04",
+      "result_summary": "IT14 getServletConnection servlet6/61 PASS (4 필드 + protocol grammar). DummyServletConnection 합성 폴백 사용"
+    },
+    {
+      "task_id": "T-PH003-05",
+      "phase_id": "PH-003",
+      "status": "done",
+      "tdd_exempted": false,
+      "trace_req_ids": [
+        "FR-TEST-003"
+      ],
+      "attempts": 2,
+      "started_at": "2026-05-20T16:44:50.217Z",
+      "ended_at": "2026-05-20T16:58:07.976Z",
+      "coder_run_id": "2026-05-20.jakarta-adapter-v100.e2e.T-PH003-05",
+      "result_summary": "IT15 WebSocket Upgrade 3 모듈 PASS. Adapter 결함 수정: HttpServletRequest.upgrade() 가 handlerClass.cast(handler.getHttpUpgradeHandler()) 로 unwrap (사용자 승인 후 진행). 회귀 BUILD SUCCESSFUL",
+      "questions": [
+        {
+          "id": "Q-1",
+          "severity": "business-decision",
+          "resolved_with": "option-1 (어댑터 수정 + IT15 PASS)"
+        }
+      ]
+    },
+    {
+      "task_id": "T-PH004-01",
+      "phase_id": "PH-004",
+      "status": "done",
+      "tdd_exempted": true,
+      "trace_req_ids": [
+        "FR-TEST-004"
+      ],
+      "attempts": 1,
+      "started_at": "2026-05-20T17:08:00.742Z",
+      "ended_at": "2026-05-20T17:10:30.879Z",
+      "coder_run_id": "2026-05-20.jakarta-adapter-v100.e2e.T-PH004-01",
+      "result_summary": "servlet5 BugMuseumTest 단일 클래스 BM01~BM10 + 5 META 15/15 PASS (회귀 확인)"
+    },
+    {
+      "task_id": "T-PH004-02",
+      "phase_id": "PH-004",
+      "status": "done",
+      "tdd_exempted": false,
+      "trace_req_ids": [
+        "FR-TEST-004"
+      ],
+      "attempts": 1,
+      "started_at": "2026-05-20T17:10:30.880Z",
+      "ended_at": "2026-05-20T17:15:26.292Z",
+      "coder_run_id": "2026-05-20.jakarta-adapter-v100.e2e.T-PH004-02",
+      "result_summary": "servlet6 BugMuseum BM01~BM10 미러 10/10 PASS. BM06 jakarta 6.0 getRealPath 제거 반영 (API 표면 비교로 조정)"
+    },
+    {
+      "task_id": "T-PH004-03",
+      "phase_id": "PH-004",
+      "status": "done",
+      "tdd_exempted": false,
+      "trace_req_ids": [
+        "FR-TEST-004"
+      ],
+      "attempts": 1,
+      "started_at": "2026-05-20T17:15:26.294Z",
+      "ended_at": "2026-05-20T17:19:20.040Z",
+      "coder_run_id": "2026-05-20.jakarta-adapter-v100.e2e.T-PH004-03",
+      "result_summary": "servlet61 BugMuseum BM01~BM10 미러 10/10 PASS. jakarta 6.1 setCharacterEncoding(Charset) 오버로드 모호성을 anyString() matcher로 해소 (BM03/BM08)"
+    },
+    {
+      "task_id": "T-PH005-01",
+      "phase_id": "PH-005",
+      "status": "pending",
+      "tdd_exempted": false,
+      "trace_req_ids": [
+        "FR-TEST-001"
+      ],
+      "attempts": 0
+    },
+    {
+      "task_id": "T-PH005-02",
+      "phase_id": "PH-005",
+      "status": "pending",
+      "tdd_exempted": false,
+      "trace_req_ids": [
+        "FR-TEST-001"
+      ],
+      "attempts": 0
+    },
+    {
+      "task_id": "T-PH005-03",
+      "phase_id": "PH-005",
+      "status": "pending",
+      "tdd_exempted": false,
+      "trace_req_ids": [
+        "FR-TEST-001"
+      ],
+      "attempts": 0
+    },
+    {
+      "task_id": "T-PH005-04",
+      "phase_id": "PH-005",
+      "status": "pending",
+      "tdd_exempted": false,
+      "trace_req_ids": [
+        "FR-TEST-001"
+      ],
+      "attempts": 0
+    },
+    {
+      "task_id": "T-PH005-05",
+      "phase_id": "PH-005",
+      "status": "pending",
+      "tdd_exempted": false,
+      "trace_req_ids": [
+        "FR-TEST-001"
+      ],
+      "attempts": 0
+    },
+    {
+      "task_id": "T-PH005-06",
+      "phase_id": "PH-005",
+      "status": "pending",
+      "tdd_exempted": false,
+      "trace_req_ids": [
+        "FR-TEST-001"
+      ],
+      "attempts": 0
+    },
+    {
+      "task_id": "T-PH005-07",
+      "phase_id": "PH-005",
+      "status": "pending",
+      "tdd_exempted": false,
+      "trace_req_ids": [
+        "FR-TEST-001"
+      ],
+      "attempts": 0
+    },
+    {
+      "task_id": "T-PH005-08",
+      "phase_id": "PH-005",
+      "status": "pending",
+      "tdd_exempted": true,
+      "trace_req_ids": [
+        "FR-TEST-001"
+      ],
+      "attempts": 0
+    },
+    {
+      "task_id": "T-PH006-01",
+      "phase_id": "PH-006",
+      "status": "pending",
+      "tdd_exempted": true,
+      "trace_req_ids": [
+        "OPS-TEST-001"
+      ],
+      "attempts": 0
+    },
+    {
+      "task_id": "T-PH006-02",
+      "phase_id": "PH-006",
+      "status": "pending",
+      "tdd_exempted": true,
+      "trace_req_ids": [
+        "OPS-TEST-001"
+      ],
+      "attempts": 0
+    },
+    {
+      "task_id": "T-PH006-03",
+      "phase_id": "PH-006",
+      "status": "pending",
+      "tdd_exempted": true,
+      "trace_req_ids": [
+        "NFR-TEST-001",
+        "OPS-TEST-001"
+      ],
+      "attempts": 0
+    },
+    {
+      "task_id": "T-PH006-04",
+      "phase_id": "PH-006",
+      "status": "pending",
+      "tdd_exempted": true,
+      "trace_req_ids": [
+        "OPS-TEST-001"
+      ],
+      "attempts": 0
+    },
+    {
+      "task_id": "T-PH007-01",
+      "phase_id": "PH-007",
+      "status": "pending",
+      "tdd_exempted": true,
+      "trace_req_ids": [
+        "NFR-TEST-001"
+      ],
+      "attempts": 0
+    },
+    {
+      "task_id": "T-PH007-02",
+      "phase_id": "PH-007",
+      "status": "pending",
+      "tdd_exempted": false,
+      "trace_req_ids": [
+        "FR-CONV-013",
+        "FR-TEST-002"
+      ],
+      "attempts": 0
+    }
   ],
-  "stats": {"total": 4, "done": 4, "running": 0, "pending": 0, "failed": 0, "blocked": 0, "skipped": 0},
-  "halted_at_boundary": "PH-002 (user requested PH-001-only partial execution)",
+  "stats": {
+    "total": 36,
+    "done": 22,
+    "running": 0,
+    "pending": 14,
+    "failed": 0,
+    "blocked": 0,
+    "skipped": 0
+  },
+  "halted_at_boundary": "PH-005 (PH-004 BM01~BM10 3 모듈 회귀+미러 complete, awaiting user decision)",
   "last_question": null,
   "last_error": null,
   "lifecycle_gate_state": {

@@ -1,0 +1,2083 @@
+{
+  "schema_version": "1.1.0",
+  "plan_contract": "1.2.0",
+  "run_id": "2026-05-21.jakarta-adapter-v100.ph005",
+  "target": "v1.0.0",
+  "plan_version": "0.1.0",
+  "generated_at": "2026-05-21T00:00:00Z",
+  "tool_versions": {
+    "speckiwi": "2.2.2",
+    "kiwi_planner": "0.6.0",
+    "validator": "0.6.0"
+  },
+  "tdd_policy": "relaxed",
+  "md_path": "docs/plans/2026-05-21.jakarta-adapter-v100.ph005.plan.md",
+  "md_sha256": "",
+  "phases": [
+    {
+      "id": "PH-005",
+      "title": "servlet5/6/61 단위 테스트 backfill + 3 모듈 통합 회귀",
+      "goal": "servlet5/6/61 어댑터 단위 테스트 backfill로 FR-TEST-001 AC-1~AC-4 충족 + 3 모듈 회귀 0건 검증",
+      "depends_on": [],
+      "task_ids": [
+        "T-PH005-01",
+        "T-PH005-02",
+        "T-PH005-03",
+        "T-PH005-04",
+        "T-PH005-05",
+        "T-PH005-06",
+        "T-PH005-07",
+        "T-PH005-08"
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "id": "T-PH005-01",
+      "phase_id": "PH-005",
+      "title": "servlet6 jakarta-side 단위 테스트 14건",
+      "type": "code",
+      "req_ids": [
+        "FR-TEST-001"
+      ],
+      "files": [
+        {
+          "path": "servlet6/src/test/java/adapter/jakarta/servlet6"
+        }
+      ],
+      "action": "servlet6 jakarta-side 어댑터 8 클래스 단위 테스트 14건 작성. 연구 §4.2/§5.1 분배. SUT 어댑터 mock 금지. RETURNS_SMART_NULLS 명시. verify before assertEquals.",
+      "acceptance_tests": [
+        {
+          "kind": "shell",
+          "cmd": "./gradlew :servlet6:test",
+          "expected_exit": 0,
+          "stdout_regex": "BUILD SUCCESSFUL"
+        }
+      ],
+      "verification_cmd": {
+        "posix": "./gradlew :servlet6:test",
+        "windows": "gradlew.bat :servlet6:test"
+      },
+      "dod": [
+        "jakarta-side 어댑터 단위 테스트 14건 신규 + PASS",
+        "각 신규 클래스 javadoc 에 @req FR-TEST-001 명시",
+        "각 mock 생성 호출에 RETURNS_SMART_NULLS 명시"
+      ],
+      "rollback": "신규 추가 테스트 파일 8개 삭제 (production code 미변경 전제)",
+      "estimated_effort": "L",
+      "covers_ac": [
+        "AC-1",
+        "AC-2",
+        "AC-3"
+      ],
+      "tdd": {
+        "applicable": true,
+        "phase": "green",
+        "exempt_reason": "",
+        "test_cases": [
+          {
+            "id": "TC-REQ-FR-TEST-001-AC1-01",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-1"
+            ],
+            "test_file": "servlet6/src/test/java/adapter/jakarta/servlet6/http/HttpServletRequestDelegationTest.java",
+            "test_symbol": "HttpServletRequestDelegationTest",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-01",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet6/src/test/java/adapter/jakarta/servlet6/http/HttpServletRequestDelegationTest.java",
+            "test_symbol": "shouldDelegateGetCookies_AC1",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-02",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet6/src/test/java/adapter/jakarta/servlet6/http/HttpServletRequestDelegationTest.java",
+            "test_symbol": "shouldDelegateGetHeader_AC2",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-03",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet6/src/test/java/adapter/jakarta/servlet6/http/HttpServletRequestDelegationTest.java",
+            "test_symbol": "shouldCacheRequestIdLazily_AC3",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-04",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet6/src/test/java/adapter/jakarta/servlet6/http/HttpServletResponseDelegationTest.java",
+            "test_symbol": "shouldDelegateSetStatus_AC1",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-05",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet6/src/test/java/adapter/jakarta/servlet6/http/HttpServletResponseDelegationTest.java",
+            "test_symbol": "shouldWrapAddCookieIntoJavaxCookie_AC2",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-06",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet6/src/test/java/adapter/jakarta/servlet6/http/HttpServletResponseDelegationTest.java",
+            "test_symbol": "shouldDelegateSendRedirectSingleArg_AC3",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-07",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet6/src/test/java/adapter/jakarta/servlet6/http/HttpSessionDelegationTest.java",
+            "test_symbol": "shouldDelegateGetSetAttribute_AC1",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-08",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet6/src/test/java/adapter/jakarta/servlet6/http/HttpSessionDelegationTest.java",
+            "test_symbol": "shouldFallbackGetValuePutValueToAttribute_AC2",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-09",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet6/src/test/java/adapter/jakarta/servlet6/http/CookieDelegationTest.java",
+            "test_symbol": "shouldDelegateSetMaxAge_AC1",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-10",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet6/src/test/java/adapter/jakarta/servlet6/http/CookieDelegationTest.java",
+            "test_symbol": "shouldDelegateSetSecure_AC2",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-11",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet6/src/test/java/adapter/jakarta/servlet6/http/PartDelegationTest.java",
+            "test_symbol": "shouldDelegateGetSubmittedFileName_AC1",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-12",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet6/src/test/java/adapter/jakarta/servlet6/ServletRequestDelegationTest.java",
+            "test_symbol": "shouldDelegateGetContentLengthLong_AC1",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-13",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet6/src/test/java/adapter/jakarta/servlet6/ServletResponseDelegationTest.java",
+            "test_symbol": "shouldDelegateSetContentLengthLong_AC1",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-14",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet6/src/test/java/adapter/jakarta/servlet6/ServletContextDelegationTest.java",
+            "test_symbol": "shouldRouteSetResponseCharacterEncodingToOrigin_AC1",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC3-01",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-3"
+            ],
+            "test_file": "servlet6/src/test/java/adapter/jakarta/servlet6/* (cross-cutting fixture verification).java",
+            "test_symbol": "* (cross-cutting fixture verification)",
+            "kind": "unit",
+            "expected_failure_signature": null
+          }
+        ],
+        "red_evidence": null,
+        "green_evidence": null
+      },
+      "trace_links": [
+        {
+          "link_id": "TL-T-PH005-01-01",
+          "source": {
+            "type": "Task",
+            "id": "T-PH005-01"
+          },
+          "target": {
+            "type": "Requirement",
+            "reference": "FR-TEST-001"
+          },
+          "relation": "depends_on"
+        }
+      ]
+    },
+    {
+      "id": "T-PH005-02",
+      "phase_id": "PH-005",
+      "title": "servlet6 javax-side 단위 테스트 14건",
+      "type": "code",
+      "req_ids": [
+        "FR-TEST-001"
+      ],
+      "files": [
+        {
+          "path": "servlet6/src/test/java/adapter/javax/servlet6"
+        }
+      ],
+      "action": "servlet6 javax-side 어댑터 8 클래스 단위 테스트 14건 작성. 연구 §4.2/§5.2 분배. jakarta-side mirror 패턴.",
+      "acceptance_tests": [
+        {
+          "kind": "shell",
+          "cmd": "./gradlew :servlet6:test",
+          "expected_exit": 0,
+          "stdout_regex": "BUILD SUCCESSFUL"
+        }
+      ],
+      "verification_cmd": {
+        "posix": "./gradlew :servlet6:test",
+        "windows": "gradlew.bat :servlet6:test"
+      },
+      "dod": [
+        "javax-side 어댑터 단위 테스트 14건 신규 + PASS",
+        "각 신규 클래스 javadoc 에 @req FR-TEST-001 명시",
+        "각 mock 생성 호출에 RETURNS_SMART_NULLS 명시"
+      ],
+      "rollback": "신규 추가 테스트 파일 8개 삭제",
+      "estimated_effort": "L",
+      "covers_ac": [
+        "AC-1",
+        "AC-2",
+        "AC-3"
+      ],
+      "tdd": {
+        "applicable": true,
+        "phase": "green",
+        "exempt_reason": "",
+        "test_cases": [
+          {
+            "id": "TC-REQ-FR-TEST-001-AC1-02",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-1"
+            ],
+            "test_file": "servlet6/src/test/java/adapter/javax/servlet6/http/HttpServletRequestDelegationTest.java",
+            "test_symbol": "HttpServletRequestDelegationTest",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-15",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet6/src/test/java/adapter/javax/servlet6/http/HttpServletRequestDelegationTest.java",
+            "test_symbol": "shouldDelegateGetCookies_AC1",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-16",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet6/src/test/java/adapter/javax/servlet6/http/HttpServletRequestDelegationTest.java",
+            "test_symbol": "shouldDelegateGetHeader_AC2",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-17",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet6/src/test/java/adapter/javax/servlet6/http/HttpServletRequestDelegationTest.java",
+            "test_symbol": "shouldDelegateGetMethod_AC3",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-18",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet6/src/test/java/adapter/javax/servlet6/http/HttpServletResponseDelegationTest.java",
+            "test_symbol": "shouldDelegateDeprecatedSetStatusWithReason_AC1",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-19",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet6/src/test/java/adapter/javax/servlet6/http/HttpServletResponseDelegationTest.java",
+            "test_symbol": "shouldDelegateEncodeRedirectUrl_AC2",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-20",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet6/src/test/java/adapter/javax/servlet6/http/HttpServletResponseDelegationTest.java",
+            "test_symbol": "shouldWrapAddCookieIntoJakartaCookie_AC3",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-21",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet6/src/test/java/adapter/javax/servlet6/http/HttpSessionDelegationTest.java",
+            "test_symbol": "shouldDelegateGetValuePutValueDirectly_AC1",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-22",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet6/src/test/java/adapter/javax/servlet6/http/HttpSessionDelegationTest.java",
+            "test_symbol": "shouldDelegateGetAttributeNames_AC2",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-23",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet6/src/test/java/adapter/javax/servlet6/http/CookieDelegationTest.java",
+            "test_symbol": "shouldDelegateSetMaxAge_AC1",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-24",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet6/src/test/java/adapter/javax/servlet6/http/CookieAttributeFallbackTest.java",
+            "test_symbol": "shouldNoOpSetAttributeWithWarnOnce_AC2",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-25",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet6/src/test/java/adapter/javax/servlet6/http/PartDelegationTest.java",
+            "test_symbol": "shouldDelegateGetSubmittedFileName_AC1",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-26",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet6/src/test/java/adapter/javax/servlet6/ServletRequestDelegationTest.java",
+            "test_symbol": "shouldRouteSetRequestCharacterEncodingToOrigin_AC1",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-27",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet6/src/test/java/adapter/javax/servlet6/ServletContextDelegationTest.java",
+            "test_symbol": "shouldRouteSetRequestCharacterEncodingToOrigin_AC1",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-28",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet6/src/test/java/adapter/javax/servlet6/RegistrationDelegationTest.java",
+            "test_symbol": "shouldDelegateAddMapping_AC1",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC3-02",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-3"
+            ],
+            "test_file": "servlet6/src/test/java/adapter/javax/servlet6/* (cross-cutting fixture verification).java",
+            "test_symbol": "* (cross-cutting fixture verification)",
+            "kind": "unit",
+            "expected_failure_signature": null
+          }
+        ],
+        "red_evidence": null,
+        "green_evidence": null
+      },
+      "trace_links": [
+        {
+          "link_id": "TL-T-PH005-02-01",
+          "source": {
+            "type": "Task",
+            "id": "T-PH005-02"
+          },
+          "target": {
+            "type": "Requirement",
+            "reference": "FR-TEST-001"
+          },
+          "relation": "depends_on"
+        }
+      ]
+    },
+    {
+      "id": "T-PH005-03",
+      "phase_id": "PH-005",
+      "title": "servlet6 converter 단위 테스트 7건",
+      "type": "code",
+      "req_ids": [
+        "FR-TEST-001"
+      ],
+      "files": [
+        {
+          "path": "servlet6/src/test/java/adapter/servletElementConverter6"
+        }
+      ],
+      "action": "servlet6 변환 유틸 5 클래스 단위 테스트 7건. 연구 §4.2/§5.3 분배. FR-FIX-001/008 회귀 lock-in 포함.",
+      "acceptance_tests": [
+        {
+          "kind": "shell",
+          "cmd": "./gradlew :servlet6:test",
+          "expected_exit": 0,
+          "stdout_regex": "BUILD SUCCESSFUL"
+        }
+      ],
+      "verification_cmd": {
+        "posix": "./gradlew :servlet6:test",
+        "windows": "gradlew.bat :servlet6:test"
+      },
+      "dod": [
+        "converter 단위 테스트 7건 신규 + PASS",
+        "각 신규 클래스 javadoc 에 @req FR-TEST-001 (FR-FIX-001/008 회귀 lock-in) 명시",
+        "RETURNS_SMART_NULLS 명시"
+      ],
+      "rollback": "신규 추가 테스트 파일 5개 삭제",
+      "estimated_effort": "M",
+      "covers_ac": [
+        "AC-1",
+        "AC-2",
+        "AC-3"
+      ],
+      "tdd": {
+        "applicable": true,
+        "phase": "green",
+        "exempt_reason": "",
+        "test_cases": [
+          {
+            "id": "TC-REQ-FR-TEST-001-AC1-03",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-1"
+            ],
+            "test_file": "servlet6/src/test/java/adapter/servletElementConverter6/StreamConverterDelegationTest.java",
+            "test_symbol": "StreamConverterDelegationTest",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-29",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet6/src/test/java/adapter/servletElementConverter6/StreamConverterDelegationTest.java",
+            "test_symbol": "shouldDelegateReadToReadNotReadLine_AC1",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-30",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet6/src/test/java/adapter/servletElementConverter6/StreamConverterDelegationTest.java",
+            "test_symbol": "shouldDelegateReadLineToOrigin_AC2",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-31",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet6/src/test/java/adapter/servletElementConverter6/ServletReqResConverterBranchTest.java",
+            "test_symbol": "shouldRouteJakartaInputToJakartaHttpBranch_AC1",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-32",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet6/src/test/java/adapter/servletElementConverter6/ServletReqResConverterBranchTest.java",
+            "test_symbol": "shouldRouteJavaxInputToJavaxHttpBranch_AC2",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-33",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet6/src/test/java/adapter/servletElementConverter6/AsyncContextConverterTest.java",
+            "test_symbol": "shouldConvertAsyncContextRoundTrip_AC1",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-34",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet6/src/test/java/adapter/servletElementConverter6/DescriptorConverterTest.java",
+            "test_symbol": "shouldConvertJspConfigDescriptor_AC1",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-35",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet6/src/test/java/adapter/servletElementConverter6/ServletConverterTest.java",
+            "test_symbol": "shouldConvertServletRegistrationDynamic_AC1",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC3-03",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-3"
+            ],
+            "test_file": "servlet6/src/test/java/adapter/servletElementConverter6/* (cross-cutting fixture verification).java",
+            "test_symbol": "* (cross-cutting fixture verification)",
+            "kind": "unit",
+            "expected_failure_signature": null
+          }
+        ],
+        "red_evidence": null,
+        "green_evidence": {
+          "command": "gradlew.bat :servlet6:test --tests \"adapter.servletElementConverter6.*\"",
+          "exit_code": 0,
+          "timestamp": "2026-05-21T05:03:28Z"
+        }
+      },
+      "trace_links": [
+        {
+          "link_id": "TL-T-PH005-03-01",
+          "source": {
+            "type": "Task",
+            "id": "T-PH005-03"
+          },
+          "target": {
+            "type": "Requirement",
+            "reference": "FR-TEST-001"
+          },
+          "relation": "depends_on"
+        }
+      ]
+    },
+    {
+      "id": "T-PH005-04",
+      "phase_id": "PH-005",
+      "title": "servlet61 jakarta-side 단위 테스트 14건",
+      "type": "code",
+      "req_ids": [
+        "FR-TEST-001"
+      ],
+      "files": [
+        {
+          "path": "servlet61/src/test/java/adapter/jakarta/servlet61"
+        }
+      ],
+      "action": "servlet61 jakarta-side 어댑터 단위 테스트 14건. T-PH005-01 의 13건 미러 + 6.1 sendRedirect(loc,sc,false) edge case 1건 신규.",
+      "acceptance_tests": [
+        {
+          "kind": "shell",
+          "cmd": "./gradlew :servlet61:test",
+          "expected_exit": 0,
+          "stdout_regex": "BUILD SUCCESSFUL"
+        }
+      ],
+      "verification_cmd": {
+        "posix": "./gradlew :servlet61:test",
+        "windows": "gradlew.bat :servlet61:test"
+      },
+      "dod": [
+        "jakarta-side 단위 테스트 14건 신규 + PASS",
+        "각 신규 클래스 javadoc 에 @req FR-TEST-001 명시",
+        "RETURNS_SMART_NULLS 명시",
+        "6.1 sendRedirect edge case 1건 신규 포함"
+      ],
+      "rollback": "신규 추가 테스트 파일 9개 삭제",
+      "estimated_effort": "L",
+      "covers_ac": [
+        "AC-1",
+        "AC-2",
+        "AC-3"
+      ],
+      "tdd": {
+        "applicable": true,
+        "phase": "green",
+        "exempt_reason": "",
+        "test_cases": [
+          {
+            "id": "TC-REQ-FR-TEST-001-AC1-04",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-1"
+            ],
+            "test_file": "servlet61/src/test/java/adapter/jakarta/servlet61/http/HttpServletRequestDelegationTest.java",
+            "test_symbol": "HttpServletRequestDelegationTest",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-36",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet61/src/test/java/adapter/jakarta/servlet61/http/HttpServletRequestDelegationTest.java",
+            "test_symbol": "shouldDelegateGetCookies_AC1",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-37",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet61/src/test/java/adapter/jakarta/servlet61/http/HttpServletRequestDelegationTest.java",
+            "test_symbol": "shouldDelegateGetHeader_AC2",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-38",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet61/src/test/java/adapter/jakarta/servlet61/http/HttpServletRequestDelegationTest.java",
+            "test_symbol": "shouldCacheRequestIdLazily_AC3",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-39",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet61/src/test/java/adapter/jakarta/servlet61/http/HttpServletResponseDelegationTest.java",
+            "test_symbol": "shouldDelegateSetStatus_AC1",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-40",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet61/src/test/java/adapter/jakarta/servlet61/http/HttpServletResponseDelegationTest.java",
+            "test_symbol": "shouldWrapAddCookieIntoJavaxCookie_AC2",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-41",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet61/src/test/java/adapter/jakarta/servlet61/http/HttpServletResponseRedirect61EdgeCaseTest.java",
+            "test_symbol": "shouldNotResetBufferWhenClearBufferFalse_AC1",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-42",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet61/src/test/java/adapter/jakarta/servlet61/http/HttpSessionDelegationTest.java",
+            "test_symbol": "shouldDelegateGetSetAttribute_AC1",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-43",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet61/src/test/java/adapter/jakarta/servlet61/http/HttpSessionDelegationTest.java",
+            "test_symbol": "shouldFallbackGetValuePutValueToAttribute_AC2",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-44",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet61/src/test/java/adapter/jakarta/servlet61/http/CookieDelegationTest.java",
+            "test_symbol": "shouldDelegateSetMaxAge_AC1",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-45",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet61/src/test/java/adapter/jakarta/servlet61/http/CookieDelegationTest.java",
+            "test_symbol": "shouldDelegateSetSecure_AC2",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-46",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet61/src/test/java/adapter/jakarta/servlet61/http/PartDelegationTest.java",
+            "test_symbol": "shouldDelegateGetSubmittedFileName_AC1",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-47",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet61/src/test/java/adapter/jakarta/servlet61/ServletRequestDelegationTest.java",
+            "test_symbol": "shouldDelegateGetContentLengthLong_AC1",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-48",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet61/src/test/java/adapter/jakarta/servlet61/ServletResponseDelegationTest.java",
+            "test_symbol": "shouldDelegateSetContentLengthLong_AC1",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-49",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet61/src/test/java/adapter/jakarta/servlet61/ServletContextDelegationTest.java",
+            "test_symbol": "shouldRouteSetResponseCharacterEncodingToOrigin_AC1",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC3-04",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-3"
+            ],
+            "test_file": "servlet61/src/test/java/adapter/jakarta/servlet61/* (cross-cutting fixture verification).java",
+            "test_symbol": "* (cross-cutting fixture verification)",
+            "kind": "unit",
+            "expected_failure_signature": null
+          }
+        ],
+        "red_evidence": null,
+        "green_evidence": null
+      },
+      "trace_links": [
+        {
+          "link_id": "TL-T-PH005-04-01",
+          "source": {
+            "type": "Task",
+            "id": "T-PH005-04"
+          },
+          "target": {
+            "type": "Requirement",
+            "reference": "FR-TEST-001"
+          },
+          "relation": "depends_on"
+        }
+      ]
+    },
+    {
+      "id": "T-PH005-05",
+      "phase_id": "PH-005",
+      "title": "servlet61 javax-side 단위 테스트 14건",
+      "type": "code",
+      "req_ids": [
+        "FR-TEST-001"
+      ],
+      "files": [
+        {
+          "path": "servlet61/src/test/java/adapter/javax/servlet61"
+        }
+      ],
+      "action": "servlet61 javax-side 어댑터 단위 테스트 14건. T-PH005-02 의 14건을 패키지명만 servlet6→servlet61 미러링 (본문 차이 0).",
+      "acceptance_tests": [
+        {
+          "kind": "shell",
+          "cmd": "./gradlew :servlet61:test",
+          "expected_exit": 0,
+          "stdout_regex": "BUILD SUCCESSFUL"
+        }
+      ],
+      "verification_cmd": {
+        "posix": "./gradlew :servlet61:test",
+        "windows": "gradlew.bat :servlet61:test"
+      },
+      "dod": [
+        "javax-side 단위 테스트 14건 신규 + PASS",
+        "각 신규 클래스 javadoc 에 @req FR-TEST-001 명시",
+        "RETURNS_SMART_NULLS 명시"
+      ],
+      "rollback": "신규 추가 테스트 파일 8개 삭제",
+      "estimated_effort": "L",
+      "covers_ac": [
+        "AC-1",
+        "AC-2",
+        "AC-3"
+      ],
+      "tdd": {
+        "applicable": true,
+        "phase": "green",
+        "exempt_reason": "",
+        "test_cases": [
+          {
+            "id": "TC-REQ-FR-TEST-001-AC1-05",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-1"
+            ],
+            "test_file": "servlet61/src/test/java/adapter/javax/servlet61/http/HttpServletRequestDelegationTest.java",
+            "test_symbol": "HttpServletRequestDelegationTest",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-50",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet61/src/test/java/adapter/javax/servlet61/http/HttpServletRequestDelegationTest.java",
+            "test_symbol": "shouldDelegateGetCookies_AC1",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-51",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet61/src/test/java/adapter/javax/servlet61/http/HttpServletRequestDelegationTest.java",
+            "test_symbol": "shouldDelegateGetHeader_AC2",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-52",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet61/src/test/java/adapter/javax/servlet61/http/HttpServletRequestDelegationTest.java",
+            "test_symbol": "shouldDelegateGetMethod_AC3",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-53",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet61/src/test/java/adapter/javax/servlet61/http/HttpServletResponseDelegationTest.java",
+            "test_symbol": "shouldDelegateDeprecatedSetStatusWithReason_AC1",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-54",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet61/src/test/java/adapter/javax/servlet61/http/HttpServletResponseDelegationTest.java",
+            "test_symbol": "shouldDelegateEncodeRedirectUrl_AC2",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-55",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet61/src/test/java/adapter/javax/servlet61/http/HttpServletResponseDelegationTest.java",
+            "test_symbol": "shouldWrapAddCookieIntoJakartaCookie_AC3",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-56",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet61/src/test/java/adapter/javax/servlet61/http/HttpSessionDelegationTest.java",
+            "test_symbol": "shouldDelegateGetValuePutValueDirectly_AC1",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-57",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet61/src/test/java/adapter/javax/servlet61/http/HttpSessionDelegationTest.java",
+            "test_symbol": "shouldDelegateGetAttributeNames_AC2",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-58",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet61/src/test/java/adapter/javax/servlet61/http/CookieDelegationTest.java",
+            "test_symbol": "shouldDelegateSetMaxAge_AC1",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-59",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet61/src/test/java/adapter/javax/servlet61/http/CookieAttributeFallbackTest.java",
+            "test_symbol": "shouldNoOpSetAttributeWithWarnOnce_AC2",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-60",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet61/src/test/java/adapter/javax/servlet61/http/PartDelegationTest.java",
+            "test_symbol": "shouldDelegateGetSubmittedFileName_AC1",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-61",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet61/src/test/java/adapter/javax/servlet61/ServletRequestDelegationTest.java",
+            "test_symbol": "shouldRouteSetRequestCharacterEncodingToOrigin_AC1",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-62",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet61/src/test/java/adapter/javax/servlet61/ServletContextDelegationTest.java",
+            "test_symbol": "shouldRouteSetRequestCharacterEncodingToOrigin_AC1",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-63",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet61/src/test/java/adapter/javax/servlet61/RegistrationDelegationTest.java",
+            "test_symbol": "shouldDelegateAddMapping_AC1",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC3-05",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-3"
+            ],
+            "test_file": "servlet61/src/test/java/adapter/javax/servlet61/* (cross-cutting fixture verification).java",
+            "test_symbol": "* (cross-cutting fixture verification)",
+            "kind": "unit",
+            "expected_failure_signature": null
+          }
+        ],
+        "red_evidence": null,
+        "green_evidence": null
+      },
+      "trace_links": [
+        {
+          "link_id": "TL-T-PH005-05-01",
+          "source": {
+            "type": "Task",
+            "id": "T-PH005-05"
+          },
+          "target": {
+            "type": "Requirement",
+            "reference": "FR-TEST-001"
+          },
+          "relation": "depends_on"
+        }
+      ]
+    },
+    {
+      "id": "T-PH005-06",
+      "phase_id": "PH-005",
+      "title": "servlet61 converter 단위 테스트 7건",
+      "type": "code",
+      "req_ids": [
+        "FR-TEST-001"
+      ],
+      "files": [
+        {
+          "path": "servlet61/src/test/java/adapter/servletElementConverter61"
+        }
+      ],
+      "action": "servlet61 변환 유틸 5 클래스 단위 테스트 7건. T-PH005-03 미러 (본문 차이 0).",
+      "acceptance_tests": [
+        {
+          "kind": "shell",
+          "cmd": "./gradlew :servlet61:test",
+          "expected_exit": 0,
+          "stdout_regex": "BUILD SUCCESSFUL"
+        }
+      ],
+      "verification_cmd": {
+        "posix": "./gradlew :servlet61:test",
+        "windows": "gradlew.bat :servlet61:test"
+      },
+      "dod": [
+        "converter 단위 테스트 7건 신규 + PASS",
+        "각 신규 클래스 javadoc 에 @req FR-TEST-001 (FR-FIX-001/008 회귀 lock-in) 명시",
+        "RETURNS_SMART_NULLS 명시"
+      ],
+      "rollback": "신규 추가 테스트 파일 5개 삭제",
+      "estimated_effort": "M",
+      "covers_ac": [
+        "AC-1",
+        "AC-2",
+        "AC-3"
+      ],
+      "tdd": {
+        "applicable": true,
+        "phase": "green",
+        "exempt_reason": "",
+        "test_cases": [
+          {
+            "id": "TC-REQ-FR-TEST-001-AC1-06",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-1"
+            ],
+            "test_file": "servlet61/src/test/java/adapter/servletElementConverter61/StreamConverterDelegationTest.java",
+            "test_symbol": "StreamConverterDelegationTest",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-64",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet61/src/test/java/adapter/servletElementConverter61/StreamConverterDelegationTest.java",
+            "test_symbol": "shouldDelegateReadToReadNotReadLine_AC1",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-65",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet61/src/test/java/adapter/servletElementConverter61/StreamConverterDelegationTest.java",
+            "test_symbol": "shouldDelegateReadLineToOrigin_AC2",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-66",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet61/src/test/java/adapter/servletElementConverter61/ServletReqResConverterBranchTest.java",
+            "test_symbol": "shouldRouteJakartaInputToJakartaHttpBranch_AC1",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-67",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet61/src/test/java/adapter/servletElementConverter61/ServletReqResConverterBranchTest.java",
+            "test_symbol": "shouldRouteJavaxInputToJavaxHttpBranch_AC2",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-68",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet61/src/test/java/adapter/servletElementConverter61/AsyncContextConverterTest.java",
+            "test_symbol": "shouldConvertAsyncContextRoundTrip_AC1",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-69",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet61/src/test/java/adapter/servletElementConverter61/DescriptorConverterTest.java",
+            "test_symbol": "shouldConvertJspConfigDescriptor_AC1",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-70",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet61/src/test/java/adapter/servletElementConverter61/ServletConverterTest.java",
+            "test_symbol": "shouldConvertServletRegistrationDynamic_AC1",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC3-06",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-3"
+            ],
+            "test_file": "servlet61/src/test/java/adapter/servletElementConverter61/* (cross-cutting fixture verification).java",
+            "test_symbol": "* (cross-cutting fixture verification)",
+            "kind": "unit",
+            "expected_failure_signature": null
+          }
+        ],
+        "red_evidence": null,
+        "green_evidence": null
+      },
+      "trace_links": [
+        {
+          "link_id": "TL-T-PH005-06-01",
+          "source": {
+            "type": "Task",
+            "id": "T-PH005-06"
+          },
+          "target": {
+            "type": "Requirement",
+            "reference": "FR-TEST-001"
+          },
+          "relation": "depends_on"
+        }
+      ]
+    },
+    {
+      "id": "T-PH005-07",
+      "phase_id": "PH-005",
+      "title": "servlet5 단위 테스트 G1~G9 9건 backfill",
+      "type": "code",
+      "req_ids": [
+        "FR-TEST-001"
+      ],
+      "files": [
+        {
+          "path": "servlet5/src/test/java/adapter/jakarta/servlet5"
+        },
+        {
+          "path": "servlet5/src/test/java/adapter/javax/servlet5"
+        },
+        {
+          "path": "servlet5/src/test/java/adapter/servletElementConverter5"
+        }
+      ],
+      "action": "servlet5 단위 테스트 G1~G9 9 신규 클래스 backfill. 연구 §3 SSOT. G9 ServletConverter 에서 FR-CONV-010 default+strict 폴백 페어 TC (AC-4 cover).",
+      "acceptance_tests": [
+        {
+          "kind": "shell",
+          "cmd": "./gradlew :servlet5:test",
+          "expected_exit": 0,
+          "stdout_regex": "BUILD SUCCESSFUL"
+        }
+      ],
+      "verification_cmd": {
+        "posix": "./gradlew :servlet5:test",
+        "windows": "gradlew.bat :servlet5:test"
+      },
+      "dod": [
+        "G1~G9 9 신규 테스트 클래스 신규 + PASS",
+        "각 신규 클래스 javadoc 에 @req FR-TEST-001 명시",
+        "RETURNS_SMART_NULLS 명시",
+        "G9 에서 FR-CONV-010 default+strict 폴백 분기 페어 TC 1쌍 이상 (AC-4 cover)",
+        "servlet5:test 카운트 ≥115"
+      ],
+      "rollback": "신규 추가 테스트 파일 G1~G9 (G6 6 클래스 포함, 총 14 파일) 삭제",
+      "estimated_effort": "M",
+      "covers_ac": [
+        "AC-1",
+        "AC-2",
+        "AC-3",
+        "AC-4"
+      ],
+      "tdd": {
+        "applicable": true,
+        "phase": "green",
+        "exempt_reason": "",
+        "test_cases": [
+          {
+            "id": "TC-REQ-FR-TEST-001-AC1-07",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-1"
+            ],
+            "test_file": "servlet5/src/test/java/adapter/jakarta/servlet5/ServletRequestUnitTest.java",
+            "test_symbol": "ServletRequestUnitTest",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC1-08",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-1"
+            ],
+            "test_file": "servlet5/src/test/java/adapter/jakarta/servlet5/http/HttpServletRequestUnitTest.java",
+            "test_symbol": "HttpServletRequestUnitTest",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC1-09",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-1"
+            ],
+            "test_file": "servlet5/src/test/java/adapter/jakarta/servlet5/http/HttpServletResponseUnitTest.java",
+            "test_symbol": "HttpServletResponseUnitTest",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC1-10",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-1"
+            ],
+            "test_file": "servlet5/src/test/java/adapter/jakarta/servlet5/http/HttpSessionUnitTest.java",
+            "test_symbol": "HttpSessionUnitTest",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC1-11",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-1"
+            ],
+            "test_file": "servlet5/src/test/java/adapter/jakarta/servlet5/ServletContextUnitTest.java",
+            "test_symbol": "ServletContextUnitTest",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC1-12",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-1"
+            ],
+            "test_file": "servlet5/src/test/java/adapter/javax/servlet5/{ServletRequest,ServletResponse,ServletContext,http/HttpServletRequest,http/HttpServletResponse,http/HttpSession}UnitTest.java",
+            "test_symbol": "HttpSession}UnitTest",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC1-13",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-1"
+            ],
+            "test_file": "servlet5/src/test/java/adapter/servletElementConverter5/AsyncContextConverterUnitTest.java",
+            "test_symbol": "AsyncContextConverterUnitTest",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC1-14",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-1"
+            ],
+            "test_file": "servlet5/src/test/java/adapter/servletElementConverter5/DescriptorConverterUnitTest.java",
+            "test_symbol": "DescriptorConverterUnitTest",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC1-15",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-1"
+            ],
+            "test_file": "servlet5/src/test/java/adapter/servletElementConverter5/ServletConverterUnitTest.java",
+            "test_symbol": "ServletConverterUnitTest",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-71",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet5/src/test/java/adapter/jakarta/servlet5/ServletRequestUnitTest.java",
+            "test_symbol": "shouldDelegateBaseDelegationMethods_AC2",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-72",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet5/src/test/java/adapter/jakarta/servlet5/http/HttpServletRequestUnitTest.java",
+            "test_symbol": "shouldDelegateHttpSpecificMethods_AC2",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-73",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet5/src/test/java/adapter/jakarta/servlet5/http/HttpServletResponseUnitTest.java",
+            "test_symbol": "shouldDelegateHttpResponseMethods_AC2",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-74",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet5/src/test/java/adapter/jakarta/servlet5/http/HttpSessionUnitTest.java",
+            "test_symbol": "shouldDelegateSessionMethods_AC2",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-75",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet5/src/test/java/adapter/jakarta/servlet5/ServletContextUnitTest.java",
+            "test_symbol": "shouldDelegateContextMethods_AC2",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-76",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet5/src/test/java/adapter/javax/servlet5/*UnitTest.java",
+            "test_symbol": "shouldDelegateMirrorMethods_AC2 (분산)",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-77",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet5/src/test/java/adapter/servletElementConverter5/AsyncContextConverterUnitTest.java",
+            "test_symbol": "shouldConvertAndDelegate_AC2",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-78",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet5/src/test/java/adapter/servletElementConverter5/DescriptorConverterUnitTest.java",
+            "test_symbol": "shouldConvertDescriptors_AC2",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC2-79",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-2"
+            ],
+            "test_file": "servlet5/src/test/java/adapter/servletElementConverter5/ServletConverterUnitTest.java",
+            "test_symbol": "shouldConvertServletElements_AC2",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC3-07",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-3"
+            ],
+            "test_file": "servlet5/src/test/java/adapter/{jakarta,javax,servletElementConverter5}/* (cross-cutting fixture verification).java",
+            "test_symbol": "* (cross-cutting fixture verification)",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC4-01",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-4"
+            ],
+            "test_file": "servlet5/src/test/java/adapter/servletElementConverter5/ServletConverterUnitTest.java",
+            "test_symbol": "shouldFallbackInDefaultMode_AC4_01",
+            "kind": "unit",
+            "expected_failure_signature": null
+          },
+          {
+            "id": "TC-REQ-FR-TEST-001-AC4-02",
+            "req_id": "FR-TEST-001",
+            "ac_refs": [
+              "AC-4"
+            ],
+            "test_file": "servlet5/src/test/java/adapter/servletElementConverter5/ServletConverterUnitTest.java",
+            "test_symbol": "shouldThrowInStrictMode_AC4_02",
+            "kind": "unit",
+            "expected_failure_signature": null
+          }
+        ],
+        "red_evidence": null,
+        "green_evidence": {
+          "command": "./gradlew :servlet5:test",
+          "exit_code": 0,
+          "timestamp": "2026-05-21T00:00:00Z"
+        }
+      },
+      "trace_links": [
+        {
+          "link_id": "TL-T-PH005-07-01",
+          "source": {
+            "type": "Task",
+            "id": "T-PH005-07"
+          },
+          "target": {
+            "type": "Requirement",
+            "reference": "FR-TEST-001"
+          },
+          "relation": "depends_on"
+        }
+      ]
+    },
+    {
+      "id": "T-PH005-08",
+      "phase_id": "PH-005",
+      "title": "3 모듈 전체 회귀 통과 검증 (단위+IT+BM+Contract)",
+      "type": "review",
+      "req_ids": [
+        "FR-TEST-001"
+      ],
+      "files": [
+        {
+          "path": "servlet5/build.gradle"
+        },
+        {
+          "path": "servlet6/build.gradle"
+        },
+        {
+          "path": "servlet61/build.gradle"
+        }
+      ],
+      "action": "T-PH005-01~07 완료 후 3 모듈 전체 회귀 검증. 어댑터 src/main + common src/main + common testFixtures 일절 미변경 확인. servlet5≥115 + servlet6≥71 + servlet61≥76 + Contract 39 PASS + 회귀 0건 + @Tag('integration') 누락 0건 검증.",
+      "acceptance_tests": [
+        {
+          "kind": "checklist",
+          "items": [
+            "gradlew test 전체 exit 0",
+            "servlet5 ≥ 115, servlet6 ≥ 71, servlet61 ≥ 76 PASS",
+            "Contract test 39건 PASS",
+            "git diff --stat common/src/main/ common/src/testFixtures/ servlet*/src/main/ 결과 0 line",
+            "신규 backfill 테스트에 @Tag(\"integration\") 부착 0건"
+          ]
+        }
+      ],
+      "verification_cmd": {
+        "posix": "./gradlew test",
+        "windows": "gradlew.bat test"
+      },
+      "dod": [
+        "servlet5≥115 + servlet6≥71 + servlet61≥76 모두 PASS",
+        "Contract test 39건 (DoD 완화: 41→39, 사용자 결정 2026-05-21) 모두 PASS",
+        "회귀 0건 (`git diff --stat common/src/main/ common/src/testFixtures/ servlet*/src/main/` = 0 line)",
+        "신규 backfill 테스트에 @Tag(\"integration\") 0건"
+      ],
+      "rollback": "변경 없음 (review 타입)",
+      "estimated_effort": "S",
+      "depends_on_task": [
+        "T-PH005-01",
+        "T-PH005-02",
+        "T-PH005-03",
+        "T-PH005-04",
+        "T-PH005-05",
+        "T-PH005-06",
+        "T-PH005-07"
+      ],
+      "covers_ac": [],
+      "tdd": {
+        "applicable": false,
+        "phase": "n/a",
+        "exempt_reason": "review type Task — 3 모듈 회귀 검증으로 새 코드 작성 없음. T-PH005-01~07 단위 테스트 backfill 결과를 통합 회귀로 검증하는 단계이며 production code 변경 없음. integration 검증 단계에서 처리",
+        "test_cases": [],
+        "red_evidence": null,
+        "green_evidence": null
+      },
+      "trace_links": [
+        {
+          "link_id": "TL-T-PH005-08-01",
+          "source": {
+            "type": "Task",
+            "id": "T-PH005-08"
+          },
+          "target": {
+            "type": "Requirement",
+            "reference": "FR-TEST-001"
+          },
+          "relation": "depends_on"
+        }
+      ]
+    }
+  ],
+  "coverage": [
+    {
+      "req_id": "FR-TEST-001",
+      "stability": "evolving",
+      "ac_total": 4,
+      "ac_covered": 4,
+      "missing_ac_ids": [],
+      "covered_tasks": [
+        "T-PH005-01",
+        "T-PH005-02",
+        "T-PH005-03",
+        "T-PH005-04",
+        "T-PH005-05",
+        "T-PH005-06",
+        "T-PH005-07",
+        "T-PH005-08"
+      ],
+      "ac_test_map": [
+        {
+          "ac_id": "AC-1",
+          "test_case_ids": [
+            "TC-REQ-FR-TEST-001-AC1-01",
+            "TC-REQ-FR-TEST-001-AC1-02",
+            "TC-REQ-FR-TEST-001-AC1-03",
+            "TC-REQ-FR-TEST-001-AC1-04",
+            "TC-REQ-FR-TEST-001-AC1-05",
+            "TC-REQ-FR-TEST-001-AC1-06",
+            "TC-REQ-FR-TEST-001-AC1-07",
+            "TC-REQ-FR-TEST-001-AC1-08",
+            "TC-REQ-FR-TEST-001-AC1-09",
+            "TC-REQ-FR-TEST-001-AC1-10",
+            "TC-REQ-FR-TEST-001-AC1-11",
+            "TC-REQ-FR-TEST-001-AC1-12",
+            "TC-REQ-FR-TEST-001-AC1-13",
+            "TC-REQ-FR-TEST-001-AC1-14",
+            "TC-REQ-FR-TEST-001-AC1-15"
+          ]
+        },
+        {
+          "ac_id": "AC-2",
+          "test_case_ids": [
+            "TC-REQ-FR-TEST-001-AC2-01",
+            "TC-REQ-FR-TEST-001-AC2-02",
+            "TC-REQ-FR-TEST-001-AC2-03",
+            "TC-REQ-FR-TEST-001-AC2-04",
+            "TC-REQ-FR-TEST-001-AC2-05",
+            "TC-REQ-FR-TEST-001-AC2-06",
+            "TC-REQ-FR-TEST-001-AC2-07",
+            "TC-REQ-FR-TEST-001-AC2-08",
+            "TC-REQ-FR-TEST-001-AC2-09",
+            "TC-REQ-FR-TEST-001-AC2-10",
+            "TC-REQ-FR-TEST-001-AC2-11",
+            "TC-REQ-FR-TEST-001-AC2-12",
+            "TC-REQ-FR-TEST-001-AC2-13",
+            "TC-REQ-FR-TEST-001-AC2-14",
+            "TC-REQ-FR-TEST-001-AC2-15",
+            "TC-REQ-FR-TEST-001-AC2-16",
+            "TC-REQ-FR-TEST-001-AC2-17",
+            "TC-REQ-FR-TEST-001-AC2-18",
+            "TC-REQ-FR-TEST-001-AC2-19",
+            "TC-REQ-FR-TEST-001-AC2-20",
+            "TC-REQ-FR-TEST-001-AC2-21",
+            "TC-REQ-FR-TEST-001-AC2-22",
+            "TC-REQ-FR-TEST-001-AC2-23",
+            "TC-REQ-FR-TEST-001-AC2-24",
+            "TC-REQ-FR-TEST-001-AC2-25",
+            "TC-REQ-FR-TEST-001-AC2-26",
+            "TC-REQ-FR-TEST-001-AC2-27",
+            "TC-REQ-FR-TEST-001-AC2-28",
+            "TC-REQ-FR-TEST-001-AC2-29",
+            "TC-REQ-FR-TEST-001-AC2-30",
+            "TC-REQ-FR-TEST-001-AC2-31",
+            "TC-REQ-FR-TEST-001-AC2-32",
+            "TC-REQ-FR-TEST-001-AC2-33",
+            "TC-REQ-FR-TEST-001-AC2-34",
+            "TC-REQ-FR-TEST-001-AC2-35",
+            "TC-REQ-FR-TEST-001-AC2-36",
+            "TC-REQ-FR-TEST-001-AC2-37",
+            "TC-REQ-FR-TEST-001-AC2-38",
+            "TC-REQ-FR-TEST-001-AC2-39",
+            "TC-REQ-FR-TEST-001-AC2-40",
+            "TC-REQ-FR-TEST-001-AC2-41",
+            "TC-REQ-FR-TEST-001-AC2-42",
+            "TC-REQ-FR-TEST-001-AC2-43",
+            "TC-REQ-FR-TEST-001-AC2-44",
+            "TC-REQ-FR-TEST-001-AC2-45",
+            "TC-REQ-FR-TEST-001-AC2-46",
+            "TC-REQ-FR-TEST-001-AC2-47",
+            "TC-REQ-FR-TEST-001-AC2-48",
+            "TC-REQ-FR-TEST-001-AC2-49",
+            "TC-REQ-FR-TEST-001-AC2-50",
+            "TC-REQ-FR-TEST-001-AC2-51",
+            "TC-REQ-FR-TEST-001-AC2-52",
+            "TC-REQ-FR-TEST-001-AC2-53",
+            "TC-REQ-FR-TEST-001-AC2-54",
+            "TC-REQ-FR-TEST-001-AC2-55",
+            "TC-REQ-FR-TEST-001-AC2-56",
+            "TC-REQ-FR-TEST-001-AC2-57",
+            "TC-REQ-FR-TEST-001-AC2-58",
+            "TC-REQ-FR-TEST-001-AC2-59",
+            "TC-REQ-FR-TEST-001-AC2-60",
+            "TC-REQ-FR-TEST-001-AC2-61",
+            "TC-REQ-FR-TEST-001-AC2-62",
+            "TC-REQ-FR-TEST-001-AC2-63",
+            "TC-REQ-FR-TEST-001-AC2-64",
+            "TC-REQ-FR-TEST-001-AC2-65",
+            "TC-REQ-FR-TEST-001-AC2-66",
+            "TC-REQ-FR-TEST-001-AC2-67",
+            "TC-REQ-FR-TEST-001-AC2-68",
+            "TC-REQ-FR-TEST-001-AC2-69",
+            "TC-REQ-FR-TEST-001-AC2-70",
+            "TC-REQ-FR-TEST-001-AC2-71",
+            "TC-REQ-FR-TEST-001-AC2-72",
+            "TC-REQ-FR-TEST-001-AC2-73",
+            "TC-REQ-FR-TEST-001-AC2-74",
+            "TC-REQ-FR-TEST-001-AC2-75",
+            "TC-REQ-FR-TEST-001-AC2-76",
+            "TC-REQ-FR-TEST-001-AC2-77",
+            "TC-REQ-FR-TEST-001-AC2-78",
+            "TC-REQ-FR-TEST-001-AC2-79"
+          ]
+        },
+        {
+          "ac_id": "AC-3",
+          "test_case_ids": [
+            "TC-REQ-FR-TEST-001-AC3-01",
+            "TC-REQ-FR-TEST-001-AC3-02",
+            "TC-REQ-FR-TEST-001-AC3-03",
+            "TC-REQ-FR-TEST-001-AC3-04",
+            "TC-REQ-FR-TEST-001-AC3-05",
+            "TC-REQ-FR-TEST-001-AC3-06",
+            "TC-REQ-FR-TEST-001-AC3-07"
+          ]
+        },
+        {
+          "ac_id": "AC-4",
+          "test_case_ids": [
+            "TC-REQ-FR-TEST-001-AC4-01",
+            "TC-REQ-FR-TEST-001-AC4-02"
+          ]
+        }
+      ]
+    }
+  ],
+  "orphans": [],
+  "unreferenced_reqs": [],
+  "excluded_reqs": [],
+  "deferred_ac": [],
+  "risks": [
+    {
+      "id": "R-001",
+      "severity": "low",
+      "description": "Contract test DoD '41 vs 코드 실측 39' -2 갭",
+      "mitigation": "사용자 결정 (2026-05-21) 으로 DoD 를 39 로 완화. T-PH005-08 DoD 에 명시 반영. SRS Change Notes 보강은 T-PH007-01 책임",
+      "affected_task_ids": []
+    },
+    {
+      "id": "R-002",
+      "severity": "medium",
+      "description": "backfill 도중 신규 단위 테스트가 어댑터 결함을 발견할 가능성",
+      "mitigation": "scope 위반. 어댑터 production code 수정 금지. 결함 발견 시 PH-003 결함 fix scope 로 escalate + 해당 신규 테스트는 RED-phase 로 임시 보류",
+      "affected_task_ids": []
+    },
+    {
+      "id": "R-003",
+      "severity": "high",
+      "description": "common/src/main, common/src/testFixtures 동반 변경 시 Contract 39 회귀 발생 위험",
+      "mitigation": "T-PH005-08 DoD 의 회귀 0 line 검증 게이트로 차단. 동반 변경 발생 시 PR 거부",
+      "affected_task_ids": []
+    },
+    {
+      "id": "R-004",
+      "severity": "medium",
+      "description": "신규 backfill 테스트에 실수로 @Tag('integration') 부착 시 `gradlew test` 카운트 미반영 → DoD 미달",
+      "mitigation": "T-PH005-08 DoD 의 태그 검증 항목으로 게이트",
+      "affected_task_ids": []
+    },
+    {
+      "id": "R-005",
+      "severity": "low",
+      "description": "servlet5 G6 javax-side mirror 가 6 클래스 분산 — test_cases_count=9 (G* 단위) 대비 실제 파일 수 14",
+      "mitigation": "covers_ac=AC-1~AC-4 충족. dod 명시 'G1~G9 9 신규 테스트 클래스' 의 의미는 gap 단위 9 + G6 의 분산 6 (rollback 14 파일)",
+      "affected_task_ids": []
+    }
+  ],
+  "open_questions": [
+    {
+      "id": "OQ-001",
+      "question": "Contract 39 vs 41 (-2) 의 의미: (a) 단순 문서 오기 / (b) sanity 분리 의도. 어느 쪽이든 신규 Contract test 추가는 PH-005 scope 외. 사용자 결정 2026-05-21 적용 후 SRS Change Notes 보강 시 결정 사유 명문화 필요",
+      "blocks_task_ids": []
+    }
+  ],
+  "external_module_impact": [],
+  "tdd_decisions": [
+    {
+      "task_id": "T-PH005-08",
+      "decision": "accept-as-exempt",
+      "reason": "review type Task — 3 모듈 회귀 검증으로 새 코드 작성 없음. PH-005 backfill 결과 통합 검증.",
+      "user_decision_id": "user-2026-05-21-ph005-exempt",
+      "decided_at": "2026-05-21T00:00:00Z"
+    }
+  ],
+  "coder_handoff_readiness": [
+    {
+      "phase_id": "PH-005",
+      "ready": true,
+      "blockers": []
+    }
+  ],
+  "mcp_call_log": [
+    {
+      "seq": 1,
+      "call": "add_trace_link",
+      "args": {
+        "source": {
+          "type": "Task",
+          "id": "T-PH005-01"
+        },
+        "target": {
+          "type": "Requirement",
+          "reference": "FR-TEST-001"
+        },
+        "relation": "depends_on"
+      },
+      "args_hash": "b8ce8086d9e4d864ce38da800951ccc286b30b3a",
+      "response_hash": "mutation_ok",
+      "timestamp": "2026-05-21T02:26:50.739Z",
+      "ok": true,
+      "dry_run": false
+    },
+    {
+      "seq": 2,
+      "call": "add_trace_link",
+      "args": {
+        "source": {
+          "type": "Task",
+          "id": "T-PH005-02"
+        },
+        "target": {
+          "type": "Requirement",
+          "reference": "FR-TEST-001"
+        },
+        "relation": "depends_on"
+      },
+      "args_hash": "e852d2a4ea24399af3edc40d924a4449ec085873",
+      "response_hash": "mutation_ok",
+      "timestamp": "2026-05-21T02:26:50.739Z",
+      "ok": true,
+      "dry_run": false
+    },
+    {
+      "seq": 3,
+      "call": "add_trace_link",
+      "args": {
+        "source": {
+          "type": "Task",
+          "id": "T-PH005-03"
+        },
+        "target": {
+          "type": "Requirement",
+          "reference": "FR-TEST-001"
+        },
+        "relation": "depends_on"
+      },
+      "args_hash": "74e5b09eff52cfba2e5c0fabf2184ff4bd598cd2",
+      "response_hash": "mutation_ok",
+      "timestamp": "2026-05-21T02:26:50.739Z",
+      "ok": true,
+      "dry_run": false
+    },
+    {
+      "seq": 4,
+      "call": "add_trace_link",
+      "args": {
+        "source": {
+          "type": "Task",
+          "id": "T-PH005-04"
+        },
+        "target": {
+          "type": "Requirement",
+          "reference": "FR-TEST-001"
+        },
+        "relation": "depends_on"
+      },
+      "args_hash": "65af046b513ccdeed3fc76b471e758a8ebeff817",
+      "response_hash": "mutation_ok",
+      "timestamp": "2026-05-21T02:26:50.739Z",
+      "ok": true,
+      "dry_run": false
+    },
+    {
+      "seq": 5,
+      "call": "add_trace_link",
+      "args": {
+        "source": {
+          "type": "Task",
+          "id": "T-PH005-05"
+        },
+        "target": {
+          "type": "Requirement",
+          "reference": "FR-TEST-001"
+        },
+        "relation": "depends_on"
+      },
+      "args_hash": "fb912a595eaa57abfa8d38e25737ca4a90bdec70",
+      "response_hash": "mutation_ok",
+      "timestamp": "2026-05-21T02:26:50.739Z",
+      "ok": true,
+      "dry_run": false
+    },
+    {
+      "seq": 6,
+      "call": "add_trace_link",
+      "args": {
+        "source": {
+          "type": "Task",
+          "id": "T-PH005-06"
+        },
+        "target": {
+          "type": "Requirement",
+          "reference": "FR-TEST-001"
+        },
+        "relation": "depends_on"
+      },
+      "args_hash": "67c41d116b4d41974cd315fd822e3b1fa771ec09",
+      "response_hash": "mutation_ok",
+      "timestamp": "2026-05-21T02:26:50.739Z",
+      "ok": true,
+      "dry_run": false
+    },
+    {
+      "seq": 7,
+      "call": "add_trace_link",
+      "args": {
+        "source": {
+          "type": "Task",
+          "id": "T-PH005-07"
+        },
+        "target": {
+          "type": "Requirement",
+          "reference": "FR-TEST-001"
+        },
+        "relation": "depends_on"
+      },
+      "args_hash": "33aa689db8af0df7218cad97fb0d8a774f3d1324",
+      "response_hash": "mutation_ok",
+      "timestamp": "2026-05-21T02:26:50.739Z",
+      "ok": true,
+      "dry_run": false
+    },
+    {
+      "seq": 8,
+      "call": "add_trace_link",
+      "args": {
+        "source": {
+          "type": "Task",
+          "id": "T-PH005-08"
+        },
+        "target": {
+          "type": "Requirement",
+          "reference": "FR-TEST-001"
+        },
+        "relation": "depends_on"
+      },
+      "args_hash": "b57557b8704be84d96b856e0dea5ff322383dd29",
+      "response_hash": "mutation_ok",
+      "timestamp": "2026-05-21T02:26:50.739Z",
+      "ok": true,
+      "dry_run": false
+    },
+    {
+      "seq": 9,
+      "call": "add_verification_evidence",
+      "args": {
+        "id": "FR-TEST-001",
+        "type": "plan",
+        "reference": "docs/plans/2026-05-21.jakarta-adapter-v100.ph005.plan.md"
+      },
+      "args_hash": "296a1bd422bd6d9eb25d788ac9cb091438c39391",
+      "response_hash": "mutation_ok",
+      "timestamp": "2026-05-21T02:26:50.739Z",
+      "ok": true,
+      "dry_run": false
+    }
+  ]
+}

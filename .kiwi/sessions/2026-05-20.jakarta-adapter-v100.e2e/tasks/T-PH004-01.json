@@ -1,0 +1,60 @@
+{
+  "task_id": "T-PH004-01",
+  "phase_id": "PH-004",
+  "started_at": "2026-05-20T17:09:00Z",
+  "completed_at": "2026-05-20T17:10:00Z",
+  "status": "done",
+  "task_type": "review",
+  "tdd_exempted": true,
+  "exempt_reason": "review 타입 — 기존 테스트의 회귀 통과 확인만 수행하며 코드 변경 없음",
+  "phase1": {
+    "skipped": true,
+    "reason": "tdd.applicable=false with exempt_reason — auto-skip per §0.G1 + review-type Phase 2 직행"
+  },
+  "phase2": {
+    "skipped": true,
+    "reason": "review-type task — 코드 변경 없음, 회귀 실행만 수행"
+  },
+  "phase3": {
+    "regression": {
+      "command": "gradlew.bat :servlet5:test --tests *BugMuseumTest* --console=plain",
+      "exit_code": 0,
+      "build_status": "BUILD SUCCESSFUL",
+      "result_xml": "servlet5/build/test-results/test/TEST-com.snoworca.regression.BugMuseumTest.xml",
+      "tests": 15,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "duration_sec": 2.157,
+      "bm_coverage": {
+        "BM01": "PASS - StreamConverter.read delegates to read (FR-FIX-001)",
+        "BM02": "PASS - Part.getSubmittedFileName delegates to origin (FR-FIX-002)",
+        "BM03": "PASS - jakarta ServletContext.setResponseCharacterEncoding delegates (FR-FIX-004)",
+        "BM04": "PASS - ServletReqResConverter routes to Http adapter (FR-FIX-008)",
+        "BM05": "PASS - jakarta ServletResponse.setContentLengthLong no narrowing (FR-FIX-003)",
+        "BM06": "PASS - jakarta ServletRequest.getRealPath @Deprecated (FR-FIX-007)",
+        "BM07": "PASS - jakarta HttpServletRequest.getCookies null-safe (FR-FIX-009)",
+        "BM08": "PASS - javax ServletContext.setRequestCharacterEncoding delegates (FR-FIX-005)",
+        "BM09": "PASS - jakarta ServletRequest.getContentLengthLong no fallback (FR-FIX-006)",
+        "BM10": "PASS - HttpUpgradeHandler ThreadLocal single-thread lock-in (NFR-CONV-001)"
+      },
+      "meta_ac": {
+        "AC-1": "PASS - BugMuseumTest exists with BM01..BM10 methods defined",
+        "AC-2": "PASS - BM01..BM09 wired as defect regression assertions",
+        "AC-3": "PASS - BM10 ThreadLocal lock-in passes under single-threaded assumption",
+        "AC-4": "PASS - every BM01..BM10 has @DisplayName with defect ID",
+        "AC-5": "PASS - BM01..BM09 form regression gate for FR-FIX-001..009"
+      }
+    },
+    "dod_check": [
+      {
+        "item": "BM01~BM10 모두 GREEN 또는 의도된 RED(회귀 보호) 상태로 PASS",
+        "satisfied": true,
+        "evidence": "15/15 testcases passed, 0 failures, 0 errors per JUnit XML"
+      }
+    ],
+    "notes": "Test class layout: 단일 파일 BugMuseumTest.java (com.snoworca.regression) 가 BM01~BM10 + 5 META AC (AC-1~AC-5) 를 1 클래스로 구현. 사이드카는 디렉토리 'bugmuseum' 경로를 명시했으나 실제 구현은 단일 파일이며 의미적으로 동일 산출물(BM 10 종 + AC 메타) 제공. action/DoD 충족."
+  },
+  "req_ids": ["FR-TEST-004"],
+  "covers_ac": ["AC-1"]
+}

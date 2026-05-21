@@ -1,0 +1,73 @@
+{
+  "task_id": "T-PH002-06",
+  "phase_id": "PH-002",
+  "title": "IT06 Filter chain 통합 테스트",
+  "req_ids": ["FR-TEST-003"],
+  "started_at": "2026-05-20T08:02:00Z",
+  "completed_at": "2026-05-20T08:08:30Z",
+  "phase1": {
+    "tdd_draft_iters": [
+      {
+        "iter": 1,
+        "file_paths": [
+          "servlet5/src/test/java/com/snoworca/adapter/it/IT06FilterChainTest.java",
+          "servlet6/src/test/java/com/snoworca/adapter/it/IT06FilterChainTest.java",
+          "servlet61/src/test/java/com/snoworca/adapter/it/IT06FilterChainTest.java"
+        ]
+      }
+    ],
+    "red_evidence": {
+      "note": "Tests authored fresh — pre-existence absence served as red baseline. Filter chain (javax.servlet.Filter ↔ jakarta.servlet.Filter via ServletConverter.convert(Filter)) already implemented in PH-004 SPEC slices."
+    }
+  },
+  "phase2": {
+    "impl_iters": [
+      {
+        "iter": 1,
+        "files_changed": [
+          "servlet5/src/test/java/com/snoworca/adapter/it/IT06FilterChainTest.java",
+          "servlet6/src/test/java/com/snoworca/adapter/it/IT06FilterChainTest.java",
+          "servlet61/src/test/java/com/snoworca/adapter/it/IT06FilterChainTest.java"
+        ]
+      },
+      {
+        "iter": 2,
+        "files_changed": [
+          "servlet5/src/test/java/com/snoworca/adapter/it/IT06FilterChainTest.java",
+          "servlet6/src/test/java/com/snoworca/adapter/it/IT06FilterChainTest.java",
+          "servlet61/src/test/java/com/snoworca/adapter/it/IT06FilterChainTest.java"
+        ],
+        "note": "First iter committed response early (setContentLength + OutputStream.write) so Filter A's post-chain setHeader was a no-op (response already committed). Switched ChainProbeServlet to getWriter().write() without setContentLength so the default Tomcat 8 KB buffer keeps the response uncommitted until the chain unwinds — Filter A can then mutate headers after chain.doFilter returns."
+      }
+    ],
+    "green_evidence": {
+      "command": "gradlew.bat :servlet5:integrationTest --tests *IT06FilterChainTest :servlet6:integrationTest --tests *IT06FilterChainTest :servlet61:integrationTest --tests *IT06FilterChainTest",
+      "exit_code": 0,
+      "timestamp": "2026-05-20T08:08:30Z",
+      "passed_test_case_ids": [
+        "TC-REQ-FR-TEST-003-AC2-16",
+        "TC-REQ-FR-TEST-003-AC2-17",
+        "TC-REQ-FR-TEST-003-AC2-18"
+      ],
+      "stdout_excerpt": "BUILD SUCCESSFUL in 33s — 19 actionable tasks: 12 executed, 7 up-to-date (servlet5/6/61 integrationTest + test + jacocoTestReport all PASS)"
+    },
+    "dod_check": [
+      {
+        "item": "Filter A→B→Servlet→B→A 순서 assert PASS",
+        "satisfied": true,
+        "notes": "ORDER_LOG snapshot asserted equals List.of(\"A-in\", \"B-in\", \"servlet\", \"B-out\", \"A-out\") across all 3 modules. Filter A entry → Filter B entry (wraps request + response) → Servlet (reads chain.tag attribute = \"wrapped-by-B\") → Filter B exit → Filter A exit (reads status from underlying response and sets X-Filter-A-Saw header)."
+      },
+      {
+        "item": "request/response wrapper 자료 누출 없음",
+        "satisfied": true,
+        "notes": "(1) Filter B's HttpServletResponseWrapper overrides addHeader/setHeader to swallow X-Filter-B-Wrapper-Only — the outermost response and HTTP client never observe that header (asserted conn.getHeaderField(\"X-Filter-B-Wrapper-Only\") == null). (2) Filter B's HttpServletRequestWrapper provides chain.tag attribute = \"wrapped-by-B\" only inside the wrapped request — servlet reads it via req.getAttribute(\"chain.tag\"). (3) Second independent request asserts fresh wrapping per request (no attribute leak across requests)."
+      }
+    ]
+  },
+  "phase3": {
+    "regression": {
+      "scope": "impacted-only",
+      "note": "Module-scoped integrationTest + test + jacocoTestReport chain — BUILD SUCCESSFUL across servlet5/6/61. No regression in unit tests."
+    }
+  }
+}

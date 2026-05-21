@@ -1,11 +1,14 @@
 package com.snoworca.adapter.it;
 
 import jakarta.servlet.Filter;
+import jakarta.servlet.MultipartConfigElement;
 import jakarta.servlet.Servlet;
 import org.apache.catalina.Context;
 import org.apache.catalina.LifecycleException;
+import org.apache.catalina.Wrapper;
 import org.apache.catalina.connector.Connector;
 import org.apache.catalina.startup.Tomcat;
+import org.apache.tomcat.util.descriptor.web.ErrorPage;
 import org.apache.tomcat.util.descriptor.web.FilterDef;
 import org.apache.tomcat.util.descriptor.web.FilterMap;
 
@@ -57,7 +60,19 @@ public final class TomcatRunner implements AutoCloseable {
      * @req FR-TEST-003
      */
     public TomcatRunner addServlet(String name, String urlPattern, Servlet servlet) {
-        Tomcat.addServlet(this.context, name, servlet);
+        Tomcat.addServlet(this.context, name, servlet).setAsyncSupported(true);
+        this.context.addServletMappingDecoded(urlPattern, name);
+        return this;
+    }
+
+    /**
+     * @req FR-TEST-003
+     */
+    public TomcatRunner addServlet(String name, String urlPattern, Servlet servlet,
+                                   MultipartConfigElement multipartConfig) {
+        Wrapper wrapper = Tomcat.addServlet(this.context, name, servlet);
+        wrapper.setAsyncSupported(true);
+        wrapper.setMultipartConfigElement(multipartConfig);
         this.context.addServletMappingDecoded(urlPattern, name);
         return this;
     }
@@ -77,6 +92,32 @@ public final class TomcatRunner implements AutoCloseable {
             map.setDispatcher(dt.name());
         }
         this.context.addFilterMap(map);
+        return this;
+    }
+
+    /**
+     * Registers an ErrorPage that maps an exception class FQN to a forward location.
+     *
+     * @req FR-TEST-003
+     */
+    public TomcatRunner addErrorPage(String exceptionType, String location) {
+        ErrorPage errorPage = new ErrorPage();
+        errorPage.setExceptionType(exceptionType);
+        errorPage.setLocation(location);
+        this.context.addErrorPage(errorPage);
+        return this;
+    }
+
+    /**
+     * Registers an ErrorPage that maps an HTTP status code to a forward location.
+     *
+     * @req FR-TEST-003
+     */
+    public TomcatRunner addErrorPage(int errorCode, String location) {
+        ErrorPage errorPage = new ErrorPage();
+        errorPage.setErrorCode(errorCode);
+        errorPage.setLocation(location);
+        this.context.addErrorPage(errorPage);
         return this;
     }
 

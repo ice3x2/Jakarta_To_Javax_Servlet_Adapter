@@ -1,0 +1,68 @@
+{
+  "task_id": "T-PH003-01",
+  "phase_id": "PH-003",
+  "title": "IT11 setStatus 폴백 통합 테스트",
+  "req_ids": ["FR-TEST-003"],
+  "started_at": "2026-05-20T23:50:00Z",
+  "completed_at": "2026-05-20T23:59:00Z",
+  "phase1": {
+    "tdd_draft_iters": [
+      {
+        "iter": 1,
+        "file_paths": [
+          "servlet5/src/test/java/com/snoworca/adapter/it/IT11SetStatusTest.java",
+          "servlet6/src/test/java/com/snoworca/adapter/it/IT11SetStatusTest.java",
+          "servlet61/src/test/java/com/snoworca/adapter/it/IT11SetStatusTest.java"
+        ]
+      }
+    ],
+    "red_evidence": {
+      "note": "Test authored fresh as integration suite. Initial draft used STATUS_TEAPOT (418) + assertNotNull(responseMessage); both produced organic red signals. (a) HTTP 418 routed HttpURLConnection.getInputStream() through the 4xx error path raising IOException — confirmed 2-arg setStatus status code does propagate; (b) After switching to 201 Created, assertNotNull(responseMessage) failed because Tomcat 10.0/10.1/11.0 emit no reason phrase on the wire, so HttpURLConnection.getResponseMessage() returns null — this very absence proves the SRS §6.2.2 E1 policy: jakarta.servlet 6.0+ removed setStatus(int, String) and the adapter drops the reason phrase. Test was refined to treat null responseMessage as positive evidence (reason phrase fully dropped) and only assert absence of CUSTOM_REASON when responseMessage is non-null. Pattern matches IT10CharsetTest (servlet5/6/61 trio) authoring style."
+    }
+  },
+  "phase2": {
+    "impl_iters": [
+      {
+        "iter": 1,
+        "files_changed": [
+          "servlet5/src/test/java/com/snoworca/adapter/it/IT11SetStatusTest.java",
+          "servlet6/src/test/java/com/snoworca/adapter/it/IT11SetStatusTest.java",
+          "servlet61/src/test/java/com/snoworca/adapter/it/IT11SetStatusTest.java"
+        ],
+        "note": "3 parallel test classes (one per servlet module: 5/6/61). Each contains 2 @Test methods: shouldIgnoreReasonPhrase (deprecated 2-arg setStatus(201, CUSTOM_REASON) — asserts status==201, custom reason phrase MUST NOT appear on HTTP status line (null responseMessage is acceptable / positive signal), body marker 'two-arg-invoked') + shouldSetStatusCode (1-arg setStatus(202) — asserts status==202, body marker 'one-arg-invoked'). Modules differ only by ServletConverter import (servletElementConverter5/6/61) and Tomcat version mentioned in javadoc. 2-arg overload annotated @SuppressWarnings(\"deprecation\") since Servlet 4.0 deprecated this signature."
+      }
+    ],
+    "green_evidence": {
+      "command": "gradlew.bat :servlet5:integrationTest --tests *IT11SetStatusTest :servlet6:integrationTest --tests *IT11SetStatusTest :servlet61:integrationTest --tests *IT11SetStatusTest",
+      "exit_code": 0,
+      "timestamp": "2026-05-20T23:58:00Z",
+      "passed_test_case_ids": [
+        "TC-REQ-FR-TEST-003-AC3-02",
+        "TC-REQ-FR-TEST-003-AC3-03",
+        "TC-REQ-FR-TEST-003-AC3-04",
+        "TC-REQ-FR-TEST-003-AC3-05",
+        "TC-REQ-FR-TEST-003-AC3-06",
+        "TC-REQ-FR-TEST-003-AC3-07"
+      ],
+      "stdout_excerpt": "BUILD SUCCESSFUL in 35s. 19 actionable tasks: 12 executed, 7 up-to-date. integrationTest + test + jacocoTestReport PASS on all 3 modules (servlet5 on Tomcat 10.0.27, servlet6 on Tomcat 10.1.30, servlet61 on Tomcat 11.0.0)."
+    },
+    "dod_check": [
+      {
+        "item": "deprecated 2-arg setStatus → reason phrase 무시 + status 코드 정확",
+        "satisfied": true,
+        "notes": "shouldIgnoreReasonPhrase: GET → javax HttpServlet calls resp.setStatus(201, 'Custom-Brew-Phrase') (deprecated 2-arg overload, @SuppressWarnings(\"deprecation\")). javax→jakarta bridge (ServletConverter.convert) → Tomcat → HTTP wire → client. Client observes status==201 (status code preserved) and responseMessage either null or standard reason phrase — never the application-supplied 'Custom-Brew-Phrase'. Verified across Tomcat 10.0.27 (servlet5), 10.1.30 (servlet6), 11.0.0 (servlet61). SRS §6.2.2 policy E1 satisfied: jakarta 6.0+ removed the API entirely, adapter delegates to setStatus(int) only."
+      },
+      {
+        "item": "1-arg setStatus 정상",
+        "satisfied": true,
+        "notes": "shouldSetStatusCode: GET → javax HttpServlet calls resp.setStatus(202). javax→jakarta bridge → Tomcat → HTTP wire → client. Client observes status==202, body 'one-arg-invoked' confirming 1-arg path executed correctly. No reason phrase manipulation involved."
+      }
+    ]
+  },
+  "phase3": {
+    "regression": {
+      "scope": "impacted-only",
+      "note": "3-module integrationTest + test + jacocoTestReport chain BUILD SUCCESSFUL (35s). No changes to TomcatRunner, ServletConverter, or any adapter sources — pure test additions in test/ tree. IT01~IT08, IT09 (61 only), IT10 unaffected (gradle re-ran them up-to-date)."
+    }
+  }
+}

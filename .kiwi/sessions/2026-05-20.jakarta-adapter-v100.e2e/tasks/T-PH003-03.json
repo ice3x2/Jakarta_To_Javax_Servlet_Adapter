@@ -1,0 +1,52 @@
+{
+  "task_id": "T-PH003-03",
+  "phase_id": "PH-003",
+  "title": "IT13 ErrorPage 통합 테스트",
+  "type": "code",
+  "req_ids": ["FR-TEST-003"],
+  "started_at": "2026-05-20T16:40:00Z",
+  "completed_at": "2026-05-20T16:45:00Z",
+  "phase1": {
+    "tdd_draft_iters": [
+      {
+        "iter": 1,
+        "file_paths": [
+          "servlet5/src/test/java/com/snoworca/adapter/it/IT13ErrorPageTest.java",
+          "servlet6/src/test/java/com/snoworca/adapter/it/IT13ErrorPageTest.java",
+          "servlet61/src/test/java/com/snoworca/adapter/it/IT13ErrorPageTest.java"
+        ]
+      }
+    ]
+  },
+  "phase2": {
+    "impl_iters": [
+      {
+        "iter": 1,
+        "files_changed": [
+          "servlet5/src/test/java/com/snoworca/adapter/it/TomcatRunner.java",
+          "servlet6/src/test/java/com/snoworca/adapter/it/TomcatRunner.java",
+          "servlet61/src/test/java/com/snoworca/adapter/it/TomcatRunner.java",
+          "servlet5/src/test/java/com/snoworca/adapter/it/IT13ErrorPageTest.java",
+          "servlet6/src/test/java/com/snoworca/adapter/it/IT13ErrorPageTest.java",
+          "servlet61/src/test/java/com/snoworca/adapter/it/IT13ErrorPageTest.java"
+        ],
+        "helper_extension_note": "TomcatRunner.addErrorPage(exceptionType, location) + addErrorPage(errorCode, location) added per plan hint (PH-002 T-PH002-07/T-PH002-08 helper extension precedent). org.apache.tomcat.util.descriptor.web.ErrorPage import added."
+      }
+    ],
+    "green_evidence": {
+      "command": "gradlew.bat :servlet5:integrationTest :servlet6:integrationTest :servlet61:integrationTest --tests *IT13ErrorPageTest",
+      "exit_code": 0,
+      "timestamp": "2026-05-20T16:44:00Z"
+    },
+    "dod_check": [
+      {
+        "item": "예외 throw → ErrorPage 매핑 → 응답 status/body 검증 PASS",
+        "satisfied": true,
+        "evidence": "3 modules BUILD SUCCESSFUL, shouldMapErrorPage() success in all integrationTest reports (servlet5/servlet6/servlet61). NullPointerException thrown by BoomServlet → Tomcat ErrorPage forward to /error → ErrorHandlerServlet writes status 500 + body 'ERROR-PAGE-HANDLED' → wire assertions pass."
+      }
+    ]
+  },
+  "phase3": {
+    "regression": {"scope": "impacted-only", "passed": 3, "failed": 0}
+  }
+}

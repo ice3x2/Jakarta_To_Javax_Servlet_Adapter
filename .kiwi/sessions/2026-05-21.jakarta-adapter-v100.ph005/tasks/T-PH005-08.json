@@ -1,0 +1,66 @@
+{
+  "task_id": "T-PH005-08",
+  "type": "review",
+  "tdd_applicable": false,
+  "tdd_exempt_reason": "review type Task — auto-exempt",
+  "started_at": "2026-05-21T05:40:00Z",
+  "completed_at": "2026-05-21T05:55:00Z",
+  "status": "FAILED",
+  "verification_results": {
+    "test_counts": {
+      "servlet5": {"tests": 182, "failures": 0, "errors": 0, "skipped": 0, "threshold": 115, "pass": true},
+      "servlet6": {"tests": 73, "failures": 0, "errors": 0, "skipped": 0, "threshold": 71, "pass": true},
+      "servlet61": {"tests": 78, "failures": 0, "errors": 0, "skipped": 0, "threshold": 76, "pass": true},
+      "common": {"tests": 4, "failures": 0, "errors": 0, "skipped": 0}
+    },
+    "contract_tests": {
+      "servlet5": {"tests": 13, "failures": 0, "errors": 0},
+      "servlet6": {"tests": 13, "failures": 0, "errors": 0},
+      "servlet61": {"tests": 13, "failures": 0, "errors": 0},
+      "total": 39,
+      "threshold": 39,
+      "pass": true
+    },
+    "scope_check": {
+      "common/src/main/": {"diff_lines": 0, "pass": true},
+      "common/src/testFixtures/": {"diff_lines": 0, "pass": true},
+      "servlet5/src/main/": {"diff_lines": 7, "pass": false, "files": ["servlet5/src/main/java/adapter/javax/servlet5/http/HttpServletRequest.java"]},
+      "servlet6/src/main/": {"diff_lines": 7, "pass": false, "files": ["servlet6/src/main/java/adapter/javax/servlet6/http/HttpServletRequest.java"]},
+      "servlet61/src/main/": {"diff_lines": 7, "pass": false, "files": ["servlet61/src/main/java/adapter/javax/servlet61/http/HttpServletRequest.java"]},
+      "total_diff_lines": 21,
+      "overall_pass": false
+    },
+    "integration_tag_check": {
+      "servlet5_adapter_dirs": 0,
+      "servlet6_adapter_dirs": 0,
+      "servlet61_adapter_dirs": 0,
+      "total": 0,
+      "threshold": 0,
+      "pass": true
+    },
+    "gradle_test": {"exit_code": 0, "result": "BUILD SUCCESSFUL"}
+  },
+  "dod_check": [
+    {"item": "servlet5≥115 + servlet6≥71 + servlet61≥76 모두 PASS", "satisfied": true, "evidence": "servlet5=182, servlet6=73, servlet61=78 (all 0 failures)"},
+    {"item": "Contract test 39건 모두 PASS", "satisfied": true, "evidence": "servlet5/6/61 × 13 = 39 PASS, 0 failures"},
+    {"item": "회귀 0건 (git diff --stat common/src/main/ common/src/testFixtures/ servlet*/src/main/ = 0 line)", "satisfied": false, "evidence": "3 production files modified (21 line delta total): servlet5/6/61 HttpServletRequest.java upgrade() method changed handler.getHttpUpgradeHandler() with explanatory comments. Uncommitted. blame shows changes at 2026-05-21 14:39:59 (PH005 timeframe)."},
+    {"item": "신규 backfill 테스트에 @Tag(\"integration\") 0건", "satisfied": true, "evidence": "grep @Tag(\"integration\") in servlet5/6/61 src/test/java/adapter = 0 hits"}
+  ],
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "type": "scope-violation",
+      "category": "regression-trap-1 (production code change)",
+      "description": "servlet5/6/61 src/main/java/adapter/javax/servlet*/http/HttpServletRequest.java::upgrade() 가 PH005 작업 중 수정됨. DoD-3 (회귀 0건) 위반. 변경 내용: handlerClass.cast(new adapter.javax.servlet*.http.HttpUpgradeHandler(handler)) → handlerClass.cast(handler.getHttpUpgradeHandler()) + 4줄 설명 주석.",
+      "evidence": {
+        "files": [
+          "servlet5/src/main/java/adapter/javax/servlet5/http/HttpServletRequest.java:340-350",
+          "servlet6/src/main/java/adapter/javax/servlet6/http/HttpServletRequest.java:342-352",
+          "servlet61/src/main/java/adapter/javax/servlet61/http/HttpServletRequest.java:342-352"
+        ],
+        "diff_stat": "3 files changed, 15 insertions(+), 6 deletions(-)",
+        "blame_timestamp": "2026-05-21 14:39:59 +0900 (uncommitted)"
+      }
+    }
+  ]
+}

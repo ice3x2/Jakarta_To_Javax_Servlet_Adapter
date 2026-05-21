@@ -342,8 +342,11 @@ public class HttpServletRequest extends ServletRequest implements javax.servlet.
       try {
          adapter.jakarta.servlet61.http.HttpUpgradeHandler.setJakartaUpgradeHandlerClass(handlerClass);
          adapter.jakarta.servlet61.http.HttpUpgradeHandler handler = this.httpRequest.upgrade(adapter.jakarta.servlet61.http.HttpUpgradeHandler.class);
-         javax.servlet.http.HttpUpgradeHandler  httpUpgradeHandler = new adapter.javax.servlet61.http.HttpUpgradeHandler(handler);
-         return handlerClass.cast(httpUpgradeHandler);
+         // The jakarta wrapper instantiated the user-provided javax handler via its no-arg
+         // constructor (see HttpUpgradeHandler() reading the ThreadLocal). Return that
+         // user-typed instance directly so handlerClass.cast() succeeds — wrapping it again
+         // in adapter.javax.servlet61.http.HttpUpgradeHandler would only make the cast fail.
+         return handlerClass.cast(handler.getHttpUpgradeHandler());
       } catch (Exception e) {
          throw new javax.servlet.ServletException(e);
       }

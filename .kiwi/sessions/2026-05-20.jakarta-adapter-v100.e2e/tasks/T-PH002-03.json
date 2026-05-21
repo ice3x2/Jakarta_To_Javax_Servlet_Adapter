@@ -1,0 +1,58 @@
+{
+  "task_id": "T-PH002-03",
+  "phase_id": "PH-002",
+  "title": "IT03 Cookie 라운드트립 통합 테스트",
+  "req_ids": ["FR-TEST-003"],
+  "started_at": "2026-05-20T07:47:00Z",
+  "completed_at": "2026-05-20T07:49:35Z",
+  "phase1": {
+    "tdd_draft_iters": [
+      {
+        "iter": 1,
+        "file_paths": [
+          "servlet5/src/test/java/com/snoworca/adapter/it/IT03CookieTest.java",
+          "servlet6/src/test/java/com/snoworca/adapter/it/IT03CookieTest.java",
+          "servlet61/src/test/java/com/snoworca/adapter/it/IT03CookieTest.java"
+        ]
+      }
+    ],
+    "red_evidence": {
+      "note": "Tests were authored fresh — pre-existence absence served as red baseline. Implementation (servlet behavior) already in place from PH-001."
+    }
+  },
+  "phase2": {
+    "impl_iters": [
+      {
+        "iter": 1,
+        "files_changed": [
+          "servlet5/src/test/java/com/snoworca/adapter/it/IT03CookieTest.java",
+          "servlet6/src/test/java/com/snoworca/adapter/it/IT03CookieTest.java",
+          "servlet61/src/test/java/com/snoworca/adapter/it/IT03CookieTest.java"
+        ]
+      }
+    ],
+    "green_evidence": {
+      "command": "gradlew.bat :servlet5:integrationTest --tests *IT03CookieTest :servlet6:integrationTest --tests *IT03CookieTest :servlet61:integrationTest --tests *IT03CookieTest",
+      "exit_code": 0,
+      "timestamp": "2026-05-20T07:49:35Z",
+      "passed_test_case_ids": [
+        "TC-REQ-FR-TEST-003-AC2-10",
+        "TC-REQ-FR-TEST-003-AC2-11",
+        "TC-REQ-FR-TEST-003-AC2-12"
+      ]
+    },
+    "dod_check": [
+      {
+        "item": "6개 속성 모두 round-trip assert PASS",
+        "satisfied": true,
+        "notes": "Six attributes asserted on Set-Cookie response (name, value, path, domain, max-age, secure, httponly) plus name=value round-trip via Cookie request header verified across all 3 modules"
+      }
+    ]
+  },
+  "phase3": {
+    "regression": {
+      "scope": "impacted-only",
+      "note": "Full suite ran as part of integrationTest+test+jacocoTestReport chain — BUILD SUCCESSFUL"
+    }
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "task_id": "T-PH002-10",
+  "phase_id": "PH-002",
+  "title": "IT10 Charset UTF-8 통합 테스트 (F3 boundary)",
+  "req_ids": ["FR-TEST-003"],
+  "started_at": "2026-05-20T08:30:00Z",
+  "completed_at": "2026-05-20T08:35:00Z",
+  "phase1": {
+    "tdd_draft_iters": [
+      {
+        "iter": 1,
+        "file_paths": [
+          "servlet5/src/test/java/com/snoworca/adapter/it/IT10CharsetTest.java",
+          "servlet6/src/test/java/com/snoworca/adapter/it/IT10CharsetTest.java",
+          "servlet61/src/test/java/com/snoworca/adapter/it/IT10CharsetTest.java"
+        ]
+      }
+    ],
+    "red_evidence": {
+      "note": "Test authored fresh — pre-existence absence served as red baseline. F3 charset boundary verified through (a) explicit charset=UTF-8 round-trip of Korean payload via javax HttpServlet→ServletConverter.convert→jakarta Servlet→Tomcat→HTTP wire→client decode chain, (b) absent-charset fallback policy where servlet reads raw bytes via getInputStream() preserving byte-for-byte fidelity (adapter must not fabricate corrupting charset). Pattern matches IT02PostTest (UTF-8 form body) which already exercises charset handling on the F1 path."
+    }
+  },
+  "phase2": {
+    "impl_iters": [
+      {
+        "iter": 1,
+        "files_changed": [
+          "servlet5/src/test/java/com/snoworca/adapter/it/IT10CharsetTest.java",
+          "servlet6/src/test/java/com/snoworca/adapter/it/IT10CharsetTest.java",
+          "servlet61/src/test/java/com/snoworca/adapter/it/IT10CharsetTest.java"
+        ],
+        "note": "3 parallel test classes (one per servlet module: 5/6/61). Each contains 2 @Test methods: shouldRoundTripUtf8 (explicit charset=UTF-8 Korean round-trip — asserts status 200, response Content-Type contains charset=utf-8, decoded body equals KOREAN_PAYLOAD) + shouldFallbackCharset (no Content-Type charset parameter — asserts status 200, X-Observed-Charset header surfaced, raw bytes preserved byte-for-byte). Modules differ only by ServletConverter import (servletElementConverter5/6/61) and Tomcat version mentioned in javadoc."
+    }
+    ],
+    "green_evidence": {
+      "command": "gradlew.bat :servlet5:integrationTest --tests *IT10CharsetTest :servlet6:integrationTest --tests *IT10CharsetTest :servlet61:integrationTest --tests *IT10CharsetTest",
+      "exit_code": 0,
+      "timestamp": "2026-05-20T08:35:00Z",
+      "passed_test_case_ids": [
+        "TC-REQ-FR-TEST-003-AC2-25",
+        "TC-REQ-FR-TEST-003-AC2-26",
+        "TC-REQ-FR-TEST-003-AC2-27",
+        "TC-REQ-FR-TEST-003-AC2-28",
+        "TC-REQ-FR-TEST-003-AC2-29",
+        "TC-REQ-FR-TEST-003-AC2-30"
+      ],
+      "stdout_excerpt": "BUILD SUCCESSFUL (servlet5: 10s, servlet6+servlet61: 26s) — 14 actionable tasks: 8 executed, 6 up-to-date. integrationTest + test + jacocoTestReport PASS on all 3 modules."
+    },
+    "dod_check": [
+      {
+        "item": "UTF-8 한글 round-trip PASS",
+        "satisfied": true,
+        "notes": "shouldRoundTripUtf8: Korean payload '안녕하세요, 스노우오르카!' encoded UTF-8 → POST with Content-Type: text/plain; charset=UTF-8 → javax HttpServlet receives via getInputStream → adapter (javax↔jakarta) → response with charset=UTF-8 → client decodes UTF-8 → assertEquals(KOREAN_PAYLOAD, echoed). Verified on Tomcat 10.0.27 (servlet5), 10.1.30 (servlet6), 11.0.0 (servlet61)."
+      },
+      {
+        "item": "Content-Type 무 명시 폴백 정책 PASS",
+        "satisfied": true,
+        "notes": "shouldFallbackCharset: POST with Content-Type: text/plain (no charset parameter) → servlet reads raw bytes via getInputStream() preserving payload byte-for-byte → assertEquals(payload.length, echoedBytes.length) + equalBytes(payload, echoedBytes). X-Observed-Charset header surfaces what the servlet API reported (null when client omitted; container default otherwise), confirming adapter does not fabricate a corrupting charset. F3 fallback policy validated."
+      }
+    ]
+  },
+  "phase3": {
+    "regression": {
+      "scope": "impacted-only",
+      "note": "3-module integrationTest + test + jacocoTestReport chain BUILD SUCCESSFUL. No changes to TomcatRunner, ServletConverter, or any adapter sources — pure test additions. IT01~IT09 unaffected (gradle re-ran them up-to-date for servlet5; only IT10 sources newly compiled)."
+    }
+  }
+}

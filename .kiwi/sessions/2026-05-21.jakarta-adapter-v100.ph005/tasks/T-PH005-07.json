@@ -1,0 +1,96 @@
+{
+  "task_id": "T-PH005-07",
+  "started_at": "2026-05-21T00:00:00Z",
+  "completed_at": "2026-05-21T00:00:00Z",
+  "phase1": {
+    "tdd_draft_iters": [
+      {
+        "iter": 1,
+        "file_paths": [
+          "servlet5/src/test/java/adapter/jakarta/servlet5/ServletRequestUnitTest.java",
+          "servlet5/src/test/java/adapter/jakarta/servlet5/http/HttpServletRequestUnitTest.java",
+          "servlet5/src/test/java/adapter/jakarta/servlet5/http/HttpServletResponseUnitTest.java",
+          "servlet5/src/test/java/adapter/jakarta/servlet5/http/HttpSessionUnitTest.java",
+          "servlet5/src/test/java/adapter/jakarta/servlet5/ServletContextUnitTest.java",
+          "servlet5/src/test/java/adapter/javax/servlet5/ServletRequestUnitTest.java",
+          "servlet5/src/test/java/adapter/javax/servlet5/ServletResponseUnitTest.java",
+          "servlet5/src/test/java/adapter/javax/servlet5/ServletContextUnitTest.java",
+          "servlet5/src/test/java/adapter/javax/servlet5/http/HttpServletRequestUnitTest.java",
+          "servlet5/src/test/java/adapter/javax/servlet5/http/HttpServletResponseUnitTest.java",
+          "servlet5/src/test/java/adapter/javax/servlet5/http/HttpSessionUnitTest.java",
+          "servlet5/src/test/java/adapter/servletElementConverter5/AsyncContextConverterUnitTest.java",
+          "servlet5/src/test/java/adapter/servletElementConverter5/DescriptorConverterUnitTest.java",
+          "servlet5/src/test/java/adapter/servletElementConverter5/ServletConverterUnitTest.java"
+        ]
+      }
+    ],
+    "sonnet4_reviews": [],
+    "red_evidence": null,
+    "phase_note": "green-phase backfill (sidecar.tdd.phase=green) — production code 가 이미 완성된 상태에서 위임/변환 단위 테스트를 작성. red→green 사이클 대신 작성 후 즉시 PASS 확인."
+  },
+  "phase2": {
+    "impl_iters": [
+      {
+        "iter": 1,
+        "files_changed": [
+          "servlet5/src/test/java/adapter/jakarta/servlet5/ServletRequestUnitTest.java (NEW)",
+          "servlet5/src/test/java/adapter/jakarta/servlet5/http/HttpServletRequestUnitTest.java (NEW)",
+          "servlet5/src/test/java/adapter/jakarta/servlet5/http/HttpServletResponseUnitTest.java (NEW)",
+          "servlet5/src/test/java/adapter/jakarta/servlet5/http/HttpSessionUnitTest.java (NEW)",
+          "servlet5/src/test/java/adapter/jakarta/servlet5/ServletContextUnitTest.java (NEW)",
+          "servlet5/src/test/java/adapter/javax/servlet5/ServletRequestUnitTest.java (NEW)",
+          "servlet5/src/test/java/adapter/javax/servlet5/ServletResponseUnitTest.java (NEW)",
+          "servlet5/src/test/java/adapter/javax/servlet5/ServletContextUnitTest.java (NEW)",
+          "servlet5/src/test/java/adapter/javax/servlet5/http/HttpServletRequestUnitTest.java (NEW)",
+          "servlet5/src/test/java/adapter/javax/servlet5/http/HttpServletResponseUnitTest.java (NEW)",
+          "servlet5/src/test/java/adapter/javax/servlet5/http/HttpSessionUnitTest.java (NEW)",
+          "servlet5/src/test/java/adapter/servletElementConverter5/AsyncContextConverterUnitTest.java (NEW)",
+          "servlet5/src/test/java/adapter/servletElementConverter5/DescriptorConverterUnitTest.java (NEW)",
+          "servlet5/src/test/java/adapter/servletElementConverter5/ServletConverterUnitTest.java (NEW)"
+        ]
+      }
+    ],
+    "formal_reviews": [],
+    "prickly_reviews": [],
+    "green_evidence": {
+      "command": "./gradlew :servlet5:test",
+      "exit_code": 0,
+      "timestamp": "2026-05-21T00:00:00Z"
+    },
+    "green_evidence_meta": {
+      "total_tests": 182,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "baseline": 106,
+      "new_tests_added": 76,
+      "files_added": 14,
+      "files_added_by_gap": {
+        "G1_ServletRequestUnitTest": 8,
+        "G2_HttpServletRequestUnitTest": 10,
+        "G3_HttpServletResponseUnitTest": 7,
+        "G4_HttpSessionUnitTest": 6,
+        "G5_ServletContextUnitTest": 10,
+        "G6_javax_mirror_total": 10,
+        "G7_AsyncContextConverterUnitTest": 8,
+        "G8_DescriptorConverterUnitTest": 6,
+        "G9_ServletConverterUnitTest": 11
+      },
+      "ac4_pair_tests": [
+        "shouldFallbackInDefaultMode_AC4_01",
+        "shouldThrowInStrictMode_AC4_02"
+      ]
+    },
+    "dod_check": [
+      {"item": "G1~G9 9 신규 테스트 클래스 신규 + PASS", "satisfied": true, "evidence": "14 new test classes (G6 분산 6 파일 포함), 76 @Test, 0 failure"},
+      {"item": "각 신규 클래스 javadoc 에 @req FR-TEST-001 명시", "satisfied": true, "evidence": "14 파일 모두 클래스 javadoc 에 @req FR-TEST-001 포함"},
+      {"item": "RETURNS_SMART_NULLS 명시", "satisfied": true, "evidence": "각 mock 생성에 withSettings().defaultAnswer(RETURNS_SMART_NULLS) 명시"},
+      {"item": "G9 에서 FR-CONV-010 default+strict 폴백 분기 페어 TC 1쌍 이상 (AC-4 cover)", "satisfied": true, "evidence": "ServletConverterUnitTest 에 shouldFallbackInDefaultMode_AC4_01 + shouldThrowInStrictMode_AC4_02 페어 작성"},
+      {"item": "servlet5:test 카운트 ≥115", "satisfied": true, "evidence": "182 tests PASS (baseline 106 + 76 신규)"}
+    ]
+  },
+  "phase3": {
+    "regression": null,
+    "mcp_calls": []
+  }
+}

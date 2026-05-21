@@ -1,0 +1,85 @@
+{
+  "task_id": "T-PH005-04",
+  "phase_id": "PH-005",
+  "title": "servlet61 jakarta-side 단위 테스트 14건",
+  "type": "code",
+  "req_ids": ["FR-TEST-001"],
+  "covers_ac": ["AC-1", "AC-2", "AC-3"],
+  "started_at": "2026-05-21T05:10:00Z",
+  "completed_at": "2026-05-21T05:11:30Z",
+  "user_decisions_applied": [
+    {
+      "decision": "Cookie attribute API: T-PH005-01 와 동일한 CookieDelegationTest(setMaxAge/setSecure) 채택. sidecar 의 CookieAttributeFallbackTest(no-op + WARN-once) 는 jakarta-side 어댑터가 setAttribute override 가 없어 적용 불가 (코드 사실 우선).",
+      "code_evidence": "servlet61/src/main/java/adapter/jakarta/servlet61/http/Cookie.java 는 super(jakarta 6.1) 의 setAttribute/getAttribute 를 override 하지 않음. fallback 정책(FR-CONV-013 no-op + WARN-once)은 servlet61/src/main/java/adapter/javax/servlet61/http/Cookie.java:13-19 의 javax-side 가 단독 책임 (T-PH005-05 cover 예정)."
+    }
+  ],
+  "phase1": {
+    "tdd_draft_iters": [
+      {
+        "iter": 1,
+        "file_paths": [
+          "servlet61/src/test/java/adapter/jakarta/servlet61/http/HttpServletRequestDelegationTest.java",
+          "servlet61/src/test/java/adapter/jakarta/servlet61/http/HttpServletResponseDelegationTest.java",
+          "servlet61/src/test/java/adapter/jakarta/servlet61/http/HttpServletResponseRedirect61EdgeCaseTest.java",
+          "servlet61/src/test/java/adapter/jakarta/servlet61/http/HttpSessionDelegationTest.java",
+          "servlet61/src/test/java/adapter/jakarta/servlet61/http/CookieDelegationTest.java",
+          "servlet61/src/test/java/adapter/jakarta/servlet61/http/PartDelegationTest.java",
+          "servlet61/src/test/java/adapter/jakarta/servlet61/ServletRequestDelegationTest.java",
+          "servlet61/src/test/java/adapter/jakarta/servlet61/ServletResponseDelegationTest.java",
+          "servlet61/src/test/java/adapter/jakarta/servlet61/ServletContextDelegationTest.java"
+        ]
+      }
+    ],
+    "note": "tdd.phase='green' per sidecar — 어댑터 production code 가 이미 fix 완료된 상태에서 backfill 검증. red-evidence 단계 생략 (planner sidecar 명시 green phase)."
+  },
+  "phase2": {
+    "impl_iters": [
+      {
+        "iter": 1,
+        "files_changed": [
+          "servlet61/src/test/java/adapter/jakarta/servlet61/http/HttpServletRequestDelegationTest.java",
+          "servlet61/src/test/java/adapter/jakarta/servlet61/http/HttpServletResponseDelegationTest.java",
+          "servlet61/src/test/java/adapter/jakarta/servlet61/http/HttpServletResponseRedirect61EdgeCaseTest.java",
+          "servlet61/src/test/java/adapter/jakarta/servlet61/http/HttpSessionDelegationTest.java",
+          "servlet61/src/test/java/adapter/jakarta/servlet61/http/CookieDelegationTest.java",
+          "servlet61/src/test/java/adapter/jakarta/servlet61/http/PartDelegationTest.java",
+          "servlet61/src/test/java/adapter/jakarta/servlet61/ServletRequestDelegationTest.java",
+          "servlet61/src/test/java/adapter/jakarta/servlet61/ServletResponseDelegationTest.java",
+          "servlet61/src/test/java/adapter/jakarta/servlet61/ServletContextDelegationTest.java"
+        ]
+      }
+    ],
+    "green_evidence": {
+      "command": "gradlew.bat :servlet61:test --tests \"adapter.jakarta.servlet61.*\"",
+      "exit_code": 0,
+      "timestamp": "2026-05-21T05:11:30Z"
+    },
+    "green_evidence_meta": {
+      "tests_run": 14,
+      "tests_passed": 14,
+      "tests_failed": 0,
+      "tests_skipped": 0,
+      "tests_errored": 0,
+      "per_class_counts": {
+        "adapter.jakarta.servlet61.http.HttpServletRequestDelegationTest": 3,
+        "adapter.jakarta.servlet61.http.HttpServletResponseDelegationTest": 2,
+        "adapter.jakarta.servlet61.http.HttpServletResponseRedirect61EdgeCaseTest": 1,
+        "adapter.jakarta.servlet61.http.HttpSessionDelegationTest": 2,
+        "adapter.jakarta.servlet61.http.CookieDelegationTest": 2,
+        "adapter.jakarta.servlet61.http.PartDelegationTest": 1,
+        "adapter.jakarta.servlet61.ServletRequestDelegationTest": 1,
+        "adapter.jakarta.servlet61.ServletResponseDelegationTest": 1,
+        "adapter.jakarta.servlet61.ServletContextDelegationTest": 1
+      },
+      "build_result": "BUILD SUCCESSFUL in 7s"
+    },
+    "dod_check": [
+      {"item": "jakarta-side 단위 테스트 14건 신규 + PASS", "satisfied": true, "evidence": "9 새 파일, 14 @Test, 14/14 PASS"},
+      {"item": "각 신규 클래스 javadoc 에 @req FR-TEST-001 명시", "satisfied": true, "evidence": "9 클래스 모두 javadoc 헤더에 @req FR-TEST-001 포함"},
+      {"item": "RETURNS_SMART_NULLS 명시", "satisfied": true, "evidence": "모든 mock() 호출에 withSettings().defaultAnswer(RETURNS_SMART_NULLS) 명시"},
+      {"item": "6.1 sendRedirect edge case 1건 신규 포함", "satisfied": true, "evidence": "HttpServletResponseRedirect61EdgeCaseTest.shouldNotResetBufferWhenClearBufferFalse_AC1 (clearBuffer=false 시 resetBuffer 호출 0회 lock-in, 기존 SendRedirect61Test 5건과 비중복)"}
+    ]
+  },
+  "production_code_changed": false,
+  "production_code_changes_verified": "servlet61/src/main/** 의 변경 0건 (테스트 디렉토리만 신규 추가)"
+}

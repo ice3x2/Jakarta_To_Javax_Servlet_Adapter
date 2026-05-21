@@ -1,0 +1,47 @@
+{
+  "task_id": "T-PH003-04",
+  "phase_id": "PH-003",
+  "title": "IT14 getServletConnection 통합 테스트 (servlet6/61 only)",
+  "type": "code",
+  "req_ids": ["FR-TEST-003"],
+  "started_at": "2026-05-20T13:20:00Z",
+  "completed_at": "2026-05-20T13:35:00Z",
+  "phase1": {
+    "tdd_draft_iters": [
+      {
+        "iter": 1,
+        "file_paths": [
+          "servlet6/src/test/java/com/snoworca/adapter/it/IT14ServletConnectionTest.java",
+          "servlet61/src/test/java/com/snoworca/adapter/it/IT14ServletConnectionTest.java"
+        ]
+      }
+    ]
+  },
+  "phase2": {
+    "impl_iters": [
+      {
+        "iter": 1,
+        "files_changed": [
+          "servlet6/src/test/java/com/snoworca/adapter/it/IT14ServletConnectionTest.java",
+          "servlet61/src/test/java/com/snoworca/adapter/it/IT14ServletConnectionTest.java"
+        ],
+        "note": "Adapter ServletConnection fallback (DummyServletConnection) already implemented in production code (adapter.jakarta.servlet6.ServletRequest#getServletConnection + adapter.jakarta.servlet61.ServletRequest#getServletConnection). Test wraps the dispatched javax HttpServletRequest with the adapter's jakarta ServletRequest inside a javax HttpServlet (registered via ServletConverter.convert) and probes the four ServletConnection fields (connectionId / protocol / protocolConnectionId / isSecure) over a real Tomcat embed HTTP roundtrip. servlet5 skipped per sidecar action: jakarta 5.0 has no ServletConnection."
+      }
+    ],
+    "green_evidence": {
+      "command": "gradlew.bat :servlet6:integrationTest --tests *IT14ServletConnectionTest :servlet61:integrationTest --tests *IT14ServletConnectionTest",
+      "exit_code": 0,
+      "timestamp": "2026-05-20T13:30:00Z"
+    },
+    "dod_check": [
+      {
+        "item": "4 필드 모두 non-null + protocol 형식 정확",
+        "satisfied": true,
+        "evidence": "2 modules BUILD SUCCESSFUL, shouldExposeServletConnection() success in servlet6:integrationTest and servlet61:integrationTest. Field-1 connectionId non-null + non-empty (UUID-shaped). Field-2 protocol non-null + matches HTTP/\\d+(\\.\\d+)? (synthesized 'HTTP/1.1'). Field-3 protocolConnectionId non-null (empty string for HTTP/1.1 stream). Field-4 isSecure non-null boolean ('true' or 'false')."
+      }
+    ]
+  },
+  "phase3": {
+    "regression": {"scope": "impacted-only", "passed": 2, "failed": 0}
+  }
+}

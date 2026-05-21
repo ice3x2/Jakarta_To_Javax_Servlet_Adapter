@@ -1,0 +1,77 @@
+{
+  "task_id": "T-PH002-08",
+  "phase_id": "PH-002",
+  "title": "IT08 MultiPart 통합 테스트 (F2 boundary)",
+  "req_ids": ["FR-TEST-003"],
+  "started_at": "2026-05-20T08:15:00Z",
+  "completed_at": "2026-05-20T08:21:00Z",
+  "phase1": {
+    "tdd_draft_iters": [
+      {
+        "iter": 1,
+        "file_paths": [
+          "servlet5/src/test/java/com/snoworca/adapter/it/IT08MultiPartTest.java",
+          "servlet6/src/test/java/com/snoworca/adapter/it/IT08MultiPartTest.java",
+          "servlet61/src/test/java/com/snoworca/adapter/it/IT08MultiPartTest.java"
+        ]
+      }
+    ],
+    "red_evidence": {
+      "note": "Tests authored fresh — pre-existence absence served as red baseline. F2 boundary (HttpServletRequest.getPart/getParts → javax.servlet.http.Part adapter via Part wrapper) already implemented in PH-004 SPEC slices."
+    }
+  },
+  "phase2": {
+    "impl_iters": [
+      {
+        "iter": 1,
+        "files_changed": [
+          "servlet5/src/test/java/com/snoworca/adapter/it/TomcatRunner.java",
+          "servlet6/src/test/java/com/snoworca/adapter/it/TomcatRunner.java",
+          "servlet61/src/test/java/com/snoworca/adapter/it/TomcatRunner.java",
+          "servlet5/src/test/java/com/snoworca/adapter/it/IT08MultiPartTest.java",
+          "servlet6/src/test/java/com/snoworca/adapter/it/IT08MultiPartTest.java",
+          "servlet61/src/test/java/com/snoworca/adapter/it/IT08MultiPartTest.java"
+        ],
+        "note": "TomcatRunner gained overload addServlet(name, urlPattern, servlet, MultipartConfigElement) to attach jakarta.servlet.MultipartConfigElement to the Tomcat Wrapper (pre-authorized IT07-style pattern, per parent context note). Required because the IT08 servlet relies on getPart/getParts which Tomcat only enables when the wrapper has a MultipartConfigElement."
+      },
+      {
+        "iter": 2,
+        "files_changed": [
+          "servlet5/src/test/java/com/snoworca/adapter/it/IT08MultiPartTest.java",
+          "servlet6/src/test/java/com/snoworca/adapter/it/IT08MultiPartTest.java",
+          "servlet61/src/test/java/com/snoworca/adapter/it/IT08MultiPartTest.java"
+        ],
+        "note": "First iter put Korean UTF-8 text directly into X-Echo-Text HTTP header — servlet container ISO-8859-1-encoded the bytes producing '??????' on client side. Switched to base64-encoding the UTF-8 text value in the header and base64-decoding in the test. ASCII-safe HTTP header transport while preserving exact byte fidelity through the F2 boundary."
+      }
+    ],
+    "green_evidence": {
+      "command": "gradlew.bat :servlet5:integrationTest --tests *IT08MultiPartTest :servlet6:integrationTest --tests *IT08MultiPartTest :servlet61:integrationTest --tests *IT08MultiPartTest",
+      "exit_code": 0,
+      "timestamp": "2026-05-20T08:21:00Z",
+      "passed_test_case_ids": [
+        "TC-REQ-FR-TEST-003-AC2-22",
+        "TC-REQ-FR-TEST-003-AC2-23",
+        "TC-REQ-FR-TEST-003-AC2-24"
+      ],
+      "stdout_excerpt": "BUILD SUCCESSFUL in 32s — 19 actionable tasks: 12 executed, 7 up-to-date (servlet5/6/61 integrationTest + test + jacocoTestReport all PASS)"
+    },
+    "dod_check": [
+      {
+        "item": "text/binary part 모두 정확히 수신",
+        "satisfied": true,
+        "notes": "Hand-crafted multipart/form-data body with two parts: (1) text part 'metadata' = 'スノーオーカ-멀티파트-텍스트' (Korean UTF-8, ~26 bytes), (2) binary part 'payload' = 16,384 deterministic bytes ((i*31)%256). Servlet calls req.getPart('metadata') + req.getPart('payload') + req.getParts(). Test asserts: X-Echo-Text matches text value after base64 round-trip, X-Echo-Parts-Count == 2, X-Echo-Binary-Filename == payload.bin, X-Echo-Binary-Length == 16384, and full byte-for-byte equality of binary echo. F2 boundary (Part wrapper) exercised including getInputStream / getSubmittedFileName / getSize on disk-spooled parts."
+      },
+      {
+        "item": "임시 파일 cleanup 검증",
+        "satisfied": true,
+        "notes": "MultipartConfigElement configured with fileSizeThreshold=128 forcing the 16 KiB binary part to spool to disk (file-backed Part). After request completes, test walks the configured multipart location dir and asserts no regular files remain (Tomcat removes spooled temp files at request lifecycle end). Test dir created via Files.createTempDirectory and deleted recursively in finally to keep system clean."
+      }
+    ]
+  },
+  "phase3": {
+    "regression": {
+      "scope": "impacted-only",
+      "note": "Module-scoped integrationTest + test + jacocoTestReport chain — BUILD SUCCESSFUL across servlet5/6/61. TomcatRunner overload addition is additive (no signature changes to existing methods) — IT01~IT07 unaffected, all unit tests pass."
+    }
+  }
+}

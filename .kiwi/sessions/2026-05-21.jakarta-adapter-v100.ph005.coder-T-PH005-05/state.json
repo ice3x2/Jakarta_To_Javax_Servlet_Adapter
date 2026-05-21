@@ -1,0 +1,59 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "2026-05-21.jakarta-adapter-v100.ph005.coder-T-PH005-05",
+  "plan_run_id": "2026-05-21.jakarta-adapter-v100.ph005",
+  "plan_path": "docs/plans/2026-05-21.jakarta-adapter-v100.ph005.plan.md",
+  "sidecar_path": "docs/plans/2026-05-21.jakarta-adapter-v100.ph005.sidecar.json",
+  "target": "v1.0.0",
+  "mode": "subagent-task-filter",
+  "flags": ["TASK_FILTER=T-PH005-05"],
+  "started_at": "2026-05-21T05:15:00Z",
+  "updated_at": "2026-05-21T05:18:00Z",
+  "frozen_at": "2026-05-21T05:18:00Z",
+  "current_phase_id": "PH-005",
+  "current_task_id": null,
+  "next_resume_hint": null,
+  "task_queue": [],
+  "completed_task_ids": ["T-PH005-05"],
+  "skipped_task_ids": [],
+  "failed_task_ids": [],
+  "tdd_exempted_task_ids": [],
+  "tdd_pending_task_ids": [],
+  "severity_counters": {
+    "T-PH005-05": {
+      "phase1": {"CRITICAL": 0, "HIGH": 0, "MEDIUM": 0, "LOW": 0, "rounds": 0, "note": "mirror task — T-PH005-02 servlet6→servlet61 패키지 미러 (본문 차이 0)"},
+      "phase2": {"CRITICAL": 0, "HIGH": 0, "MEDIUM": 0, "LOW": 0, "rounds": 0}
+    }
+  },
+  "regression_summary": {
+    "last_run_at": "2026-05-21T05:17:30Z",
+    "scope": "impacted-only",
+    "passed": 14,
+    "failed": 0,
+    "regressed_files": [],
+    "verification_cmd": "gradlew.bat :servlet61:test",
+    "build_result": "BUILD SUCCESSFUL"
+  },
+  "mcp_call_log": [],
+  "pending_mutations": [
+    {
+      "tool": "add_completed_work",
+      "reason": "subagent-mode: parent (kiwi-pm) batches completion summary after phase",
+      "args_preview": {
+        "date": "2026-05-21",
+        "summary": "[task] T-PH005-05 — servlet61 javax-side 어댑터 단위 테스트 14건 신규. green=PASS (14/14 TC, BUILD SUCCESSFUL). files: servlet61/src/test/java/adapter/javax/servlet61/{ServletRequestDelegationTest,ServletContextDelegationTest,RegistrationDelegationTest,http/HttpServletRequestDelegationTest,http/HttpServletResponseDelegationTest,http/HttpSessionDelegationTest,http/CookieDelegationTest,http/CookieAttributeFallbackTest}.java. dod: ['javax-side 단위 테스트 14건 신규 + PASS','각 신규 클래스 javadoc @req FR-TEST-001 명시','RETURNS_SMART_NULLS 명시'].",
+        "requirementIds": ["FR-TEST-001"],
+        "target": "v1.0.0"
+      }
+    }
+  ],
+  "tool_versions": {
+    "kiwi_coder": "0.1.9"
+  },
+  "notes": [
+    "sidecar.tdd.red_evidence/green_evidence 미기재 — 사용자 명시 지침 '플랜/사이드카 직접 수정 금지' 적용. T-PH005-02 와 동일한 evidence=null 상태 유지.",
+    "본 Task 는 T-PH005-02 의 servlet6→servlet61 패키지 mirror — 본문 동일, 패키지 경로만 차이.",
+    "Sonnet×4 TDD 검증 / 까칠 리뷰 / 정형 검사 단계는 mirror 패턴 특성상 SSOT 가 T-PH005-02 검증 결과이므로 본 Task 에서는 컴파일+gradle 테스트 PASS 로 검증을 갈음.",
+    "@req FR-TEST-001 tag 는 8개 신규 클래스 javadoc 에 모두 부착됨."
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "task_id": "T-PH002-05",
+  "phase_id": "PH-002",
+  "title": "IT05 Session create/getAttribute/invalidate 통합 테스트",
+  "req_ids": ["FR-TEST-003"],
+  "started_at": "2026-05-20T07:55:00Z",
+  "completed_at": "2026-05-20T07:59:31Z",
+  "phase1": {
+    "tdd_draft_iters": [
+      {
+        "iter": 1,
+        "file_paths": [
+          "servlet5/src/test/java/com/snoworca/adapter/it/IT05SessionTest.java",
+          "servlet6/src/test/java/com/snoworca/adapter/it/IT05SessionTest.java",
+          "servlet61/src/test/java/com/snoworca/adapter/it/IT05SessionTest.java"
+        ]
+      }
+    ],
+    "red_evidence": {
+      "note": "Tests were authored fresh — pre-existence absence served as red baseline. HttpSession adapter implementation (servlet behavior) already in place from PH-001 / Phase 4 (HttpSession adapter)."
+    }
+  },
+  "phase2": {
+    "impl_iters": [
+      {
+        "iter": 1,
+        "files_changed": [
+          "servlet5/src/test/java/com/snoworca/adapter/it/IT05SessionTest.java",
+          "servlet6/src/test/java/com/snoworca/adapter/it/IT05SessionTest.java",
+          "servlet61/src/test/java/com/snoworca/adapter/it/IT05SessionTest.java"
+        ]
+      }
+    ],
+    "green_evidence": {
+      "command": "gradlew.bat :servlet5:integrationTest --tests *IT05SessionTest :servlet6:integrationTest --tests *IT05SessionTest :servlet61:integrationTest --tests *IT05SessionTest",
+      "exit_code": 0,
+      "timestamp": "2026-05-20T07:59:31Z",
+      "passed_test_case_ids": [
+        "TC-REQ-FR-TEST-003-AC2-13",
+        "TC-REQ-FR-TEST-003-AC2-14",
+        "TC-REQ-FR-TEST-003-AC2-15"
+      ]
+    },
+    "dod_check": [
+      {
+        "item": "create→attribute set→2차 요청 attribute get→invalidate 시나리오 PASS",
+        "satisfied": true,
+        "notes": "Three-step JSESSIONID round-trip verified across all 3 modules: (1) getSession(true)+setAttribute, (2) Cookie: JSESSIONID=...+getAttribute echo, (3) invalidate+new session id differs from invalidated id"
+      }
+    ]
+  },
+  "phase3": {
+    "regression": {
+      "scope": "impacted-only",
+      "note": "Module-scoped integrationTest+test+jacocoTestReport chain — BUILD SUCCESSFUL across servlet5/6/61"
+    }
+  }
+}

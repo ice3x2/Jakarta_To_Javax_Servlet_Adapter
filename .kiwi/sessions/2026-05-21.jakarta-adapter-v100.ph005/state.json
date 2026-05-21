@@ -1,0 +1,42 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "2026-05-21.jakarta-adapter-v100.ph005",
+  "plan_run_id": "2026-05-21.jakarta-adapter-v100.ph005",
+  "plan_path": "docs/plans/2026-05-21.jakarta-adapter-v100.ph005.plan.md",
+  "sidecar_path": "docs/plans/2026-05-21.jakarta-adapter-v100.ph005.sidecar.json",
+  "target": "v1.0.0",
+  "mode": "normal-subagent",
+  "flags": ["TASK_FILTER=T-PH005-07"],
+  "started_at": "2026-05-21T00:00:00Z",
+  "updated_at": "2026-05-21T06:01:30Z",
+  "frozen_at": null,
+  "current_phase_id": "PH-005",
+  "current_task_id": null,
+  "next_resume_hint": null,
+  "task_queue": [],
+  "completed_task_ids": ["T-PH005-07"],
+  "skipped_task_ids": [],
+  "failed_task_ids": [],
+  "tdd_exempted_task_ids": [],
+  "tdd_pending_task_ids": [],
+  "severity_counters": {
+    "T-PH005-07": {
+      "phase1": {"CRITICAL": 0, "HIGH": 0, "MEDIUM": 0, "LOW": 0, "rounds": 0},
+      "phase2": {"CRITICAL": 0, "HIGH": 0, "MEDIUM": 0, "LOW": 0, "rounds": 0}
+    }
+  },
+  "regression_summary": {
+    "last_run_at": "2026-05-21T06:01:30Z",
+    "scope": "module-only",
+    "passed": 182,
+    "failed": 0,
+    "regressed_files": []
+  },
+  "mcp_call_log": [],
+  "pending_mutations": [],
+  "tool_versions": {
+    "kiwi_planner": "0.6.0",
+    "kiwi_coder": "0.1.9",
+    "speckiwi": "2.2.2"
+  }
+}

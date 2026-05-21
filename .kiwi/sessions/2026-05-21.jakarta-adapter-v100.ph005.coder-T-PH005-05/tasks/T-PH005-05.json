@@ -1,0 +1,126 @@
+{
+  "task_id": "T-PH005-05",
+  "phase_id": "PH-005",
+  "title": "servlet61 javax-side 단위 테스트 14건",
+  "req_ids": ["FR-TEST-001"],
+  "covers_ac": ["AC-1", "AC-2", "AC-3"],
+  "started_at": "2026-05-21T05:15:00Z",
+  "completed_at": "2026-05-21T05:18:00Z",
+  "mirror_of": "T-PH005-02",
+  "mirror_translation": "package adapter.javax.servlet6.* -> adapter.javax.servlet61.* (본문 동일, 패키지 경로만 변경)",
+  "phase1": {
+    "tdd_draft_iters": [
+      {
+        "iter": 1,
+        "file_paths": [
+          "servlet61/src/test/java/adapter/javax/servlet61/http/HttpServletRequestDelegationTest.java",
+          "servlet61/src/test/java/adapter/javax/servlet61/http/HttpServletResponseDelegationTest.java",
+          "servlet61/src/test/java/adapter/javax/servlet61/http/HttpSessionDelegationTest.java",
+          "servlet61/src/test/java/adapter/javax/servlet61/http/CookieDelegationTest.java",
+          "servlet61/src/test/java/adapter/javax/servlet61/http/CookieAttributeFallbackTest.java",
+          "servlet61/src/test/java/adapter/javax/servlet61/http/PartDelegationTest.java",
+          "servlet61/src/test/java/adapter/javax/servlet61/ServletRequestDelegationTest.java",
+          "servlet61/src/test/java/adapter/javax/servlet61/ServletContextDelegationTest.java",
+          "servlet61/src/test/java/adapter/javax/servlet61/RegistrationDelegationTest.java"
+        ],
+        "test_case_distribution": {
+          "HttpServletRequestDelegationTest": 3,
+          "HttpServletResponseDelegationTest": 3,
+          "HttpSessionDelegationTest": 2,
+          "CookieDelegationTest": 1,
+          "CookieAttributeFallbackTest": 1,
+          "PartDelegationTest": 1,
+          "ServletRequestDelegationTest": 1,
+          "ServletContextDelegationTest": 1,
+          "RegistrationDelegationTest": 1,
+          "total": 14
+        }
+      }
+    ],
+    "sonnet4_reviews": [
+      {
+        "iter": 1,
+        "note": "mirror task — 원본 (T-PH005-02 servlet6 javax-side) 가 이미 검증 통과한 SSOT. 패키지 경로만 변경된 본문 동일 mirror 이므로 Sonnet×4 검증은 본 Task 에서는 컴파일 + green 으로 갈음."
+      }
+    ],
+    "red_evidence_meta": {
+      "rationale": "T-PH005-05 시작 시점에 servlet61/src/test/java/adapter/javax/servlet61/ 디렉토리 자체가 부재 — adapter.javax.servlet61.* 테스트 클래스가 하나도 없는 상태가 red. 명시적 expected_failure_signature 없음 (sidecar.tdd.test_cases[*].expected_failure_signature == null).",
+      "pre_state_command": "gradlew.bat :servlet61:test --tests adapter.javax.servlet61.*",
+      "pre_state_expected": "No tests found for given includes — directory absent"
+    }
+  },
+  "phase2": {
+    "impl_iters": [
+      {
+        "iter": 1,
+        "files_changed": [
+          "servlet61/src/test/java/adapter/javax/servlet61/http/HttpServletRequestDelegationTest.java",
+          "servlet61/src/test/java/adapter/javax/servlet61/http/HttpServletResponseDelegationTest.java",
+          "servlet61/src/test/java/adapter/javax/servlet61/http/HttpSessionDelegationTest.java",
+          "servlet61/src/test/java/adapter/javax/servlet61/http/CookieDelegationTest.java",
+          "servlet61/src/test/java/adapter/javax/servlet61/http/CookieAttributeFallbackTest.java",
+          "servlet61/src/test/java/adapter/javax/servlet61/http/PartDelegationTest.java",
+          "servlet61/src/test/java/adapter/javax/servlet61/ServletRequestDelegationTest.java",
+          "servlet61/src/test/java/adapter/javax/servlet61/ServletContextDelegationTest.java",
+          "servlet61/src/test/java/adapter/javax/servlet61/RegistrationDelegationTest.java"
+        ],
+        "loc_added": 524,
+        "loc_removed": 0,
+        "note": "production code 변경 0건. 테스트 파일 9개만 신규 생성 (sidecar.files = servlet61/src/test/java/adapter/javax/servlet61 directory 1개에 부합)."
+      }
+    ],
+    "green_evidence_meta": {
+      "command": "gradlew.bat :servlet61:test",
+      "exit_code": 0,
+      "build_result": "BUILD SUCCESSFUL in 7s",
+      "test_cases_passed": 14,
+      "test_cases_failed": 0,
+      "passed_test_case_ids": [
+        "TC-REQ-FR-TEST-001-AC1-05",
+        "TC-REQ-FR-TEST-001-AC2-50",
+        "TC-REQ-FR-TEST-001-AC2-51",
+        "TC-REQ-FR-TEST-001-AC2-52",
+        "TC-REQ-FR-TEST-001-AC2-53",
+        "TC-REQ-FR-TEST-001-AC2-54",
+        "TC-REQ-FR-TEST-001-AC2-55",
+        "TC-REQ-FR-TEST-001-AC2-56",
+        "TC-REQ-FR-TEST-001-AC2-57",
+        "TC-REQ-FR-TEST-001-AC2-58",
+        "TC-REQ-FR-TEST-001-AC2-59",
+        "TC-REQ-FR-TEST-001-AC2-60",
+        "TC-REQ-FR-TEST-001-AC2-61",
+        "TC-REQ-FR-TEST-001-AC2-62",
+        "TC-REQ-FR-TEST-001-AC2-63"
+      ],
+      "verified_at": "2026-05-21T05:17:30Z"
+    },
+    "dod_check": [
+      {"item": "javax-side 단위 테스트 14건 신규 + PASS", "satisfied": true, "evidence": "BUILD SUCCESSFUL, 14/14 testcases pass (8 신규 클래스 + 14 메서드)"},
+      {"item": "각 신규 클래스 javadoc 에 @req FR-TEST-001 명시", "satisfied": true, "evidence": "8개 신규 테스트 클래스 javadoc 모두 @req FR-TEST-001 포함 (CookieAttributeFallbackTest 는 추가 @req FR-CONV-013)"},
+      {"item": "RETURNS_SMART_NULLS 명시", "satisfied": true, "evidence": "전 테스트의 mock() 호출이 withSettings().defaultAnswer(RETURNS_SMART_NULLS) 사용"}
+    ]
+  },
+  "phase3": {
+    "regression": {
+      "scope": "impacted-only",
+      "command": "gradlew.bat :servlet61:test",
+      "build_result": "BUILD SUCCESSFUL",
+      "passed": 14,
+      "failed": 0,
+      "external_failures": []
+    },
+    "mcp_calls": [],
+    "mcp_notes": "subagent-mode (kiwi-pm 자식). MCP mutation 4종은 부모 (kiwi-pm) 가 Task 종료 보고 수신 시 일괄 호출. 본 자식 세션은 state.pending_mutations[] 에 add_completed_work args preview 만 적재."
+  },
+  "req_tag_summary": {
+    "obligation_in_scope": false,
+    "reason": "kiwi-coder §0.17.1 — 테스트 파일은 @req 태그 부착 의무 범위에서 제외 (경로 정규식 `(^|/)(tests?|__tests__|spec|e2e|integration)(/|$)` 매칭). 그러나 본 task DoD #2 에서 '각 신규 클래스 javadoc 에 @req FR-TEST-001 명시' 를 별도 명시 요구사항으로 부과 — 의무 범위 외임에도 부착 완료.",
+    "tags_attached": 9
+  },
+  "anomalies": [],
+  "user_notes": [
+    "user 확정 분배: CookieDelegationTest(1) + CookieAttributeFallbackTest(1). FR-CONV-013 fallback SSOT 는 javax-side.",
+    "PM 이 sidecar 정정 완료 (AC2-59 → CookieAttributeFallbackTest.shouldNoOpSetAttributeWithWarnOnce_AC2).",
+    "production code 변경 0건 — placeholder 코드 변경 없이 mirror test 만 추가."
+  ]
+}

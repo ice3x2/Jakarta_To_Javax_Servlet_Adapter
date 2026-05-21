@@ -1,0 +1,52 @@
+{"ts":"2026-05-20T08:02:00Z","event":"task_start","task_id":"T-PH002-06","phase_id":"PH-002"}
+{"ts":"2026-05-20T08:08:30Z","event":"test_green","task_id":"T-PH002-06","exit_code":0}
+{"ts":"2026-05-20T08:08:30Z","event":"task_done","task_id":"T-PH002-06","spawn_mode":"agent","note":"IT06 Filter chain 3 모듈 PASS - A->B->Servlet->B->A 순서 + wrapper 격리 확인"}
+{"ts":"2026-05-20T08:15:00Z","event":"task_start","task_id":"T-PH002-08","phase_id":"PH-002"}
+{"ts":"2026-05-20T08:21:00Z","event":"test_green","task_id":"T-PH002-08","exit_code":0}
+{"ts":"2026-05-20T08:21:00Z","event":"task_done","task_id":"T-PH002-08","spawn_mode":"agent","note":"IT08 MultiPart 3 모듈 PASS - text+binary part F2 경계 + 임시 파일 cleanup 검증. TomcatRunner addServlet(name,url,servlet,MultipartConfigElement) 오버로드 추가 (IT07 사전 승인 패턴)."}
+{"event":"task_start","task_id":"T-PH002-09","phase_id":"PH-002","timestamp":"2026-05-20T08:25:00Z"}
+{"event":"tdd_draft_done","task_id":"T-PH002-09","iter":1,"file_paths":["servlet61/src/test/java/com/snoworca/adapter/it/IT09Redirect308Test.java"],"timestamp":"2026-05-20T08:26:00Z"}
+{"event":"impl_done","task_id":"T-PH002-09","iter":1,"files_changed":["servlet61/src/test/java/com/snoworca/adapter/it/IT09Redirect308Test.java"],"timestamp":"2026-05-20T08:26:30Z"}
+{"event":"test_green","task_id":"T-PH002-09","exit_code":0,"timestamp":"2026-05-20T08:27:00Z"}
+{"event":"task_done","task_id":"T-PH002-09","duration_ms":120000,"timestamp":"2026-05-20T08:27:00Z"}
+{"ts":"2026-05-20T08:30:00Z","event":"task_start","task_id":"T-PH002-10","phase_id":"PH-002"}
+{"ts":"2026-05-20T08:31:00Z","event":"tdd_draft_done","task_id":"T-PH002-10","iter":1,"file_paths":["servlet5/src/test/java/com/snoworca/adapter/it/IT10CharsetTest.java","servlet6/src/test/java/com/snoworca/adapter/it/IT10CharsetTest.java","servlet61/src/test/java/com/snoworca/adapter/it/IT10CharsetTest.java"]}
+{"ts":"2026-05-20T08:32:00Z","event":"tdd_red_confirmed","task_id":"T-PH002-10","exit_code":1,"test_case_ids":["TC-REQ-FR-TEST-003-AC2-25","TC-REQ-FR-TEST-003-AC2-26","TC-REQ-FR-TEST-003-AC2-27","TC-REQ-FR-TEST-003-AC2-28","TC-REQ-FR-TEST-003-AC2-29","TC-REQ-FR-TEST-003-AC2-30"]}
+{"ts":"2026-05-20T08:33:00Z","event":"impl_done","task_id":"T-PH002-10","iter":1,"files_changed":["servlet5/src/test/java/com/snoworca/adapter/it/IT10CharsetTest.java","servlet6/src/test/java/com/snoworca/adapter/it/IT10CharsetTest.java","servlet61/src/test/java/com/snoworca/adapter/it/IT10CharsetTest.java"]}
+{"ts":"2026-05-20T08:35:00Z","event":"test_green","task_id":"T-PH002-10","exit_code":0}
+{"ts":"2026-05-20T08:35:30Z","event":"task_done","task_id":"T-PH002-10","duration_ms":330000}
+{"ts":"2026-05-20T23:50:00Z","event":"task_start","task_id":"T-PH003-01","phase_id":"PH-003"}
+{"ts":"2026-05-20T23:52:00Z","event":"tdd_draft_done","task_id":"T-PH003-01","iter":1,"file_paths":["servlet5/src/test/java/com/snoworca/adapter/it/IT11SetStatusTest.java","servlet6/src/test/java/com/snoworca/adapter/it/IT11SetStatusTest.java","servlet61/src/test/java/com/snoworca/adapter/it/IT11SetStatusTest.java"]}
+{"ts":"2026-05-20T23:54:00Z","event":"tdd_red_confirmed","task_id":"T-PH003-01","exit_code":1,"test_case_ids":["TC-REQ-FR-TEST-003-AC3-02","TC-REQ-FR-TEST-003-AC3-03","TC-REQ-FR-TEST-003-AC3-04","TC-REQ-FR-TEST-003-AC3-05","TC-REQ-FR-TEST-003-AC3-06","TC-REQ-FR-TEST-003-AC3-07"]}
+{"ts":"2026-05-20T23:56:00Z","event":"impl_done","task_id":"T-PH003-01","iter":1,"files_changed":["servlet5/src/test/java/com/snoworca/adapter/it/IT11SetStatusTest.java","servlet6/src/test/java/com/snoworca/adapter/it/IT11SetStatusTest.java","servlet61/src/test/java/com/snoworca/adapter/it/IT11SetStatusTest.java"]}
+{"ts":"2026-05-20T23:58:00Z","event":"test_green","task_id":"T-PH003-01","exit_code":0}
+{"ts":"2026-05-20T23:58:30Z","event":"regression_done","task_id":"T-PH003-01","scope":"impacted-only","passed":1,"failed":0}
+{"ts":"2026-05-20T23:59:00Z","event":"task_done","task_id":"T-PH003-01","duration_ms":540000}
+{"ts":"2026-05-20T16:20:00Z","event":"task_start","task_id":"T-PH003-02","phase_id":"PH-003"}
+{"ts":"2026-05-20T16:22:00Z","event":"tdd_draft_done","task_id":"T-PH003-02","iter":1,"file_paths":["servlet5/src/test/java/com/snoworca/adapter/it/IT12ContentLengthLongTest.java","servlet6/src/test/java/com/snoworca/adapter/it/IT12ContentLengthLongTest.java","servlet61/src/test/java/com/snoworca/adapter/it/IT12ContentLengthLongTest.java"]}
+{"ts":"2026-05-20T16:24:00Z","event":"tdd_draft_done","task_id":"T-PH003-02","iter":2,"file_paths":["servlet5/src/test/java/com/snoworca/adapter/it/IT12ContentLengthLongTest.java","servlet6/src/test/java/com/snoworca/adapter/it/IT12ContentLengthLongTest.java","servlet61/src/test/java/com/snoworca/adapter/it/IT12ContentLengthLongTest.java"]}
+{"ts":"2026-05-20T16:26:00Z","event":"tdd_draft_done","task_id":"T-PH003-02","iter":3,"file_paths":["servlet5/src/test/java/com/snoworca/adapter/it/IT12ContentLengthLongTest.java","servlet6/src/test/java/com/snoworca/adapter/it/IT12ContentLengthLongTest.java","servlet61/src/test/java/com/snoworca/adapter/it/IT12ContentLengthLongTest.java"]}
+{"ts":"2026-05-20T16:26:30Z","event":"tdd_red_confirmed","task_id":"T-PH003-02","exit_code":1,"test_case_ids":["TC-REQ-FR-TEST-003-AC3-08","TC-REQ-FR-TEST-003-AC3-09","TC-REQ-FR-TEST-003-AC3-10","TC-REQ-FR-TEST-003-AC3-11","TC-REQ-FR-TEST-003-AC3-12","TC-REQ-FR-TEST-003-AC3-13"]}
+{"ts":"2026-05-20T16:30:00Z","event":"impl_done","task_id":"T-PH003-02","iter":1,"files_changed":["servlet5/src/test/java/com/snoworca/adapter/it/IT12ContentLengthLongTest.java","servlet6/src/test/java/com/snoworca/adapter/it/IT12ContentLengthLongTest.java","servlet61/src/test/java/com/snoworca/adapter/it/IT12ContentLengthLongTest.java"]}
+{"ts":"2026-05-20T16:31:00Z","event":"test_green","task_id":"T-PH003-02","exit_code":0}
+{"ts":"2026-05-20T16:31:30Z","event":"regression_done","task_id":"T-PH003-02","scope":"impacted-only","passed":1,"failed":0}
+{"ts":"2026-05-20T16:32:00Z","event":"task_done","task_id":"T-PH003-02","duration_ms":720000}
+{"ts":"2026-05-20T16:40:00Z","event":"task_start","task_id":"T-PH003-03","phase_id":"PH-003"}
+{"ts":"2026-05-20T16:42:00Z","event":"tdd_draft_done","task_id":"T-PH003-03","iter":1,"file_paths":["servlet5/src/test/java/com/snoworca/adapter/it/IT13ErrorPageTest.java","servlet6/src/test/java/com/snoworca/adapter/it/IT13ErrorPageTest.java","servlet61/src/test/java/com/snoworca/adapter/it/IT13ErrorPageTest.java"]}
+{"ts":"2026-05-20T16:43:00Z","event":"impl_done","task_id":"T-PH003-03","iter":1,"files_changed":["servlet5/src/test/java/com/snoworca/adapter/it/TomcatRunner.java","servlet6/src/test/java/com/snoworca/adapter/it/TomcatRunner.java","servlet61/src/test/java/com/snoworca/adapter/it/TomcatRunner.java","servlet5/src/test/java/com/snoworca/adapter/it/IT13ErrorPageTest.java","servlet6/src/test/java/com/snoworca/adapter/it/IT13ErrorPageTest.java","servlet61/src/test/java/com/snoworca/adapter/it/IT13ErrorPageTest.java"]}
+{"ts":"2026-05-20T16:44:00Z","event":"test_green","task_id":"T-PH003-03","exit_code":0}
+{"ts":"2026-05-20T16:44:30Z","event":"regression_done","task_id":"T-PH003-03","scope":"impacted-only","passed":3,"failed":0}
+{"ts":"2026-05-20T16:45:00Z","event":"task_done","task_id":"T-PH003-03","duration_ms":300000}
+{"event": "task_start", "task_id": "T-PH003-04", "phase_id": "PH-003", "timestamp": "2026-05-20T13:20:00Z"}
+{"event": "tdd_draft_done", "task_id": "T-PH003-04", "iter": 1, "file_paths": ["servlet6/src/test/java/com/snoworca/adapter/it/IT14ServletConnectionTest.java", "servlet61/src/test/java/com/snoworca/adapter/it/IT14ServletConnectionTest.java"], "timestamp": "2026-05-20T13:25:00Z"}
+{"event": "test_green", "task_id": "T-PH003-04", "exit_code": 0, "timestamp": "2026-05-20T13:30:00Z"}
+{"event": "regression_done", "task_id": "T-PH003-04", "scope": "impacted-only", "passed": 2, "failed": 0, "timestamp": "2026-05-20T13:33:00Z"}
+{"event": "task_done", "task_id": "T-PH003-04", "duration_ms": 900000, "timestamp": "2026-05-20T13:35:00Z"}
+{"event":"task_start","task_id":"T-PH003-05","phase_id":"PH-003","ts":"2026-05-20T17:00:00Z"}
+{"event":"tdd_draft_done","task_id":"T-PH003-05","iter":1,"file_paths":["servlet5/src/test/java/com/snoworca/adapter/it/IT15WebSocketUpgradeTest.java","servlet6/src/test/java/com/snoworca/adapter/it/IT15WebSocketUpgradeTest.java","servlet61/src/test/java/com/snoworca/adapter/it/IT15WebSocketUpgradeTest.java"],"ts":"2026-05-20T17:00:00Z"}
+{"event":"test_fail","task_id":"T-PH003-05","exit_code":1,"failed_test_case_ids":["TC-REQ-FR-TEST-003-AC2-34"],"cause":"adapter defect: HttpServletRequest.upgrade() ClassCastException — adapter.javax.servletN.http.HttpUpgradeHandler wrapper cannot be cast to user handler class","ts":"2026-05-20T17:00:00Z"}
+{"event":"need_user","task_id":"T-PH003-05","reason":"adapter code modification required (HttpServletRequest.upgrade implementation defect across servlet5/6/61 modules) — out of scope per task constraints","options":["fix adapter upgrade() in 3 modules","mark IT15 as known-defect skip","abandon-task"],"ts":"2026-05-20T17:00:00Z"}
+{"event":"task_start","ts":"2026-05-20T17:09:00Z","task_id":"T-PH004-01","phase_id":"PH-004"}
+{"event":"tdd_exempted","ts":"2026-05-20T17:09:05Z","task_id":"T-PH004-01","reason":"review 타입 — 기존 테스트 회귀 확인만 수행"}
+{"event":"regression_done","ts":"2026-05-20T17:10:00Z","task_id":"T-PH004-01","scope":"impacted-only","passed":15,"failed":0}
+{"event":"task_done","ts":"2026-05-20T17:10:05Z","task_id":"T-PH004-01","duration_ms":65000}

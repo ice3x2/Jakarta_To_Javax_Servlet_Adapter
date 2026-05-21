@@ -1,0 +1,54 @@
+{
+  "task_id": "T-PH002-09",
+  "phase_id": "PH-002",
+  "title": "IT09 sendRedirect(308) 통합 테스트 (servlet61 only)",
+  "req_ids": ["FR-TEST-003"],
+  "started_at": "2026-05-20T08:25:00Z",
+  "completed_at": "2026-05-20T08:27:00Z",
+  "phase1": {
+    "tdd_draft_iters": [
+      {
+        "iter": 1,
+        "file_paths": [
+          "servlet61/src/test/java/com/snoworca/adapter/it/IT09Redirect308Test.java"
+        ]
+      }
+    ],
+    "red_evidence": {
+      "note": "Test authored fresh — pre-existence absence served as red baseline. jakarta 6.1 sendRedirect(String, int, boolean) 3-arg overload already implemented in servlet61/src/main/java/adapter/jakarta/servlet61/http/HttpServletResponse.java:112-119 via setStatus + setHeader('Location', ...) + optional resetBuffer + flushBuffer (SRS §6.2.2 policy E, FR-CONV-014). javax-side servlet exercises this path by setting status 308 + Location header which traverses adapter → jakarta response → Tomcat 11 emission."
+    }
+  },
+  "phase2": {
+    "impl_iters": [
+      {
+        "iter": 1,
+        "files_changed": [
+          "servlet61/src/test/java/com/snoworca/adapter/it/IT09Redirect308Test.java"
+        ],
+        "note": "Single test class. javax HttpServlet sets resp.setStatus(308) + resp.setHeader('Location', 'https://example.com/new-path'). HttpURLConnection.setInstanceFollowRedirects(false) captures the 308 response without following. Asserts: status == 308 (assertEquals), Location header present + matches target URL exactly. servlet61-only per task scope (jakarta 5.0/6.0 lack the 3-arg overload — scenario inapplicable)."
+      }
+    ],
+    "green_evidence": {
+      "command": "gradlew.bat :servlet61:integrationTest --tests *IT09Redirect308Test",
+      "exit_code": 0,
+      "timestamp": "2026-05-20T08:27:00Z",
+      "passed_test_case_ids": [
+        "TC-REQ-FR-TEST-003-AC3-01"
+      ],
+      "stdout_excerpt": "BUILD SUCCESSFUL in 11s — 9 actionable tasks: 4 executed, 5 up-to-date (servlet61 integrationTest + test + jacocoTestReport all PASS)"
+    },
+    "dod_check": [
+      {
+        "item": "응답 status 308 + Location header 정확",
+        "satisfied": true,
+        "notes": "assertEquals(308, status) verifies HTTP status line. assertNotNull(location) + assertEquals(TARGET_LOCATION, location) verifies Location header value matches 'https://example.com/new-path' exactly. End-to-end path: javax servlet setStatus(308) + setHeader → adapter (javax→jakarta response bridge) → Tomcat 11 wire emission → HttpURLConnection (followRedirects=false) captures raw 308 + Location."
+      }
+    ]
+  },
+  "phase3": {
+    "regression": {
+      "scope": "impacted-only",
+      "note": "servlet61 module-scoped integrationTest + test + jacocoTestReport chain BUILD SUCCESSFUL. No changes to TomcatRunner or adapter sources — single test file addition. IT01~IT08 unaffected."
+    }
+  }
+}
