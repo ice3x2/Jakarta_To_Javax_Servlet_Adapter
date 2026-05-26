@@ -15,7 +15,7 @@ applications run inside Web Application Servers that implement the
 either direction at the boundary, so an application written against `javax.servlet`
 can be hosted on a Tomcat 10+ / Jetty 11+ runtime without changing application code.
 
-> **Group / Coordinates**: `com.clipsoft:jakarta-to-javax-servlet-adapter-*:2.0.0`
+> **Group / Coordinates**: `com.snoworca:jakarta-to-javax-servlet-adapter-*:3.0.0`
 
 ---
 
@@ -92,9 +92,9 @@ Each version module contains:
 ```groovy
 dependencies {
     // Choose ONE of the three version modules
-    implementation 'com.clipsoft:jakarta-to-javax-servlet-adapter-servlet5:2.0.0'   // Tomcat 10.0.x
-    // implementation 'com.clipsoft:jakarta-to-javax-servlet-adapter-servlet6:2.0.0'  // Tomcat 10.1.x
-    // implementation 'com.clipsoft:jakarta-to-javax-servlet-adapter-servlet61:2.0.0' // Tomcat 11.x
+    implementation 'com.snoworca:jakarta-to-javax-servlet-adapter-servlet5:3.0.0'   // Tomcat 10.0.x
+    // implementation 'com.snoworca:jakarta-to-javax-servlet-adapter-servlet6:3.0.0'  // Tomcat 10.1.x
+    // implementation 'com.snoworca:jakarta-to-javax-servlet-adapter-servlet61:3.0.0' // Tomcat 11.x
 
     // The legacy javax Servlet API is required at compile time
     // (provided by the adapter at runtime)
@@ -106,8 +106,8 @@ dependencies {
 
 ```groovy
 dependencies {
-    implementation platform('com.clipsoft:jakarta-to-javax-servlet-adapter-bom:2.0.0')
-    implementation 'com.clipsoft:jakarta-to-javax-servlet-adapter-servlet6'
+    implementation platform('com.snoworca:jakarta-to-javax-servlet-adapter-bom:3.0.0')
+    implementation 'com.snoworca:jakarta-to-javax-servlet-adapter-servlet6'
     compileOnly    'javax.servlet:javax.servlet-api:4.0.1'
 }
 ```
@@ -118,9 +118,9 @@ dependencies {
 <dependencyManagement>
   <dependencies>
     <dependency>
-      <groupId>com.clipsoft</groupId>
+      <groupId>com.snoworca</groupId>
       <artifactId>jakarta-to-javax-servlet-adapter-bom</artifactId>
-      <version>2.0.0</version>
+      <version>3.0.0</version>
       <type>pom</type>
       <scope>import</scope>
     </dependency>
@@ -129,7 +129,7 @@ dependencies {
 
 <dependencies>
   <dependency>
-    <groupId>com.clipsoft</groupId>
+    <groupId>com.snoworca</groupId>
     <artifactId>jakarta-to-javax-servlet-adapter-servlet6</artifactId>
   </dependency>
   <dependency>
@@ -376,7 +376,7 @@ Apache License 2.0 — see [`LICENSE`](LICENSE).
 기반으로 작성된 애플리케이션을 Tomcat 10+ / Jetty 11+ 런타임에서
 **소스 코드 변경 없이** 호스팅할 수 있습니다.
 
-> **Group / Coordinates**: `com.clipsoft:jakarta-to-javax-servlet-adapter-*:2.0.0`
+> **Group / Coordinates**: `com.snoworca:jakarta-to-javax-servlet-adapter-*:3.0.0`
 
 ---
 
@@ -451,9 +451,9 @@ jakarta-to-javax-servlet-adapter/
 ```groovy
 dependencies {
     // 3 version 모듈 중 하나만 선택
-    implementation 'com.clipsoft:jakarta-to-javax-servlet-adapter-servlet5:2.0.0'   // Tomcat 10.0.x
-    // implementation 'com.clipsoft:jakarta-to-javax-servlet-adapter-servlet6:2.0.0'  // Tomcat 10.1.x
-    // implementation 'com.clipsoft:jakarta-to-javax-servlet-adapter-servlet61:2.0.0' // Tomcat 11.x
+    implementation 'com.snoworca:jakarta-to-javax-servlet-adapter-servlet5:3.0.0'   // Tomcat 10.0.x
+    // implementation 'com.snoworca:jakarta-to-javax-servlet-adapter-servlet6:3.0.0'  // Tomcat 10.1.x
+    // implementation 'com.snoworca:jakarta-to-javax-servlet-adapter-servlet61:3.0.0' // Tomcat 11.x
 
     // 레거시 javax Servlet API 는 컴파일 타임에 필요 (런타임은 어댑터가 제공)
     compileOnly 'javax.servlet:javax.servlet-api:4.0.1'
@@ -464,8 +464,8 @@ dependencies {
 
 ```groovy
 dependencies {
-    implementation platform('com.clipsoft:jakarta-to-javax-servlet-adapter-bom:2.0.0')
-    implementation 'com.clipsoft:jakarta-to-javax-servlet-adapter-servlet6'
+    implementation platform('com.snoworca:jakarta-to-javax-servlet-adapter-bom:3.0.0')
+    implementation 'com.snoworca:jakarta-to-javax-servlet-adapter-servlet6'
     compileOnly    'javax.servlet:javax.servlet-api:4.0.1'
 }
 ```
@@ -476,9 +476,9 @@ dependencies {
 <dependencyManagement>
   <dependencies>
     <dependency>
-      <groupId>com.clipsoft</groupId>
+      <groupId>com.snoworca</groupId>
       <artifactId>jakarta-to-javax-servlet-adapter-bom</artifactId>
-      <version>2.0.0</version>
+      <version>3.0.0</version>
       <type>pom</type>
       <scope>import</scope>
     </dependency>
@@ -487,7 +487,7 @@ dependencies {
 
 <dependencies>
   <dependency>
-    <groupId>com.clipsoft</groupId>
+    <groupId>com.snoworca</groupId>
     <artifactId>jakarta-to-javax-servlet-adapter-servlet6</artifactId>
   </dependency>
   <dependency>

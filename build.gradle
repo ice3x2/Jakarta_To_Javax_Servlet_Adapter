@@ -1,6 +1,6 @@
 allprojects {
-    group = 'com.clipsoft'
-    version = '2.0.0'
+    group = 'com.snoworca'
+    version = '3.0.0'
 
     repositories {
         mavenCentral()
